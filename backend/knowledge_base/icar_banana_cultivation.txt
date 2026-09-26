@@ -1,0 +1,256 @@
+ICAR TECHNICAL BULLETIN — Banana Cultivation Guide for Andhra Pradesh, Tamil Nadu, Maharashtra, and Gujarat
+Source: ICAR-National Research Centre for Banana (NRCB), Tiruchirappalli, Tamil Nadu
+Document Reference: ICAR-NRCB/Tech/2024/AP-TN-MH-GJ-01
+
+India is the world's largest banana producer — 30.5 million tonnes from 8.5 lakh hectares.
+Tamil Nadu, Maharashtra (Jalgaon), Andhra Pradesh, Gujarat, and Karnataka are leading producers.
+Banana is the most consumed fruit in India (consumed by all income groups).
+
+=======================================================================
+SECTION 1: RECOMMENDED VARIETIES — STATE AND PURPOSE WISE
+=======================================================================
+
+ROBUSTA (William/Grande Naine):
+- Most exported variety globally
+- Best for: Andhra Pradesh, Maharashtra (Jalgaon), Gujarat
+- Bunch weight: 25–40 kg | Duration: 12–14 months
+- Susceptible to Fusarium wilt (avoid in endemic areas)
+
+GRAND NAINE:
+- Taller, hardier than Robusta
+- Best for: Maharashtra (Jalgaon) — exports
+- Bunch weight: 30–50 kg
+- Premium price in Middle East export market
+
+RASTHALI (Silk Banana):
+- Most popular dessert banana in Tamil Nadu, Andhra
+- Best table variety — aromatic, sweet
+- Bunch weight: 10–15 kg | Duration: 12 months
+- Highly susceptible to Fusarium wilt
+
+POOVAN (ELAKKI BALE):
+- Most widely grown banana in South India
+- Hardy, tolerates waterlogging
+- Bunch weight: 8–12 kg | Good for rain-fed conditions
+
+NENDRAN:
+- MOST IMPORTANT variety for Kerala farmers
+- Used for chips, baby food, cooked banana (plantain use)
+- Bunch weight: 12–18 kg | High value crop
+
+RED BANANA (Lal Velchi):
+- Premium market price (2–3x Robusta)
+- Bunch weight: 15–25 kg
+- Grown in Jalgaon (Maharashtra) and Tamil Nadu
+
+KARPURAVALLI:
+- Good for Andhra Pradesh
+- Disease tolerant | Long shelf life
+
+G9 (Cavendish hybrid):
+- Tissue culture plants — disease-free start
+- Bunch weight: 35–55 kg
+- Grown widely in Gujarat's Saurashtra, AP
+
+=======================================================================
+SECTION 2: PLANTING AND ESTABLISHMENT
+=======================================================================
+
+PLANTING MATERIAL:
+1. Tissue Culture Plants (TC) — BEST:
+   - Disease-free from certified laboratory
+   - Uniform growth, early bearing (10–11 months)
+   - Higher yield potential (30–40% more than suckers)
+   - Cost: Rs 15–20/plant (government subsidies available)
+   
+2. Sword Suckers (traditional):
+   - Select 1–1.5 kg suckers with narrow leaves
+   - Treat with Carbendazim 1 g/litre before planting
+   
+3. Rhizome Bits (for propagation):
+   - Less preferred due to disease transmission
+
+PLANTING SEASON:
+- South India: June–July (monsoon) or Oct–Nov (second season)
+- Maharashtra (Jalgaon): June–July
+- Gujarat: June or January–February (winter planting)
+
+SPACING:
+- High Density: 1.5 m × 1.5 m (4,444 plants/ha) — Robusta, Grand Naine
+- Medium Density: 1.8 m × 1.8 m (3,086 plants/ha)
+- Paired Row: (1.5+0.9) m × 1.8 m — allows intercropping
+
+PLANTING DEPTH:
+- Pit size: 45 cm × 45 cm × 45 cm
+- Fill with topsoil + compost 10 kg + Trichoderma 50 g
+- Plant at original ground level (not deeper)
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+RECOMMENDED DOSE (per plant per year):
+
+| Fertilizer       | Amount    | Application               |
+|-----------------|----------|---------------------------|
+| FYM/Compost     | 20–25 kg | At planting + 3 months    |
+| N (Urea)        | 200 g    | 6 splits over the season  |
+| P (SSP)         | 100 g    | 2 splits (at planting +3m)|
+| K (MOP)         | 300 g    | 6 splits over the season  |
+| Mg (MgSO₄)     | 50 g     | 2 splits                  |
+| Boron           | 5 g      | At flowering              |
+
+SPLIT APPLICATION (6 doses):
+- 1st month: N 30g + P 50g + K 50g
+- 2nd month: N 30g + K 50g
+- 3rd month: N 30g + P 50g + K 50g
+- 4th month: N 40g + K 50g
+- 5th month: N 40g + K 50g + Mg 50g
+- 6th month: N 30g + K 50g
+
+FERTIGATION (drip irrigation):
+- Apply 25% less fertilizer for same yield
+- Daily micro-dosing schedule:
+  * 6 g urea + 4 g MOP + 2 g SSP per plant per day (adjust by growth stage)
+- Chelated micronutrients (Fe, Zn, Mn, Cu): Monthly spray
+
+POTASSIUM IS CRITICAL:
+- Banana is the highest K-consuming crop
+- K deficiency: Yellow leaf margins (marginal chlorosis), poor bunch weight
+- Apply K in 6–8 splits throughout the crop
+
+=======================================================================
+SECTION 4: MAJOR DISEASES OF BANANA
+=======================================================================
+
+4.1 PANAMA WILT / FUSARIUM WILT (Fusarium oxysporum f. sp. cubense)
+MOST DEVASTATING DISEASE — No cure. Can persist in soil for 30+ years.
+
+IDENTIFICATION:
+- Lower leaves yellow first, then all leaves yellow and hang down
+- Internal brown/red discolouration of rhizome (cut and look)
+- Pseudostem shows brown streaks when peeled
+- Plants die before bearing fruit
+
+TROPICAL RACE 4 (TR4) — MAJOR THREAT:
+- New race attacking Cavendish varieties (Grand Naine, Robusta, G9)
+- Present in Gujarat, parts of Maharashtra
+
+MANAGEMENT:
+- NO CHEMICAL CURE AVAILABLE
+- Use resistant varieties: Poovan, Karpuravalli, BBTV-resistant TC plants
+- Sterilize all tools with 1% bleach or 70% alcohol between plants
+- Do NOT take soil/plant material from infected fields
+- Solarize soil before replanting (polythene sheets for 6 weeks, summer)
+- Biological: Trichoderma harzianum 50 g/plant in planting pit
+- Do NOT plant Cavendish types in known Panama-endemic areas
+
+4.2 SIGATOKA LEAF SPOT (Mycosphaerella musicola — Yellow Sigatoka)
+IDENTIFICATION:
+- Pale yellow streaks on lower leaves, expand to brown necrotic patches
+- Leaves dry and die from the tips downward
+- Reduces photosynthesis and bunch weight significantly
+
+MANAGEMENT:
+- Remove and destroy badly affected leaves (leaf pruning)
+- Propiconazole 25 EC: 1.5 ml/litre spray on leaves
+- Copper oxychloride 50 WP: 3 g/litre (preventive)
+- Good drainage and proper spacing reduce severity
+- Silicon spray (SiO₂ 0.2%) strengthens leaf wax — reduces infection
+
+4.3 BLACK SIGATOKA (Mycosphaerella fijiensis) — More Severe
+- Dark streaks with yellow halo — more aggressive than Yellow Sigatoka
+- Present in some parts of Northeast India
+- Propiconazole 25 EC at 1.5 ml/litre + oil emulsion
+
+4.4 BANANA BUNCHY TOP VIRUS (BBTV)
+IDENTIFICATION:
+- Leaves remain small, upright, and bunched at top (like a rosette)
+- Dark green streaks/dashes on leaf midrib and petiole ("Morse code" streaks)
+- Spread by banana aphid (Pentalonia nigronervosa)
+- Infected plant NEVER produces fruit
+
+MANAGEMENT:
+- Remove infected plants immediately (including rhizome) — use kerosene injection
+- Control aphid vector:
+  * Dimethoate 30 EC: 1 ml/litre spray
+  * Imidacloprid 17.8 SL: 0.5 ml/litre
+- Use BBTV-certified TC plants only
+- Inspect new TC plants before purchase
+
+4.5 CROWN ROT (Aspergillus, Botryodiplodia)
+POST-HARVEST disease — affects marketability
+
+MANAGEMENT:
+- Harvest with 2 cm of stem
+- Bavistin (Carbendazim) dip after harvest: 1 g/litre
+- Store at 13°C to slow decay
+
+=======================================================================
+SECTION 5: MAJOR PESTS
+=======================================================================
+
+5.1 BANANA STEM WEEVIL (Odoiporus longicollis)
+IDENTIFICATION:
+- Adults: Reddish-brown weevil, 20–25 mm, found in pseudostem
+- Grubs tunnel inside pseudostem causing rotting
+- Oozing red/brown liquid from pseudostem (weevil frass)
+- Pseudostem breaks at wind/rain (weak due to internal damage)
+
+MANAGEMENT:
+- Remove crop debris after harvest (weevil breeding site)
+- Phorate 10G: 2g per pseudostem cut (injected into slit)
+- Chlorpyrifos 20 EC: 5 ml/plant (applied to pseudostem base)
+- Pheromone traps with Aggregation pheromone (Odoilure): 20 traps/ha
+- Biological: Beauveria bassiana 10 g/plant
+
+5.2 THRIPS (Thrips hawaiiensis)
+IDENTIFICATION:
+- Silver scarring on fruits inside bunch
+- Reduce fruit quality and market price
+
+MANAGEMENT:
+- Covering bunch with polyethylene bags at shooting stage
+- Imidacloprid 17.8 SL: 0.5 ml/litre spray on emerging bunch
+
+5.3 NEMATODES (Radopholus similis, Pratylenchus coffeae)
+IDENTIFICATION:
+- Brown/black lesions on roots
+- Toppling of plants (banana falls over in wind)
+- Poor bunch development
+
+MANAGEMENT:
+- Use TC plants (nematode-free)
+- Carbofuran 3G: 40 g/plant every 6 months in soil
+- Paecilomyces lilacinus (bioagent): 10 g/plant
+
+=======================================================================
+SECTION 6: BUNCH MANAGEMENT AND HARVEST
+=======================================================================
+
+BUNCH CARE:
+- Deflowering: Remove flower tips 15 days after shooting (improves fruit size)
+- Propping: Bamboo/rope support for heavy bunches (prevents toppling)
+- Bunch cover: White polypropylene sleeve — protects from thrips, sunburn, dust
+  * Use bags with 1% Imidacloprid treatment for thrips control
+
+HARVEST:
+- Harvest at 75–80% maturity (green stage for market)
+- Full-size fruits: 3/4 filled (round appearance, green, no angles)
+- Premature harvest → poor flavour, shrivelled fruits
+
+RIPENING:
+- Ethylene gas treatment: 100 ppm ethylene for 24 hours at 20°C
+  (commercially done in ripening chambers)
+- Traditional: Calcium carbide 1 g per kg fruit (wrapped in newspaper)
+  Note: Calcium carbide ripening is ILLEGAL in some states due to acetylene gas.
+
+MARKET AND PRICES:
+- Grand Naine export: Rs 1,200–2,000/quintal
+- Nendran (Kerala): Rs 2,500–4,000/quintal
+- Rasthali: Rs 1,500–2,500/quintal
+
+=======================================================================
+Contact: ICAR-NRCB, Tiruchirappalli — Phone: 0431-2618128 | www.nrcb.icar.gov.in
+National Horticulture Board: nhb.gov.in | Subsidy for TC plants available
+=======================================================================

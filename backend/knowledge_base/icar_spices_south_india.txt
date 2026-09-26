@@ -1,0 +1,266 @@
+ICAR TECHNICAL BULLETIN — Spices Cultivation Advisory: Pepper, Cardamom, Turmeric, and Ginger for South India
+Source: ICAR-Indian Institute of Spices Research (IISR), Kozhikode, Kerala
+Document Reference: ICAR-IISR/Tech/2024/IN-SP-01
+
+India is the world's largest producer and exporter of spices, earning Rs 25,000 crore in foreign exchange.
+The "Spice Garden of India" states: Kerala, Karnataka, Tamil Nadu, and Andhra Pradesh together produce
+95% of India's major spices. This bulletin covers black pepper, cardamom, turmeric, and ginger.
+
+=======================================================================
+SECTION 1: BLACK PEPPER (Piper nigrum)
+=======================================================================
+
+World's most traded spice. India produces 70,000–80,000 tonnes/year.
+Kerala accounts for 96% of India's pepper production.
+
+1.1 VARIETIES
+1. Panniyur 1: Most popular hybrid (♀ Cheriyakaniyakadan × ♂ Uthirankotta)
+   - Yield: 2–3 kg dry pepper/vine/year
+   - Early bearing (3rd year) | Tolerates waterlogging
+   
+2. Pournami: High yielding (3.5–4 kg/vine) | Multiple spike-bearing
+3. Sreekara: Suitable for homestead gardens | Phytophthora tolerant
+4. Subhakara: High yielding | Less Phytophthora susceptible
+5. Karimunda (Heritage variety): Most preferred quality pepper globally
+   - Lower yield (0.5–1 kg/vine) but premium price
+   - Oleoresin content: 14% (highest quality)
+   
+6. IISR Thevam: Released for Wayanad | Phytophthora tolerant
+
+1.2 ESTABLISHMENT
+- Stem cuttings (runner shoots): 2–3 node cuttings
+- Nursery: Poly bags with river sand + FYM (1:1) for 3–4 months
+- Standard: 60–120 cm rooted cuttings for field planting
+- Planting season: June–July (SW monsoon)
+- Spacing: 3 m × 3 m (standard) along live/dead standards
+- Standards (support trees):
+  * Garuga pinnata (Kula mara) — most preferred
+  * Erythrina indica (Murukku)
+  * Dead standards (concrete/GI poles)
+
+TRAINING:
+- Tie runner shoots to standard every 4–6 weeks
+- Remove unwanted lateral (flag) shoots to promote vertical growth
+- Top budding at 5–6 m height
+
+1.3 FERTILIZER (per vine per year, full bearing):
+- FYM: 10 kg (June — pre-monsoon)
+- N: 100 g (urea: 220 g) | Applied June + August
+- P₂O₅: 40 g | Applied June (full dose)
+- K₂O: 140 g (MOP: 233 g) | Applied June + September
+
+MICRONUTRIENTS (Critical for yield):
+- Magnesium sulphate: 500 g/vine/year (soil application)
+- Calcium: Lime 500 g/vine (apply February)
+- Zinc: ZnSO₄ 5 g/vine (spray 0.5% on leaves)
+- Micronutrient cocktail spray (spray 3 times/year):
+  ZnSO₄ + FeSO₄ + MgSO₄ + Borax (mixed)
+
+1.4 DISEASES OF BLACK PEPPER
+
+PHYTOPHTHORA FOOT ROT (Quick Wilt) — Phytophthora capsici:
+THE MOST DESTRUCTIVE DISEASE. Can kill a vine in 2–3 weeks.
+
+IDENTIFICATION:
+- Sudden wilting of the entire vine during monsoon
+- Dark water-soaked lesion at collar region (base of stem)
+- Rapid leaf shedding
+- Internal stem tissue becomes dark brown on cutting
+
+MANAGEMENT:
+- Preventive soil drench: Metalaxyl-M + Mancozeb (2.5 g/litre) at base of vine — EVERY YEAR before monsoon (May)
+- Curative: Potassium phosphonate (Aliette): 5 ml/litre spray + soil drench
+- Bordeaux Mixture 1%: 3 litres per vine (soil drench + spray, June and August)
+- Remove and destroy infected vines completely (don't carry to nursery)
+- Improve drainage around standards
+- Avoid wounding roots during weeding
+
+POLLU DISEASE (Colletotrichum gloeosporioides) — Anthracnose:
+IDENTIFICATION:
+- Small black dots on berries — "shot-hole" appearance
+- Premature berry drop (pollu = hollow/empty berry)
+- 20–40% yield loss in epidemic years
+
+MANAGEMENT:
+- Bordeaux Mixture 1%: Spray 3 times from June at 30-day intervals
+- Carbendazim 50 WP: 1 g/litre spray
+
+SLOW DECLINE (Radopholus similis — nematode):
+IDENTIFICATION:
+- Gradual yellowing, loss of leaves over months
+- Poor new shoot production
+- Roots show brown lesions (nematode damage)
+
+MANAGEMENT:
+- Carbofuran 3G: 40 g/vine every 6 months
+- Paecilomyces lilacinus (bioagent): 10 g/vine
+
+1.5 PESTS OF BLACK PEPPER
+
+POLLU BEETLE (Longitarsus nigripennis):
+- Tiny black beetles; larvae feed inside developing berries
+- Infested berries are empty (pollu)
+MANAGEMENT:
+- Dimethoate 30 EC: 2 ml/litre spray (June + August)
+- Pyrethroids also effective
+
+TOP SHOOT BORER (Cydia hemidoxa):
+- Bore into growing tip and young spikes
+MANAGEMENT: Monocrotophos 36 SL 1.5 ml/litre
+
+PRICES (2024):
+- Black pepper (dry, MG1): Rs 700–900/kg
+- Export price: $7–12/kg (USD)
+
+=======================================================================
+SECTION 2: CARDAMOM (Elettaria cardamomum)
+=======================================================================
+
+"Queen of Spices." India (mainly Idukki district, Kerala) and Guatemala are the
+major producers. Cardamom is the third most expensive spice in the world.
+
+2.1 VARIETIES
+1. IISR Avinash (PV-1): Yield 150–200 kg/ha dry | Clump forming
+2. IISR Suvasini (CL-759): Good capsule size, strong aroma
+3. Mysore (Type IV): Traditional Kerala variety | Best aroma
+4. Vazhukka: Erect variety | High yielding for open conditions
+5. Njallani (Green Gold): Premium, large capsule | High market price
+
+2.2 ESTABLISHMENT
+- Planting material: Suckers or seedlings (12–18 months old)
+- Planting season: June–August (SW monsoon)
+- Spacing: 3 m × 3 m (conventional) or 2 m × 2 m (intensive)
+- Shade requirement: 40–50% shade (under forest or artificial shade)
+- Temperature: 15–35°C | Altitude: 600–1500 m (ideal: 900–1200 m)
+- Soil: Rich forest loam, well-drained, slightly acidic pH 5.0–6.5
+
+2.3 FERTILIZER (per hectare per year):
+- FYM: 5 tonnes
+- N: 75 kg | P₂O₅: 75 kg | K₂O: 150 kg
+- Applied in 2 splits: June and September
+- Micronutrients: Foliar spray of ZnSO₄ 0.2% + MgSO₄ 1% at 2-monthly intervals
+
+2.4 DISEASES
+
+KATTE (Cardamom Mosaic):
+Most serious disease — caused by Cardamom Mosaic Virus (CdMV), spread by aphids.
+IDENTIFICATION:
+- Mosaic chlorosis on young leaves
+- Yellow and green streaks running along leaf veins
+- Severely reduced yield; plant gradually declines
+
+MANAGEMENT:
+- No cure — remove infected clumps immediately
+- Control aphid vector: Dimethoate 30 EC 2 ml/litre
+- Use virus-free planting material from certified nurseries
+- Rogue out infected plants before aphid season (Nov–Feb)
+
+RHIZOME ROT (Pythium vexans):
+- Rhizome becomes brown and soft
+MANAGEMENT:
+- Soil drench with Metalaxyl 0.4% before monsoon
+
+AZHUKAL (Capsule rot — Phytophthora meadii):
+- Capsules show water-soaked patches, turn brown
+- Heavy yield loss in rainy season
+MANAGEMENT:
+- Copper oxychloride 0.3% spray on capsule clusters (3 rounds)
+
+2.5 PESTS
+
+THRIPS (Sciothrips cardamomi):
+- Causes "chenthal" — brown scarring on capsules
+- Significant quality reduction
+MANAGEMENT:
+- Dimethoate 30 EC 2 ml/litre spray
+
+SHOOT BORER:
+- Bores into young shoots
+MANAGEMENT: Chlorpyrifos 20 EC 2 ml/litre
+
+PRICES:
+- Cardamom (Indian) auction: Rs 1,200–2,000/kg
+- Guatemala (competition) price: $5–7/kg USD
+
+=======================================================================
+SECTION 3: TURMERIC (Curcuma longa)
+=======================================================================
+
+India produces 80% of world's turmeric. Erode (Tamil Nadu) is the world's largest
+turmeric trading centre. Telangana (Nizamabad), Maharashtra (Sangli), Andhra Pradesh,
+Karnataka, and Odisha are major producers.
+
+3.1 VARIETIES
+1. Erode Local (TDN 82): Tamil Nadu | Curcumin: 3.5%
+2. Alleppey Finger (Kerala): Best for oleoresin | Curcumin: 4.5%
+3. Rajendra Sonia (Odisha): Yield 35–40 t/ha fresh
+4. Suguna (IISR): High curcumin (5.5%) | Disease tolerant
+5. Pragati (IISR): High yielding | Rhizome rot tolerant
+6. Nizamabad Bulb (Telangana): GI Tagged | Low curcumin, pale colour
+
+3.2 PLANTING
+- Season: May–June (with monsoon)
+- Planting material: Mother rhizomes or fingers (40–50 g each)
+- Seed rate: 2,000–2,500 kg/ha
+- Spacing: 45 cm × 30 cm | Beds 1 m wide, 15 cm high
+- Mulching: Paddy straw mulch 10 t/ha at planting (critical)
+
+3.3 FERTILIZER:
+- FYM/Compost: 30–40 t/ha (most important)
+- N: 80 kg/ha (3 splits: at planting, 45 DAS, 90 DAS)
+- P₂O₅: 50 kg/ha (basal)
+- K₂O: 80 kg/ha (2 splits)
+
+3.4 DISEASES
+
+RHIZOME ROT (Pythium aphanidermatum):
+MOST SERIOUS — can destroy entire crop in heavy-rainfall areas.
+IDENTIFICATION:
+- Young shoots wilt and collapse at base
+- Rhizome becomes soft and emits foul smell
+MANAGEMENT:
+- Seed treatment: Metalaxyl 2 g/kg rhizome soak (30 minutes)
+- Soil drench: Metalaxyl 0.4% (2 litres/plant at planting)
+- Raise beds for good drainage
+
+LEAF BLOTCH (Taphrina maculans):
+- Brown oval spots with yellow halo
+MANAGEMENT: Mancozeb 0.2% spray
+
+3.5 HARVEST
+- Harvest when leaves turn yellow and dry (7–9 months)
+- Yield: 15–25 t/ha fresh rhizome
+- Processing: Boil in water for 45–60 minutes + dry (8–10% moisture)
+- Yield of dry turmeric: 15–25% of fresh weight
+- MSP 2024: Rs 70–90/kg dry
+
+=======================================================================
+SECTION 4: GINGER (Zingiber officinale)
+=======================================================================
+
+4.1 VARIETIES
+1. Rio-de-Janeiro (Assam / Meghalaya): High oleoresin
+2. Maran (Kerala): Bold, good for export
+3. Himachal: Less fibre, mild pungency
+4. Varada (IISR): Rhizome rot tolerant | High yield
+5. IISR Mahima: Very high yielding (25 t/ha)
+6. Rejatha (IISR): Export-oriented, less fibre
+
+4.2 PLANTING
+- Season: April–May (2–3 weeks before monsoon)
+- Planting material: Healthy rhizomes (20–25 g seed pieces)
+- Spacing: 30 cm × 25 cm
+- Seed rate: 1,500–2,000 kg/ha
+- Shade: 25–50% shade improves quality; not required for rain-fed crop
+
+4.3 SOFT ROT (Pythium aphanidermatum) — MOST SERIOUS:
+MANAGEMENT: Same as turmeric rhizome rot
+- Rhizome treatment: Metalaxyl 2 g/litre + Copper oxychloride 2 g/litre
+
+4.4 HARVEST: 8–10 months (mature ginger, dry ginger) or 5–6 months (green ginger)
+- MSP: No official MSP; farm gate price Rs 20–60/kg (highly variable)
+
+=======================================================================
+Contact: ICAR-IISR, Kozhikode — Phone: 0495-2731410 | www.spices.res.in
+Spices Board of India — www.indianspices.com | Subsidy on spice nurseries available.
+=======================================================================

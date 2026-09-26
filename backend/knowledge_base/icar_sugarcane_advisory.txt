@@ -1,0 +1,242 @@
+ICAR TECHNICAL BULLETIN — Sugarcane Cultivation Guide for Maharashtra, UP, and Tamil Nadu
+Source: ICAR-Sugarcane Breeding Institute (SBI), Coimbatore, Tamil Nadu
+Document Reference: ICAR-SBI/Tech/2024/MH-UP-TN-01
+
+India is the world's second-largest sugarcane producer after Brazil. Uttar Pradesh (largest), Maharashtra,
+Tamil Nadu, Karnataka, and Andhra Pradesh are the major producing states. India's sugar industry employs
+over 50 million people.
+
+=======================================================================
+SECTION 1: RECOMMENDED VARIETIES — STATE-WISE
+=======================================================================
+
+UTTAR PRADESH:
+1. Co 0238 (Karan 4): Most popular in UP
+   - Duration: 12 months | Yield: 80–90 t/ha
+   - High sucrose (14.5%) | Upright cane, good ratoon
+   - Early maturing — good for sugar mills
+   
+2. Co 0118: Good for waterlogged conditions
+   - Yield: 75–85 t/ha
+
+3. CoLk 94184: Short duration (10 months)
+   - Ideal for late planting
+
+MAHARASHTRA:
+1. Co 86032 (Phule): Most grown in Maharashtra
+   - Yield: 100–120 t/ha (irrigated)
+   - High juice quality, early maturing
+   
+2. CoM 265: Short duration variety
+   
+3. Co 8014: Late variety, high yield (110–130 t/ha)
+
+TAMIL Nadu / ANDHRA PRADESH:
+1. Co 86032: Widely adapted
+2. CoC 671: High sucrose content (15%)
+3. CoSi 95071: Drought tolerant, suitable for Deccan plateau
+
+KARNATAKA:
+1. Co 92005 (ULM): Best for tropical conditions
+2. CoC 671: High sucrose
+
+=======================================================================
+SECTION 2: PLANTING SEASONS
+=======================================================================
+
+| State          | Planting Season         | Harvest Season      |
+|----------------|------------------------|---------------------|
+| UP (Spring)    | Feb 15 – March 30      | Nov – Jan (12 m)    |
+| UP (Autumn)    | Sep 15 – Oct 15        | Nov – Jan (14–15 m) |
+| Maharashtra    | Oct – Nov (Suru)        | Oct – Feb (12–14 m) |
+| Maharashtra    | Jan – Feb (Adsali)      | Jan – March (18 m)  |
+| Tamil Nadu     | Nov – Jan               | Nov – Dec next year |
+| Karnataka      | Aug – Oct               | Aug – Oct next year |
+
+PLANTING METHODS:
+1. Ring Pit Method (Best for Maharashtra):
+   - Pits: 60 cm × 60 cm × 60 cm
+   - 3 sett/pit, 2-bud setts
+   - Spacing: 1.2 m between rows, 0.6 m between pits
+   - Benefit: 30% water saving, better ratoon management
+
+2. Flat Bed (Most common, UP):
+   - Furrow spacing: 90 cm (UP) / 75 cm (TN)
+   - Depth of furrows: 20–25 cm
+   - 2-3 bud setts end-to-end in furrows
+
+3. Trash Mulching Method:
+   - Trash from previous crop used as mulch
+   - Reduces weeding cost, saves moisture
+
+SEED MATERIAL:
+- Select disease-free seed from seed nurseries
+- Use top 3rd of cane for setts (most vigorous buds)
+- Sett treatment: Carbendazim 0.1% + Emisan (agrosan) 2g/litre soak 30 minutes
+- Hot Water Treatment: 50°C for 2 hours — kills ratoon stunting disease (RSD)
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+RECOMMENDED DOSE (per hectare):
+
+| State         | N       | P₂O₅   | K₂O     | Note                |
+|--------------|---------|--------|--------|---------------------|
+| UP           | 250 kg  | 60 kg  | 60 kg  | 3 splits for N      |
+| Maharashtra  | 250 kg  | 115 kg | 115 kg | Ring pit method      |
+| Tamil Nadu   | 275 kg  | 62 kg  | 62 kg  |                     |
+
+SPLIT APPLICATION (UP example, 250 kg N/ha):
+- At planting: 1/3 N + full P + full K
+- 30 DAS (earthing up): 1/3 N
+- 90 DAS: 1/3 N
+
+BIOFERTILIZERS (reduce chemical N by 25%):
+- Azospirillum: 10 kg/ha soil application
+- Phosphobacteria: 10 kg/ha
+- Combined use reduces N requirement from 250 to 188 kg/ha
+
+FOLIAR NUTRITION:
+- 2% Urea spray at 3 and 5 months
+- 1% KCl spray at 5–6 months (improves sugar content)
+- Silica (SiO₂) 200 kg/ha as slag: improves stem strength, pest resistance
+
+=======================================================================
+SECTION 4: WEED MANAGEMENT
+=======================================================================
+
+CRITICAL WEED-FREE PERIOD: First 90 days after planting
+
+PRE-EMERGENCE:
+- Atrazine 50% WP: 2 kg/ha in 600 litres water (1–2 DAS)
+
+POST-EMERGENCE (for narrow-leaf weeds):
+- 2,4-D sodium salt 80%: 1.5 kg/ha at 30–45 DAS
+
+POST-EMERGENCE (broad-spectrum):
+- Metribuzin 70% WP: 1 kg/ha at 15–20 DAS
+
+TRASH MULCHING: Suppresses 70% of weeds naturally — recommended
+
+=======================================================================
+SECTION 5: MAJOR DISEASES OF SUGARCANE
+=======================================================================
+
+5.1 RED ROT (Colletotrichum falcatum)
+MOST SERIOUS DISEASE of sugarcane in India.
+
+IDENTIFICATION:
+- Cut the cane longitudinally: red discolouration of internal tissue
+- White spots at irregular intervals on the red tissue
+- Characteristic sour/alcoholic smell from infected cane
+- Leaves dry up prematurely
+
+MANAGEMENT:
+- Use disease-free seed from certified sources
+- Hot water treatment (50°C/2 hours) of setts
+- Sett treatment: Carbendazim 0.1% soak for 5 minutes
+- Grow resistant varieties: CoJ 64, Co 0238 (resistant in UP)
+- Remove and destroy infected clumps
+
+5.2 RATOON STUNTING DISEASE (RSD) — Leifsonia xyli
+IDENTIFICATION:
+- No specific visible symptoms
+- Stunted plant, fewer tillers
+- Cut node — orange-yellow discolouration at nodal junction
+
+MANAGEMENT:
+- Hot water treatment of setts (MANDATORY for ratoon)
+- No chemical control effective after infection
+
+5.3 WILT (Fusarium sacchari)
+IDENTIFICATION:
+- Internal drying of cane
+- Hollow cavity with dried pith
+- Pink/red discolouration inside
+
+MANAGEMENT:
+- Crop rotation (avoid sugarcane monoculture)
+- Use healthy, wilt-tolerant varieties
+- Carbendazim 0.1% sett treatment
+
+5.4 SMUT (Ustilago scitaminea)
+IDENTIFICATION:
+- Long black whip-like structure emerging from top of shoot
+- Reduces yield by 30–90%
+
+MANAGEMENT:
+- Grow resistant varieties: Co 8014, Co 86032 (resistant)
+- Destroy infected plants immediately
+- Hot water sett treatment
+
+=======================================================================
+SECTION 6: MAJOR PESTS OF SUGARCANE
+=======================================================================
+
+6.1 EARLY SHOOT BORER (Chilo infuscatellus)
+IDENTIFICATION:
+- Dead heart in young plants (central leaf withers)
+- Maggot inside the central shoot
+- Up to 30–40% dead hearts in epidemic years
+
+MANAGEMENT:
+- Release egg parasitoid Trichogramma chilonis: 50,000/ha twice (at 45 and 60 DAS)
+- Chlorpyrifos 20 EC: 3 litres + sand 20 kg/ha in furrows at planting
+- Phorate 10G: 15 kg/ha in furrows
+
+6.2 TOP BORER (Scirpophaga excerptalis)
+IDENTIFICATION:
+- Attacks growing point — dead heart at tillering/grand growth stage
+- Caterpillar found inside top portion of stalk
+
+MANAGEMENT:
+- Chlorpyrifos 20 EC: 500 ml/acre at 90–120 DAS
+- Fipronil 0.3% GR: 7.5 kg/ha
+
+6.3 WOOLLY APHID (Ceratovacuna lanigera)
+IDENTIFICATION:
+- White cottony mass on leaf underside
+- Ants herding the colonies
+- Severe stunting and sooty mould
+
+MANAGEMENT:
+- Spray water jets to dislodge colonies
+- Chlorpyrifos 20 EC: 1.5 litres/acre
+- Endosulfan (if approved by state)
+
+6.4 WHITE GRUBS (Holotrichia serrata)
+IDENTIFICATION:
+- C-shaped grubs in soil eating roots
+- Plants wilt in patches (circular patches of dying cane)
+
+MANAGEMENT:
+- Deep summer ploughing (exposes grubs to birds/sun)
+- Chlorpyrifos 20 EC: 3 litres drench in soil
+
+=======================================================================
+SECTION 7: RATOON MANAGEMENT
+=======================================================================
+
+Ratoon crop saves: Rs 15,000–20,000/ha vs replanting
+
+KEY STEPS:
+1. Root stripping and stubble shaving (within 10 days of harvest)
+2. Gap filling with fresh setts in empty patches
+3. Intercultivation + earthing up at 30 DAS
+4. 75% of main crop fertilizer dose
+5. Irrigate within 2–3 days of harvest
+6. Propiconazole spray: To prevent ratoon diseases
+
+Maximum 2 ratoons per planting (yield declines significantly after 2nd ratoon)
+
+=======================================================================
+PRICES AND SUPPORT:
+- Fair and Remunerative Price (FRP) 2024-25: ₹340/quintal
+- State Advised Price (SAP) in UP: ₹370–380/quintal
+- Maharashtra SAP: ₹340+
+
+Contact: ICAR-SBI, Coimbatore — Phone: 0422-2472621 | www.sugarcane.icar.gov.in
+Vasantdada Sugar Institute, Pune — www.vsisugar.com
+UP Ganna Shoth Parishad, Shahjahanpur — www.upcane.gov.in
+=======================================================================

@@ -1,0 +1,118 @@
+ICAR TECHNICAL BULLETIN — Jute & Makhana Cultivation Guide for Eastern India
+Source: ICAR-Central Research Institute for Jute and Allied Fibres (CRIJAF), Barrackpore (WB) & ICAR-RCER, Patna (Bihar)
+Document Reference: ICAR-EAST/Tech/2024/WB-BH-AS-01
+
+Eastern India (West Bengal, Bihar, Assam, and Odisha) is the world's epicentre for two ecologically unique,
+high-value crops: Jute ("The Golden Fibre") and Makhana ("Gorgon Nut / Foxnut", Mithila GI Tag).
+This technical advisory provides verified protocols for cultivation, disease management, and post-harvest retting/popping.
+
+=======================================================================
+SECTION 1: JUTE CULTIVATION (West Bengal, Bihar, Assam, Odisha)
+=======================================================================
+
+India is the largest producer of raw jute globally, with West Bengal producing ~75% of total national volume.
+Jute is completely biodegradable and provides the backbone for eco-friendly packaging and geo-textiles.
+
+1.1 SPECIES & VARIETIES:
+A. Tossa Jute (Corchorus olitorius) — 90% of area, superior tensile strength, golden lustrous fibre:
+- JRO 204 (Suren): Most popular, high-yielding (35–40 q fibre/ha), non-lodging, 120 days.
+- JRO 524 (Navin): Widely adapted, resistant to premature flowering, excellent spinability.
+- JRO 8432 (Jute Shrestha): Fine fibre quality, resistant to stem rot.
+- CO 58 (Tarun): Tolerates waterlogging, recommended for lowlands.
+B. White Jute (Corchorus capsularis) — Tolerates early flooding/inundation in low-lying tracts:
+- JRC 698 (Kamala), JRC 517, JRC 532: Ideal for river basin tracts prone to early inundation.
+
+1.2 SOWING & FIELD PREPARATION:
+- Sowing window: March 15 to May 10.
+- Soil: Fertile alluvial loam; pH 6.0–7.5.
+- Seed Rate: Line sowing with CRIJAF Seed Drill: 4–5 kg/ha (Tossa), 6–7 kg/ha (White).
+  (Broadcasting requires 7–8 kg/ha and results in uneven stem thickness).
+- Spacing: 25–30 cm between rows × 5–7 cm plant-to-plant (optimum plant population: 4.5–5.0 lakh plants/ha).
+
+1.3 NUTRIENT MANAGEMENT:
+- Recommended N:P₂O₅:K₂O: 60:30:30 kg/ha for Tossa Jute; 40:20:20 kg/ha for White Jute.
+- Nitrogen application in 2 splits: 50% basal at sowing + 50% top-dressed at 30–35 DAS after weeding.
+- Apply FYM @ 5 t/ha. In acidic alluvial soils (pH < 5.5), apply 1–1.5 t agricultural lime/ha every 3 years.
+
+1.4 MAJOR PESTS & DISEASES:
+- Jute Stem Rot / Root Rot (Macrophomina phaseolina):
+  * Symptoms: Brown to black sunken lesions at base of stem; leaves turn yellow and drop; shredding of fibre.
+  * Management: Seed treatment with Carbendazim 50 WP @ 2 g/kg or Trichoderma viride @ 4 g/kg seed.
+  * Spray Mancozeb 75 WP (2.5 g/L) or Carbendazim (1 g/L) at first appearance of stem lesions.
+  * Improve drainage; avoid excessive nitrogen.
+- Jute Semilooper (Anomis sabulifera):
+  * Feeds voraciously on apical buds and young upper leaves, arresting plant height.
+  * Management: Install bird perches (15/ha). Spray Lambda-cyhalothrin 5 EC @ 1 ml/L or Chlorpyrifos 20 EC @ 2 ml/L.
+- Yellow Mite (Polyphagotarsonemus latus):
+  * Causes downward curling, bronzing, and crinkling of tender apical leaves.
+  * Management: Spray Spiromesifen 22.9 SC @ 1 ml/L or Wettable Sulphur 80 WP @ 3 g/L.
+
+1.5 MICROBIAL ACCELERATED RETTING (CRIJAF SONA):
+- Conventional retting in stagnant muddy water requires 18–25 days and produces dark, low-grade fibre.
+- CRIJAF Sona Technology:
+  * A dry microbial consortia powder containing pectinolytic bacteria.
+  * Dose: 25–30 kg CRIJAF Sona per hectare harvest.
+  * Sprinkled over bundled jute stems during "Jak" (submerged raft) formation in clean water.
+  * Reduces retting duration from 21 days down to 10–12 days.
+  * Improves fibre grade by 2–3 grades (Golden yellow lustre, TDN-1 to TDN-3 grade).
+  * Increases farmer net realization by ₹600–₹1,000 per quintal.
+- MSP (2024-25 Season): ₹5,335 / quintal (TDN-3 grade).
+
+=======================================================================
+SECTION 2: MAKHANA (FOXNUT / GORGON NUT) CULTIVATION
+=======================================================================
+
+Makhana (Euryale ferox Salisb.) is a high-value aquatic cash crop. Mithila region of Northern Bihar
+(Darbhanga, Madhubani, Purnea, Katihar, Saharsa) produces over 85% of the world's makhana.
+Mithila Makhana received the prestigious Geographical Indication (GI) Tag in 2022.
+
+2.1 VARIETIES & ECOTYPES:
+- Sabour Makhana-1 (Bihar Agricultural University, Sabour): High-yielding (28–30 q raw seed/ha).
+- Swarna Vaidehi (ICAR-RCER Patna): Yield 30–32 q raw seed/ha; bold seed size, superior popping recovery (>55%).
+- Traditional local ecotypes: Deshi (small seed) and Kataha (large spiny seed).
+
+2.2 CROPPING SYSTEMS:
+A. Traditional Pond/Wetland System:
+   - Deep perennial water bodies (4–6 feet depth). Continuous self-sown seeds germinate in December.
+B. ICAR Field/Cropland System (REVOLUTIONARY WATER-SAVING METHOD):
+   - Grown in shallow agricultural fields with 1 to 1.5 feet standing water (like transplanted rice).
+   - Allows crop rotation: Makhana (March–August) followed by Wheat/Mustard/Berseem (November–March).
+   - Multiplies farmer income 3-fold compared to traditional water bodies.
+
+2.3 NURSERY & TRANSPLANTING (Field System):
+- Nursery Sowing: November–December in shallow nursery beds.
+- Seed Rate: 20 kg sound raw seeds for raising 1 ha nursery.
+- Field Transplanting: February–March when seedlings have 4–5 leaves.
+- Spacing: 1.2 m × 1.2 m (approx 7,000 plants/ha).
+
+2.4 FIELD MANAGEMENT & WATER QUALITY:
+- Water depth maintained at 30 cm during vegetative phase; 45 cm during flowering/fruiting.
+- FYM / Compost: 10 tonnes/ha incorporated during field preparation.
+- Fertilizer: 100:60:40 kg NPK/ha in the field system (split into 3 equal doses).
+- Aquatic Weeds: Must be cleared manually or mechanically prior to leaf canopy spreading.
+
+2.5 INSECT PESTS & DISEASES:
+- Aphids (Rhopalosiphum nymphaeae):
+  * Attack tender leaves and floral buds from March to May.
+  * Management: Spray Neem oil 3 ml/L or systemic Dimethoate 30 EC @ 1.5 ml/L (safe for aquatic fauna).
+- Makhana Leaf Blight (Alternaria / Cercospora spp.):
+  * Circular brown patches on gigantic floating leaves.
+  * Management: Spray Mancozeb 75 WP @ 2.5 g/L or Copper Oxychloride @ 3 g/L.
+
+2.6 HARVESTING & TRADITIONAL POPPING (LAVA MAKING):
+- Mature fruit bursts underwater in July–August. Thorny seeds sink to the pond bottom.
+- Harvesting: Traditional skilled divers scoop seeds from bottom mud using bamboo sieves ("Ganja").
+- Cleaning & Grading: Seeds washed, graded by sieves into 5–6 size grades.
+- Sun Drying: Dried to 30–32% moisture for tempering.
+- Roasting & Popping:
+  * Seeds roasted in cast iron pans on wood fires at 280–300°C.
+  * Hot seeds scooped onto wooden block and struck immediately with wooden mallet ("Kati").
+  * Seed coat cracks instantly and white puff ("Lawa" / Pop) expands out.
+  * Popping recovery: 50–58% by weight in improved varieties.
+- Price Realization:
+  * Raw seed: ₹100–₹160/kg.
+  * Popped Makhana (Phool Makhana grade 1): ₹600–₹1,200/kg (superfood export commodity).
+
+Contact: ICAR-CRIJAF, Barrackpore, Kolkata — Phone: 033-25351932 | crijaf.icar.gov.in
+ICAR-RCER Research Centre for Makhana, Darbhanga, Bihar — icarrcer.in
+=======================================================================

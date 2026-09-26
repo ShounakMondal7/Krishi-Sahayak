@@ -1,0 +1,278 @@
+ICAR TECHNICAL BULLETIN — Mango Cultivation Advisory for Uttar Pradesh, Andhra Pradesh, Maharashtra, and Gujarat
+Source: ICAR-Central Institute for Subtropical Horticulture (CISH), Lucknow, Uttar Pradesh
+Document Reference: ICAR-CISH/Tech/2024/IN-01
+
+India is the world's largest mango producer — 20 million tonnes from 25 lakh hectares.
+Uttar Pradesh (Malihabad Belt), Andhra Pradesh (Krishnapatnam), Maharashtra (Konkan — Alphonso),
+Gujarat (Gir Kesar), Tamil Nadu, and Bihar are major producing states.
+Mango is the national fruit of India.
+
+=======================================================================
+SECTION 1: MAJOR VARIETIES BY STATE
+=======================================================================
+
+UTTAR PRADESH (Lucknow / Malihabad Belt):
+1. Dasheri: Famous for aroma, sweetest taste
+   - Originated in Malihabad | Season: July
+   - GI Tagged — Malihabad Dasheri
+   
+2. Langra: Kashi-origin | Fibreless, juicy
+   - Season: July–August
+   
+3. Chausa: Season: August–September (late variety)
+   - Sweet, mild flavour
+   
+4. Safeda (Bombay Green): Early season | Processing variety
+5. Lucknow 49 (Malda): Excellent shelf life
+
+ANDHRA PRADESH / TELANGANA:
+1. Banganapalli (Benishan): Most popular variety in India
+   - GI Tagged | Large fruit (300–500 g)
+   - Season: May–June | Sweet, fibreless
+   
+2. Totapuri: Large, parrot-beak shaped
+   - Main variety for processing/pickle industry
+   - Season: May–June
+   
+3. Neelum: Late variety (July) | Sweet, fibreless
+4. Suvarnarekha: Medium-large | Red blush
+5. Raspuri: Karnataka / AP border — excellent quality
+
+MAHARASHTRA (Konkan Belt — Ratnagiri / Sindhudurg):
+1. Alphonso (Hapus): World's most premium mango
+   - GI Tagged — Ratnagiri/Devgad Alphonso
+   - Weight: 200–300 g | Rich, creamy, non-fibrous
+   - Season: April–May | Price: Rs 500–2000/kg
+   
+2. Kesar (Gujarat Origin): Second most premium
+   - Grown in Valsad (Maharashtra) and Girnar (Gujarat)
+   
+3. Payri (Maharashtra): Early season, processing
+4. Ratna (ICAR variety): Hybrid, high yielding
+
+GUJARAT:
+1. Kesar (Girnar Kesar): GI Tagged
+   - Less fibrous, highly aromatic
+   - Season: May–June | Saurashtra region (Junagadh)
+   
+2. Alphonso: Also grown in Valsad
+3. Totapuri: For processing
+
+BIHAR / JHARKHAND:
+1. Malda: Traditional Bihar variety | Season July–August
+2. Jardalu (Bhagalpur): GI Tagged | Aromatic, unique flavour
+
+TAMIL Nadu:
+1. Neelum: Most popular | Late season
+2. Malgoa: Large fruit | Processed variety
+
+=======================================================================
+SECTION 2: ORCHARD ESTABLISHMENT
+=======================================================================
+
+CLIMATE REQUIREMENTS:
+- Ideal temperature: 24–27°C (annual mean)
+- Low/no rain during flowering (Nov–Feb): Rains cause anthracnose
+- High temperature and dry weather during fruit development
+- Mango cannot tolerate frost (kills young plants)
+
+SOIL REQUIREMENTS:
+- Well-drained deep loam or sandy loam
+- pH: 5.5–7.5 (ideal 6.0–7.0)
+- AVOID: Heavy clay, waterlogged soils
+- Can tolerate light salinity (up to 2 dS/m)
+
+PLANTING:
+- Season: June–July (SW monsoon) or February–March (spring)
+- Spacing: 10 m × 10 m (100 plants/ha) — traditional
+  High Density: 2.5 m × 5 m (800 plants/ha) — Ultrahigh density orchards
+- Pit size: 1 m × 1 m × 1 m
+- Fill pit: Topsoil + 25 kg FYM + 1 kg SSP + 100 g Phorate 10G
+- Grafted plants begin bearing in 3–4 years (vs 8–10 years for seedlings)
+
+VARIETIES FOR HIGH DENSITY:
+- Amrapali (Dwarf hybrid): Best for HDP
+  Yield: 15–20 kg/plant even at HDP (400–600 plants/ha)
+- Mallika: High yielding | Semi-dwarf
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+FERTILIZER DOSE (per tree per year, for bearing trees):
+
+| Tree Age | FYM  | N     | P     | K     |
+|---------|------|-------|-------|-------|
+| 1 year  | 10 kg| 100 g | 50 g  | 100 g |
+| 3 years | 25 kg| 300 g | 150 g | 300 g |
+| 5 years | 40 kg| 500 g | 250 g | 500 g |
+| 10+ yrs | 50 kg| 1 kg  | 500 g | 1 kg  |
+
+SPLIT APPLICATION:
+- June (pre-monsoon onset): 50% N + 100% P + 50% K + FYM
+- September (post-monsoon): 50% N + 50% K
+
+CRITICAL MICRONUTRIENTS:
+- Zinc: ZnSO₄ 0.5% spray at bud break (March) — prevents little leaf
+- Boron: Borax 0.3% spray at flowering — improves fruit set
+- Calcium: CaCl₂ 0.5% spray at marble stage — prevents spongy tissue (Alphonso)
+
+SPONGY TISSUE (Alphonso-specific disorder):
+- Internal brownish spongy areas despite good external appearance
+- Cause: calcium deficiency + high temperature during development
+- Prevention: CaCl₂ 0.5% spray at 3 intervals during development
+
+=======================================================================
+SECTION 4: FLOWERING MANAGEMENT
+=======================================================================
+
+MANGO ALTERNATE BEARING PROBLEM:
+Many mango varieties (especially Alphonso, Dasheri) bear heavily one year
+and poorly the next — "Alternate Bearing" or "Off Year" problem.
+
+SOLUTIONS:
+1. Cultar (Paclobutrazol) treatment:
+   - Method: Soil drench or trunk smear
+   - Dose: 4.5 g a.i./tree (soil application, September–October of off year)
+   - Effect: Induces early, uniform flowering in off year
+   - Used commercially in Konkan for Alphonso
+
+2. Potassium nitrate (KNO₃) spray:
+   - 2% spray at tip of branches (just before expected flowering)
+   - Induces uniform bud break
+
+3. Smudging: Burning agricultural waste near trees (smoke triggers flowering)
+
+PROBLEMS AT FLOWERING:
+- Spongy Blossom Midge: Removes flowers
+- Mango Hopper: Attacks panicles and flowers
+
+=======================================================================
+SECTION 5: MAJOR DISEASES
+=======================================================================
+
+5.1 ANTHRACNOSE (Colletotrichum gloeosporioides)
+MOST COMMON DISEASE — attacks flowers, young fruits, leaves.
+
+IDENTIFICATION:
+- Dark brown to black irregular spots on leaves, twigs, flowers
+- "Blossom Blight" — flowers turn brown and drop
+- Black sunken spots on fruits (pre and post-harvest)
+- Severely affects fruit quality and marketability
+
+MANAGEMENT:
+- Avoid overhead irrigation during flowering
+- Copper oxychloride 50 WP: 3 g/litre spray at panicle emergence
+- Carbendazim 50 WP: 1 g/litre spray (2 rounds — pre and post-rain)
+- Propiconazole 25 EC: 1 ml/litre for curative action
+- Post-harvest: Hot water treatment 52°C for 5 minutes + Carbendazim dip
+
+5.2 POWDERY MILDEW (Oidium mangiferae)
+IDENTIFICATION:
+- White powdery coating on young leaves, panicles, and young fruits
+- Severe in cool, humid nights (December–February)
+- Panicle blight — entire flower cluster affected
+
+MANAGEMENT:
+- Sulphur 80 WP: 2 g/litre spray (most effective, safe at pre-bloom)
+- Triadimefon 25 WP: 1 g/litre
+- Hexaconazole 5 SC: 1 ml/litre
+- First spray at panicle emergence + 2nd at 15-day interval
+
+5.3 SOOTY MOULD (Capnodium mangiferae)
+IDENTIFICATION:
+- Black soot-like growth on leaves and fruits
+- Grows on honeydew excreted by hoppers/mealybugs
+
+MANAGEMENT:
+- Control insect vector (hoppers, mealybugs)
+- Starch solution 4%: Spray to dislodge sooty mould from leaves
+
+5.4 STEM END ROT (Botryodiplodia theobromae)
+POST-HARVEST disease — common in transport
+
+MANAGEMENT:
+- Thiabendazole or Carbendazim post-harvest dip
+- Harvest with full stalk attached (2 cm)
+
+=======================================================================
+SECTION 6: MAJOR PESTS
+=======================================================================
+
+6.1 MANGO HOPPER (Idioscopus clypealis, Amritodus atkinsoni)
+IDENTIFICATION:
+- Small pale green/yellow wedge-shaped insects
+- Adults and nymphs suck sap from panicles and young leaves
+- Cause "hopperburn" — blackening of affected tissue
+- Exude honeydew → sooty mould
+
+MANAGEMENT:
+- Imidacloprid 17.8 SL: 0.5 ml/litre spray at panicle emergence
+- Thiamethoxam 25 WG: 0.25 g/litre
+- First spray at panicle emergence (before full opening)
+
+6.2 MANGO STONE WEEVIL (Sternochetus mangiferae)
+IDENTIFICATION:
+- Grubs feed on seed (stone) inside the fruit
+- External fruit appears normal
+- Quarantine pest — restricts export
+
+MANAGEMENT:
+- Hot water treatment 52°C/10 minutes (post-harvest)
+- Avoid mixing infested fruits with clean ones
+- Collect and destroy fallen fruits (breeding site)
+
+6.3 FRUIT FLY (Bactrocera dorsalis)
+IDENTIFICATION:
+- Flies lay eggs in ripening fruits
+- Maggots cause internal rotting
+- Pin-hole visible on fruit surface (oviposition site)
+
+MANAGEMENT:
+- Methyl Eugenol traps (Cue-lure): 25 traps/ha (replace lure every 21 days)
+- Protein bait spray: Spinosad 0.02% + Hydrolysed protein 1% bait
+- Bag fruits individually at pea size (small orchards)
+- Collect and destroy fallen fruits daily
+
+6.4 MANGO MEALYBUG (Drosicha mangiferae)
+IDENTIFICATION:
+- White cottony mass at base of buds, stems, and on panicles
+- Severely affects young trees and panicles
+
+MANAGEMENT:
+- Sticky trap bands (alkathene sheet 20 cm wide) around trunk base (October)
+- Spray Imidacloprid 17.8 SL + petroleum oil spray
+- Remove weeds around tree (nymph habitat)
+
+=======================================================================
+SECTION 7: HARVESTING AND POST-HARVEST
+=======================================================================
+
+MATURITY INDICES:
+- Alphonso: Changes from green to yellow; stalk turns yellow; floats in water
+- Dasheri: Slight yellow tinge; plum aroma
+- Banganapalli: Shoulder development; slight colour change
+- Specific gravity: < 1.0 (mature fruit floats in water)
+
+POST-HARVEST HANDLING:
+- Harvest in cool hours (morning)
+- Leave 2–5 cm stalk (prevents latex drip on fruit surface)
+- Wash latex with 1% lime solution or plain water
+- Grade by weight: A (>300g), B (200–300g), C (<200g)
+- Pre-cooling: Forced air cooling at 10–12°C extends shelf life
+
+EXPORT PROTOCOL:
+- Vapour heat treatment (VHT): 46°C for 10 minutes — for Japan, S. Korea export
+- Hot water treatment: 52°C / 5 minutes — for USA, EU export
+- Residue monitoring: Test for Imidacloprid, Cypermethrin (most common violations)
+
+PRICES:
+- Alphonso (Ratnagiri): Rs 800–2500/dozen at farm gate
+- Kesar (Junagadh): Rs 60–120/kg
+- Dasheri (Malihabad): Rs 30–60/kg
+- Banganapalli: Rs 30–50/kg
+
+=======================================================================
+Contact: ICAR-CISH, Lucknow — Phone: 0522-2841022 | www.cish.res.in
+ICAR-NRC on Mango, Lucknow | Maharashtra Alphonso Growers Assoc., Ratnagiri
+=======================================================================

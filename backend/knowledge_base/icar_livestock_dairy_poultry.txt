@@ -1,0 +1,119 @@
+ICAR TECHNICAL BULLETIN — Dairy, Livestock & Poultry Husbandry Advisory for Indian Farmers
+Source: ICAR-National Dairy Research Institute (NDRI), Karnal & ICAR-Central Avian Research Institute (CARI), Izatnagar
+Document Reference: ICAR-LIVESTOCK/Tech/2024/PAN-IN-01
+
+Livestock contributes ~30% of total agricultural GDP in India and serves as the primary livelihood security net
+for over 73 million rural households. India ranks #1 in global milk production (230+ million tonnes) and #3 in egg
+production. This bulletin provides practical guidelines for dairy cattle, buffalo, goat rearing, and poultry.
+
+=======================================================================
+SECTION 1: DAIRY CATTLE & BUFFALO MANAGEMENT
+=======================================================================
+
+1.1 RECOMMENDED BREEDS:
+A. Indigenous Dairy Cattle (Heat, tick & disease tolerant; A2 milk profile):
+   - Gir (Gujarat/Maharashtra): Yield 3,000–4,500 L/lactation; distinct convex forehead, long pendulous ears.
+   - Sahiwal (Punjab/Haryana/UP): Best dairy zebu breed; yield 3,200–4,000 L/lactation; reddish-dun color.
+   - Red Sindhi & Tharparkar (Rajasthan): Exceptionally drought & heat hardy.
+   - Crossbred Cattle (HF × Gir / Jersey × Sahiwal): High yield (4,500–6,500 L/lactation), but need cooling & shelter.
+B. Dairy Buffaloes (Highest fat content 6.5–8.5%):
+   - Murrah (Haryana/Punjab): "Black Gold", world's premier dairy buffalo; tightly curled horns; 2,500–3,600 L.
+   - Jaffarabadi (Gujarat): Heavy draft & high-fat milk producer (7.5–9% fat).
+   - Mehsana, Surti, Nili-Ravi.
+
+1.2 SCIENTIFIC FEEDING & BALANCED RATION:
+- Thumb Rule for Daily Feed Intake: Dry Matter (DM) requirement is 2.5–3.0 kg per 100 kg body weight.
+- Daily Ration Composition for a 400 kg Cow yielding 10 L milk:
+  * Green Fodder: 25–30 kg (Maize, Sorghum, Hybrid Napier / CO-4, Lucerne, Berseem).
+  * Dry Roughage: 4–5 kg (Paddy straw or wheat straw; always treat with 4% urea to boost digestibility).
+  * Concentrate Mixture: 1.5 kg (for body maintenance) + 400 g per litre of milk produced (e.g., 4.0 kg for 10 L).
+  * Mineral Mixture (NDRI Type-II): 50–60 grams daily (MANDATORY to prevent silent heat, repeat breeding, and pica).
+  * Clean Drinking Water: 60–80 litres daily (free access).
+
+1.3 SILAGE MAKING (Green Fodder Security for Dry Seasons):
+- Best crops: Green maize or fodder sorghum harvested at milk-to-dough stage (30–35% dry matter).
+- Process:
+  * Chop fodder to 2–3 cm length.
+  * Pack tightly in concrete trench / silo pit or heavy 200-micron silo bags to expel all air (anaerobic).
+  * Add 1% jaggery + 0.5% salt or commercial lactic acid bacterial culture.
+  * Seal airtight with plastic sheet and soil weight.
+  * Ferments in 45–60 days; remains nutritious for up to 18–24 months; pH should be 3.8–4.2 with sweet-sour aroma.
+
+1.4 MASTITIS MANAGEMENT (The #1 Economic Loss in Dairy):
+- Symptoms: Swollen, hot, painful quarter; watery, clotty, or discolored milk; reduced yield.
+- Prevention (California Mastitis Test — CMT):
+  * Test all quarters weekly using CMT paddle to detect subclinical mastitis before clots appear.
+  * Post-milking Teat Dipping: Dip all 4 teats in 0.5% Povidone-Iodine solution immediately after every milking.
+  * Dry Cow Therapy: Infuse long-acting intramammary antibiotic at start of dry period.
+- Treatment: Intramammary antibiotic infusion + systemic anti-inflammatory (Flunixin / Meloxicam) under veterinary guidance.
+  NEVER consume milk from cows undergoing antibiotic treatment during withholding period (3–5 days).
+
+=======================================================================
+SECTION 2: NATIONAL LIVESTOCK VACCINATION & DEWORMING CALENDAR
+=======================================================================
+
+Failure to vaccinate can cause 100% herd wipeout. All farmers must adhere to this schedule:
+
+| Disease                 | Target Animals         | Primary Age     | Booster / Regular Schedule |
+|-------------------------|------------------------|-----------------|----------------------------|
+| Foot & Mouth (FMD)      | Cattle, Buffalo, Goats | 4 months        | Every 6 months (Bi-annual) |
+| Haemorrhagic Septicaemia| Cattle, Buffalo        | 6 months        | Annually (Pre-monsoon, May)|
+| Black Quarter (BQ)      | Cattle, Buffalo        | 6 months        | Annually (Pre-monsoon, May)|
+| Brucellosis (Bruvax)    | Female calves ONLY     | 4 to 8 months   | ONCE IN LIFETIME (Calfhood)|
+| Peste des Petits (PPR)  | Goats & Sheep          | 3 months        | Once every 3 years         |
+| Enterotoxaemia (ET)     | Goats & Sheep          | 4 months        | Annually (Pre-monsoon)     |
+| Ranikhet (RD-F1 / LaSota)| Poultry (Chicks)      | Day 5–7         | Day 28 (Lasota / RD-VK)    |
+
+DEWORMING PROTOCOL:
+- Calves: Deworm on Day 7, 14, 21, 30 with Piperazine or Albendazole; then monthly up to 6 months.
+- Adult Cattle & Buffalo: Deworm with broad-spectrum anthelmintic (Oxyclozanide + Levamisole or Fenbendazole)
+  twice a year: Pre-monsoon (May) and Post-monsoon (October).
+- Pregnant animals: Fenbendazole is safe in pregnancy; avoid Albendazole in first trimester.
+
+=======================================================================
+SECTION 3: GOAT & SHEEP REARING (Small Ruminants)
+=======================================================================
+
+3.1 TOP MEAT & DUAL-PURPOSE GOAT BREEDS:
+- Jamunapari & Beetal (UP/Punjab): Tall, long Roman nose, high twinning rate (60%), 2.0–2.5 L milk/day.
+- Osmanabadi (Maharashtra/Karnataka): Highly disease resistant, black coat, adapts to harsh drylands.
+- Sirohi (Rajasthan/Gujarat): Compact brown-spotted body, rapid weight gain in intensive stalls.
+- Malabari / Tellicherry (Kerala): High prolificacy (triplets common), adapts to humid tropical rainfall.
+- Black Bengal (West Bengal, Bihar, Assam, Odisha): World's best skin quality, multiple kidding (3–4 kids), succulent meat.
+
+3.2 STALL-FED (INTENSIVE) GOAT FARMING:
+- Elevated slatted floor housing (wood or plastic slats 1.5–2.0 feet above ground):
+  * Keeps animals dry, dung falls through, eliminates 85% of coccidiosis and internal parasite infections.
+- Feeding: Green fodder 4–5 kg + 200–300 g concentrate feed/day. Feed mineral mixture daily.
+- Mortality reduction in kids: Ensure 100% colostrum feeding within 2 hours of birth (at 10% of birth weight).
+
+=======================================================================
+SECTION 4: BACKYARD & COMMERCIAL POULTRY
+=======================================================================
+
+4.1 IMPROVED INDIGENOUS / DUAL-PURPOSE BREEDS:
+- Kadaknath (MP/Chhattisgarh): GI Tagged; black meat, bones, and organs; low cholesterol (<0.73%), high protein (>25%).
+  * High market premium: Live bird ₹600–₹1,000/kg; eggs ₹20–₹35/piece.
+- Aseel (AP/Odisha/Tamil Nadu): Majestic game breed, high fighting spirit, sturdy, disease-hardy.
+- CARI Nirbheek, CARI Shyama, Vanaraja, Gramapriya, Srinidhi:
+  * Lay 160–200 eggs/year (vs 50–60 eggs of desi local birds).
+  * Require minimal scavenging supplement; escape predators due to alert flight capability.
+
+4.2 BIOSECURITY & DISEASE PREVENTION:
+- Ranikhet Disease (Newcastle Disease): Watery greenish diarrhea, twisted neck, respiratory distress, 90% mortality.
+  * Mandatory: Vaccinate chicks on Day 5 (F1 intraocular drops) and Day 28 (LaSota).
+- Infectious Bursal Disease (Gumboro / IBD): Vaccinate on Day 14 (IBD intermediate strain drops).
+- Coccidiosis: Bloody droppings; maintain bone-dry litter bedding; use Coccidiostat (Amprolium) in drinking water.
+
+=======================================================================
+SECTION 5: GOVERNMENT SUBSIDIES & LIVESTOCK SCHEMES
+=======================================================================
+- National Livestock Mission (NLM): 50% capital subsidy (up to ₹50 lakh for sheep/goat breeding units;
+  up to ₹25 lakh for poultry breeding farms). Apply online at: nlm.udyamimitra.in.
+- Rashtriya Gokul Mission: Subsidized sex-sorted semen (ensures 90% female calves born).
+- KCC for Animal Husbandry: Working capital loan up to ₹2 lakh at 4% interest rate.
+
+Contact: ICAR-NDRI, Karnal, Haryana — Phone: 0184-2259002 | ndri.res.in
+ICAR-CARI (Poultry), Izatnagar, Bareilly (UP) — cari.icar.gov.in
+ICAR-CIRG (Goats), Makhdoom, Farah, Mathura (UP) — cirg.res.in
+=======================================================================

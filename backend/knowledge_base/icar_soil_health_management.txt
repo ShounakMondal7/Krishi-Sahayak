@@ -1,0 +1,201 @@
+ICAR TECHNICAL BULLETIN — Soil Health Management for Kerala Farmers
+Source: ICAR-Indian Institute of Soil Science, Bhopal & Kerala Agricultural University
+Document Reference: ICAR-IISS/Kerala/2023/SH-12
+
+=======================================================================
+SECTION 1: UNDERSTANDING SOIL pH
+=======================================================================
+
+Soil pH is the single most important soil property that determines nutrient availability.
+
+pH SCALE FOR AGRICULTURE:
+- pH < 4.5: Very strongly acidic — most nutrients unavailable
+- pH 4.5–5.5: Strongly acidic — aluminium and manganese toxicity
+- pH 5.5–6.5: Moderately acidic — IDEAL for most Kerala crops
+- pH 6.5–7.0: Neutral — ideal for pulse crops
+- pH > 7.0: Alkaline — micronutrient deficiencies common
+
+KERALA SOIL pH REALITY:
+- Most Kerala soils are naturally acidic (pH 4.5–6.0)
+- Causes: Heavy rainfall leaches basic cations (Ca, Mg)
+- Red laterite soils of Kerala: typically pH 4.8–5.8
+- Kuttanad backwaters: pH can go below 4.0 (acid sulphate soils)
+
+LIMING FOR ACID SOILS:
+- Agricultural Lime (CaCO3): Apply 1–4 tonnes/ha based on pH
+- Dolomitic Lime: Better than agricultural lime — supplies Mg too
+- Lime slurry: For paddy fields, mix lime in standing water
+- When to apply: 4–6 weeks before planting (not with fertilizers)
+- pH correction chart for Kerala:
+  * To raise pH from 4.5 to 6.0: Apply 2.5–4 tonnes lime/ha
+  * To raise pH from 5.0 to 6.0: Apply 1.5–2.5 tonnes lime/ha
+  * To raise pH from 5.5 to 6.5: Apply 0.5–1.5 tonnes lime/ha
+
+=======================================================================
+SECTION 2: ORGANIC MATTER AND SOIL CARBON
+=======================================================================
+
+Organic carbon is the backbone of soil fertility in Kerala.
+
+IMPORTANCE OF ORGANIC MATTER:
+- Improves soil structure and water holding capacity
+- Feeds soil microorganisms (biological activity)
+- Releases nutrients slowly (nutrient buffering)
+- Reduces aluminium toxicity in acid soils
+
+ORGANIC MATTER STATUS IN KERALA:
+- Desirable: >1.5% organic carbon
+- Kerala average: 0.5–1.0% (declining trend)
+- Kuttanad: 2–4% (high due to organic sediments)
+
+WAYS TO BUILD ORGANIC MATTER:
+
+1. Farm Yard Manure (FYM):
+   - Fully composted FYM: Apply 5–10 tonnes/ha
+   - Composition: N 0.5%, P 0.3%, K 0.5%
+   - Green FYM (cattle/buffalo dung directly): Only if well-composted
+
+2. Compost Making:
+   - Heap method: Layer crop residues, cattle dung, soil alternately
+   - Decomposition time: 2–3 months (turn every 3–4 weeks)
+   - Add Trichoderma viride to accelerate decomposition
+   - Final C:N ratio should be <20:1
+
+3. Green Manuring:
+   - Sesbania rostrata (rostrata sesbania): Best for paddy — fixes 40–60 kg N/ha
+   - Crotalaria juncea (sunnhemp): For upland crops
+   - Mucuna pruriens (velvet bean): For coconut gardens
+   - Incorporate green manure at 50% flowering stage
+
+4. Vermicomposting:
+   - Use Eisenia fetida (red wiggler earthworms)
+   - Feed kitchen waste, crop residues, paper
+   - Production: 1 kg worms → 4 kg vermicompost in 45–60 days
+   - Vermicompost NPK: 1.5–2.5% N, 1.5–2% P, 1–1.5% K
+
+5. Paddy Straw Incorporation:
+   - Do not burn paddy straw — incorporate into soil
+   - Apply urea @ 10 kg/tonne of straw to aid decomposition
+   - Retains: 0.5% N, 0.2% P, 1.5% K per tonne
+
+=======================================================================
+SECTION 3: ESSENTIAL PLANT NUTRIENTS
+=======================================================================
+
+PRIMARY MACRONUTRIENTS:
+
+NITROGEN (N):
+- Role: Leaf and stem growth, protein synthesis, chlorophyll
+- Deficiency signs: Yellowing starts from older leaves, V-shaped yellow pattern
+- Sources: Urea (46% N), Ammonium sulphate (21% N)
+- For rice: Apply in 3 splits (basal 25%, tillering 25%, panicle initiation 50%)
+
+PHOSPHORUS (P):
+- Role: Root development, flowering, seed formation
+- Deficiency signs: Purple or red coloration of older leaves; poor root growth
+- Sources: Single Superphosphate (16% P2O5), Triple Superphosphate (46% P2O5)
+- Low mobility in soil — always apply as basal dose
+
+POTASSIUM (K):
+- Role: Disease resistance, water regulation, grain filling
+- Deficiency signs: Scorching/browning at leaf margins starting from older leaves
+- Sources: Muriate of Potash (60% K2O), Sulphate of Potash (50% K2O)
+
+SECONDARY NUTRIENTS:
+
+CALCIUM (Ca):
+- Role: Cell wall structure, root tip growth
+- In Kerala soils: Often deficient due to leaching
+- Management: Regular liming corrects Ca deficiency
+
+MAGNESIUM (Mg):
+- Role: Chlorophyll production, enzyme activation
+- Deficiency: Interveinal chlorosis on older leaves
+- Management: Dolomitic lime (contains Mg), MgSO4 spray 0.5%
+
+SULPHUR (S):
+- Deficiency increasing in Kerala due to sulphur-free fertilizers
+- Symptoms: Yellowing of young leaves (unlike N deficiency)
+- Management: Single Superphosphate (contains S), Ammonium sulphate, Gypsum
+
+MICRONUTRIENTS (trace elements):
+
+ZINC:
+- Most common micronutrient deficiency in Kerala rice
+- Symptoms: New leaves show rusty-brown blotches; stunted plants
+- Management: ZnSO4 × 7H2O @ 25 kg/ha basal; foliar spray 0.5% ZnSO4
+
+BORON:
+- Critical for coconut and vegetable crops
+- Deficiency: Button shedding in coconut, hollow heart in vegetables
+- Management: Borax @ 1 kg/ha; foliar spray 0.1% borax
+
+IRON:
+- Deficiency in alkaline and waterlogged soils
+- Symptoms: Young leaves turn pale green to yellow (interveinal chlorosis)
+- Management: FeSO4 spray 0.5% twice at 10-day intervals
+
+=======================================================================
+SECTION 4: BIOFERTILIZERS
+=======================================================================
+
+Biofertilizers are living microorganisms that improve soil fertility naturally.
+
+RECOMMENDED BIOFERTILIZERS FOR KERALA:
+
+1. Azospirillum (for grasses/cereals):
+   - Fixes atmospheric nitrogen (20–30 kg N/ha equivalent)
+   - Apply @ 200 g/ha (seed treatment or soil application)
+   - Best for rice, sugarcane, maize
+
+2. Phosphate Solubilizing Bacteria (PSB):
+   - Releases fixed phosphorus in soil
+   - Apply @ 200 g/ha
+   - Compatible with chemical phosphorus fertilizers (use together)
+
+3. Rhizobium (for legumes):
+   - Fixes N2 in root nodules of legumes
+   - Apply as seed coating before sowing cowpea, groundnut, beans
+   - Reduces nitrogen fertilizer requirement by 50%
+
+4. Trichoderma viride:
+   - Biological fungicide — controls soil-borne diseases
+   - Apply @ 4 g/kg seed (seed treatment) or 2.5 kg/ha (soil application)
+   - Controls Fusarium, Pythium, Rhizoctonia root rots
+
+5. Mycorrhizal Fungi (VAM):
+   - Enhances phosphorus and water uptake
+   - Apply during transplanting for vegetables
+
+IMPORTANT: Do not mix biofertilizers with chemical fertilizers or pesticides.
+Apply biofertilizers in the evening (sunlight reduces viability).
+
+=======================================================================
+SECTION 5: SOIL CONSERVATION IN HILLY AREAS (Wayanad/Idukki)
+=======================================================================
+
+- Contour farming: Cultivate across slopes, not down the slope
+- Bunds and terracing: Essential for slopes >5%
+- Vetiver (Chrysopogon zizanioides) grass strips: Plant along contours to prevent erosion
+- Cover crops: Mucuna bean or Stylosanthes between plantation rows
+- Avoid burning forest areas for cultivation (causes topsoil loss)
+
+=======================================================================
+SOIL TESTING LABORATORIES IN KERALA
+=======================================================================
+
+Soil testing is FREE for small/marginal farmers (< 2 ha). Others: Rs. 50/sample
+
+- State Soil Testing Laboratory, Thiruvananthapuram: 0471-2317999
+- Regional STL, Thrissur: 0487-2360280
+- Regional STL, Palakkad: 0491-2507700
+- Regional STL, Kozhikode: 0495-2760000
+- Soil analysis online results: www.msoilnet.gov.in
+
+Parameters tested: pH, EC, Organic Carbon, N, P, K, Zn, B, Fe
+Result time: 10–15 working days
+
+=======================================================================
+Contact for Queries: Kerala Agricultural University, Thrissur
+Phone: 0487-2371918 | Email: registrar@kau.in
+=======================================================================

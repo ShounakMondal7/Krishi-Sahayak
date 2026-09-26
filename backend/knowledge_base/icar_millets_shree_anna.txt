@@ -1,0 +1,128 @@
+ICAR TECHNICAL BULLETIN — Millets & Shree Anna Cultivation Guide for Dryland India
+Source: ICAR-Indian Institute of Millets Research (IIMR), Rajendranagar, Hyderabad, Telangana
+Document Reference: ICAR-IIMR/Tech/2024/PAN-IN-01
+
+Millets ("Shree Anna") are ancient, climate-resilient, nutrient-dense cereal crops requiring 70% less water
+than rice and sugarcane. They thrive in dryland conditions (semi-arid tropics of Rajasthan, Karnataka,
+Maharashtra, Andhra Pradesh, Telangana, Madhya Pradesh, Gujarat, and Tamil Nadu) and tolerate temperatures
+exceeding 40°C where other grains fail.
+
+=======================================================================
+SECTION 1: MAJOR MILLETS OVERVIEW & VARIETIES
+=======================================================================
+
+1.1 SORGHUM (JOWAR / GREAT MILLET) — Sorghum bicolor:
+- Leading States: Maharashtra, Karnataka, Rajasthan, MP, Telangana.
+- Kharif Hybrids: CSH 14, CSH 16, CSH 25, CSH 30 (yield 35–42 q/ha).
+- Rabi Varieties (for human food grain, premium quality):
+  * Maldandi (M 35-1): Gold standard for chapati / bhakri, pearly white bold grain.
+  * CSV 22R, CSV 29R, Phule Suchitra, Phule Vasudha (drought tolerant rabi types).
+- Seed Rate: 8–10 kg/ha; Spacing: 45 cm × 15 cm.
+
+1.2 PEARL MILLET (BAJRA) — Pennisetum glaucum:
+- Leading States: Rajasthan (45% of India), Gujarat, Haryana, UP, Maharashtra.
+- Biofortified High-Iron & High-Zinc Hybrids:
+  * HHB 67 Improved: Matures in 65 days! Drought escape, ideal for western Rajasthan.
+  * RHB 177, RHB 233, MPMH 17, Kaveri Super Boss.
+  * Dhanshakti: First biofortified variety (Iron >70 mg/kg, Zinc >40 mg/kg).
+- Seed Rate: 4–5 kg/ha; Sowing: June–July with monsoon onset; Spacing: 45 cm × 12 cm.
+
+1.3 FINGER MILLET (RAGI / MANDUA) — Eleusine coracana:
+- Leading States: Karnataka (60% of India), Tamil Nadu, Uttarakhand, Odisha, Andhra Pradesh.
+- Richest cereal source of Calcium (344 mg/100g — 10x more than rice/wheat).
+- Varieties: GPU 28, GPU 48, ML 365, KMR 301, Indaf 9, PR 202 (suitable for transplanting).
+- Hill states (Uttarakhand): VL Mandua 352, VL Mandua 379.
+- Seed Rate: 5 kg/ha (transplanted), 8–10 kg/ha (direct drilling); Spacing: 25 cm × 10 cm.
+
+1.4 MINOR MILLETS:
+- Foxtail Millet (Kangni / Thinai / Navane / Kakum):
+  * Varieties: SiA 3088, SiA 3156, Suryanandi (duration 70–80 days, high dietary fibre).
+- Kodo Millet (Varagu / Kodra / Haraka):
+  * Varieties: GPUK 3, RBK 155 (thrives in stony marginal gravel soils, diabetic-friendly).
+- Little Millet (Samai / Kutki / Sama):
+  * Varieties: OLM 203, JK 8, Kolab (duration 75 days, withstands both drought and waterlogging).
+- Barnyard Millet (Sanwa / Jhangora / Kuthiraivali):
+  * Fastest growing cereal (matures in 45–60 days); Varieties: PRJ 1, VL 207 (Uttarakhand hills).
+- Proso Millet (Cheena / Barri):
+  * Shortest duration catch crop (50–60 days); Varieties: TNAU 202, DHPM 2769.
+
+=======================================================================
+SECTION 2: AGRONOMY & DRYLAND NUTRIENT MANAGEMENT
+=======================================================================
+
+2.1 SOWING TIME & SEEDBED PREPARATION:
+- Kharif Millets: Sown with first soaking monsoon rains (June 15 – July 15).
+- Rabi Jowar: Critical window September 15 – October 15 (moisture conservation).
+- Summer Bajra (Gujarat/Rajasthan): February 15 – March 10 (under assured irrigation).
+- Seed Treatment (Mandatory):
+  * Imidacloprid 70 WS @ 5 g/kg seed (for shoot fly protection in Jowar and Bajra).
+  * Thiram 75 WP or Carbendazim 50 WP @ 2 g/kg seed.
+  * Bio-inoculants: Azospirillum brasilense + PSB (Phosphate Solubilizing Bacteria) @ 25 g/kg seed.
+
+2.2 BALANCED FERTIGATION FOR RAINFED CONDITIONS:
+- Sorghum / Bajra:
+  * Recommended N:P₂O₅:K₂O: 80:40:40 kg/ha (irrigated/high rainfall) or 50:25:0 kg/ha (arid).
+  * Nitrogen split: 50% basal at sowing + 50% top-dressed at 30 DAS with available rain/moisture.
+  * Zinc Sulphate: 25 kg/ha once every 3 years (corrects widespread Zn deficiency in drylands).
+- Ragi (Finger Millet):
+  * 60:30:30 kg NPK/ha. In acidic soils (Odisha/Uttarakhand), apply 200 kg agricultural lime/ha.
+- Minor Millets:
+  * Very low nutrient demand: 30:15:15 kg NPK/ha + 5 tonnes FYM/ha gives optimal yields.
+
+2.3 INTERCROPPING SYSTEMS (Risk Insurance in Drylands):
+- Sorghum + Pigeonpea (Tur): 2:1 or 4:2 row ratio (most profitable in Maharashtra/Karnataka).
+- Pearl Millet (Bajra) + Moth Bean / Cluster Bean (Guar): 2:1 ratio (western Rajasthan).
+- Finger Millet (Ragi) + Field Bean / Soybean: 4:1 row ratio.
+
+=======================================================================
+SECTION 3: PEST & DISEASE MANAGEMENT IN SHREE ANNA
+=======================================================================
+
+3.1 SORGHUM SHOOT FLY (Atherigona soccata):
+- Attacks within 4 weeks of emergence; maggots cut the growing point causing "dead heart".
+- Management:
+  * Sow within 10–14 days of monsoon onset (late-sown crop suffers 80% loss).
+  * Seed treatment with Imidacloprid 70 WS (5 g/kg) or Thiamethoxam 30 FS (10 ml/kg).
+  * Install Fishmeal Traps @ 10/ha to attract and trap adult shoot flies.
+
+3.2 SORGHUM & BAJRA STEM BORER (Chilo partellus):
+- Symptoms: "Shot holes" on unfolded leaves; elongated dead hearts after 30 DAS; broken stalks.
+- Management:
+  * Release Trichogramma chilonis egg parasitoid @ 50,000/ha at 15 and 30 DAS.
+  * Whorl application of Carbofuran 3G or Fipronil 0.3G granules @ 8 kg/ha at 25–30 DAS.
+
+3.3 DOWNY MILDEW / GREEN EAR DISEASE OF BAJRA (Sclerospora graminicola):
+- Symptoms: Chlorotic streaks on leaves, white cottony growth on leaf underside; floral parts
+  transform into leafy green structures ("Green Ear"), completely destroying grain formation.
+- Management:
+  * Seed treatment with Metalaxyl-M (Apron XL 35 FS) @ 2 ml/kg seed.
+  * Rogue out and destroy diseased plants before 30 DAS.
+  * Spray Metalaxyl-Mancozeb (Ridomil MZ 72 WP) @ 2 g/L if disease appears in nursery/early crop.
+
+3.4 ERGOT OF BAJRA (Claviceps fusiformis):
+- Symptoms: Pinkish/honey-like sticky fluid oozing from spikelets; converts into dark sclerotia bodies.
+  CAUTION: Ergot-infected grains contain toxic alkaloids; harmful to livestock and humans.
+- Management:
+  * Soak seed in 10% salt brine solution; skim off floating sclerotia and destroy.
+  * Spray Mancozeb 75 WP (2.5 g/L) at 50% flowering stage.
+
+3.5 RAGI BLAST (Pyricularia grisea) — Neck Blast & Finger Blast:
+- Most damaging disease of Finger Millet; causes finger breakage and chaffy ears.
+- Management:
+  * Grow blast-resistant varieties: GPU 28, GPU 48, ML 365.
+  * Seed treatment with Tricyclazole 75 WP @ 2 g/kg.
+  * Spray Tricyclazole 75 WP @ 0.6 g/L or Kitazin 48 EC @ 1 ml/L at earhead emergence.
+
+=======================================================================
+SECTION 4: POST-HARVEST VALUE ADDITION & MSP
+=======================================================================
+- Threshing & Dehulling: Moisture must be brought to 10–12% before storage to prevent grain mold.
+- Minor millets require abrasive de-hulling machines to remove indigestible outer silica husk.
+- Minimum Support Prices (MSP 2024-25):
+  * Jowar (Hybrid): ₹3,371 / quintal; Jowar (Maldandi): ₹3,421 / quintal.
+  * Bajra: ₹2,625 / quintal.
+  * Ragi: ₹4,290 / quintal (highest among coarse grains!).
+
+Contact: ICAR-IIMR, Rajendranagar, Hyderabad — Phone: 040-24599300 | millets.res.in
+Nutrihub Technology Business Incubator (IIMR) for startup incubation: nutrihubiimr.com
+=======================================================================

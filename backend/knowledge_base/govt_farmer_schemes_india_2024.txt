@@ -1,0 +1,228 @@
+GOVERNMENT OF INDIA — FARMER WELFARE SCHEMES AND SUBSIDIES 2024-25
+Source: Ministry of Agriculture and Farmers Welfare, Government of India
+Document Reference: MoAFW/Schemes/2024-25/IN-01
+
+This bulletin summarises all major central government schemes providing financial support, insurance,
+credit, and technology to Indian farmers. Knowing these schemes is the farmer's right.
+
+=======================================================================
+SECTION 1: INCOME SUPPORT AND DIRECT BENEFIT
+=======================================================================
+
+1.1 PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)
+AIM: Direct income support to land-owning farmers.
+
+BENEFIT: Rs 6,000 per year (3 equal instalments of Rs 2,000 every 4 months)
+ELIGIBILITY:
+- All land-owning farmer families (including small and marginal)
+- Updated land records required (Bhunaksha/Bhulekh)
+- Aadhaar-linked bank account required (mandatory)
+
+EXCLUSIONS:
+- Institutional land holders
+- Farmer families holding constitutional positions (MP, MLA, etc.)
+- Serving/retired government employees
+
+HOW TO APPLY:
+- Online: pmkisan.gov.in
+- Common Service Centre (CSC): Bring Aadhaar + bank passbook + land records
+- Status check: pmkisan.gov.in → "Beneficiary Status"
+
+STATE ADDITIONS: Many states add additional amounts (Tamil Nadu +Rs 2,000, Telangana +Rs 10,000 Rythu Bandhu)
+
+1.2 RYTHU BANDHU (TELANGANA):
+- Rs 10,000/acre/season (Kharif + Rabi = Rs 20,000/year per acre)
+- For all farmers in Telangana state
+- Direct bank transfer before each season
+
+1.3 KALIA SCHEME (ODISHA):
+- Rs 10,000/year for cultivator farmers
+- Rs 12,500 for landless agricultural labourers
+- Additional: Free crop insurance
+
+=======================================================================
+SECTION 2: CROP INSURANCE
+=======================================================================
+
+2.1 PRADHAN MANTRI FASAL BIMA YOJANA (PMFBY)
+India's main crop insurance scheme.
+
+COVERAGE:
+- Crop loss due to: Natural calamities (flood, drought, hail, cyclone)
+- Prevented sowing due to adverse weather
+- Post-harvest losses (for 14 days after harvest)
+- Localized calamities (landslide, flood, hailstorm for specific field)
+
+PREMIUM (Farmer's share):
+- Kharif crops: 2% of Sum Insured (maximum)
+- Rabi crops: 1.5% of Sum Insured
+- Commercial/Horticultural crops: 5% of Sum Insured
+- Government pays the rest
+
+EXAMPLE: Rice insured at Rs 50,000/ha
+- Farmer pays: 2% = Rs 1,000 (for Kharif)
+- Government pays remaining premium (Rs 5,000–8,000)
+- Farmer gets up to Rs 50,000 per ha if total crop loss
+
+HOW TO ENROLL:
+- Through CSC, bank branch, or insurance company
+- Deadline: 2 weeks before sowing (Kharif) or end of November (Rabi)
+- For loanee farmers: Auto-enrolled; can opt out if desired
+
+CLAIM PROCESS:
+- Crop loss >25%: Automatic assessment by government
+- Specific field loss (hail/flood): Farmer must notify within 72 hours
+  Call: Insurance company toll-free number (on policy document)
+  Photo/video of damage very helpful
+
+2.2 WEATHER BASED CROP INSURANCE:
+- Payment triggered by weather station data (not crop inspection)
+- Faster claim settlement (7–14 days vs months)
+- For: Fruit crops, vegetables in many states
+
+=======================================================================
+SECTION 3: CREDIT AND LOANS
+=======================================================================
+
+3.1 KISAN CREDIT CARD (KCC)
+BENEFIT: Short-term crop credit at 4% effective interest rate
+(Normal bank rate: 7% | Government gives 3% interest subvention)
+
+CREDIT LIMIT:
+- Based on crop area × district-level scale of finance
+- Typically Rs 50,000–5,00,000 for 5 acres
+
+FEATURES:
+- Revolving credit — withdraw as needed, repay after harvest
+- No collateral needed up to Rs 1.6 lakh (for crop loans)
+- Free personal accident insurance included (Rs 50,000)
+- Free crop insurance through KCC link
+
+ELIGIBILITY: Any farmer with land records or tenant farming proof
+WHERE TO APPLY: Nearest branch of any nationalized bank, cooperative bank, or PACS
+
+3.2 PRADHAN MANTRI MUDRA YOJANA (PMMY):
+- For agriculture-allied activities (animal husbandry, fisheries, poultry)
+- Loans up to Rs 10 lakh | No collateral up to Rs 10 lakh
+- Shishu: up to Rs 50,000 | Kishor: Rs 50,000–5 lakh | Tarun: Rs 5–10 lakh
+
+3.3 AGRI INFRASTRUCTURE FUND (AIF):
+- Loans up to Rs 2 crore for post-harvest infrastructure
+- 3% interest subvention
+- For: Cold storage, warehouses, sorting units, primary processing
+
+=======================================================================
+SECTION 4: IRRIGATION SUPPORT
+=======================================================================
+
+4.1 PM KRISHI SINCHAYEE YOJANA (PMKSY):
+"Har Khet Ko Pani, More Crop Per Drop"
+
+DRIP/SPRINKLER SUBSIDY (PDMC component):
+| Farmer Category | Subsidy %    |
+|----------------|-------------|
+| Small/Marginal | 55%         |
+| Other farmers  | 45%         |
+Maximum subsidy: Rs 2 lakh per ha (drip), Rs 1 lakh per ha (sprinkler)
+
+APPLICATION:
+- State-level portal (different in each state)
+- Documents: Land records, Aadhaar, bank account
+- Quotation from empanelled manufacturer required
+
+MICRO-IRRIGATION FUND (MIF):
+- State governments can access Rs 5,000 crore fund from NABARD
+- For farmer-level micro-irrigation subsidies
+
+=======================================================================
+SECTION 5: INPUT SUBSIDIES
+=======================================================================
+
+5.1 SOIL HEALTH CARD (SHC):
+- FREE soil testing every 2 years for all farmers
+- Card shows N, P, K, pH, organic carbon, 8 micronutrients
+- Specific fertilizer recommendation included
+- Apply at nearest Soil Testing Laboratory (Krishi Vigyan Kendra or District Agriculture Office)
+
+5.2 NEEM-COATED UREA:
+- All urea in India is now mandatorily neem-coated (since 2015)
+- Benefits: 10–15% more nitrogen efficiency | Reduces diversion to industry
+- Price: Same as regular urea (Rs 266.50/50 kg bag, heavily subsidised)
+- MRP fixed by government — cannot be sold above Rs 266.50
+
+5.3 PM-PRANAM (Programme for Restoration, Awareness, Nourishment):
+- Incentivizes states to reduce chemical fertilizer consumption
+- States that reduce fertilizer subsidy draw can use savings for farmer schemes
+
+5.4 NATIONAL FOOD SECURITY MISSION (NFSM):
+- Free/subsidised certified seeds for rice, wheat, pulses, oilseeds
+- Free bio-fertilizers, micronutrients under NFSM
+- Apply: Nearest Block Agriculture Office (before Kharif/Rabi season)
+
+=======================================================================
+SECTION 6: MARKETING AND PRICE SUPPORT
+=======================================================================
+
+6.1 MINIMUM SUPPORT PRICE (MSP) — 2024-25:
+| Crop            | MSP (Rs/quintal) |
+|----------------|-----------------|
+| Paddy (Common)  | 2,300           |
+| Wheat           | 2,275           |
+| Maize           | 2,090           |
+| Soybean         | 4,892           |
+| Groundnut       | 6,783           |
+| Cotton (Medium) | 7,121           |
+| Cotton (Long)   | 7,521           |
+| Tur (Pigeon Pea)| 7,000           |
+| Moong           | 8,682           |
+| Urad            | 7,400           |
+| Lentil (Masoor) | 6,425           |
+| Mustard         | 5,650           |
+| Sugarcane (FRP) | 340 (per qtl)   |
+
+HOW TO SELL AT MSP:
+- Register on eNAM (enam.gov.in) — online mandi platform
+- Bring produce to nearest APMC/Government Procurement Centre
+- Required documents: Aadhaar card, bank account, crop registration
+- PM Fasal Bima Yojana — always enroll to protect MSP recovery
+
+6.2 eNAM (Electronic National Agriculture Market):
+- Online trading platform linking 1,361 mandis across India
+- Farmer can sell from home state mandi to buyers across India
+- Better price discovery | Transparent bidding
+- Registration: enam.gov.in or at nearest mandi office
+
+6.3 PM-AASHA (Farmer income protection):
+- Price Deficiency Payment Scheme: Farmer gets difference between MSP and mandi price
+- State procurement when mandi price < MSP for notified crops
+
+=======================================================================
+SECTION 7: TECHNOLOGY AND EDUCATION SUPPORT
+=======================================================================
+
+7.1 KRISHI VIGYAN KENDRA (KVK):
+- 731 KVKs across India (1 per district target)
+- Services:
+  * Free soil testing
+  * Training on new varieties and techniques
+  * Demonstration plots
+  * Weather-based agro-advisory (weekly)
+  * Subsidised/free seed mini-kits of new varieties
+  * Rented farm machinery (tractors, seed drills, threshers)
+  * Goat, poultry, fishery guidance
+
+7.2 PM KISAN SAMMAN NIDHI HELPLINE: 155261
+   Ministry of Agriculture Helpline: 1800-180-1551 (toll-free)
+   Kisan Call Centre: 1800-180-1551 (6 AM – 10 PM)
+
+7.3 DIGITAL RESOURCES:
+- Kisan Suvidha App: Weather, market prices, pest alerts
+- mKisan: SMS advisory service (register mobile number)
+- IFFCO Kisan: Weather + market info app
+- India Agri: Crop-specific advisory
+- eNAM app: Real-time mandi prices
+
+=======================================================================
+Contact: Ministry of Agriculture & Farmers Welfare, Krishi Bhavan, New Delhi
+Website: agriculture.gov.in | Kisan Call Centre: 1800-180-1551 (Free)
+=======================================================================

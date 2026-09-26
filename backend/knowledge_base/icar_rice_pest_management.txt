@@ -1,0 +1,216 @@
+ICAR TECHNICAL BULLETIN — Rice Pest Management in Kerala
+Source: Indian Council of Agricultural Research (ICAR), Directorate of Rice Research
+Document Reference: ICAR-DRR/TB/2023/07 | Kerala Specific Pest Advisory
+
+=======================================================================
+SECTION 1: BROWN PLANTHOPPER (BPH) — Nilaparvata lugens
+=======================================================================
+
+Brown Planthopper (BPH) is the most destructive insect pest of rice in Kerala, causing "hopperburn" — complete death of plants in circular patches.
+
+IDENTIFICATION:
+- Small (3–4 mm), brown insects at the base of rice plants
+- Both macropterous (long-winged) and brachypterous (short-winged) forms
+- Nymphs are pale yellow-brown
+- "Hopperburn": circular patches of dead, dried plants resembling fire damage
+- Heavy honeydew secretion leads to sooty mould growth
+
+MONITORING:
+- Use yellow sticky traps (1 per 10 ha)
+- Sample base of 5 random hills per plot
+- Economic Threshold Level (ETL): 10 BPH/hill during vegetative stage; 20 BPH/hill during reproductive stage
+
+MANAGEMENT:
+1. Chemical Control (spray at base of plants):
+   - Buprofezin 25 SC: 1 ml/litre (IGR — insect growth regulator, safest)
+   - Thiamethoxam 25 WG: 0.5 g/litre (rotate to prevent resistance)
+   - Pymetrozine 50 WG: 0.3 g/litre
+   - Imidacloprid 17.8 SL: 0.5 ml/litre (use only 1–2 times per season)
+   - Chlorantraniliprole 18.5 SC: 0.4 ml/litre
+   - NEVER use organophosphates (Quinalphos, Profenophos) — resurgence risk
+
+2. Resistance Management:
+   - Rotate insecticides with different modes of action each application
+   - NEVER apply the same class of insecticide twice consecutively
+   - Avoid blanket spraying — spray only affected areas
+
+3. Cultural Control:
+   - Plant BPH-resistant varieties: Ptb-33, IR-64, Swarna, Jyothi
+   - Avoid excess nitrogen (promotes BPH population buildup)
+   - Use alternate wetting and drying (AWD) irrigation
+   - Maintain proper spacing to reduce humidity
+
+4. Biological Control:
+   - Preserve natural enemies: spiders, water bugs, Cyrtorhinus lividipennis
+   - Apply Beauveria bassiana 1.15 WP @ 2.5 kg/ha
+   - Avoid broad-spectrum insecticides that kill natural enemies
+
+IMPORTANT: Hopperburn is irreversible once it sets in. Prevention and early action are critical.
+
+=======================================================================
+SECTION 2: LEAF FOLDER (Cnaphalocrocis medinalis)
+=======================================================================
+
+Leaf folder causes significant yield reduction by destroying leaf area needed for photosynthesis.
+
+IDENTIFICATION:
+- Larvae fold single rice leaf lengthwise and feed from inside
+- White streaks (scraped leaf surface) running lengthwise on leaves
+- Multiple folded leaves visible across field
+- Adult moth: light brown with three black-bordered yellow stripes
+
+ETL: 1–2 rolled leaves/hill (vegetative) or 2–5% tillers with rolled leaves
+
+MANAGEMENT:
+1. Chemical Control:
+   - Chlorpyrifos 20 EC: 2.5 ml/litre
+   - Monocrotophos 36 WSC: 1.6 ml/litre (restricted use)
+   - Lambda-cyhalothrin 5 EC: 0.5 ml/litre
+   - Cartap hydrochloride 50 SP: 1 g/litre
+
+2. Cultural Control:
+   - Clip and destroy leaf tips of seedlings before transplanting
+   - Avoid excessive nitrogen
+   - Light traps attract adults (1 trap/2 ha)
+
+=======================================================================
+SECTION 3: STEM BORER (Scirpophaga incertulas — Yellow Stem Borer)
+=======================================================================
+
+Yellow Stem Borer causes "dead heart" in vegetative stage and "white ear" in reproductive stage.
+
+IDENTIFICATION:
+- Dead Heart: Central shoot dries and turns pale yellow; can be pulled out easily
+- White Ear: Panicle fails to fill; grains become white/chalky
+- Entry holes visible on stems; frass (excrement) inside stem
+
+ETL: 5% dead hearts (vegetative); 1% white ears (reproductive)
+
+MANAGEMENT:
+1. Chemical Control:
+   - Fipronil 0.3 GR: Apply @ 33 kg/ha to standing water
+   - Cartap hydrochloride 4 G: 18.75 kg/ha granule application
+   - Chlorantraniliprole 0.4 GR: 10 kg/ha
+
+2. Pheromone Traps:
+   - Set up 5 pheromone traps per hectare for monitoring
+   - Replace lures every 3–4 weeks
+
+3. Cultural Control:
+   - Timely transplanting (avoid peak moth periods)
+   - Clip seedling tips to remove egg masses before transplanting
+   - Maintain continuous standing water (reduces pupation)
+
+=======================================================================
+SECTION 4: GALL MIDGE (Orseolia oryzae)
+=======================================================================
+
+Gall midge is a sporadic but devastating pest in Kerala's Kuttanad and Palakkad regions.
+
+IDENTIFICATION:
+- Infested tillers form hollow, silver-coloured tubes ("silver shoots")
+- Silver shoots are tubular, silvery, and 20–50 cm long
+- The central shoot of the tiller is destroyed
+- Rice plants tiller excessively to compensate
+
+ETL: 5% silver shoots
+
+MANAGEMENT:
+1. Chemical Control:
+   - Carbofuran 3 G: Apply 33 kg/ha in standing water (2–3 cm) at active infestation
+   - Fipronil 5 SC: 1.5 ml/litre foliar spray
+   - Chlorpyrifos 20 EC: 2.5 ml/litre
+
+2. Cultural Control:
+   - Early transplanting (mid-June for Virippu)
+   - Use tolerant varieties: Vikas, Seeraga Samba, Ptb-33
+   - Drain fields for 3–4 days to reduce larval survival
+
+=======================================================================
+SECTION 5: WHORL MAGGOT (Hydrellia philippina)
+=======================================================================
+
+Affects young seedlings and early transplanted rice.
+
+IDENTIFICATION:
+- Yellowing of young leaves (central leaf first)
+- Narrow, elongated feeding marks on leaves
+- Maggots (white, legless, 3 mm) visible inside leaf whorl
+
+MANAGEMENT:
+- Cultural: Raise nursery on slightly elevated seedbeds
+- Chemical: Malathion 50 EC 0.05% spray on nursery
+
+=======================================================================
+SECTION 6: RICE HISPA (Dicladispa armigera)
+=======================================================================
+
+IDENTIFICATION:
+- Black, spiny adult beetles scrape upper surface of leaves
+- White linear marks on leaves parallel to midrib
+- Larvae mine inside leaves creating tubular mines
+
+MANAGEMENT:
+- Clip and destroy infested leaves
+- Quinalphos 25 EC: 2 ml/litre (when infestation is severe)
+- Neem oil 3%: 3 ml/litre
+
+=======================================================================
+SECTION 7: INTEGRATED PEST MANAGEMENT (IPM) CALENDAR
+=======================================================================
+
+PRE-PLANTING:
+- Dry cultivation to expose soil pests to sun
+- Incorporate previous crop stubble deeply
+
+NURSERY STAGE:
+- Seed treatment: Chlorpyrifos 20 EC (2.5 ml/litre) for 10 minutes, then dry
+- Remove egg masses from seedling leaves
+
+TRANSPLANTING (0–15 DAT):
+- Apply Carbofuran 3G for soil pests and gall midge prevention
+- Set up pheromone traps for stem borer monitoring
+
+TILLERING (15–45 DAT):
+- Scout for BPH weekly (check plant base)
+- Monitor for leaf folder symptoms
+- Apply insecticide only when ETL is reached
+
+PANICLE INITIATION (45–60 DAT):
+- Scout for white ears (stem borer)
+- Check for BPH resurgence
+
+GRAIN FILLING (60–90 DAT):
+- Minimize pesticide use (consumer safety)
+- Biological control preferred
+- Watch for false smut and store grain mites
+
+=======================================================================
+PESTICIDE SAFETY GUIDELINES
+=======================================================================
+
+- Always wear protective equipment (gloves, mask, goggles) during spraying
+- Do not spray during windy conditions or when bees are active
+- Observe Pre-Harvest Interval (PHI): stop all spraying 2 weeks before harvest
+- Store pesticides in original containers away from food, water, and children
+- Dispose of empty containers safely — do not burn or bury near water sources
+- For poisoning emergencies: call 1800-180-1551 (Pesticide Helpline)
+
+=======================================================================
+APPROVED PESTICIDE LIST FOR RICE IN KERALA (as of 2024)
+Managed by: Kerala State Farmers' Welfare Fund Board
+=======================================================================
+
+| Pest          | Chemical         | Dose        | PHI (days) |
+|---------------|-----------------|-------------|-----------|
+| BPH           | Buprofezin 25SC  | 1 ml/litre  | 14        |
+| BPH           | Thiamethoxam 25WG| 0.5 g/litre | 14        |
+| Leaf folder   | Chlorpyrifos 20EC| 2.5 ml/litre| 21        |
+| Stem borer    | Fipronil 0.3 GR  | 33 kg/ha    | 21        |
+| Blast         | Tricyclazole 75WP| 0.6 g/litre | 30        |
+| Sheath blight | Hexaconazole 5EC | 2 ml/litre  | 14        |
+
+=======================================================================
+Contact: Kerala Agriculture University, Thrissur — Phone: 0487-2371918
+ICAR-NRRI Pest Bulletin: www.nrri.nic.in/pest-advisory
+=======================================================================

@@ -1,0 +1,220 @@
+ICAR TECHNICAL BULLETIN — Soybean Cultivation Guide for Madhya Pradesh, Maharashtra, and Rajasthan
+Source: ICAR-Indian Institute of Soybean Research (IISR), Indore, Madhya Pradesh
+Document Reference: ICAR-IISR/Tech/2024/MP-MH-RJ-01
+
+India is the world's 5th largest soybean producer. Madhya Pradesh alone contributes 55% of India's soybean
+production. Maharashtra contributes 25%. Soybean has transformed the economy of central India farmers.
+It is both a cash crop and a nitrogen fixer (fixes 40–80 kg N/ha), reducing next-crop fertilizer need.
+
+=======================================================================
+SECTION 1: RECOMMENDED VARIETIES
+=======================================================================
+
+MADHYA PRADESH (Main Zone):
+1. JS 335 (Most Widely Grown):
+   - Duration: 95–100 days | Yield: 20–25 q/ha
+   - Upright plant, non-shattering, good for combine harvest
+   - Purple flower | Yellow seed with yellow hilum
+   
+2. NRC 37 (Ahilya 3):
+   - Duration: 95–100 days | Yield: 22–28 q/ha
+   - Yellow mosaic resistant | Best for MP
+   
+3. JS 9305:
+   - Duration: 90–95 days | Yield: 20–24 q/ha
+   - Early maturing (good for late planting or double cropping)
+   - Yellow Mosaic Virus resistant (important for MP)
+   
+4. RVS 2001-4:
+   - High oil content (21.5%)
+   - Suitable for black soils
+
+MAHARASHTRA:
+1. MAUS 71: Yield 18–22 q/ha
+2. MAUS 162 (Phule Kalyani): Drought tolerant, Vidarbha
+3. JS 335: Also grown in Maharashtra
+
+RAJASTHAN:
+1. NRC 7: Short duration (90 days)
+2. JS 335: Most common
+
+=======================================================================
+SECTION 2: SOWING SEASON AND PREPARATION
+=======================================================================
+
+SOWING DATES:
+- Optimal: 20 June – 10 July (onset of Kharif monsoon)
+- Late sowing (after July 20): Yield reduction of 40–50 kg/ha per day
+- Cannot sow before adequate soil moisture (first monsoon rain)
+
+SEED RATE: 75 kg/ha (large seed) or 65 kg/ha (small seed)
+
+SPACING:
+- Between rows: 45 cm (for mechanized sowing) or 30 cm (for maximum yield)
+- Between plants: 5–7 cm
+
+SEED TREATMENT (Critical for nitrogen fixation):
+1. Rhizobium japonicum inoculant: 200 g/10 kg seed
+   - Mix with 250 ml 10% jaggery solution as sticker
+   - Dry in shade for 30 minutes before sowing
+   - NEVER mix with chemical seed treatment — kills Rhizobium
+   
+2. Phosphate Solubilising Bacteria (PSB): 200 g/10 kg seed
+   
+3. Chemical fungicide (apply separately, 2 days before Rhizobium):
+   - Thiram 75 WS: 2 g/kg seed (seed-borne disease prevention)
+   - Carbendazim 50 WP: 2 g/kg seed
+
+FIELD PREPARATION:
+- One deep ploughing + two disc harrowings
+- Apply FYM 5 t/ha as basal
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+Soybean is a legume — it fixes its own nitrogen via Rhizobium bacteria.
+Chemical N requirement is very low if Rhizobium inoculation is done properly.
+
+RECOMMENDED DOSE:
+| Nutrient | Amount      | Notes                              |
+|---------|-------------|-----------------------------------|
+| N       | 20 kg/ha    | Starter dose only (basal)         |
+| P₂O₅   | 60–80 kg/ha | Basal — most important nutrient   |
+| K₂O    | 40 kg/ha    | Basal                             |
+| S       | 20 kg/ha    | As gypsum — basal                 |
+| Zn      | 5 kg/ha     | ZnSO₄, if Zn deficiency           |
+| Mo      | 1 g/kg seed | As ammonium molybdate — seed treatment |
+
+MOLYBDENUM APPLICATION:
+- Mo is essential for Rhizobium nodulation
+- Seed treatment with 1 g Mo/kg seed increases yield by 10–15%
+- Apply as sodium molybdate or ammonium molybdate solution
+
+FOLIAR NUTRITION:
+- DAP 2% spray at pod-fill stage: Increases seed size and oil content
+- Boron 0.2% at flowering: Improves pod retention
+- 2% K₂SO₄ spray at grain filling: Improves seed quality
+
+=======================================================================
+SECTION 4: MAJOR DISEASES OF SOYBEAN
+=======================================================================
+
+4.1 YELLOW MOSAIC VIRUS (YMV) — Most Serious
+IDENTIFICATION:
+- Bright yellow patches on leaves (mosaic pattern)
+- Young leaves turn completely yellow in severe cases
+- Stunted plant, very few pods
+- Spread by whitefly (Bemisia tabaci)
+
+MANAGEMENT:
+- Grow YMV-resistant varieties: JS 9305, NRC 37, MAUS 71
+- Control whitefly vector:
+  - Dimethoate 30 EC: 1 litre/ha
+  - Imidacloprid 17.8 SL: 500 ml/ha
+- Remove and destroy infected plants in early stages
+- No chemical treatment after infection — only prevention
+
+4.2 STEM FLY (Melanagromyza sojae) — Major Pest and Disease
+IDENTIFICATION:
+- Maggots mine inside the stem (pith shows black discolouration)
+- Plants wilt and die at seedling stage
+- Dead plants pull out easily (roots intact)
+
+MANAGEMENT:
+- Carbofuran 3G: 30 kg/ha in furrows at sowing
+- Triazophos 40 EC: 1 litre/acre spray at 15 and 25 DAS
+- Imidacloprid seed treatment (reduces early damage)
+
+4.3 BACTERIAL PUSTULE (Xanthomonas axonopodis)
+IDENTIFICATION:
+- Small, raised, yellow-brown pustules on leaf underside
+- Yellowing and premature defoliation
+- Worse after heavy rains followed by sunshine
+
+MANAGEMENT:
+- Copper oxychloride 0.3% spray
+- Streptocycline + Copper oxychloride combination spray
+
+4.4 CHARCOAL ROT (Macrophomina phaseolina)
+IDENTIFICATION:
+- Mid-season wilting (looks like drought stress)
+- Stem base turns charcoal grey (fine black sclerotia visible in tissue)
+- More common in dry years and sandy soils
+
+MANAGEMENT:
+- Crop rotation (avoid soybean-soybean)
+- Soil application of T. viride at sowing
+- Deep ploughing to bury sclerotia
+
+4.5 FROGEYE LEAF SPOT (Cercospora sojina)
+- Circular spots with grey centre, brown border
+MANAGEMENT:
+- Thiophanate methyl 70 WP: 0.1% spray
+
+=======================================================================
+SECTION 5: MAJOR PESTS
+=======================================================================
+
+5.1 GIRDLE BEETLE (Oberea brevis)
+IDENTIFICATION:
+- Beetle girdles (cuts a ring around) the stem at two points
+- Upper part of plant wilts and breaks off
+- Grub found inside the girdled portion
+
+MANAGEMENT:
+- Monocrotophos 36 SL: 750 ml/ha spray at early stage
+- Pick and destroy beetles manually
+
+5.2 SPODOPTERA LITURA (Tobacco Caterpillar)
+IDENTIFICATION:
+- Group feeding on leaves (skeletonization)
+- Large brown caterpillars visible on leaves
+
+MANAGEMENT:
+- NPV spray (SNPV): 500 LE/ha — highly effective
+- Chlorpyrifos 20 EC: 1 litre/acre
+- Check for egg masses in field — crush early
+
+5.3 LEAF FOLDER (Lamprosema indicate)
+IDENTIFICATION:
+- Leaves folded and webbed together
+- Caterpillar feeds inside folded leaf
+
+MANAGEMENT:
+- Endosulfan 35 EC: 1.5 litres/ha (if permitted in state)
+- Chlorpyrifos 20 EC: 1 litre/acre
+
+=======================================================================
+SECTION 6: HARVEST AND POST-HARVEST
+=======================================================================
+
+HARVEST INDICATORS:
+- 90% pods have turned brown
+- Moisture content 18–20%
+- Seed moisture 14% (ideal for storage)
+
+THRESHING:
+- Combine harvester (most efficient)
+- Cylinder speed: 600–700 RPM (higher speed = more seed damage)
+- Sieve opening: 10–12 mm
+
+POST-HARVEST PROCESSING:
+- Dry to 12% moisture (sun-drying 2–3 days)
+- Clean seed — remove damaged, shrivelled seeds
+- Store in moisture-proof bags
+
+MARKET PRICES (2024-25):
+- MSP: ₹4,892/quintal
+- Typical market price: ₹4,500–5,500/quintal depending on quality
+- Oil content >18% gets premium price
+
+VALUE ADDITION:
+- Soy milk, tofu — village-level processing
+- Soy flour — profitable small-scale enterprise
+- Soybean oil extraction (large scale)
+
+=======================================================================
+Contact: ICAR-IISR, Indore — Phone: 0731-2479482 | www.soybean.icar.gov.in
+Jawaharlal Nehru Krishi Vishwa Vidyalaya (JNKVV), Jabalpur — www.jnkvv.org
+=======================================================================

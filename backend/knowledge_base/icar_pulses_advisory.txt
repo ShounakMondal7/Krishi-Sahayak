@@ -1,0 +1,236 @@
+ICAR TECHNICAL BULLETIN — Pulses (Dal) Cultivation Advisory for India
+Source: ICAR-Indian Institute of Pulses Research (IIPR), Kanpur, Uttar Pradesh
+Document Reference: ICAR-IIPR/Tech/2024/IN-01
+
+India is the world's largest producer AND consumer of pulses (dal). The major pulses grown in India are:
+- Chickpea (Gram / Chana) — 40% of total pulse area
+- Pigeon Pea (Tur / Arhar) — 25%
+- Lentil (Masoor) — 10%
+- Black Gram (Urad) — 10%
+- Green Gram (Moong) — 10%
+
+India faces a chronic pulse deficit and imports 2–3 million tonnes annually.
+Improving pulse productivity is a national priority under the National Food Security Mission.
+
+=======================================================================
+SECTION 1: CHICKPEA (GRAM / CHANA) — Cicer arietinum
+=======================================================================
+
+1.1 RECOMMENDED VARIETIES
+
+DESI CHICKPEA (small brown seed — most grown):
+1. JG 11 (Madhya Pradesh):
+   - Duration: 90–95 days | Yield: 25–30 q/ha
+   - Fusarium wilt and dry root rot resistant
+   - Suitable for vertisols (black soils)
+
+2. Pusa 372 (IARI, Delhi):
+   - Yield: 20–25 q/ha | Duration: 100 days
+   - Suitable for North India (UP, Bihar, MP)
+
+3. Vijay (K 850): Wilt-resistant | UP, Bihar
+
+4. GNG 1958 (Rajasthan): Drought tolerant
+
+KABULI CHICKPEA (large white seed — premium market):
+1. Pusa 1003: Yield 25–30 q/ha | White seed, bold
+2. PKV Kabuli-2 (Maharashtra): High yielding
+
+1.2 SOWING AND AGRONOMY
+- Season: Rabi (October–November)
+- Optimal sowing: 25 Oct – 25 Nov
+- Spacing: 30 cm × 10 cm
+- Seed rate: 75–80 kg/ha (Desi) | 100 kg/ha (Kabuli)
+- Rhizobium inoculation: Strain Mesorhizobium ciceri — 200 g/10 kg seed
+
+1.3 FERTILIZER:
+- N: 20 kg/ha (starter dose — basal)
+- P₂O₅: 40–60 kg/ha (basal)
+- K₂O: 30 kg/ha (basal)
+- S: 20 kg/ha (as gypsum)
+
+1.4 CHICKPEA DISEASES
+
+FUSARIUM WILT (Fusarium oxysporum f. sp. ciceris):
+- Yellowing and wilting of plant (looks like drought)
+- Reddish-brown vascular discolouration inside root/stem
+MANAGEMENT:
+- Use resistant varieties: JG 11, ICC 4814, WR 315
+- Trichoderma viride seed treatment 4 g/kg seed
+- Crop rotation (avoid chickpea-chickpea)
+
+ASCOCHYTA BLIGHT (Ascochyta rabiei):
+- Dark water-soaked lesions on leaves, stems, pods
+- Entire plant blackens in epidemic (late February–March rains)
+MANAGEMENT:
+- Mancozeb 75 WP: 2 g/litre spray at first appearance
+- Tebuconazole 25.9 EC: 1 ml/litre (curative)
+- Chlorothalonil 75 WP: 2 g/litre
+
+BOTRYTIS GREY MOULD:
+- Grey mould on stem and pods in humid conditions
+MANAGEMENT: Carbendazim 0.1% spray
+
+1.5 CHICKPEA PESTS
+
+POD BORER (Helicoverpa armigera):
+- MOST IMPORTANT PEST of chickpea — can cause 50–80% yield loss
+- ETL: 1 larva per plant
+MANAGEMENT:
+- Pheromone traps: 5 traps/ha (Helilure)
+- Chickpea is a unique host — NPV (HaNPV) is highly effective
+  Apply HaNPV: 500 LE/ha spray in evening
+- Emamectin benzoate 5 SG: 200 g/acre
+- Chlorantraniliprole 18.5 SC: 150 ml/acre
+- Indoxacarb 15.8 EC: 333 ml/acre
+
+APHIDS (Aphis craccivora):
+- Black aphids on growing tips
+MANAGEMENT: Imidacloprid 17.8 SL 300 ml/ha
+
+=======================================================================
+SECTION 2: PIGEON PEA (TUR / ARHAR) — Cajanus cajan
+=======================================================================
+
+2.1 RECOMMENDED VARIETIES
+
+SHORT DURATION (110–130 days):
+1. UPAS 120: Most popular in UP, Bihar
+   - Yield: 12–15 q/ha | Kharif crop
+2. ICPL 88039: Dwarf, early maturing
+3. Prabhat (IARI): Short duration, suitable for intercropping
+
+MEDIUM DURATION (150–180 days):
+1. Narendra Arhar 1: UP/Bihar | Yield 15–20 q/ha
+2. BSMR 736 (Maharashtra): Fusarium wilt resistant
+
+LONG DURATION (180–240 days):
+1. C 11 (Tur): Classic variety, Karnataka
+2. PRG 100 (Maharashtra/AP): High yielding
+
+2.2 SOWING
+- Kharif sowing: June 15 – July 15
+- Spacing: 60–75 cm between rows × 20–25 cm
+- Seed rate: 15–20 kg/ha | Rhizobium inoculant applied
+
+2.3 FERTILIZER:
+- N: 25 kg/ha (basal only)
+- P₂O₅: 50 kg/ha
+- K₂O: 20–25 kg/ha
+- Rhizobium (Bradyrhizobium species): 200 g/10 kg seed
+
+2.4 PIGEON PEA DISEASES
+
+FUSARIUM WILT (Fusarium udum):
+- Most serious disease | Up to 90% mortality in endemic areas
+- Yellowing from lower leaves | Brown ring in stem vascular tissue
+MANAGEMENT:
+- Grow resistant varieties: BSMR 736, ICPL 87119 (Asha)
+- Trichoderma seed treatment
+- Crop rotation (minimum 3-year break from pigeon pea)
+
+STERILITY MOSAIC (caused by mite-vectored virus):
+- All leaves become small, green, sterile (no pods)
+- Spread by eriophyid mite (Aceria cajani)
+MANAGEMENT:
+- Dicofol 18.5 EC: 2 ml/litre spray
+- Grow resistant varieties: Asha (ICPL 87119)
+
+2.5 PIGEON PEA PESTS
+
+POD FLY (Melanagromyza obtusa):
+- Maggot inside the pod, feeding on seed
+- Pinholes on pods; seeds become shrivelled
+MANAGEMENT:
+- Monocrotophos 36 SL: 1 litre/ha at 50% flowering + 15 days later
+
+POD BORER (Helicoverpa + Maruca testulalis):
+- Same management as chickpea pod borer
+
+=======================================================================
+SECTION 3: GREEN GRAM (MOONG) — Vigna radiata
+=======================================================================
+
+3.1 VARIETIES
+1. Pusa Vishal (IPM 02-3): Short duration 65 days | Yield 15–18 q/ha
+2. Samrat (PDM 54): Most popular | Yield 12–15 q/ha
+3. Pusa Ratna: MYMV (Yellow Mosaic Virus) resistant
+4. SML 668 (Punjab): Short duration, good for spring/summer
+
+3.2 SOWING
+- Kharif: June–July | Spring/Summer: Feb–March
+- Spacing: 30 cm × 10 cm | Seed rate: 20–25 kg/ha
+
+3.3 DISEASES
+YELLOW MOSAIC VIRUS (MYMV):
+- Bright yellow patches on leaves (mosaic pattern)
+- Spread by whitefly
+MANAGEMENT:
+- Grow MYMV-resistant varieties: Pusa Ratna, ML 1299
+- Imidacloprid seed treatment
+- Whitefly control: Imidacloprid 17.8 SL + Dimethoate 30 EC
+
+3.4 PESTS — same as black gram (see below)
+
+=======================================================================
+SECTION 4: BLACK GRAM (URAD) — Vigna mungo
+=======================================================================
+
+4.1 VARIETIES
+1. KU 301: Short duration (70 days) | Yield 15–18 q/ha
+2. Pant U 30: Kharif variety | Good quality
+3. WBU 108 (West Bengal): Suitable for eastern India
+
+4.2 LEAF CURL VIRUS:
+- Leaves curl upward, appear thick and leathery
+- Spread by thrips
+MANAGEMENT:
+- Imidacloprid seed treatment
+- Spinosad 45 SC: 75 ml/acre for thrips control
+
+=======================================================================
+SECTION 5: LENTIL (MASOOR) — Lens culinaris
+=======================================================================
+
+5.1 VARIETIES
+1. Pant L 639: Yield 20–25 q/ha | Short duration (120 days)
+2. Sabouri (K 75): Long duration | UP, Bihar
+3. LL 699 (Punjab): Rust resistant
+
+5.2 RUST (Uromyces viciae-fabae):
+- Orange pustules on stem and leaves
+MANAGEMENT:
+- Mancozeb 75 WP 2 g/litre spray
+- Grow rust-resistant varieties: LL 699
+
+=======================================================================
+SECTION 6: PULSE IMPROVEMENT TIPS
+=======================================================================
+
+COMMON MISTAKES:
+1. Not using Rhizobium inoculant — losing 40–60 kg/ha free nitrogen
+2. Excess nitrogen → vegetative growth, poor pod set
+3. Skipping fungicide seed treatment → 20% yield loss from soil diseases
+4. Late sowing → 30–50% yield reduction
+
+INTERCROPPING (improves income):
+- Pigeon pea + Sorghum/Maize: 2:1 ratio (highly beneficial)
+- Chickpea + Mustard: 6:2 row ratio
+- Groundnut + Pigeon pea: 4:2 ratio
+
+NATIONAL PULSE MISSION SUPPORT:
+- Subsidy on certified seeds: 50% of cost (up to Rs 1,200/ha)
+- Free distribution of micronutrients: State government schemes
+- Contact: Nearest District Agriculture Office for Pulse Mission support
+
+MSP 2024-25:
+- Chickpea: ₹5,440/quintal
+- Pigeon Pea (Tur): ₹7,000/quintal
+- Moong: ₹8,682/quintal
+- Urad: ₹7,400/quintal
+- Lentil: ₹6,425/quintal
+
+=======================================================================
+Contact: ICAR-IIPR, Kanpur — Phone: 0512-2580716 | www.iipr.icar.gov.in
+National Food Security Mission (Pulses): nfsm.gov.in
+=======================================================================

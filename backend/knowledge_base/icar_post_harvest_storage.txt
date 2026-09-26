@@ -1,0 +1,139 @@
+ICAR TECHNICAL BULLETIN — Post-Harvest Loss Prevention, Cold Chain & Safe Storage
+Source: Indian Council of Agricultural Research (ICAR) - Central Institute of Post-Harvest Engineering & Technology (CIPHET), Ludhiana
+Document Reference: ICAR-CIPHET/TB/2024/08 | Pan-India Post-Harvest & Storage Protocol
+
+=======================================================================
+SECTION 1: POST-HARVEST LOSS AUDITING & NATIONAL BENCHMARKS
+=======================================================================
+
+Post-harvest losses represent the quantitative and qualitative degradation of agricultural produce between harvest maturity and retail consumption. 
+
+1. NATIONAL HARVEST & POST-HARVEST LOSS ESTIMATES (CIPHET STUDY):
+-------------------------------------------------------------------------
+Commodity Group        Cumulative Loss Range (%)   Primary Loss Hotspots
+-------------------------------------------------------------------------
+Cereals (Paddy, Wheat)  4.6% – 6.0%                 Threshing, farm storage, transport
+Pulses (Gram, Tur)      6.3% – 8.4%                 Storage (bruquid beetle damage)
+Oilseeds (Mustard, Soy) 5.3% – 9.9%                 Drying, high-moisture rancidity
+Fruits (Mango, Banana)  6.7% – 15.8%                Rough handling, cold chain gaps, rot
+Vegetables (Tomato, Okra) 7.3% – 12.4%              Bruising, desiccation, lack of pre-cooling
+Tuber Crops (Potato, Onion) 7.5% – 15.0%            Sprouting, fungal rots, poor ventilation
+-------------------------------------------------------------------------
+
+2. PRIMARY MECHANISMS OF POST-HARVEST SPOILAGE:
+- Mechanical Damage: Cuts, punctures, compression bruising during harvest and rough road transport. Bruised tissue releases ethylene and wound hormones, accelerating senescence and fungal entry.
+- Physiological Weight Loss (PWL): Transpiration of moisture from product surface into dry ambient air, causing shriveling, loss of gloss, and economic weight loss.
+- High Respiration Rates: Rapid breakdown of stored starches, organic acids, and sugars with excessive heat and moisture generation inside closed packages.
+- Fungal & Bacterial Decay: Post-harvest rots (Anthracnose, Rhizopus soft rot, Penicillium blue/green mold, Aspergillus black mold, Bacterial soft rot).
+
+=======================================================================
+SECTION 2: GRAIN, PULSE & OILSEED STORAGE MANAGEMENT
+=======================================================================
+
+1. SAFE STORAGE MOISTURE THRESHOLDS (THE GOLDEN RULE OF GRAIN STORAGE):
+- Paddy (Rough Rice): 13.0% to 14.0%
+- Milled Rice: 12.0% to 13.0%
+- Wheat: 11.5% to 12.0%
+- Maize (Corn): 12.5% to 13.0%
+- Pulses (Chickpea, Pigeonpea, Green Gram): 9.0% to 10.0%
+- Oilseeds (Mustard, Soybean, Groundnut pods): 7.0% to 8.0%
+* CRITICAL METRIC: Storing oilseeds at moisture > 9.0% triggers rapid enzymatic lipolysis, hydrolytic rancidity, free fatty acid (FFA) surge, and self-heating.
+
+2. FARM-LEVEL GRAIN STORAGE STRUCTURES:
+- Galvanized Iron (GI) Metal Bins: Rodent-proof, moisture-proof, fire-proof; fitted with airtight loading lid and bottom off-loading chute. Keep on raised platform (30 cm above floor) away from walls.
+- Pusa Bin (ICAR-IARI Design): Traditional mud/brick structure incorporating an inner sandwich envelope of 700-gauge polyethylene film. Provides airtight, moisture-impermeable hermetic seal.
+- Hermetic Storage Bags (SuperGrainbags / PICS Bags - Purdue Improved Crop Storage):
+  * Structure: Multi-layer polyethylene hermetic liners enclosed within high-density woven polypropylene outer bag.
+  * Mechanism: Grain respiration naturally consumes oxygen and produces carbon dioxide within 10–15 days, reducing O2 to < 3% and raising CO2 to > 15%.
+  * Result: All life stages of insects (eggs, larvae, pupae, adults) suffocate and die without requiring any chemical pesticides or toxic fumigants.
+
+3. PRIMARY STORAGE INSECT PESTS & CONTROL:
+- Primary Pests (Bore into sound, undamaged grains):
+  * Rice Weevil (Sitophilus oryzae): Characteristic snout; adult bores circular exit holes in grains.
+  * Lesser Grain Borer (Rhyzopertha dominica): Head concealed under prothorax; produces copious floury frass.
+  * Pulse Beetle (Callosobruchus chinensis / maculatus): White oval eggs glued directly onto pulse seed coats; grubs bore inside, emerging as adults leaving neat circular exit holes.
+- Secondary Pests (Feed on damaged grains, dust, and milled flour):
+  * Red Flour Beetle (Tribolium castaneum): Reddish-brown flat beetle in processed flours and broken grains.
+  * Saw-toothed Grain Beetle (Oryzaephilus surinamensis): Slender beetle with 6 tooth-like projections on thorax.
+
+4. WAREHOUSE PROPHYLAXIS & CHEMICAL FUMIGATION:
+- Preventive Surface Spray: Clean warehouse thoroughly; spray walls, ceiling, and floor with Malathion 50 EC @ 1:100 dilution (3 L solution per 100 m² surface) or Deltamethrin 2.5 WP @ 40 g/L before loading new grain stocks.
+- Chemical Fumigation (Aluminium Phosphide - ALP):
+  * Mandatory under gas-tight multi-layer PVC / rubberized tarpaulins (covers weighed down with sand snakes at floor edges).
+  * Dosage: 3 tablets (3 grams each) of Aluminium Phosphide per metric tonne of grain (or 21 tablets per 1,000 cubic feet warehouse volume).
+  * Exposure Period: Minimum 7 days under air-tight seal (allows complete release of toxic Phosphine gas, PH3).
+  * Safety Mandate: Minimum ambient temperature > 15°C for tablet decomposition. Certified operators must wear full-face gas mask with phosphine canister. Aerate for 24 hours before re-entry.
+
+=======================================================================
+SECTION 3: HORTICULTURAL COLD CHAIN & PRE-COOLING ENGINEERING
+=======================================================================
+
+1. PRE-COOLING METHODS (RAPID REMOVAL OF FIELD HEAT):
+- Significance: Every 1 hour delay in removing field heat from harvested vegetables reduces market shelf-life by 1 full day!
+- Forced-Air Cooling: Rapid pulling of chilled air (1°C–5°C) across perforated cartons inside a cooling tunnel. Essential for grapes, strawberries, capsicum, cut flowers, mango.
+- Hydro-Cooling: Chilled water (0.5°C–2°C) showered over produce or immersed in tanks. Cooling rate is 4–5 times faster than air. Ideal for carrots, radishes, sweet corn, celery, leafy greens.
+- Room Cooling: Slow cooling inside cold storage room. Suitable for low-respiration commodities (potato, apple, citrus, cabbage).
+- Pusa Zero Energy Cool Chamber (ZECC):
+  * Low-cost on-farm evaporative cool storage for marginal farmers requiring no electricity.
+  * Double-walled brick structure (100 cm height x 165 cm length x 115 cm width) with 7.5 cm cavity filled with river sand. Sand is kept constantly saturated with water.
+  * Performance: Lowers chamber temperature by 10°C to 15°C below ambient peak summer temperature and maintains 90%–95% Relative Humidity. Extends shelf-life of vegetables by 7–14 days.
+
+2. COLD STORAGE MATRIX (TEMPERATURE & HUMIDITY PROTOCOLS):
+-------------------------------------------------------------------------------------
+Crop Commodity          Optimal Temp (°C)   Optimal RH (%)   Expected Storage Life
+-------------------------------------------------------------------------------------
+Potato (Table Ware)      8°C – 10°C          90% – 95%        5 to 6 months
+Potato (Processing/Chips)10°C – 12°C         90% – 95%        4 to 5 months
+Potato (Seed Tubers)     2°C – 4°C           90% – 95%        7 to 8 months
+Tomato (Mature Green)    12°C – 15°C         90% – 95%        3 to 4 weeks
+Tomato (Firm Red Ripe)   8°C – 10°C          90% – 92%        1 to 2 weeks
+Mango (Mature Green)     12°C – 13°C         85% – 90%        2 to 3 weeks
+Banana (Green Unripe)    13°C – 14°C         90% – 95%        3 to 4 weeks
+Apple (Delicious/Gala)   -1°C to 0°C         90% – 95%        4 to 8 months
+Table Grapes             -1°C to 0°C         95%              2 to 4 months
+Citrus (Orange/Kinnow)   4°C – 6°C           85% – 90%        8 to 12 weeks
+Capsicum / Bell Pepper   7°C – 8°C           90% – 95%        3 to 4 weeks
+Okra (Ladies Finger)     8°C – 10°C          90% – 95%        7 to 10 days
+-------------------------------------------------------------------------------------
+
+3. CHILLING INJURY WARNING THRESHOLDS:
+- Never store tropical/subtropical fruits below their critical chilling thresholds:
+  * Banana: Severely injured below 11°C (peel turns dull grey, fail to ripen, flavor loss).
+  * Mango: Injured below 10°C (skin pitting, brown discoloration, uneven ripening).
+  * Tomato: Injured below 7°C (water-soaked lesions, failure to synthesize lycopene red pigment, susceptibility to Alternaria rot).
+  * Processing Potato: Storing below 8°C triggers "Cold-Induced Sweetening" (conversion of starch into reducing sugars like glucose and fructose, causing black/brown burnt discoloration during frying into chips).
+
+=======================================================================
+SECTION 4: COMMERCIAL RIPENING PROTOCOLS & ETHYLENE SAFETY
+=======================================================================
+
+1. LEGAL PROHIBITION OF CALCIUM CARBIDE (FSSAI MANDATE):
+- Artificial ripening using Calcium Carbide ("Masala") is strictly prohibited under the Food Safety and Standards (Prohibition and Restrictions on Sales) Regulations, 2011.
+- Hazard: Commercial grade calcium carbide contains highly hazardous impurities of Arsenic and Phosphorus Hydrides (Arsine, Phosphine), causing severe neurological disorders, gastrointestinal ulceration, and carcinogenic toxicity in consumers.
+
+2. SCIENTIFIC ETHYLENE RIPENING PROTOCOL:
+- Ethylene Gas (C2H4) is the natural, non-hazardous plant ripening hormone.
+- Protocol for Banana, Mango, and Papaya:
+  * Chamber Temperature: 18°C to 22°C (Banana); 20°C to 24°C (Mango).
+  * Relative Humidity: 90% to 95% during the first 24 hours of treatment.
+  * Ethylene Concentration: 100 to 150 parts per million (ppm).
+  * Exposure Duration: 24 hours in hermetically sealed ripening chamber.
+  * Air Circulation & CO2 Scrubbing: Vent chamber thoroughly after 24 hours. Respiration generates Carbon Dioxide (CO2). If CO2 levels rise above 1.0%, ethylene ripening is inhibited and fruit suffers off-flavors.
+  * Post-treatment: Lower humidity to 80%–85% at 16°C–18°C for uniform yellow coloration and pulp softening over the subsequent 3–4 days.
+
+=======================================================================
+SECTION 5: PACKAGING & VALUE-ADDITION LOGISTICS
+=======================================================================
+
+1. CORRUGATED FIBREBOARD (CFB) BOXES:
+- Material: 3-ply or 5-ply kraft paper boxes with internal bursting strength > 12 kg/cm².
+- Ventilation: Must feature 5% to 8% total side ventilation holes (oval or circular) aligned across stacked boxes to facilitate heat dissipation during cold storage and refrigerated transit.
+- Internal Liners: Polyethylene foam netting or corrugated dividers to eliminate friction scuffing during transit.
+
+2. RETURNABLE PLASTIC CRATES (RPC):
+- Food-grade, high-density polyethylene (HDPE), stackable and nestable, perforated base and sides (dimensions: 600 mm x 400 mm x 250 mm; capacity 20–25 kg).
+- Superior to traditional bamboo/wire baskets: reduces mechanical damage from 18% down to < 2%.
+
+3. MODIFIED ATMOSPHERE PACKAGING (MAP):
+- Employs polymeric micro-perforated polypropylene (BOPP) or low-density polyethylene (LDPE) films.
+- Mechanism: Balances product respiration rate with film gas transmission rate, creating a modified steady-state atmosphere inside package (typically 3%–5% O2 and 3%–8% CO2), slowing respiration, delaying chlorophyll degradation, and doubling shelf-life.

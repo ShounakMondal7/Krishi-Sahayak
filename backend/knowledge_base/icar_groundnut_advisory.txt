@@ -1,0 +1,222 @@
+ICAR TECHNICAL BULLETIN — Groundnut (Peanut) Cultivation for Gujarat, Andhra Pradesh, and Tamil Nadu
+Source: ICAR-Directorate of Groundnut Research (DGR), Junagadh, Gujarat
+Document Reference: ICAR-DGR/Tech/2024/GJ-AP-TN-01
+
+India is the world's second-largest groundnut producer. Gujarat alone contributes 40% of India's
+groundnut production. Andhra Pradesh, Tamil Nadu, Karnataka, and Rajasthan are other major producers.
+Groundnut provides edible oil (50% of India's edible oil demand from groundnut), protein-rich cake,
+and fodder — a complete crop system.
+
+=======================================================================
+SECTION 1: RECOMMENDED VARIETIES
+=======================================================================
+
+GUJARAT:
+1. GG 20 (Gujarat Groundnut 20):
+   - Duration: 100–105 days | Yield: 25–30 q/ha
+   - Bold seeds, high oil content (50%)
+   - Blight resistant
+
+2. GG 2 (Gujarat Groundnut 2):
+   - Duration: 105–110 days | Yield: 22–27 q/ha
+   - Most popular in Saurashtra
+
+3. GPBD 4 (Girnar 4):
+   - Late leaf spot and rust resistant
+   - Yield: 25–35 q/ha | Kharif season
+
+4. Somnath (GG 11): Rain-fed suitable
+
+ANDHRA PRADESH:
+1. K 6: Most popular | Yield: 25–30 q/ha
+2. TCGS 29: High yielding | Drought tolerant
+3. K 9 (Greeshma): Summer crop, short duration
+4. TMV 2: Bunchy top resistant
+
+TAMIL Nadu:
+1. VRI 2: Duration 90 days | Summer crop
+2. Co 2 (Chandra): High yielding
+3. TMV 7: Blight resistant, popular
+
+RAJASTHAN / MP:
+1. R 9251: Drought tolerant | Short duration
+2. Chandra (TG 37A): Widely adapted
+
+=======================================================================
+SECTION 2: PLANTING SEASON AND PREPARATION
+=======================================================================
+
+SEASONS:
+| State      | Kharif               | Rabi/Summer        |
+|-----------|---------------------|--------------------|
+| Gujarat    | June 15 – July 10   | Jan 15 – Feb 28    |
+| AP         | June 15 – July 10   | Nov 1 – Dec 15     |
+| Tamil Nadu | June–July           | Dec–Jan (winter)   |
+
+FIELD PREPARATION:
+- Deep ploughing 20–25 cm (for pod penetration into soil)
+- Sandy loam soil preferred (light soil easier for pod development)
+- Apply gypsum 400 kg/ha as basal (calcium is critical for peg development)
+
+SEED RATE:
+- Bold seeded varieties: 100–120 kg/ha (shelled seed)
+- Small seeded: 80–90 kg/ha
+
+SEED TREATMENT:
+1. Thiram 75% WS: 3 g/kg seed — fungicide
+2. Rhizobium inoculum (Bradyrhizobium japonicum): 200 g/10 kg seed
+   - Mix with 10% jaggery solution as sticker
+   - Apply just before sowing (morning of sowing day)
+3. Trichoderma viride: 4 g/kg seed (collar rot prevention)
+
+SPACING:
+- Kharif: 30 cm × 15 cm (22,222 plants/ha) or 45 cm × 10 cm
+- Summer: 30 cm × 10 cm (higher density for summer crop)
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+RECOMMENDED DOSE:
+| Nutrient | Amount     | Notes                                  |
+|---------|-----------|----------------------------------------|
+| N       | 20 kg/ha  | Starter dose only; Rhizobium fixes rest|
+| P₂O₅   | 40 kg/ha  | Basal (SSP preferred over DAP)         |
+| K₂O    | 40 kg/ha  | Basal                                  |
+| Ca      | 400 kg/ha | As gypsum — applied at flowering       |
+| S       | 25 kg/ha  | As gypsum (S-containing fertilizer)    |
+| B       | 1 kg/ha   | As Borax — at pegging                 |
+
+GYPSUM APPLICATION — CRITICAL FOR GROUNDNUT:
+- Apply 400–500 kg/ha at flowering / pegging stage (50–55 DAS)
+- Gypsum provides calcium directly to developing pods
+- Without calcium → "pops" (empty pods) / "hollow heart" disorder
+- Apply in top 10 cm soil around plants (broadcast between rows)
+
+MICRONUTRIENT MANAGEMENT:
+- Iron deficiency (common in calcareous soils): 
+  FeSO₄ 0.5% spray (2 rounds at 30 and 45 DAS)
+- Zinc deficiency: ZnSO₄ 0.5% spray or 25 kg/ha soil application
+- Boron deficiency: Borax 0.2% spray at pegging (improves pod fill)
+
+=======================================================================
+SECTION 4: IRRIGATION
+=======================================================================
+
+CRITICAL STAGES:
+1. Pegging stage: 30–35 DAS — critical
+2. Pod formation: 45–60 DAS — most critical
+3. Pod filling: 60–90 DAS — critical
+
+Rain-fed crop: 450–550 mm rainfall sufficient
+Irrigated: 5–6 irrigations at 10–14 day intervals during dry periods
+
+AVOID:
+- Irrigation within 10–15 days of harvest (causes aflatoxin contamination)
+- Waterlogged conditions (promotes collar rot)
+
+=======================================================================
+SECTION 5: MAJOR DISEASES
+=======================================================================
+
+5.1 TIKKA DISEASE — EARLY LEAF SPOT (Cercospora arachidicola)
+IDENTIFICATION:
+- Brown-black circular spots on upper leaf surface
+- Yellow halo around spots
+- Defoliation in severe cases — significant yield loss
+
+5.2 LATE LEAF SPOT (Cercosporidium personatum)
+IDENTIFICATION:
+- Darker, rougher texture spots than early leaf spot
+- No yellow halo
+- More severe than early leaf spot
+
+MANAGEMENT (both leaf spots):
+- Spray schedule starting at 35 DAS:
+  * Mancozeb 75 WP: 2.5 g/litre (preventive, 3 sprays at 15-day intervals)
+  * Chlorothalonil 75 WP: 2 g/litre
+  * Tebuconazole 25.9 EC: 1 ml/litre (curative)
+- Grow resistant varieties: GPBD 4, JL 24 (late leaf spot resistant)
+
+5.3 GROUNDNUT RUST (Puccinia arachidis)
+IDENTIFICATION:
+- Orange-yellow pustules on lower leaf surface
+- Yellow spots on upper surface
+- Occurs from August onwards (late Kharif)
+
+MANAGEMENT:
+- Mancozeb 75 WP + Chlorothalonil tank mix spray
+- Triadimefon 25 WP: 1 g/litre (curative)
+- GPBD 4 variety is rust-resistant
+
+5.4 COLLAR ROT / STEM ROT (Sclerotium rolfsii)
+IDENTIFICATION:
+- Browning and rotting of stem at soil level
+- White mycelial growth (cotton-like) on stem base
+- Mustard-like brown sclerotia on and near the stem
+- Sudden wilting of plant (not seen in early morning)
+
+MANAGEMENT:
+- Avoid waterlogging conditions
+- Seed treatment with Trichoderma viride 4 g/kg seed (CRITICAL)
+- Soil application: Trichoderma viride 2.5 kg/ha mixed with 250 kg FYM
+- Carbendazim 50 WP: 2 g/litre drench around affected plants
+
+5.5 AFLATOXIN CONTAMINATION (Aspergillus flavus)
+Critical food safety issue — not visible in the field.
+
+PREVENTION:
+- Harvest on time (avoid over-maturity in field)
+- Harvest when soil moisture is moderate
+- Do NOT store above 9% moisture
+- Store in cool, dry, well-ventilated conditions
+- Aflatoxin testing: Any batch above 30 ppb REJECTED by processors
+
+=======================================================================
+SECTION 6: MAJOR PESTS
+=======================================================================
+
+6.1 LEAF MINER (Aproaerema modicella)
+IDENTIFICATION:
+- Larvae mine inside leaf tissue — visible winding mines
+- Leaf dries and curls (cigar-like rolling at severe stages)
+
+MANAGEMENT:
+- Chlorpyrifos 20 EC: 1 litre/acre
+- Quinalphos 25 EC: 1 litre/acre
+
+6.2 SPODOPTERA LITURA (Tobacco Caterpillar)
+- Same management as for soybean (see soybean advisory)
+- ETL: 4 larvae/metre row length
+
+6.3 THRIPS (Frankliniella schultzei)
+- Spread groundnut bud necrosis virus
+- Management: Imidacloprid seed treatment (most effective)
+
+6.4 WHITE GRUBS — ROOT FEEDING
+- Management: Chlorpyrifos 20 EC 3 litres/ha + sand drench at sowing
+
+=======================================================================
+SECTION 7: HARVEST AND POST-HARVEST
+=======================================================================
+
+HARVEST TIMING:
+- Maturity indicators: 70% pods have dark (tannin-stained) interiors
+- Leaf yellowing and shedding
+- Shelling check: Seeds fill pods completely, seed coat papery
+
+DIGGING:
+- Groundnut digger or tractor-mounted digger
+- Allow to dry in field (windrow) for 3–4 days
+
+DRYING AND STORAGE:
+- Dry pods to <9% moisture (critical for aflatoxin prevention)
+- Store in perforated gunny bags in elevated, ventilated sheds
+- Do NOT store in polythene bags (traps moisture — promotes aflatoxin)
+
+MSP 2024-25: ₹6,783/quintal
+Oil yield (expeller pressing): 35–42% of weight
+
+=======================================================================
+Contact: ICAR-DGR, Junagadh — Phone: 0285-2672072 | www.dgr.icar.gov.in
+=======================================================================

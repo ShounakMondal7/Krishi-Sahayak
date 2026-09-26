@@ -1,0 +1,307 @@
+ICAR TECHNICAL BULLETIN — Vegetable Cultivation Guide for Kerala Farmers
+Source: Indian Council of Vegetable Research (ICAR-IIVR), Varanasi & Kerala Agriculture University
+Document Reference: KAU/VEG/2024/Kerala-03
+
+Kerala has excellent potential for vegetable cultivation due to its year-round warm climate,
+but specific challenges like high rainfall, humidity, and pest pressure require adapted management.
+
+=======================================================================
+SECTION 1: SEASON-WISE VEGETABLE PLANTING CALENDAR FOR KERALA
+=======================================================================
+
+SUMMER SEASON (February–May):
+Best time for cucurbits and gourds.
+
+MONSOON SEASON (June–September):
+Use raised beds. Leafy vegetables and beans work best.
+
+POST-MONSOON (October–January):
+Best quality tomatoes, brinjal, capsicum, chilly. Lowest pest pressure.
+
+CROP-WISE SEASONAL GUIDE:
+
+| Vegetable         | Best Season          | District Focus        |
+|------------------|---------------------|-----------------------|
+| Bittergourd       | Feb–May, Sep–Nov    | All districts         |
+| Snakegourd        | Feb–May             | Thrissur, Palakkad    |
+| Ashgourd          | Feb–Apr             | All districts         |
+| Ridgegourd        | Feb–May, Sep–Nov    | All districts         |
+| Tomato            | Oct–Jan             | Wayanad, Palakkad     |
+| Brinjal           | Oct–Feb             | All districts         |
+| Okra (Ladies finger)| Feb–May, Sep–Nov  | All districts         |
+| Cowpea            | Jun–Sep, Dec–Feb    | All districts         |
+| Yardlong Bean     | May–Sep             | All districts         |
+| Amaranthus        | All year (avoid peak| All districts         |
+|                   | monsoon)            |                       |
+| Elephant foot yam | Jun–Jul (planting)  | Wayanad, Idukki       |
+| Colocasia (Taro)  | Jun–Jul             | All high-rain areas   |
+| Drumstick         | Oct–Nov (sowing)    | All districts         |
+| Ginger            | May–Jun             | Wayanad, Idukki       |
+| Turmeric          | May–Jun             | Ernakulam, Thrissur   |
+
+=======================================================================
+SECTION 2: KEY VEGETABLE VARIETIES FOR KERALA
+=======================================================================
+
+TOMATO:
+- Sakthi: Suitable for Kerala climate, moderate disease resistance
+- Mukthi: Heat tolerant, 60–65 days to harvest, 25–30 t/ha
+- Arka Vikas: IIHR variety, indeterminate, 30–35 t/ha
+- CO-3: Widely grown, suitable for monsoon (with support)
+- Avoid: European varieties — not adapted to Kerala's high humidity
+
+BITTERGOURD (Pavakka):
+- Preethi: High yielding (18–20 t/ha), dark green fruit, 55 days
+- Priya: Bitter type, preferred by consumers, 18 t/ha
+- CO-1: Tamil Nadu variety, good for summer
+- IIHR-K: Disease tolerant
+
+SNAKEGOURD:
+- CO-1, CO-2: 20–25 t/ha, suitable for trellising
+- Thiruvananthapuram Local: Popular, long fruits (1–1.5 m)
+- PLR-1: Palakkad local release, 30–35 t/ha
+
+OKRA (Ladies Finger / Vendakka):
+- Arka Anamika: High yielding, 15–18 t/ha, 50 days to first harvest
+- Arka Abhay: Best for Kerala climate, YVMV resistant (important!)
+- MDU-1: Good for high-density planting
+- Avoid YVMV-susceptible varieties during whitefly season
+
+COWPEA:
+- Lola: Bushy type, 45 days to harvest, 15–18 t/ha green pods
+- Bhaskar: Climbing type, 55 days, 20 t/ha
+- Kanakamony: Local variety, high protein content
+
+BRINJAL:
+- Surya: Round purple, 25–30 t/ha, early bearing (60 days)
+- Arka Shirish: Long purple, 35–40 t/ha, suitable for post-monsoon
+- Muktakeshi: Local, preferred for culinary properties
+
+CHILLY:
+- K-1: High yielding, suitable for Kerala (hot and humid)
+- Kanthari: Local bird's eye chilly, high market value
+- CO-1: Compact, 45 t/ha fresh green chillies
+
+=======================================================================
+SECTION 3: RAISED BED CULTIVATION (CRITICAL FOR KERALA MONSOON)
+=======================================================================
+
+WHY RAISED BEDS:
+- Heavy rainfall in Kerala (2000–4000 mm) causes waterlogging
+- Root diseases (Phytophthora, Pythium) are major causes of crop failure in flat beds
+- Raised beds ensure proper drainage and aeration
+
+HOW TO MAKE RAISED BEDS:
+1. Plot size: 1 m wide × 6–8 m long (for home gardens: 1 m × 3 m)
+2. Bed height: 30 cm above ground level during monsoon; 15 cm in dry season
+3. Path width between beds: 50 cm (for movement and drainage)
+4. Direction: Orient beds North–South for maximum sun exposure
+5. Material: Use topsoil + 25% compost + 25% sand (for loose, well-drained mix)
+
+SOIL MIXTURE FOR RAISED BEDS (per sq. metre):
+- Red soil/loam: 50% (2 baskets)
+- Well-decomposed compost/FYM: 25% (1 basket)
+- Sand or coir pith: 25% (1 basket)
+- Lime: 100 g (to adjust pH)
+- Bone meal or rock phosphate: 100 g
+
+MAINTENANCE:
+- Drench beds with Copper oxychloride 0.25% before planting (soil sterilization)
+- Trichoderma viride 50 g/sq.m mixed with compost
+- Mulch with dry leaves or paddy straw (5 cm thick) to retain moisture and suppress weeds
+
+=======================================================================
+SECTION 4: FERTILIZER RECOMMENDATIONS FOR VEGETABLES
+=======================================================================
+
+PER 10 SQUARE METRE RAISED BED:
+- FYM or vermicompost: 25 kg (basal, mix into soil)
+- Urea: 75 g (top dressing in 3 splits at 15, 30, 45 days)
+- Superphosphate (SSP): 200 g (basal application)
+- Muriate of Potash (MOP): 75 g (split: 50% basal, 50% at flowering)
+
+PER HECTARE RECOMMENDATIONS:
+
+| Vegetable   | N (kg) | P₂O₅ (kg) | K₂O (kg) | FYM (t) |
+|------------|--------|-----------|---------|---------|
+| Tomato     | 120    | 60        | 60      | 25      |
+| Bittergourd| 75     | 50        | 75      | 20      |
+| Brinjal    | 120    | 60        | 60      | 25      |
+| Okra       | 90     | 45        | 45      | 15      |
+| Cowpea     | 25*    | 60        | 30      | 10      |
+| Chilly     | 100    | 60        | 60      | 25      |
+| Ginger     | 75     | 50        | 75      | 30      |
+
+* Cowpea fixes N — use low N fertilizer.
+
+FOLIAR NUTRITION (spray to boost yield):
+- Panchagavya 3% (weekly from 20 days onwards): Stimulates growth
+- 19:19:19 NPK at 5 g/litre (weekly from flowering): Boosts fruit set
+- Boron 0.1% (borax solution): At flower initiation — reduces fruit drop
+
+=======================================================================
+SECTION 5: MAJOR VEGETABLE PESTS IN KERALA
+=======================================================================
+
+5.1 FRUIT BORER (Leucinodes orbonalis) — Brinjal/Tomato
+Most damaging pest of brinjal in Kerala.
+
+IDENTIFICATION:
+- Pink larvae bore into fruits and shoots
+- Entry hole with frass (excrement) visible on fruit surface
+- Affected fruits are unmarketable
+- Shoots wilt and dry up (shoot borer phase)
+
+MANAGEMENT:
+- ETL: 5% affected shoots or 2% bored fruits
+- Spinosad 45 SC: 0.3 ml/litre spray
+- Emamectin benzoate 5 SG: 0.4 g/litre
+- Chlorantraniliprole 18.5 SC: 0.3 ml/litre (most effective)
+- Pheromone traps: 10–12 traps/ha for monitoring
+- Remove and destroy bored fruits regularly
+
+5.2 WHITEFLY (Bemisia tabaci) — Vector of YVMV in Okra
+Yellow Vein Mosaic Virus (YVMV) — the most devastating okra disease, spread by whitefly.
+
+IDENTIFICATION OF YVMV:
+- Yellow vein network pattern on leaves (distinct yellow veins, green between them)
+- Leaves become yellow and severely stunted
+- No cure — remove infected plants immediately
+
+WHITEFLY MANAGEMENT:
+- Use YVMV-resistant varieties (Arka Abhay, Arka Anamika)
+- Yellow sticky traps: 25 traps/ha
+- Imidacloprid 17.8 SL: 0.5 ml/litre (apply early when whiteflies first appear)
+- Beauveria bassiana spray: 5 g/litre on leaf underside
+- Reflective mulch (silver polyethylene): Disorients whiteflies
+
+5.3 THRIPS (Thrips palmi, Scirtothrips dorsalis) — Cucurbits/Chilly
+MANAGEMENT:
+- Spinosad 45 SC: 0.3 ml/litre
+- Fipronil 5 SC: 1 ml/litre
+- Blue sticky traps: 25 traps/ha
+
+5.4 APHIDS — Multiple crops
+MANAGEMENT:
+- Imidacloprid 17.8 SL: 0.5 ml/litre
+- Neem oil 3%: 3 ml/litre + soap solution
+- Lady bird beetles and parasitoids — conserve natural enemies
+
+5.5 RED PUMPKIN BEETLE (Aulacophora foveicollis) — Cucurbits
+IDENTIFICATION:
+- Orange-red adult beetles on leaves and flowers
+- Adults eat holes in leaves; larvae bore roots
+- Most damaging in first 4 weeks after sowing
+
+MANAGEMENT:
+- Seed treatment: Carbendazim 1 g/kg seed
+- Cover young seedlings with insect net (40 mesh) for 3–4 weeks
+- Carbaryl 50 WP: 2 g/litre spray when beetles appear
+
+=======================================================================
+SECTION 6: MAJOR VEGETABLE DISEASES IN KERALA
+=======================================================================
+
+6.1 LATE BLIGHT (Phytophthora infestans) — Tomato
+Most serious disease of tomato in high-altitude Kerala (Wayanad, Idukki).
+
+IDENTIFICATION:
+- Water-soaked lesions on leaves, turning brown-black
+- White sporulating growth on leaf underside in humid conditions
+- Rapid collapse of entire plant
+- Brown lesions on tomato fruits
+
+MANAGEMENT:
+- Metalaxyl + Mancozeb 72 WP: 3 g/litre spray
+- Cymoxanil + Mancozeb 72 WP: 3 g/litre
+- Copper oxychloride 50 WP: 3 g/litre (preventive)
+- Do not irrigate by sprinkler — use drip
+- Avoid planting in low-lying, poorly-drained areas
+
+6.2 DOWNY MILDEW — Cucurbits
+IDENTIFICATION:
+- Yellow angular patches on upper leaf surface
+- Grayish-purple sporulation on underside
+
+MANAGEMENT:
+- Fosetyl-Al 80 WP: 2.5 g/litre
+- Dimethomorph + Mancozeb: 3 g/litre
+- Space plants widely for air circulation
+
+6.3 POWDERY MILDEW — Cucurbits/Okra
+IDENTIFICATION:
+- White powdery coating on leaves
+- Worse in dry conditions with high humidity nights
+
+MANAGEMENT:
+- Wettable sulphur 80 WP: 3 g/litre spray
+- Hexaconazole 5 EC: 1 ml/litre
+- Avoid overhead irrigation in evening
+
+6.4 DAMPING-OFF — All seedlings
+The number one cause of seedling mortality in Kerala nurseries.
+
+CAUSE:
+- Pythium, Phytophthora, Fusarium fungi
+- Triggered by overwatering, poor drainage, heavy rain
+
+PREVENTION (most important):
+- Raised beds (mandatory)
+- Drenching with Copper oxychloride 0.25% before sowing
+- Mix Trichoderma viride 50 g/sq.m with growing medium
+- Avoid overwatering seedlings
+
+TREATMENT:
+- Drench with Metalaxyl + Mancozeb 72 WP 3 g/litre
+- Reduce watering frequency
+
+=======================================================================
+SECTION 7: PROTECTED CULTIVATION (SHADENET / POLYHOUSE)
+=======================================================================
+
+BENEFITS:
+- Year-round production — not limited by monsoon
+- 30–40% higher yields
+- Reduced pesticide use (insect exclusion)
+- Premium price for off-season produce
+
+TYPES SUITABLE FOR KERALA:
+1. Shadenet House (50% shade): Best for leafy vegetables, nurseries, orchids
+2. Low-cost polyhouse (UV-film): For tomato, capsicum, cucumber
+3. Net House (40-mesh insect net): For organic, pesticide-free vegetables
+
+GOVERNMENT SUBSIDY:
+- MIDH (Mission for Integrated Development of Horticulture): 50% subsidy for polyhouse
+- Maximum area: 4000 sq.m for small farmers
+- Apply through District Horticulture Office
+
+=======================================================================
+PEST MANAGEMENT CALENDAR FOR VEGETABLES (Kerala-Specific)
+=======================================================================
+
+PRE-SOWING:
+- Soil solarization with clear polythene (1 month in March–April)
+- Soil drench with Trichoderma
+
+SEEDLING STAGE:
+- Damping-off prevention: Drenching
+- Aphid/whitefly monitoring: Yellow sticky traps
+
+VEGETATIVE STAGE:
+- Scout weekly for thrips, aphids, leaf miners
+- Spray only when ETL is crossed
+
+FLOWERING AND FRUITING:
+- Fruit borer monitoring: Pheromone traps
+- Spray during early morning or evening (avoid bee-active hours)
+- Observe Pre-Harvest Intervals strictly
+
+POST-HARVEST:
+- Remove and compost crop debris
+- Deep plough to expose soil pests
+
+=======================================================================
+Contact: KAU, Thrissur — Phone: 0487-2371918 | www.kau.in
+ICAR-IIVR, Varanasi — www.iivr.org.in
+Horticulture Mission for North-East and Himalayan States (HMNEH): horticulture.gov.in
+=======================================================================

@@ -1,0 +1,159 @@
+ICAR TECHNICAL BULLETIN — Onion & Garlic Production, Post-Harvest & Storage Rot Management
+Source: Indian Council of Agricultural Research (ICAR) - Directorate of Onion and Garlic Research (DOGR), Rajgurunagar, Pune
+Document Reference: ICAR-DOGR/TB/2024/11 | Pan-India Production Advisory
+
+=======================================================================
+SECTION 1: AGRO-CLIMATIC & SOIL REQUIREMENTS
+=======================================================================
+
+Onion (Allium cepa) and Garlic (Allium sativum) are cool-season bulb crops of immense commercial and dietary importance across India.
+
+1. TEMPERATURE & CLIMATIC THRESHOLDS:
+- Vegetative Growth Phase: 13°C to 24°C optimal. Cool conditions promote root proliferation and vigorous leaf development.
+- Bulb Initiation & Development Phase: 16°C to 25°C with moderate photoperiod.
+- Bulb Maturation & Ripening Phase: 25°C to 35°C with dry atmospheric conditions and low relative humidity (< 60%).
+- Photoperiodism:
+  * Short-day cultivars require 10–12 hours daylight (standard for peninsular and central Indian tropical plains).
+  * Intermediate-day types require 12–14 hours daylight (northern plains during late rabi).
+  * Long-day types require > 14 hours daylight (strictly adapted to temperate Himalayan hills of J&K, Himachal Pradesh, Uttarakhand).
+- Bolting Sensitivity: Prolonged exposure of vegetative plants to temperatures below 10°C–12°C triggers physiological bolting (premature flowering), leading to unmarketable, thick, woody-necked bulbs.
+
+2. SOIL PROFILE & WATER REQUIREMENTS:
+- Soil Texture: Deep, friable, well-aerated sandy loam to clay loam rich in organic matter (> 0.6% organic carbon).
+- Drainage: Highly sensitive to waterlogging. Poorly drained, heavy sticky clays restrict bulb expansion, causing asymmetrical, split, or rotten bulbs.
+- Soil pH Range: 6.0 to 7.5 (optimum 6.5). Highly sensitive to soil acidity (pH < 5.8) and salinity/alkalinity.
+- Salinity Tolerance: Electrical Conductivity (EC) must be < 1.2 dS/m. Yield drops steeply by 16% for every 1.0 dS/m increase above 1.2 dS/m.
+
+=======================================================================
+SECTION 2: SEASONS, NURSERY RAISING & PLANTING GEOMETRY
+=======================================================================
+
+1. CROPPING SEASONS IN INDIA:
+- Kharif Season (Monsoon):
+  * Nursery Sowing: May to June
+  * Transplanting: July to August
+  * Harvesting: October to December
+  * Key Feature: High price realization; bulbs have higher moisture and lower storability (1–2 months).
+- Late Kharif / Rangda Season:
+  * Nursery Sowing: August to September
+  * Transplanting: October to November
+  * Harvesting: January to March
+  * Key Feature: Bridge crop between Kharif and Rabi.
+- Rabi Season (Winter):
+  * Nursery Sowing: October to November
+  * Transplanting: December to January
+  * Harvesting: April to May
+  * Key Feature: Accounts for 60%–65% of national production; dense dry matter, tight papery skins, excellent storability (5–6 months).
+
+2. ONION NURSERY MANAGEMENT & SEED RATE:
+- Seed Rate: 8–10 kg/ha for open-pollinated varieties; 4–5 kg/ha for F1 hybrids.
+- Nursery Bed Preparation: Raised nursery beds of 15 cm height, 1.0–1.2 m width, and convenient length (5–10 m). Provide 30 cm drainage channels between beds.
+- Seed Treatment: Treat seeds with Trichoderma viride / T. harzianum @ 5 g/kg seed or Thiram / Captan @ 2.5 g/kg seed to prevent damping-off.
+- Sowing: Line sowing at 5–7 cm row spacing and 1–2 cm depth. Cover with fine compost and paddy straw/dry grass mulch. Irrigate through rose-can or micro-sprinklers. Remove mulch immediately upon seedling emergence (5–7 days).
+- Seedling Age: Transplant healthy, pencil-thick seedlings (15 cm tall) at 45–50 days after sowing. Avoid over-aged seedlings (> 60 days) as they bolt prematurely.
+
+3. TRANSPLANTING GEOMETRY & SYSTEM:
+- Broad Bed Furrow (BBF) System (Recommended by ICAR-DOGR):
+  * Raised beds of 15 cm height, top width 120 cm, furrow width 30 cm.
+  * Plant spacing: 15 cm between rows x 10 cm between plants within rows (density: ~50–55 plants/m²).
+  * Advantages: 15–20% higher yield, perfect surface drainage during unseasonal rains, ideal for drip lateral placement.
+- Flat Bed System: Small check basins (2 m x 3 m) with spacing 15 cm x 10 cm.
+
+4. GARLIC PROPAGATION & PLANTING:
+- Propagating Material: Vegetative cloves separated from healthy, disease-free, cured composite bulbs.
+- Clove Selection: Select plump, outer and middle cloves weighing 1.5 to 2.5 g. Avoid small, central, deformed cloves (< 1 g) which yield thin, unmarketable bulbs.
+- Seed Rate: 500 to 600 kg cloves/ha.
+- Clove Treatment: Soak cloves in a suspension of Carbendazim 12% + Mancozeb 63% WP @ 2.0 g/L or Trichoderma @ 5 g/L for 15 minutes; shade dry before planting.
+- Planting Geometry: Dibble cloves upright with root end downwards at 10 cm x 10 cm or 15 cm x 10 cm spacing. Planting depth: 2.5–3.0 cm. Cover with loose soil and irrigate immediately.
+
+=======================================================================
+SECTION 3: HIGH-YIELDING VARIETIES (ICAR-DOGR RELEASES)
+=======================================================================
+
+1. ONION VARIETIES:
+- Bhima Super: Red Kharif variety; matures in 100–105 days after transplanting (DAT); yield 20–22 t/ha in Kharif, 40–45 t/ha in Late Kharif.
+- Bhima Dark Red: Intense dark red bulbs; Kharif/Late Kharif; matures in 95–100 DAT; yield 20–24 t/ha.
+- Bhima Red: Dual-purpose (Late Kharif and Rabi); globe-shaped red bulbs; yield 30–32 t/ha; moderate storability (3 months).
+- Bhima Shweta: High-yielding white onion; Kharif and Rabi; excellent TSS (11–12° Brix); suitable for dehydration; yield 26–30 t/ha.
+- Bhima Kiran: Outstanding Rabi variety; light red, globe bulbs; high storage life (5 months with < 20% loss); yield 38–42 t/ha; TSS 12–13° Brix.
+- Bhima Shakti: Premier Rabi variety for Maharashtra, Karnataka, Gujarat; matures in 125–130 DAT; yield 35–42 t/ha; outstanding storage potential (5–6 months).
+- Agrifound Light Red (ALR): National Rabi benchmark; light red bulbs, 160–165 days from sowing; yield 30–35 t/ha; storage up to 5 months.
+
+2. GARLIC VARIETIES:
+- Bhima Omkar: Medium-sized, uniform white bulbs; matures in 120–135 days; yield 8–10 t/ha; suitable for early Rabi across central and peninsular India.
+- Bhima Purple: Purple-streaked cloves with high allicin content and pungency; matures in 125–135 days; yield 10–12 t/ha; superior thrips tolerance.
+- Yamuna Safed (G-1): Solid white bulbs, 15–18 compact cloves; yield 12–15 t/ha; widely adapted across North and Central India.
+- Yamuna Safed-3 (G-282): Extra-large bold white cloves (diameter 4.5–5.5 cm); highly suited for international export markets; yield 15–18 t/ha.
+
+=======================================================================
+SECTION 4: INTEGRATED NUTRIENT & IRRIGATION MANAGEMENT
+=======================================================================
+
+1. FERTILIZER SCHEDULE (ONION & GARLIC):
+- Recommended Dose of Fertilizers (RDF):
+  * Onion: 110 kg N : 50 kg P2O5 : 50 kg K2O : 30–40 kg S /ha + 20 tonnes well-rotted FYM.
+  * Garlic: 100 kg N : 50 kg P2O5 : 50 kg K2O : 40–50 kg S /ha.
+- Sulphur (S) Requirement: Sulphur is mandatory for allium crops. It forms the precursor for volatile sulfur compounds (allyl propyl disulfide, allicin), governing pungency, aroma, bulb firmness, and storage shelf-life. Apply Elemental Sulphur @ 30 kg/ha or Bentonite Sulphur @ 40 kg/ha at basal transplanting.
+- Split Application Schedule:
+  * Basal at Transplanting: 100% FYM + 33% Nitrogen + 100% P2O5 + 100% K2O + 100% Sulphur.
+  * 1st Top Dressing (30 DAT): 33% Nitrogen.
+  * 2nd Top Dressing (45–50 DAT): 34% Nitrogen.
+  * CRITICAL: Terminate all Nitrogen applications strictly before 60 DAT. Late Nitrogen causes excessive vegetative growth, thick/hollow necks ("bull necks"), split bulbs, and catastrophic storage rot.
+- Micronutrient Foliar Sprays: Spray Zinc Sulphate (0.5%) + Boric Acid (0.2%) + Ferrous Sulphate (0.5%) at 30 and 45 DAT.
+
+2. IRRIGATION REGIME:
+- Total Water Requirement: 350 to 550 mm depending on season.
+- Critical Growth Stages:
+  * Seedling establishment (0–15 DAT): Light, frequent irrigations every 3–4 days.
+  * Rapid vegetative phase (15–40 DAT): Irrigate every 6–7 days.
+  * Bulb initiation & enlargement (45–80 DAT): Most moisture-sensitive stage. Water stress here permanently stunts bulb sizing.
+- Water Termination Rule: Stop irrigation strictly 10 to 15 days prior to harvest. This allows pseudostem necks to soften, dry out, and seal naturally, preventing field fungal spores from entering bulb tissues.
+
+=======================================================================
+SECTION 5: PEST & DISEASE MANAGEMENT
+=======================================================================
+
+1. INSECT PEST:
+- Onion Thrips (Thrips tabaci):
+  * Symptoms: Adults and nymphs rasp leaf epidermis and suck cell sap, producing characteristic silvery white patches, leaf twisting, and tip drying. Primary vector of Iris Yellow Spot Virus (IYSV).
+  * ETL: 15–20 thrips/plant.
+  * Management:
+    - Install yellow or blue sticky traps @ 25–30 traps/ha.
+    - Spray Azadirachtin 1500 ppm @ 3 ml/L at early detection.
+    - Chemical Control: Spinetoram 11.7 SC @ 1.0 ml/L, or Fipronil 5 SC @ 1.5 ml/L, or Acetamiprid 20 SP @ 0.5 g/L. Always add non-ionic wetting agent/sticker (0.5 ml/L) due to the slippery, waxy cuticle of allium foliage.
+
+2. FUNGAL DISEASES:
+- Purple Blotch (Alternaria porri) & Stemphylium Leaf Blight (Stemphylium vesicarium):
+  * Symptoms: Small water-soaked lesions turning sunken, dark purple with yellow chlorotic margins; lesions coalesce, causing extensive foliage blighting. Triggered by high humidity (> 85%) and temperatures 20°C–28°C.
+  * Management:
+    - Prophylactic: Mancozeb 75 WP @ 2.5 g/L or Chlorothalonil 75 WP @ 2 g/L.
+    - Curative: Tebuconazole 25.9 EC @ 1 ml/L, or Azoxystrobin 18.2% + Difenoconazole 11.4% SC @ 1 ml/L, or Pyraclostrobin 20 WG @ 1 g/L.
+- Basal Rot (Fusarium oxysporum f. sp. cepae):
+  * Symptoms: Yellowing and downward curling of leaves starting from leaf tips; roots turn pinkish-brown and rot completely; stem plate shows brown discoloration.
+  * Management: Crop rotation with non-allium crops (3 years); soil drenching with Carbendazim 50 WP @ 1 g/L or Trichoderma-enriched FYM @ 5 kg/ha.
+- Downy Mildew (Peronospora destructor):
+  * Symptoms: Purplish-grey velvety fungal growth on leaf surfaces under cool, foggy conditions (< 15°C, high RH). Spray Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.
+
+=======================================================================
+SECTION 6: HARVESTING, CURING & STORAGE ROT PREVENTION
+=======================================================================
+
+1. HARVEST MATURITY INDEX:
+- Harvest when 50% of the crop foliage exhibits natural "neck fall" (tops falling over while foliage is still partially green).
+- Harvesting too early (< 20% neck fall) results in thin skins, thick necks, and high rot incidence; harvesting too late (> 80% neck fall) causes sunscald, root regrowth, and split skins.
+
+2. CURING PROTOCOL (THE KEY TO LONGEVITY):
+- Field Curing (Windrowing): Lay harvested plants in windrows in the field for 3 to 5 days, arranging foliage of one row over the bulbs of the next to shield bulbs from direct solar scorching/sunscald.
+- Shade Curing: Transfer bulbs to a well-ventilated covered shed and spread in thin layers (10–15 cm) for 10 to 15 days. Curing is complete when the outer 2–3 scales dry into a papery rustling skin, the neck shrinks into a tight thin seal, and bulb moisture drops below 14%.
+- Detopping: Cut foliage leaving a neck stub of 2.5 to 3.0 cm attached to the bulb. NEVER cut flush with the bulb crown; an open neck allows direct entry of fungal pathogens into the scale leaves.
+
+3. PREVENTING SPROUTING & STORAGE ROTS:
+- Sprout Suppression: For long-term commercial Rabi storage, apply a foliar spray of Maleic Hydrazide (MH) @ 2500 ppm (2.5 g/L) 10 to 15 days before harvest when tops have 20–30% neck fall and foliage is still active and photosynthesizing.
+- Primary Storage Pathogens:
+  * Black Mould (Aspergillus niger): Black powdery spore masses beneath outer papery scales. Triggered by temperatures > 28°C and RH > 75%.
+  * Bacterial Soft Rot (Pectobacterium carotovorum): Watery, foul-smelling liquefaction of internal bulb scales.
+  * Neck Rot (Botrytis allii): Soft, sunken neck tissue with grey felt-like fungal growth.
+- Storage Architecture & Environment:
+  * Store in ICAR-DOGR Improved Ventilated Storage Structures featuring bottom mesh elevation (50 cm above ground), perforated side bamboo/wooden battens, and ridge exhaust ventilators.
+  * Optimal Conditions: Temperature 25°C to 30°C; Relative Humidity 65% to 70%.
+  * CAUTION: High humidity (> 75%) induces root initiation and mould infection; low humidity (< 60%) causes severe desiccation and physiological weight loss (PWL).

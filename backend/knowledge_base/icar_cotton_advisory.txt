@@ -1,0 +1,270 @@
+ICAR TECHNICAL BULLETIN — Cotton Cultivation Advisory for Vidarbha, Telangana and Gujarat
+Source: ICAR-Central Institute for Cotton Research (CICR), Nagpur, Maharashtra
+Document Reference: ICAR-CICR/Tech/2024/MH-TS-GJ-01
+
+Cotton is India's primary commercial crop, earning the title "White Gold". India is the world's largest
+cotton producer. Maharashtra (Vidarbha), Telangana, Gujarat, and Punjab account for 85% of production.
+Bt cotton now covers 95% of India's cotton area.
+
+=======================================================================
+SECTION 1: RECOMMENDED COTTON VARIETIES / HYBRIDS
+=======================================================================
+
+MAHARASHTRA (Vidarbha):
+1. JKCH 1947 (Bt): Most popular in Vidarbha
+   - Duration: 170–180 days | Yield: 18–22 q/ha
+   - Good bollworm tolerance
+   
+2. Ankur 651 (Bt): Drought tolerant
+   - Yield: 16–20 q/ha | Suitable for rain-fed
+   
+3. RCH 650 Bt:
+   - Yield: 20–25 q/ha | Better fibre quality
+
+TELANGANA / ANDHRA PRADESH:
+1. Bunny Bt (Mahyco 915): Most popular
+   - Duration: 155–165 days | Yield: 20–28 q/ha
+   - Irrigated conditions
+   
+2. MRC 7017 (Bt): Good for black soils
+
+GUJARAT:
+1. Kanchan (Bt): Best for Saurashtra
+   - Long staple, good for export quality
+   
+2. Jadav: Rain-fed, short-duration (150 days)
+
+HARYANA / PUNJAB (Hirsutum):
+1. HS 6 (Desi cotton — non-Bt): Rain-fed
+2. F 1861 Bt: High-yielding irrigated
+
+=======================================================================
+SECTION 2: PLANTING SEASON AND ESTABLISHMENT
+=======================================================================
+
+SOWING DATES:
+| State        | Rain-fed         | Irrigated        |
+|-------------|-----------------|-----------------|
+| Maharashtra  | June 15 – July 10| May 15 – June 15|
+| Telangana    | June 15 – July 1 | May – June       |
+| Gujarat      | June 15 – July 15| May – June       |
+| Punjab/Haryana| April 25 – May 15| April 15–May 1   |
+
+SPACING:
+- Rain-fed black cotton soils: 90 cm × 60 cm (18,500 plants/ha)
+- Irrigated hybrids: 90 cm × 90 cm (12,300 plants/ha)
+- High Density Planting (HDP): 67 cm × 30 cm (49,500 plants/ha) — new approach
+
+SEED RATE: 1.0–1.5 kg/ha (Bt hybrid, pelleted seed)
+
+NURSERY (for transplanting method):
+- Raise in poly bags — reduces transplanting shock
+- 30-day old seedlings for transplanting
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+RECOMMENDED DOSE PER HECTARE:
+
+| Nutrient | Rain-fed   | Irrigated   |
+|---------|-----------|------------|
+| N       | 60 kg      | 120–150 kg  |
+| P₂O₅   | 30 kg      | 60–80 kg    |
+| K₂O    | 30 kg      | 80–120 kg   |
+| S       | 25 kg      | 40 kg       |
+| B       | 0.5 kg/ha  | 0.5 kg/ha   |
+
+SPLIT APPLICATION OF NITROGEN:
+- Basal: 25% N + Full P + Full K (at sowing)
+- 30 DAS: 25% N (squaring stage)
+- 60 DAS: 25% N (flowering)
+- 90 DAS: 25% N (boll development)
+
+FOLIAR SPRAY SCHEDULE:
+- 2% DAP solution: At 60 and 80 DAS (boosts boll retention)
+- 1% KCl + 0.5% KH₂PO₄: At boll development (quality improvement)
+- 0.25% Boron: At flowering (prevents boll shedding)
+
+FYM/Compost: 10–15 t/ha as basal (crucial for black cotton soil structure)
+
+=======================================================================
+SECTION 4: WATER MANAGEMENT
+=======================================================================
+
+CRITICAL IRRIGATION STAGES:
+1. At sowing (if no rain)
+2. Squaring (45 DAS)
+3. Flowering (60–70 DAS) — most critical
+4. Boll development (90–100 DAS)
+5. Boll opening (120 DAS)
+
+DRIP IRRIGATION (recommended for Gujarat):
+- 60% water saving compared to flood irrigation
+- Fertigation possible — improves fertilizer use efficiency
+- Daily drip rate: 25–30 mm/day during flowering
+
+=======================================================================
+SECTION 5: MAJOR PESTS OF COTTON
+=======================================================================
+
+5.1 BOLLWORMS — The Primary Pest Complex
+Three species attack simultaneously:
+
+A. AMERICAN BOLLWORM (Helicoverpa armigera):
+IDENTIFICATION:
+- Green/brown caterpillar with white stripes on body
+- Half of larval body hangs outside the boll
+- Attacks squares, flowers, and young bolls
+- Can develop Bt resistance (very important for Vidarbha farmers)
+
+MANAGEMENT:
+- Pheromone traps: 5 traps/ha (Helilure lure, change every 21 days)
+- Spinosad 45 SC: 125 ml/acre
+- Chlorantraniliprole 18.5 SC: 150 ml/acre (most effective)
+- Emamectin benzoate 5 SG: 80 g/acre
+- NPV (Helicoverpa NPV): 500 LE/ha spray — biological, safe
+- Do NOT spray during flowering (protect pollinators)
+
+B. PINK BOLLWORM (Pectinophora gossypiella):
+IDENTIFICATION:
+- Pink caterpillar inside the boll (larvae enter boll, not seen outside)
+- Two seeds joined by silk thread inside boll ("double seed")
+- Boll has small circular entry hole
+
+MANAGEMENT:
+- Gossyplure pheromone traps: 5 traps/ha
+- Profenofos 50 EC: 1 litre/acre spray at boll formation
+- Bt spray (Bacillus thuringiensis var. kurstaki): 1 kg/acre
+- Avoid late sowing (late crop more vulnerable)
+
+C. SPOTTED BOLLWORM (Earias vittella):
+- Attacks young shoots (shot-hole pattern), then bolls
+
+5.2 SUCKING PESTS (Most important in early season)
+
+WHITEFLY (Bemisia tabaci):
+- Most serious pest in recent years — causes Cotton Leaf Curl Virus (CLCuV)
+- YELLOWING, leaf curling, stunting — all caused by whitefly-transmitted virus
+- ETL: 10 adults/leaf
+
+MANAGEMENT:
+- Yellow sticky traps: 10 traps/ha (early monitoring)
+- Flonicamid 50 WG: 60 g/acre (most selective, safe for natural enemies)
+- Spiromesifen 22.9 SC: 200 ml/acre
+- Avoid Imidacloprid and Acephate (resistance developed)
+- Silver reflective mulch: Repels whiteflies significantly
+
+JASSIDS/LEAFHOPPERS (Amrasca biguttula):
+- Yellow triangular wedge-shaped insects on leaf underside
+- ETL: 2 per leaf
+MANAGEMENT:
+- Imidacloprid 17.8 SL: 150 ml/acre
+- Acephate 75 SP: 400 g/acre
+
+THRIPS (Thrips tabaci):
+- Silver crinkling of leaves
+MANAGEMENT:
+- Spinosad 45 SC: 75 ml/acre
+
+MEALYBUGS (Phenacoccus solenopsis):
+- White waxy cottony mass on stems and leaves
+- Spreads via ants — use ant barriers
+MANAGEMENT:
+- Profenofos 50 EC: 1 litre/acre
+- Spray water jet to dislodge colonies
+- Release Cryptolaemus montrouzieri (mealybug destroyer) — 10/plant
+
+5.3 TOBACCO CATERPILLAR (Spodoptera litura)
+- Cut leaves, skeletonize leaves in groups
+- ETL: 1 egg mass/plant or 5% defoliation
+MANAGEMENT:
+- Chlorpyrifos 20 EC: 1.5 litre/acre
+- NPV (SNPV): 500 LE/ha
+
+=======================================================================
+SECTION 6: MAJOR DISEASES OF COTTON
+=======================================================================
+
+6.1 COTTON LEAF CURL VIRUS (CLCuV)
+MOST SERIOUS DISEASE IN INDIA — No curative treatment.
+
+IDENTIFICATION:
+- Upward curling of leaves
+- Thick dark green veins, twisted leaves
+- Dark vein enations (swellings) on leaf underside
+- Plant stunted; no boll formation
+
+MANAGEMENT:
+- Control whitefly vector (see above)
+- Remove and destroy affected plants within 30 DAS
+- Avoid CLCuV-susceptible varieties (HD 324 susceptible)
+- Grow resistant varieties: HS 6, HD 432
+
+6.2 BACTERIAL BLIGHT (Angular Leaf Spot) — Xanthomonas campestris
+IDENTIFICATION:
+- Angular water-soaked spots on leaves, turning brown
+- Shot-hole appearance
+- Black lesions on bolls (boll rot) in severe cases
+
+MANAGEMENT:
+- Seed treatment: Streptocycline 500 ppm solution
+- Spray: Copper oxychloride 0.3% + Streptocycline 100 ppm
+- Remove infected crop debris after harvest
+
+6.3 FUSARIUM WILT (Fusarium oxysporum)
+IDENTIFICATION:
+- Sudden wilting of plant
+- Brown discolouration of vascular tissue (cut stem — brown ring visible)
+- More severe in light soils and repeated cotton cultivation
+
+MANAGEMENT:
+- Crop rotation (avoid cotton after cotton)
+- Seed treatment with Trichoderma viride 4 g/kg seed
+- Soil application: T. viride 5 kg/ha at sowing
+
+6.4 ALTERNARIA LEAF BLIGHT
+- Brown circular spots with yellow halo
+- Worse after heavy rains
+MANAGEMENT:
+- Mancozeb 75 WP: 2 g/litre spray
+
+=======================================================================
+SECTION 7: INTEGRATED PEST MANAGEMENT (IPM) CALENDAR
+=======================================================================
+
+PRE-SOWING:
+- Deep summer ploughing (May–June) to destroy soil pests
+- Apply FYM + Trichoderma
+
+VEGETATIVE STAGE (0–45 DAS):
+- Install pheromone traps
+- Monitor for jassids, aphids
+- No insecticide if natural enemies present
+
+SQUARING STAGE (45–70 DAS):
+- Scout for bollworm eggs
+- Apply only at ETL
+
+FLOWERING AND BOLL DEVELOPMENT (70–120 DAS):
+- Monitor for pink bollworm
+- Avoid spraying during peak flowering (9 AM – 12 PM)
+
+BOLL OPENING (120+ DAS):
+- Stop all pesticide applications
+- Harvest only fully open bolls
+
+=======================================================================
+HARVEST AND POST-HARVEST:
+=======================================================================
+- Pick cotton early morning (dew removes natural colour)
+- Separate grades: S-6, MCU-5, J-34 (different prices)
+- Avoid storing wet cotton — aflatoxin contamination risk
+- Minimum Support Price (MSP) 2024-25: Medium Staple ₹7,121/quintal,
+  Long Staple ₹7,521/quintal
+
+=======================================================================
+Contact: ICAR-CICR, Nagpur — Phone: 0712-2500430 | www.cicr.org.in
+Dr. Panjabrao Deshmukh Krishi Vidyapeeth, Akola — www.pdkv.ac.in
+PJTSAU, Hyderabad — www.pjtsau.edu.in
+=======================================================================

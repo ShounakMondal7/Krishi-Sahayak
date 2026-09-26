@@ -1,0 +1,227 @@
+ICAR TECHNICAL BULLETIN — Mustard (Rapeseed-Mustard) Cultivation for Rajasthan, Haryana, and Madhya Pradesh
+Source: ICAR-Directorate of Rapeseed-Mustard Research (DRMR), Bharatpur, Rajasthan
+Document Reference: ICAR-DRMR/Tech/2024/RJ-HR-MP-01
+
+Mustard (Brassica juncea) is India's most important oilseed after soybean. Rajasthan alone contributes
+46% of India's mustard production. UP, Haryana, MP, and West Bengal are other major producers.
+India produces 8–9 million tonnes of mustard annually. Mustard oil is the primary cooking oil in
+North India (used by over 400 million people daily).
+
+=======================================================================
+SECTION 1: RECOMMENDED VARIETIES
+=======================================================================
+
+RAJASTHAN:
+1. RH 749 (Giriraj): Most popular in Rajasthan
+   - Duration: 125–130 days | Yield: 22–28 q/ha
+   - Bold seed | High oil content (40%)
+   - White rust resistant
+   
+2. RH 30: Old reliable variety | Yield 18–22 q/ha
+3. NRC DR-2 (Navgold): High oil (42%) | Sclerotinia resistant
+4. RH 0749: Early maturing
+
+HARYANA:
+1. RH 8113: Most popular | Yield 20–25 q/ha
+2. PHR 126 (Pusa Bold): Bold seed, good oil quality
+3. Varuna (T 59): Classic variety, widely adapted
+
+UTTAR PRADESH:
+1. Pusa Bold (Bio-902): High yielding | Aphid tolerant
+2. Kranti (MLK 2): Suitable for late sowing
+
+MADHYA PRADESH:
+1. JM 1: Good for black cotton soil
+2. Ashirwad (JD 6): Yield 20–22 q/ha
+
+=======================================================================
+SECTION 2: SOWING AND AGRONOMY
+=======================================================================
+
+SOWING DATES:
+| State           | Optimal            | Late               |
+|----------------|-------------------|--------------------|
+| Rajasthan      | 1–25 October       | After 1 November   |
+| Haryana/Delhi  | 1–15 October       | After 25 October   |
+| UP             | 5–25 October       | After 1 November   |
+| MP             | 10 Oct – 5 Nov     | After 15 November  |
+
+EACH WEEK DELAY = 2–3 q/ha YIELD LOSS.
+
+SEED RATE:
+- Timely sowing: 4 kg/ha (broadcast) or 3 kg/ha (line sowing)
+- Late sowing: 5–6 kg/ha
+- Line sowing with seed drill gives 15–20% higher yield than broadcast
+
+SPACING: 45 cm × 15 cm (line sowing)
+
+SEED TREATMENT:
+1. Thiram 75% WS: 3 g/kg seed (seed-borne Alternaria prevention)
+2. Imidacloprid 70% WS: 5 ml/kg seed (aphid and diamond back moth protection)
+
+FIELD PREPARATION:
+- 1 deep ploughing + 2 light harrowings
+- Apply FYM 10–15 t/ha as basal
+- Avoid excessively fine seedbed (causes soil crusting after rain)
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+RECOMMENDED DOSE:
+| Nutrient | Irrigated   | Rain-fed   |
+|---------|------------|-----------|
+| N       | 80–100 kg  | 40 kg     |
+| P₂O₅   | 40–60 kg   | 30 kg     |
+| K₂O    | 30–40 kg   | 20 kg     |
+| S       | 20–40 kg   | 20 kg     |
+
+SULPHUR IS CRITICAL FOR MUSTARD:
+- Mustard is a high sulphur-demanding crop (glucosinolate synthesis)
+- Deficiency: Yellowing of young leaves, reduced oil content
+- Apply 20–40 kg S/ha as gypsum (single super phosphate also contains S)
+- Foliar: Ammonium sulphate 2% spray at flowering
+
+SPLIT APPLICATION OF N:
+- Basal: 50% N + full P + full K
+- At first irrigation (25–30 DAS): 50% N
+
+BORON APPLICATION:
+- 0.2% Borax spray at flowering stage
+- Improves siliqua (pod) set significantly
+
+=======================================================================
+SECTION 4: IRRIGATION
+=======================================================================
+
+- Mustard is moderately drought-tolerant
+- 2 irrigations give highest efficiency:
+  1. At 30–35 DAS (rosette/branching stage) — most critical
+  2. At 55–60 DAS (flowering stage)
+- Do NOT irrigate at podding/grain filling (lodging risk)
+- Excess irrigation after pod formation → lodging and Sclerotinia
+
+=======================================================================
+SECTION 5: MAJOR DISEASES
+=======================================================================
+
+5.1 ALTERNARIA BLIGHT (Alternaria brassicae and A. brassicicola)
+MOST COMMON disease of mustard.
+
+IDENTIFICATION:
+- Dark brown to black circular spots on leaves, stems, and siliquae (pods)
+- Yellow halo around spots (on leaves)
+- Severe on siliquae — seeds shrivel, oil content drops
+- Worse after morning dew or intermittent rains
+
+MANAGEMENT:
+- Seed treatment with Thiram (preventive)
+- First spray at 50% flowering: Iprodione 50 WP 1 g/litre
+- Second spray at siliqua formation: Mancozeb 75 WP 2.5 g/litre
+- Chlorothalonil 75 WP: 2 g/litre as alternative
+- Avoid overhead irrigation (sprinkler wets leaves → promotes Alternaria)
+
+5.2 WHITE RUST (Albugo candida)
+IDENTIFICATION:
+- White blister-like pustules on lower leaf surface
+- Yellowing on upper surface above pustules
+- "Staghead" deformation of inflorescence (most characteristic)
+- Severe in cool, humid conditions (November–December)
+
+MANAGEMENT:
+- Metalaxyl-M + Mancozeb: 2 g/litre spray at first appearance
+- Grow resistant varieties: RH 749 (moderately resistant)
+- Avoid excess nitrogen and waterlogging
+
+5.3 SCLEROTINIA STEM ROT (Sclerotinia sclerotiorum)
+IDENTIFICATION:
+- Water-soaked lesion on stem — rapidly girdling the stem
+- White cotton-like mycelium + black rat-dropping sclerotia inside stem
+- Plant wilts and falls (lodging of stems)
+- Worse in heavy dew, foggy conditions (January–February)
+
+MANAGEMENT:
+- Avoid dense sowing and waterlogging
+- Carbendazim 50 WP: 1 g/litre spray (preventive at flowering)
+- Tebuconazole 25.9 EC: 1 ml/litre (curative)
+- Crop rotation (peas → mustard rotation is HIGH RISK for Sclerotinia)
+
+5.4 DOWNY MILDEW (Peronospora brassicae)
+IDENTIFICATION:
+- Angular yellow patches on upper leaf surface
+- Grey-purple sporulation on lower leaf surface
+
+MANAGEMENT:
+- Metalaxyl 0.25% spray at first signs
+
+=======================================================================
+SECTION 6: MAJOR PESTS
+=======================================================================
+
+6.1 APHIDS (Lipaphis erysimi) — Mustard Aphid
+THE MOST IMPORTANT PEST of mustard — can cause 50–70% yield loss.
+
+IDENTIFICATION:
+- Greyish-green aphids in large colonies on growing tips and pods
+- Yellowing, curling, and stunting of tips
+- Honeydew secretion → sooty mould
+- Peak damage: January–February (flowering stage)
+
+ETL: 51 aphids per 10 cm tip / plant
+
+MANAGEMENT:
+- Pusa Bold variety has some aphid tolerance
+- Imidacloprid 17.8 SL: 150 ml/acre spray
+- Thiamethoxam 25 WG: 40 g/acre
+- Dimethoate 30 EC: 300 ml/acre
+- Spray after 3 PM (bees most active before 3 PM — protect pollinators)
+- One well-timed spray usually sufficient
+
+NATURAL ENEMIES:
+- Syrphid flies, ladybird beetles, parasitoid wasps (Diaeretiella rapae)
+- Conserve natural enemies — avoid calendar-based spraying
+
+6.2 DIAMOND BACK MOTH (Plutella xylostella)
+IDENTIFICATION:
+- Small green caterpillars on leaf underside
+- "Window pane" feeding — skeletonize leaves
+
+MANAGEMENT:
+- Spinosad 45 SC: 75 ml/acre
+- Bacillus thuringiensis (Bt): 1 kg/acre
+- Avoid Cypermethrin (resistance developed)
+
+6.3 SAWFLY (Athalia lugens)
+- Black and yellow larvae eat leaves
+MANAGEMENT: Chlorpyrifos 20 EC 750 ml/acre
+
+=======================================================================
+SECTION 7: HARVEST AND PROCESSING
+=======================================================================
+
+HARVEST TIMING:
+- When 75% of siliquae (pods) turn yellowish-brown
+- Seeds inside should be hard and dark brown
+- Moisture: 20–22% at harvest
+- If delayed: Shattering loss (siliquae burst in hot/windy weather)
+
+THRESHING:
+- Combine harvester (set carefully — easy siliqua shattering)
+- Cylinder speed: 700–800 RPM
+- Traditional: Cut and windrow, then thresh with bullocks/machine
+
+STORAGE:
+- Dry to 8–9% moisture
+- Use polythene-lined bags or metal bins
+- Fumigation: Aluminium phosphide 3 tablets/tonne
+
+OIL EXTRACTION:
+- Expeller press: 38–42% oil yield
+- Residual cake: 38% protein — valuable animal feed (mustard cake)
+
+MSP 2024-25: ₹5,650/quintal
+
+=======================================================================
+Contact: ICAR-DRMR, Bharatpur, Rajasthan — Phone: 05644-247532 | www.drmr.icar.gov.in
+Rajasthan Agriculture Department, Jaipur — agriculture.rajasthan.gov.in
+=======================================================================

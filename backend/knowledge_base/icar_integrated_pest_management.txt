@@ -1,0 +1,164 @@
+ICAR TECHNICAL BULLETIN — Integrated Pest Management (IPM) & Plant Protection Protocols
+Source: Indian Council of Agricultural Research (ICAR) - National Centre for Integrated Pest Management (NCIPM), New Delhi
+Document Reference: ICAR-NCIPM/TB/2024/09 | Standardized Pan-India Advisory
+
+=======================================================================
+SECTION 1: FUNDAMENTALS OF INTEGRATED PEST MANAGEMENT (IPM)
+=======================================================================
+
+Integrated Pest Management (IPM) is an ecosystem-based strategy focusing on long-term prevention of pests through a combination of techniques: cultural controls, habitat manipulation, biological control agents, mechanical exclusion, and judicious, targeted chemical use only when economic thresholds are breached.
+
+CORE PILLARS OF ICAR-IPM:
+1. Cultural Practices: Crop rotation, trap cropping, intercropping, solarization, field sanitation, balanced fertilization.
+2. Mechanical & Physical Controls: Pheromone traps, light traps, sticky traps, bird perches, hand picking of egg masses and gregarious larvae.
+3. Biological Control: Conservation and augmentation of local parasitoids, predators, and entomopathogens (bacteria, fungi, viruses).
+4. Chemical Control (Last Resort): Selective, green-label or blue-label chemistries with minimal non-target toxicity, applied at precise Economic Threshold Levels (ETL).
+
+ECONOMIC THRESHOLD LEVEL (ETL) PRINCIPLE:
+- Economic Injury Level (EIL): Lowest pest population density that causes economic damage exceeding the cost of pest control.
+- Economic Threshold Level (ETL): Action threshold; pest density at which control measures must be initiated to prevent the population from reaching the EIL.
+- Universal Scouting Rule: Scout fields twice weekly using a 'W' or zig-zag pattern across 20 random representative plants per acre. Never apply broadcast chemical sprays without confirming that ETL benchmarks have been reached.
+
+=======================================================================
+SECTION 2: UNIVERSAL INSECT PEST SCOUTING & IDENTIFICATION
+=======================================================================
+
+1. SUCKING PEST COMPLEX:
+- Aphids (Aphis gossypii, Myzus persicae):
+  * Identification: Small (1–2 mm), pear-shaped soft-bodied insects, winged or wingless, yellow, green, or black. Clustered on tender shoots and leaf undersides.
+  * Symptoms: Leaf curling, stunting, excessive sticky honeydew secretion leading to black sooty mould (Capnodium sp.), transmission of viral diseases.
+  * ETL: 10% affected plants or 20 aphids/terminal shoot.
+- Thrips (Thrips tabaci, Scirtothrips dorsalis):
+  * Identification: Slender, microscopic (0.5–1.5 mm), fringed wings, yellow-brown to dark brown.
+  * Symptoms: Silvery-white translucent patches, upward leaf curling ("boat-shaped"), brown necrotic streaks, scar tissue on pods/fruits.
+  * ETL: 5–10 thrips/leaf or 5 thrips/flower bud.
+- Whiteflies (Bemisia tabaci):
+  * Identification: Minute (1 mm), moth-like insects covered in white powdery waxy secretion. Rapid fluttering when disturbed.
+  * Symptoms: Chlorotic yellow spotting, premature leaf drop, vector of devastating Gemini viruses (Yellow Mosaic Virus, Leaf Curl Virus).
+  * ETL: 5–8 adults/leaf before flowering; 10–12 adults/leaf after flowering.
+- Jassids / Leafhoppers (Amrasca biguttula biguttula):
+  * Identification: Tiny (2–3 mm), wedge-shaped, pale green insects moving diagonally when disturbed.
+  * Symptoms: "Hopperburn" — yellowing followed by downward cupping of leaf margins, brick-red necrosis, and leaf death.
+  * ETL: 1–2 nymphs/leaf.
+
+2. CHEWING & BORER PEST COMPLEX:
+- Helicoverpa armigera (Gram Pod Borer / American Bollworm / Fruit Borer):
+  * Identification: Stout caterpillar (30–40 mm), variable body colour (green, brown, yellow) with distinct longitudinal lateral stripes; adult moth has yellowish-brown wings with a dark kidney-shaped speck.
+  * Symptoms: Circular entry holes bored into buds, flowers, pods, and fruits; internal feeding with the caterpillar body partly hanging outside the hole.
+  * ETL: 1 larva/meter row length or 5% affected pods/fruits.
+- Spodoptera litura (Tobacco Caterpillar / Cutworm):
+  * Identification: Egg masses covered in brown waxy scales; gregarious young larvae are dark green; mature larvae (40–50 mm) are cylindrical, velvety black-green with bright yellow longitudinal stripes and black lateral triangles.
+  * Symptoms: Skeletonized leaves (papery white patches); older larvae devour whole leaves and crowns overnight.
+  * ETL: 1 egg mass/10 plants or 1–2 larvae/plant.
+- Spodoptera frugiperda (Fall Armyworm - FAW):
+  * Identification: Inverted white 'Y' mark on the dark head capsule; four raised black dots arranged in a square on the 8th abdominal segment.
+  * Symptoms: Severe whorl feeding, large ragged holes, heavy sawdust-like frass inside the central leaf whorl of maize/sorghum.
+  * ETL: 5% infested whorls in seedling to early vegetative stage; 10% in mid-whorl stage.
+- Stem Borers (Scirpophaga, Chilo, Sesamia):
+  * Symptoms: "Dead Heart" (drying and withering of the central whorl shoot in early stage; pulls out easily and smells foul) and "White Ear" / "Whitehead" (empty chaffy white panicles at reproductive stage).
+  * ETL: 5% dead hearts or 1 egg mass/sq meter.
+
+3. SOIL INSECT PESTS:
+- Termites (Odontotermes obesus):
+  * Symptoms: Wilting of plants in patches; hollowed-out root system and lower stem packed with moist soil galleries.
+- White Grubs (Holotrichia consanguinea):
+  * Identification: 'C'-shaped fleshy white grubs with dark brown head capsule and powerful mandibles, found in soil root zone (5–15 cm).
+  * Symptoms: Complete severing of primary and secondary roots; sudden lodging and death of standing plants in circular field patches.
+  * ETL: 1 grub/square meter.
+
+=======================================================================
+SECTION 3: BIOLOGICAL CONTROL AGENTS & BIO-PESTICIDES
+=======================================================================
+
+1. PARASITOIDS & PREDATORS:
+- Trichogramma chilonis / Trichogramma japonicum (Egg Parasitoids):
+  * Target: Eggs of lepidopteran borers (Helicoverpa, Spodoptera, Chilo, Scirpophaga).
+  * Application: Tricho-cards containing parasitized Corcyra eggs stapled to the underside of leaves @ 50,000 to 1,00,000 eggs/ha (equivalent to 5–6 cards/ha).
+  * Release Interval: 3–4 releases at 7–10 day intervals starting at early moth appearance. Never spray broad-spectrum insecticides within 7 days of release.
+- Chrysoperla carnea (Green Lacewing / Aphid Lion):
+  * Target: Aphids, whiteflies, thrips, jassids, mealybug crawlers, mite eggs.
+  * Application: Release 2nd instar grubs @ 10,000–15,000/ha or 2–3 larvae/plant.
+- Coccinella septempunctata & Cryptolaemus montrouzieri (Ladybird Beetles):
+  * Target: Soft-bodied sucking insects and mealybugs.
+  * Application: Cryptolaemus adults released @ 1,000–1,500 beetles/ha for severe mealybug infestations in cotton, papaya, and horticultural crops.
+
+2. ENTOMOPATHOGENIC FUNGI (EPF):
+- Beauveria bassiana (1.15% WP - 1x10^8 CFU/g):
+  * Target: Caterpillars, beetle grubs, weevils, grasshoppers, borer larvae.
+  * Dosage: 2.5 kg/ha or 5 g/litre of water. Apply during late afternoon (RH > 70%, temperature 22°C–30°C).
+- Metarhizium anisopliae (1.15% WP - 1x10^8 CFU/g):
+  * Target: Soil-dwelling pests, white grubs, root weevils, termites, pupating Spodoptera.
+  * Dosage: Soil application @ 2.5–5.0 kg/ha mixed with 500 kg well-rotted Farmyard Manure (FYM); incubated under shade for 7 days before soil incorporation.
+- Lecanicillium lecanii (formerly Verticillium lecanii) (1.15% WP):
+  * Target: Sucking insects, whitefly nymphs, scale insects, mealybugs, thrips.
+  * Dosage: 5 g/litre with 0.5 ml/L agricultural sticker/spreader.
+
+3. MICROBIAL ENTOMOPATHOGENS & BIO-FUNGICIDES:
+- Bacillus thuringiensis var. kurstaki (Bt) (5% WP / 8000 IU/mg):
+  * Target: Young lepidopteran larvae (1st to 3rd instar of Helicoverpa, Spodoptera, Plutella).
+  * Dosage: 1.0–1.5 kg/ha or 2 g/litre. Larvae ingest crystal endotoxin, leading to midgut paralysis within 2–4 hours and death in 48–72 hours.
+- Nuclear Polyhedrosis Viruses (NPV):
+  * HaNPV for Helicoverpa armigera @ 250–500 LE (Larval Equivalents)/ha.
+  * SlNPV for Spodoptera litura @ 250 LE/ha.
+  * Spray in late afternoon with 0.1% crude sugar or jaggery (UV protectant and feeding stimulant).
+- Trichoderma harzianum / Trichoderma viride (Bio-fungicides):
+  * Seed Treatment: 5–10 g/kg seed.
+  * Soil Application: 2.5 kg/ha mixed with 250 kg FYM for control of Rhizoctonia, Pythium, Fusarium, and Sclerotium root rot complexes.
+
+=======================================================================
+SECTION 4: BOTANICAL PESTICIDES & INDIGENOUS TECHNICAL KNOWLEDGE (ITK)
+=======================================================================
+
+1. NEEM-BASED FORMULATIONS (Azadirachtin):
+- Active Principles: Azadirachtin, salannin, meliantriol, nimbin.
+- Modes of Action: Oviposition deterrence, anti-feedant, insect growth regulation (ecdysone inhibition leading to moulting failure), repellent.
+- Commercial Formulations & Dosages:
+  * Azadirachtin 300 ppm (0.03% EC): 5 ml/litre
+  * Azadirachtin 1500 ppm (0.15% EC): 3 ml/litre
+  * Azadirachtin 10000 ppm (1.0% EC): 1.5–2.0 ml/litre
+  * Azadirachtin 50000 ppm (5.0% EC): 0.5 ml/litre
+- Neem Seed Kernel Extract (NSKE 5% Preparation):
+  * Grind 50 kg dry neem seed kernels into coarse powder.
+  * Soak in 100 litres of clean water overnight with 200 g soap powder/detergent.
+  * Stir vigorously, filter through muslin cloth, and make volume up to 1000 litres for 1 hectare application.
+
+2. VERIFIED INDIGENOUS FORMULATIONS:
+- Agniastra:
+  * Ingredients: 10 litres local cow urine, 2 kg crushed neem leaves, 500 g crushed tobacco leaves, 500 g crushed hot green chillies, 250 g crushed local garlic.
+  * Boil mixture for 20 minutes, ferment for 48 hours, strain. Dilute 2–3 litres in 100 litres water/acre against stubborn leaf-eating caterpillars and stem borers.
+- Dashaparni Kashayam:
+  * Broad-spectrum organic pest repellent fermented using leaves of 10 non-palatable plants (Neem, Karanj, Custard apple, Castor, Datura, Calotropis, Guava, Papaya, Lantana, Nerium) in cow dung and urine for 30 days. Spray @ 200 ml per 10 litres water.
+
+=======================================================================
+SECTION 5: SAFE CHEMICAL PESTICIDE STEWARDSHIP & RESISTANCE MANAGEMENT
+=======================================================================
+
+1. CIBRC TOXICITY CLASSIFICATION & LABEL PROTOCOLS:
+- Red Label (Extremely Toxic): Oral LD50 1–50 mg/kg. (Strictly restricted; prohibited in vegetables/fruits near harvest).
+- Yellow Label (Highly Toxic): Oral LD50 51–500 mg/kg. (Use with extreme caution and protective gear).
+- Blue Label (Moderately Toxic): Oral LD50 501–5000 mg/kg. (Standard agricultural formulations).
+- Green Label (Slightly Toxic): Oral LD50 > 5000 mg/kg. (Preferred for IPM and vegetable cultivation).
+
+2. PRE-HARVEST INTERVAL (PHI) / WAITING PERIOD:
+- Minimum mandatory duration between final pesticide spray and crop harvest to ensure residues drop below Maximum Residue Limits (MRL):
+  * Chlorantraniliprole 18.5 SC: 1–3 days in vegetables
+  * Emamectin benzoate 5 SG: 3 days in okra, tomato, cabbage
+  * Spinosad 45 SC: 3 days
+  * Imidacloprid 17.8 SL: 7–15 days
+  * Mancozeb 75 WP: 7 days
+  * Hexaconazole 5 EC: 15–20 days
+
+3. INSECTICIDE RESISTANCE ACTION COMMITTEE (IRAC) ROTATION:
+- Never apply insecticides with the same Mode of Action (MoA) consecutively.
+- Rotate between diverse IRAC Groups:
+  * Group 1 (Organophosphates & Carbamates: Acetylcholinesterase inhibitors)
+  * Group 4A (Neonicotinoids: Nicotinic acetylcholine receptor competitive modulators)
+  * Group 5 (Spinosyns: Nicotinic acetylcholine receptor allosteric modulators)
+  * Group 6 (Avermectins / Emamectin: Glutamate-gated chloride channel allosteric modulators)
+  * Group 28 (Diamides / Chlorantraniliprole, Flubendiamide: Ryanodine receptor modulators)
+
+4. APPLICATION EQUIPMENT & PERSONAL SAFETY:
+- Sprayer Calibration: Use Hollow Cone Nozzles for foliar insecticides and fungicides (fine droplets for canopy coverage); use Flat Fan Nozzles strictly for herbicide sprays.
+- PPE Mandate: Chemical-resistant nitrile gloves, face shield or goggles, carbon-filter respirator, full-sleeve apron, rubber gumboots.
+- Spraying Conditions: Apply during early morning (6:00 AM–9:00 AM) or late afternoon (4:00 PM–6:30 PM). Never spray against wind direction or during high noon temperatures (> 35°C) to prevent chemical vaporization, phytotoxicity, and pollinator mortality.
+- Empty Container Disposal: Triple rinse empty pesticide containers, puncture bottom to prevent reuse, and dispose of in designated hazardous agricultural collection bins.

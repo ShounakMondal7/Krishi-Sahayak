@@ -1,0 +1,233 @@
+ICAR TECHNICAL BULLETIN — Wheat Cultivation Guide for North Indian Farmers
+Source: ICAR-Indian Institute of Wheat and Barley Research (IIWBR), Karnal, Haryana
+Document Reference: ICAR-IIWBR/Tech/2024/PB-HY-UP-01
+
+Wheat is the second most important food crop of India after rice. Punjab, Haryana, and Uttar Pradesh
+together contribute about 70% of total wheat production. India produces 107-110 million tonnes of wheat
+annually. This bulletin covers variety selection, crop management, pest and disease control.
+
+=======================================================================
+SECTION 1: RECOMMENDED WHEAT VARIETIES — ZONE-WISE
+=======================================================================
+
+NORTH WESTERN PLAINS ZONE (Punjab, Haryana, Western UP, Rajasthan):
+1. HD 3086 (Pusa Gautami):
+   - Released: 2015 | Duration: 155–160 days
+   - Yield: 55–60 q/ha (irrigated)
+   - Resistant to Yellow Rust, Leaf Rust
+   - Protein content: 12.0% | Chapati quality: Excellent
+   
+2. DBW 222 (Karan Narendra):
+   - Released: 2019 | Duration: 152–157 days
+   - Yield: 60–65 q/ha | BEST VARIETY CURRENTLY
+   - Resistant to all three rusts (yellow, brown, stem)
+   - Heat tolerant — good for late sowing
+   
+3. HD 2967:
+   - Most widely grown variety in India
+   - Yield: 50–55 q/ha | Duration: 155–160 days
+   - Good chapati making quality
+   - Susceptible to Yellow Rust — needs fungicide spray
+   
+4. PBW 723 (Punjab):
+   - Yield: 55–60 q/ha
+   - Excellent grain quality, bold grains
+   - Recommended for Punjab only
+
+NORTH EASTERN PLAINS ZONE (Eastern UP, Bihar, Jharkhand, W. Bengal):
+1. HD 2781:
+   - Yield: 45–50 q/ha | Late sown suitable
+   
+2. K 307 (Uttar Pradesh):
+   - Yield: 40–45 q/ha | Drought tolerant
+   - Suitable for rain-fed conditions
+
+LATE SOWN (After 25 December) VARIETIES:
+1. DBW 173 (Karan Vidya):
+   - Designed for late sowing; short duration (130 days)
+   - Yield: 40–45 q/ha even when sown in January
+   
+2. PBW 752:
+   - Yield: 45–50 q/ha | Heat tolerant, late sowing
+
+=======================================================================
+SECTION 2: SOWING SEASON AND PREPARATION
+=======================================================================
+
+OPTIMAL SOWING DATES:
+| Zone                    | Timely Sowing     | Late Sowing      |
+|------------------------|-------------------|------------------|
+| Punjab, Haryana        | 1–25 November     | After 10 Dec     |
+| Western UP             | 1–25 November     | After 15 Dec     |
+| Eastern UP, Bihar      | 15 Nov – 5 Dec    | After 20 Dec     |
+| Rajasthan              | 1–25 November     | After 10 Dec     |
+| Madhya Pradesh         | 15 Nov – 15 Dec   | After 25 Dec     |
+
+Every week delay after optimal date = 35–40 kg/ha yield loss.
+
+SEED RATE:
+- Timely sown: 100 kg/ha (bold varieties) or 125 kg/ha (small grain)
+- Late sown: 125 kg/ha (increased seed rate compensates for lost time)
+- Raised beds: 80 kg/ha
+
+SEED TREATMENT (mandatory):
+1. Thiram 75% + Carboxin 37.5% (Vitavax): 2.5 g/kg seed
+   - Prevents seed-borne diseases (Loose Smut, Karnal Bunt)
+2. Imidacloprid 70% WS: 5 ml/kg seed — for aphid/shoot fly protection
+3. Trichoderma viride: 5 g/kg seed — for soil-borne disease control
+
+FIELD PREPARATION:
+- Deep ploughing once in 3 years to break hard pan
+- 2–3 discing + planking (to get fine seedbed)
+- Apply FYM/compost: 10–15 t/ha as basal dressing
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+RECOMMENDED DOSE (Irrigated, Timely Sown):
+| Nutrient | Amount      | Application Timing               |
+|---------|-------------|----------------------------------|
+| N       | 120 kg/ha   | 1/3 basal + 1/3 at 1st irrigation + 1/3 at 2nd irr |
+| P₂O₅   | 60 kg/ha    | Full basal (before sowing)        |
+| K₂O    | 40 kg/ha    | Full basal                        |
+| S       | 20 kg/ha    | Basal (as gypsum)                |
+| Zn      | 25 kg/ha    | ZnSO₄ — basal every 3 years      |
+
+PRACTICAL DOSES PER ACRE:
+- Urea: 65 kg (basal 22 + 1st irrigation 22 + 2nd irrigation 21 kg)
+- DAP: 55 kg (full basal)
+- MOP: 25 kg (full basal)
+
+LATE SOWN DOSE (reduced):
+- N: 80 kg/ha | P: 40 kg/ha | K: 30 kg/ha
+
+FOLIAR APPLICATION (for quality boost):
+- 2% Urea spray at flowering + grain filling stage
+- 0.5% ZnSO₄ spray at tillering if zinc deficiency (yellow bands on leaves)
+
+ZERO TILLAGE WHEAT (after paddy):
+- Saves Rs 2000–2500/acre in tillage cost
+- No burning stubble — maintains soil health
+- Same fertilizer dose; apply after sowing via top-dressing
+- Use Furrow Irrigated Raised Bed (FIRB) for water saving
+
+=======================================================================
+SECTION 4: IRRIGATION MANAGEMENT
+=======================================================================
+
+Critical irrigation stages (6 total for optimal yield):
+1. Crown Root Initiation (CRI): 20–22 DAS — MOST CRITICAL
+2. Tillering: 40–45 DAS
+3. Jointing/Stem Elongation: 60–65 DAS
+4. Flowering/Anthesis: 85–90 DAS — SECOND MOST CRITICAL
+5. Milk Stage: 100–105 DAS
+6. Dough Stage: 115–120 DAS
+
+WATER SAVING APPROACHES:
+- Tensiometer-based irrigation (irrigate when soil moisture at 60 kPa)
+- Bed and furrow irrigation (saves 25% water)
+- Sprinkler irrigation (saves 30% water)
+- Skip furrow method
+
+=======================================================================
+SECTION 5: MAJOR DISEASES AND MANAGEMENT
+=======================================================================
+
+5.1 YELLOW RUST / STRIPE RUST (Puccinia striiformis)
+Most important disease — can cause 40–70% yield loss in epidemics.
+
+IDENTIFICATION:
+- Yellow-orange pustules arranged in STRIPES along the leaf (distinct feature)
+- Appears first on upper leaf surface
+- Cool, moist weather (10–15°C) favours spread
+- Most severe in Punjab, Himachal Pradesh foothills
+
+MANAGEMENT:
+- Grow resistant varieties: DBW 222, HD 3086
+- Monitor from December onwards
+- Propiconazole 25 EC: 0.1% spray (500 ml/200 litres water/acre)
+- Tebuconazole 25.9% EC: 200 ml/acre spray
+- Spray within 7 days of first observation — delayed spraying reduces effectiveness
+
+5.2 BROWN RUST / LEAF RUST (Puccinia recondita)
+IDENTIFICATION:
+- Circular-oval orange pustules randomly scattered (NOT in stripes)
+- Appears later than Yellow Rust (February–March)
+
+MANAGEMENT:
+- Propiconazole 25 EC: 200 ml/acre
+- Spray at flag leaf emergence if >5% leaf area infected
+
+5.3 STEM RUST (Puccinia graminis)
+- Ug99 race — international threat, present in Karnataka hills
+- Dark reddish-brown pustules on stem and leaf sheath
+
+5.4 LOOSE SMUT (Ustilago tritici)
+IDENTIFICATION:
+- Entire ear replaced by black powdery mass (smut spores)
+- Spreads via seed
+
+MANAGEMENT:
+- Hot Water Seed Treatment: soak seed 4 hours in water at 47°C
+- Vitavax seed treatment (prevents 95% infection)
+
+5.5 KARNAL BUNT (Tilletia indica)
+IDENTIFICATION:
+- Some grains in ear partially converted to black, foul-smelling mass
+- Quarantine disease — affects marketability
+
+MANAGEMENT:
+- Propiconazole 25 EC: 200 ml/acre spray at ear emergence
+- Use certified disease-free seed
+
+5.6 POWDERY MILDEW (Blumeria graminis)
+- White powdery patches on leaf surface
+- Prevalent in cool, humid conditions
+- Propiconazole or Triadimefon 25 WP: 200 g/acre
+
+=======================================================================
+SECTION 6: MAJOR PESTS
+=======================================================================
+
+6.1 APHIDS (Sitobion avenae, Rhopalosiphum padi)
+ETL: 20 aphids per ear (flag leaf stage)
+
+MANAGEMENT:
+- Imidacloprid 17.8 SL: 150 ml/acre spray
+- Thiamethoxam 25 WG: 40 g/acre
+- Conserve natural enemies (ladybird beetles, parasitoid wasps)
+- Avoid pre-anthesis insecticide sprays (to protect pollinators)
+
+6.2 TERMITES (Odontotermes spp.)
+- Severe in light sandy soils, dry seasons
+MANAGEMENT:
+- Chlorpyrifos 20 EC: 1 litre/acre drench in furrows at sowing
+
+6.3 SHOOT FLY (Atherigona spp.)
+- Young plants cut at base (deadheart symptom)
+MANAGEMENT:
+- Imidacloprid seed treatment prevents early-stage damage
+
+=======================================================================
+SECTION 7: HARVESTING AND THRESHING
+=======================================================================
+
+HARVEST TIMING:
+- Hard dough stage — physiological maturity
+- Grain moisture: 20–25% (at harvest), 12–14% (for storage)
+- Harvesting during full ripeness → maximum yield
+
+THRESHING:
+- Combine harvesters (most efficient — 20–25 acres/day)
+- Set concave clearance properly to reduce broken grains
+
+STORAGE:
+- Dry grain to 12% moisture before storage
+- Use metal bins or CAP (Cover and Plinth) storage
+- Aluminium phosphide (Celphos): 3 tablets per tonne for 7 days fumigation
+
+=======================================================================
+Contact: ICAR-IIWBR, Karnal — Phone: 0184-2267538 | www.iiwbr.icar.gov.in
+Punjab Agriculture University, Ludhiana — www.pau.edu
+=======================================================================

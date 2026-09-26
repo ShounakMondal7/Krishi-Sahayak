@@ -1,0 +1,139 @@
+ICAR TECHNICAL BULLETIN — Commercial Floriculture: Marigold, Rose & Gerbera Cultivation
+Source: Indian Council of Agricultural Research (ICAR) - Directorate of Floricultural Research (DFR), Pune & Division of Floriculture, ICAR-IARI, New Delhi
+Document Reference: ICAR-DFR/TB/2024/06 | Commercial Floriculture Production Manual
+
+=======================================================================
+SECTION 1: COMMERCIAL MARIGOLD PRODUCTION (Tagetes erecta & T. patula)
+=======================================================================
+
+Marigold is one of the most lucrative commercial loose flower crops in India, widely utilized for religious offerings, festive garlands, decorative arrangements, and industrial extraction of lutein/xanthophyll carotenoid pigments (poultry feed and nutraceuticals).
+
+1. SPECIES CLASSIFICATION:
+- African Marigold (Tagetes erecta): Tall (60–100 cm), large globular flower heads (diameter 6–12 cm), shades of orange, golden, yellow, and bronze. Primary commercial loose flower choice.
+- French Marigold (Tagetes patula): Dwarf, bushy (20–40 cm), smaller flowers (diameter 3–5 cm), multi-colored petals (red-orange with yellow margins). Suited for bedding, pots, and borders.
+
+2. AGRO-CLIMATIC & SOIL REQUIREMENTS:
+- Climate: Mild, tropical to subtropical climate with abundant sunshine (6–8 hours daily).
+- Optimal Temperature: 15°C to 28°C. Temperatures above 35°C severely restrict floral bud initiation and cause small, deformed flowers with reduced petal density. Night temperatures < 10°C stall vegetative growth.
+- Soil: Deep, fertile, well-drained sandy loam or clay loam with high organic matter. Optimum soil pH is 6.5 to 7.5. Avoid saline soils (EC > 1.5 dS/m causes marginal leaf burn and root necrosis).
+
+3. HIGH-YIELDING COMMERCIAL CULTIVARS (ICAR RELEASES):
+- Pusa Narangi Gainda (IARI): Outstanding open-pollinated variety; deep orange flowers; compact carnation-type blooms (diameter 7–8 cm); 120–130 days to maturity; yield 25–30 tonnes loose flowers/ha.
+- Pusa Basanti Gainda (IARI): Sulfur-yellow, compact globe flowers; matures in 130–140 days; yield 25–28 tonnes/ha.
+- Arka Bangara (ICAR-IIHR): High xanthophyll yield; brilliant golden-yellow flowers; yield 30–35 tonnes/ha; suited for industrial pigment extraction.
+- Arka Agni: Bright orange petals with exceptional petal density; tolerant to Alternaria blight; yield 28–30 tonnes/ha.
+- Bidhan Marigold-1 & 2 (BCKV/ICAR): Excellent adaptation to eastern and southern plains; resistant to collar rot.
+- Commercial F1 Hybrids: Maxima Yellow, Inca Orange, Tennis Ball series (compact uniform plants, bold flowers, yield up to 40 tonnes/ha).
+
+4. NURSERY MANAGEMENT & PLANTING GEOMETRY:
+- Seed Rate: 1.0 to 1.5 kg/ha for open-pollinated varieties; 250 to 300 g/ha for F1 hybrids.
+- Sowing Seasons:
+  * Rainy Season Crop: Sowing in June; transplanting in July; peak harvest during Dussehra/Diwali (Oct–Nov).
+  * Winter Season Crop: Sowing in September; transplanting in October; peak harvest Dec–Feb.
+  * Summer Season Crop: Sowing in January; transplanting in February; harvest April–May.
+- Transplanting: Seedlings ready at 3 to 4 weeks after sowing (height 10–12 cm with 3–4 true leaves).
+- Spacing: 45 cm x 45 cm for medium types; 60 cm x 45 cm for vigorous tall African varieties (density: ~37,000–49,000 plants/ha).
+
+5. CRITICAL CULTURAL PRACTICE — PINCHING:
+- Definition: Removal of the terminal vegetative shoot apex (top 2–3 cm) leaving 5–6 pairs of leaves.
+- Timing: Performed strictly at 30 to 35 days after transplanting (DAT) when plants are well established.
+- Physiological Impact: Disrupts apical dominance by lowering auxin concentration at the apex, stimulating cytokinin release that forces 10 to 15 strong, lateral flowering branches to emerge simultaneously.
+- Result: Increases flower yield per plant by 40% to 60% compared to unpinched plants (which produce a single dominant apical flower and few weak side shoots).
+
+6. NUTRIENT & WATER MANAGEMENT:
+- Fertilizer Schedule: 120 kg N : 60 kg P2O5 : 60 kg K2O /ha + 20 tonnes FYM.
+  * Basal: 50% N + 100% P2O5 + 100% K2O.
+  * Top Dressing: 25% N at 30 DAT (post-pinching); 25% N at 50 DAT (flower bud initiation).
+- Irrigation: Irrigate immediately after transplanting; subsequent irrigations at 6–8 day intervals during winter and 4–5 days in summer. Avoid overhead flooding during flowering to prevent flower rot.
+
+7. PEST & DISEASE MANAGEMENT:
+- Damping-Off (Pythium / Rhizoctonia in nursery): Drench nursery beds with Copper Oxychloride 50 WP @ 2.5 g/L or Metalaxyl-Mancozeb @ 2.0 g/L.
+- Alternaria Leaf Spot & Flower Blight (Alternaria zinniae / A. tagetica): Dark brown circular lesions on leaves expanding to outer ray florets causing flower decay. Spray Azoxystrobin 23 SC @ 1 ml/L or Mancozeb 75 WP @ 2.5 g/L.
+- Two-Spotted Spider Mite (Tetranychus urticae): Heavy webbing and chlorotic stippling during hot, dry summer months. Spray Spiromesifen 22.9 SC @ 1 ml/L or Propargite 57 EC @ 2 ml/L.
+
+=======================================================================
+SECTION 2: PROTECTED GREENHOUSE CUT ROSE PRODUCTION (Rosa hybrida)
+=======================================================================
+
+1. GREENHOUSE INFRASTRUCTURE & CLIMATE PARAMETERS:
+- Structure: Naturally Ventilated Polyhouse (NVPH) covered with 200-micron UV-stabilized, anti-drip, diffused polyethylene film.
+- Temperature Regime:
+  * Daytime: 24°C to 28°C (photosynthetic optimum).
+  * Nighttime: 15°C to 18°C (cool nights promote carbohydrate conservation, stem elongation, and rich petal coloration).
+- Relative Humidity: 60% to 70%. High humidity (> 85%) promotes Botrytis and powdery mildew; low humidity (< 40%) triggers mite outbreaks and petal burn.
+- Light Intensity: 45,000 to 60,000 lux with photoperiod of 12 hours.
+
+2. BED ARCHITECTURE & PLANTING DENSITY:
+- Raised Beds: Height 35–40 cm, top width 90 cm, bottom width 100 cm, pathway width 50–60 cm.
+- Growing Media: Soil-based (red soil + cocopeat + rice husk + well-rotted FYM in 2:1:1:1 ratio) with soil pH 6.0–6.5 and EC < 1.0 dS/m. Sterilize with Hydrogen Peroxide with Silver ions (0.5%) before planting.
+- Planting Geometry: Two-row planting system per bed at 30 cm between rows and 15–20 cm between plants within rows (plant density: 7 to 8 plants/m² of net bed area).
+
+3. TOP COMMERCIAL DUTCH CUT ROSE VARIETIES:
+- Passion / Grand Gala: Classic deep crimson red; long sturdy stems (70–90 cm); high petal count; primary Valentine's Day export cultivar.
+- Top Secret: Velvety dark red, high-centered bloom; excellent vase life (12–14 days).
+- Avalanche: Pure pristine white with subtle green tint on guard petals; huge head size; high yield (200–220 stems/m²/year).
+- Gold Strike: Vibrant canary yellow; compact foliage; thrips-tolerant.
+- Revival: Soft candy pink; long vase life.
+- Taj Mahal: Bright cherry red; vigorous grower under Indian polyhouse conditions.
+
+4. CANOPY ARCHITECTURE — THE ARCHING / BENDING TECHNIQUE:
+- Principle: Cut roses produce strong basal shoots ("bottom breaks") only when the root crown receives high concentrations of carbohydrates and auxins.
+- Execution:
+  * Within 60–75 days after planting budded plants, select 2–3 upright structural mother stems.
+  * Thin, blind, weak, or non-commercial side shoots are NOT pruned; instead, they are gently bent downwards horizontally towards the pathway without snapping the cambium/vascular bundle.
+  * Function: These bent shoots ("arching canopy") act as a permanent leaf factory, synthesizing photosynthates and translocating sucrose straight into the basal crown.
+  * Result: The crown generates thick, thumb-thick "bottom breaks" that shoot vertically upwards into prime A-grade export cut stems (stem length 60–90 cm).
+
+5. POST-HARVEST HARVESTING & PULSING:
+- Harvest Maturity Stage: Stage 2 (Tight bud stage: 1 to 2 outer petals have just begun to uncurl from the bud; calyx completely reflexed).
+- Timing: Early morning (6:00 AM–8:00 AM) when plant tissue is fully turgid. Cut with sharp secateurs leaving 2 five-leaflet leaves on the stem.
+- Immediate Hydration: Place cut stems immediately into clean plastic buckets filled with sterilized cold water (pH adjusted to 3.5–4.0 using Citric Acid) containing 50 ppm active chlorine or 8-HQC (8-hydroxyquinoline citrate) @ 200 ppm.
+- Pulsing Treatment: Stand stem bases in a solution of 3% Sucrose + 200 ppm 8-HQS at 2°C–4°C for 4 to 6 hours inside a cold room before grading and packing.
+
+6. DISEASE MANAGEMENT:
+- Powdery Mildew (Podosphaera pannosa): White powdery fungal talc on young leaves, buds, and stems, causing curling and distortion. Spray Difenoconazole 25 EC @ 0.5 ml/L, or Penconazole 10 EC @ 1 ml/L, or Azoxystrobin @ 1 ml/L.
+- Downy Mildew (Peronospora sparsa): Purplish-red angular leaf spots under cool, humid conditions, causing sudden massive leaf drop. Spray Dimethomorph 50 WP @ 1 g/L or Cymoxanil 8% + Mancozeb 64% WP @ 2.5 g/L.
+- Rose Thrips (Frankliniella occidentalis): Browning, distortion, and scarring of flower petal margins. Spray Fipronil 5 SC @ 1.5 ml/L or Spinetoram 11.7 SC @ 1 ml/L.
+
+=======================================================================
+SECTION 3: PROTECTED GERBERA CULTIVATION (Gerbera jamesonii)
+=======================================================================
+
+1. CLIMATE & ENVIRONMENTAL PARAMETERS:
+- Daytime Temperature: 22°C to 25°C; Nighttime: 15°C to 18°C.
+- Relative Humidity: 65% to 75%.
+- Light: High light requirement (35,000–45,000 lux). Shading screens (50% shade) required during peak summer months.
+- Sensitivity: Highly intolerant of waterlogged, compact root zones and deep crown burial.
+
+2. MEDIA PREPARATION & FUMIGATION:
+- Growing Bed Dimensions: Raised beds of 40 cm height, 60–70 cm top width, 40 cm pathway width.
+- Substrate Composition: High porosity media comprising red loam soil + coco peat + sand + decomposed FYM in 2:1:1:1 ratio. Media porosity must exceed 50% with drainage percolation > 50 mm/hour. Media pH must be 5.5 to 6.5 with EC < 1.0 dS/m.
+- Soil Fumigation: Drench beds with Formalin (4%) or Hydrogen Peroxide with Silver ions (35 ml/L) 15 days before planting to eradicate root nematodes and soil fungal spores.
+
+3. TISSUE-CULTURED CULTIVARS:
+- Red: Pre-Intenzz, Red Bull, Sangria
+- Yellow: Dune, Panama, Starlight
+- Pink: Rosalin, Esmara, Balance
+- White: Silvester, Winter Queen
+- Orange: Dana Ellen, Balance
+
+4. THE GOLDEN RULE OF GERBERA PLANTING:
+- Crown Placement Mandate: At transplanting, the crown (collar region) of the tissue-cultured plantlet MUST remain 1.0 to 1.5 cm ABOVE the finished soil/media line.
+- CATASTROPHIC FAILURE RISK: If the crown is buried even 5 mm beneath the soil, water and silt accumulate in the heart of the rosette, resulting in 100% plant mortality from Crown Rot and Foot Rot within 3 to 4 weeks!
+- Planting Geometry: Two rows per bed at 30 cm x 30 cm spacing (density: 6–7 plants/m² of gross polyhouse area).
+
+5. FERTIGATION & PHYSIOLOGICAL DISORDER MANAGEMENT:
+- Nutrient Schedule: Fertigate daily through drip system using 1.5 g/m²/day of balanced 19:19:19 during vegetative phase, shifting to 15:8:35 or 16:8:32 during commercial flowering.
+- Magnesium (Mg) Requirement: Highly demanding; apply Magnesium Sulphate @ 0.5 g/m² weekly. Deficiency shows as bright interveinal chlorosis on older leaves.
+- Boron (B) Requirement: Boron deficiency causes deformed, brittle flower heads and "Bent Neck" (pedicel collapses right below the flower capitulum). Spray Solubor (20% B) @ 1 g/L fortnightly.
+
+6. PEST & DISEASE MANAGEMENT:
+- Crown Rot / Foot Rot (Phytophthora cryptogea / Rhizoctonia solani): Sudden wilting and complete blackening of the crown and root cortex. Drench immediately with Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L or Fosetyl-Aluminium 80 WP @ 2.0 g/L.
+- Whiteflies (Bemisia tabaci): Vector of virus and sooty mould. Install yellow sticky traps (1 trap per 20 m²). Spray Diafenthiuron 50 WP @ 1.2 g/L or Pyriproxyfen 10 EC @ 1.5 ml/L.
+- Serpentine Leaf Miner (Liriomyza trifolii): White serpentine winding mines on leaf surface. Spray Abamectin 1.9 EC @ 0.5 ml/L or Cyromazine 75 WP @ 0.25 g/L.
+
+7. HARVESTING & PACKAGING:
+- Harvest Stage: When the outer 2 to 3 rows of disc florets are perpendicular to the flower stem.
+- Technique: Do not use knife/secateurs; pull and twist the stem cleanly sideways at the crown base (heel cut). This prevents leaving a rotting stem stub on the crown.
+- Flower Sleeve Protection: Slip each harvested flower head into an individual transparent micro-perforated polypropylene cup/sleeve to prevent ray floret bruising and entanglement during transit.
+- Cold Hydration: Place stems in clean water containing 50 ppm Sodium Hypochlorite at 4°C for 4 hours before carton packing. Expected vase life: 10 to 15 days.

@@ -1,0 +1,46 @@
+# ── Core API Framework ───────────────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+httpx==0.27.0
+
+# ── Database ─────────────────────────────────────────────────────────────────
+sqlalchemy[asyncio]==2.0.30
+asyncpg==0.29.0
+alembic==1.13.1
+
+# ── Validation & Config ───────────────────────────────────────────────────────
+pydantic==2.7.1
+pydantic-settings==2.2.1
+python-dotenv==1.0.1
+
+# ── Vector Store ─────────────────────────────────────────────────────────────
+chromadb==0.5.0
+
+# ── Embeddings ───────────────────────────────────────────────────────────────
+sentence-transformers==2.7.0
+
+# ── LLM ──────────────────────────────────────────────────────────────────────
+openai==1.30.1
+
+# ── Translation (IndicTrans2) ─────────────────────────────────────────────────
+transformers==4.41.0
+torch==2.3.0
+sentencepiece==0.2.0
+sacremoses==0.1.1
+# Fallback translation (dev only)
+googletrans==4.0.0rc1
+
+# ── Speech-to-Text & Text-to-Speech ──────────────────────────────────────────
+google-cloud-speech==2.26.0
+google-cloud-texttospeech==2.16.3
+
+# ── Document Processing ───────────────────────────────────────────────────────
+pdfminer.six==20221105
+langchain-text-splitters==0.2.0
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+aiofiles==23.2.1
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+tenacity==8.3.0

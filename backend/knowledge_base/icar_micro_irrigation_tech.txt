@@ -1,0 +1,138 @@
+ICAR TECHNICAL BULLETIN — Micro-Irrigation Engineering & Fertigation Management
+Source: Indian Council of Agricultural Research (ICAR) - Central Institute of Agricultural Engineering (CIAE), Bhopal & Precision Farming Development Centres (PFDC)
+Document Reference: ICAR-CIAE/TB/2024/04 | Engineering & Water Management Protocol
+
+=======================================================================
+SECTION 1: MICRO-IRRIGATION PRINCIPLES & COMPARATIVE METRICS
+=======================================================================
+
+Micro-irrigation is the targeted, low-pressure application of water through localized emitters directly to the active root zone of plants at frequent intervals, matching real-time crop evapotranspiration (ETc) requirements.
+
+1. COMPARATIVE WATER APPLICATION EFFICIENCIES:
+-----------------------------------------------------------------------------------------
+Irrigation Method        Application Efficiency   Water Savings vs Flood   Yield Increase
+-----------------------------------------------------------------------------------------
+Conventional Surface      35% – 45%               Baseline (0%)            Baseline
+Sprinkler Irrigation     75% – 85%               30% – 40%                15% – 25%
+Drip / Trickle System    90% – 95%               40% – 70%                25% – 50%
+Sub-surface Drip (SDI)   95% – 98%               50% – 75%                30% – 55%
+-----------------------------------------------------------------------------------------
+
+2. HYDROLOGICAL & AGRONOMIC ADVANTAGES:
+- Eliminates deep percolation, field channel seepage, and surface runoff losses.
+- Maintains root zone soil moisture permanently near Field Capacity (tension: 10–25 kPa), preventing soil saturation stress (hypoxia/asphyxiation) and moisture deficit stress.
+- Suppresses inter-row weed growth by leaving inter-space dry.
+- Enables cultivation on undulating terrain, rocky topography, and marginal sandy soils without extensive land leveling.
+- Reduces pest and fungal incidence by keeping plant foliage dry (unlike overhead flood or heavy furrow irrigation).
+
+=======================================================================
+SECTION 2: DRIP IRRIGATION SYSTEM ARCHITECTURE & COMPONENTS
+=======================================================================
+
+1. SYSTEM COMPONENT HIERARCHY:
+- Control Head Assembly: Water source pump, backflow preventer, air release valve, pressure relief valve, pressure gauges, bypass assembly.
+- Filtration Station: Primary physical barrier preventing emitter clogging.
+- Fertigation Station: Venturi injector, bypass fertilizer tank, or electrical dosing pump.
+- Conveyance Network:
+  * Mainline: Rigid PVC or HDPE pipes (diameter 63 mm to 90 mm, pressure rating PN 4 or PN 6 kg/cm²), buried 60–90 cm below soil surface.
+  * Sub-main Lines: Rigid PVC or HDPE (diameter 50 mm to 63 mm), fitted with isolation control valves, pressure regulators, and flush valves.
+  * Lateral Distribution Lines: Linear Low-Density Polyethylene (LLDPE), Class-II UV-stabilized (outer diameter 12 mm or 16 mm), laid along crop rows.
+- Distal Flushing Ends: Flush valves located at lateral terminations to discharge accumulated silt and particulates.
+
+2. FILTRATION UNIT SELECTION (CRITICAL SPECIFICATIONS):
+- Screen Filters (120 mesh / 130 microns):
+  * Application: Well water / groundwater containing coarse inorganic mineral particles, sand, and fine silt.
+  * Cleaning: Backwashed manually or automatically when differential pressure across filter exceeds 0.5 kg/cm².
+- Disc Filters (120 mesh / 130 microns):
+  * Application: Groundwater or open reservoir water with mixed mineral particles and light biological matter. Grooved synthetic discs compress to trap particles both on surface and in depth.
+- Media / Sand Filters (Silica Sand Grade 16–20, size 0.8–1.2 mm):
+  * Application: Surface water (rivers, canals, farm ponds, open tanks) heavily loaded with organic matter, live algae, zooplankton, and suspended organic debris.
+- Hydrocyclone Separator (Sand Separator):
+  * Application: Installed ahead of media/screen filters when borewell water pumps heavy loads of coarse sand (> 50 ppm). Operates on centrifugal vortex force with zero moving parts.
+
+3. EMITTER SELECTION & HYDRAULIC DESIGN:
+- Emitter Classification:
+  * Inline Drippers: Emitters factory-molded inside the seamless LLDPE lateral tube at fixed intervals (20 cm, 30 cm, 40 cm, 50 cm, 60 cm). Ideal for row crops, vegetables, pulses, sugarcane, cotton.
+  * Online Drippers: External drippers punched manually into the lateral line at arbitrary distances. Ideal for widely spaced horticultural orchards (mango, citrus, guava, banana, coconut).
+- Hydraulic Operating Types:
+  * Non-Pressure Compensating (Non-PC): Discharge varies directly with pressure. Suitable only for flat topography and short lateral runs (< 50 m).
+  * Pressure Compensating (PC): Built-in elastomeric silicone diaphragm regulates orifice size, ensuring completely uniform discharge (e.g. exactly 2.0 L/h) across an operating pressure range of 0.7 to 4.0 kg/cm² (bar). Essential for undulating terrain and long lateral runs (> 80–120 m).
+- Standard Discharge Rates & Crop Allocation:
+  * 1.2 to 1.6 L/h: Heavy clay soils; closely spaced vegetables (onion, garlic, carrot).
+  * 2.0 to 2.4 L/h: Standard loam/silt soils; tomato, brinjal, chilly, capsicum, cotton.
+  * 4.0 to 8.0 L/h: Sandy, porous soils with rapid infiltration; fruit trees, orchards.
+- Operating Pressures: Mainline: 2.5–3.5 kg/cm²; Lateral end pressure: Minimum 1.0–1.2 kg/cm².
+
+=======================================================================
+SECTION 3: SPRINKLER IRRIGATION SYSTEM ENGINEERING
+=======================================================================
+
+1. IMPACT SPRINKLER SYSTEMS:
+- Working Mechanism: High-velocity rotating water jet driven by a spring-loaded oscillating impact arm striking the water stream.
+- Operating Parameters:
+  * Nozzle Orifice: 3.2 mm to 4.8 mm diameter.
+  * Operating Pressure: 2.0 to 3.5 kg/cm² (28–50 psi).
+  * Discharge Rate: 1,000 to 2,500 litres per hour (LPH).
+  * Wetted Radius / Throw: 10 to 18 meters.
+- Layout Geometry: Triangular or square layout with 50% to 65% overlap of the wetted diameter to achieve Christiansen’s Coefficient of Uniformity (CU) > 82% under wind speeds < 8 km/h.
+- Best Suited Crops: Wheat, mustard, chickpea, groundnut, soybean, pearl millet, pasture fodder.
+
+2. MICRO-SPRINKLERS & SPRAY JETS:
+- Working Parameters: Operating pressure 1.5 to 2.5 kg/cm²; discharge 30 to 250 LPH; wetting diameter 2.0 to 6.0 m.
+- Application: Nurseries, leafy greens, onion, ginger, turmeric, polyhouse climate cooling, and fruit tree under-canopy micro-climate modification.
+
+3. RAINGUN SYSTEMS (HIGH-PRESSURE CANNONS):
+- Operating Parameters: Nozzle 12 to 24 mm; pressure 4.0 to 6.5 kg/cm²; discharge 15,000 to 45,000 LPH; throw radius 25 to 45 meters.
+- Suitable for sugarcane, fodder grass, tea estates, and large-acreage emergency drought relief.
+
+=======================================================================
+SECTION 4: FERTIGATION MANAGEMENT & WATER-SOLUBLE FERTILIZERS (WSF)
+=======================================================================
+
+1. FERTILIZER USE EFFICIENCY (FUE) COMPARISON:
+- Nitrogen (N): Broadcast: 30%–45%  --> Fertigation: 85%–92%
+- Phosphorus (P): Broadcast: 15%–20%  --> Fertigation: 45%–60%
+- Potassium (K): Broadcast: 50%–60%  --> Fertigation: 85%–90%
+
+2. WATER-SOLUBLE FERTILIZER (WSF) GRADES & PHYSIOLOGICAL PHASES:
+- Starter / Vegetative Establishment:
+  * Urea Phosphate (17:44:0): Acidic pH (2.0–2.5 in solution); cleans dripper lines while supplying high available phosphorus for explosive root branching.
+  * Balanced NPK (19:19:19 or 20:20:20): Sustains balanced vegetative canopy growth.
+- Flowering & Fruit Setting Phase:
+  * Mono Potassium Phosphate / MKP (0:52:34): High phosphorus induces profuse floral buds; potassium strengthens pedicel and prevents flower/fruit abortion.
+- Fruit Development & Maturation Phase:
+  * Potassium Nitrate / NOP (13:0:45): Drives carbohydrate translocation, fruit enlargement, TSS accumulation, color development, and drought resilience.
+  * Potassium Sulphate / SOP (0:0:50 + 17.5% S): Chloride-free; mandatory for salt-sensitive crops (potato, strawberry, grapes, onion, tobacco).
+- Cell Wall Rigidity & Quality:
+  * Calcium Nitrate (15.5% N + 18.8% Water-Soluble Ca): Structural component of middle lamella; prevents blossom-end rot in tomato/capsicum and tip burn in leafy vegetables.
+
+3. CRITICAL SOLUBILITY & CHEMICAL COMPATIBILITY RULES:
+- The Two-Tank Protocol (Tank A & Tank B):
+  * TANK A (Calcium & Iron): Dissolve Calcium Nitrate and Chelated Iron (Fe-EDTA / Fe-EDDHA).
+  * TANK B (Phosphates & Sulphates): Dissolve Mono Potassium Phosphate (0:52:34), Potassium Sulphate (0:0:50), Magnesium Sulphate, and Ammonium Sulphate.
+  * STRICT PROHIBITION: NEVER mix Calcium Nitrate with Phosphates or Sulphates in the same mother tank! Doing so causes immediate chemical precipitation of insoluble Gypsum (Calcium Sulphate) or Calcium Phosphate, irreversibly clogging every dripper within minutes!
+
+=======================================================================
+SECTION 5: SYSTEM MAINTENANCE, ACID WASHING & CHLORINATION
+=======================================================================
+
+1. PREVENTATIVE DAILY & WEEKLY REGIMEN:
+- Daily: Check inlet/outlet pressure gauges; manually flush screen/disc filter if pressure differential exceeds 0.5 kg/cm².
+- Weekly: Open lateral end flush caps 5 lines at a time while pump runs at full operating pressure. Allow water to discharge until it runs crystal clear (expelling trapped sand/silt).
+
+2. ACID WASHING PROTOCOL (CARBONATE & MINERAL SCALE REMOVAL):
+- Trigger: Emitter discharge rate declines by > 10%; white encrustations visible on dripper exits; water source contains Bicarbonates (> 3.0 meq/L) or high Calcium/Magnesium hardness.
+- Chemical: Commercial Hydrochloric Acid (HCl 33%) or Phosphoric Acid (85%).
+- Execution Protocol:
+  * Calculate acid volume required to bring system exit water pH down to 4.0.
+  * Inject acid through the Venturi unit into the irrigation system.
+  * Test pH at distal lateral ends using litmus paper or digital pH meter until pH reads 4.0 to 4.5.
+  * Shut off pump immediately; lock acid solution inside the pipeline network for 60 to 90 minutes to dissolve calcium/magnesium carbonate precipitates.
+  * Open all flush valves and run pump with clean water for 20–30 minutes to thoroughly flush dissolved salts and acid residue out of the field.
+
+3. CHLORINATION PROTOCOL (ALGAE, BIO-SLIME & BACTERIAL CLOGGING):
+- Trigger: Slimy brown/green organic coating inside lateral walls; presence of iron bacteria or algal colonies from open farm ponds.
+- Chemical: Liquid Sodium Hypochlorite (NaOCl 10–12% available chlorine) or Bleaching Powder solution.
+- Execution Modes:
+  * Continuous Preventive Chlorination: Inject chlorine continuously to maintain 1.0 to 2.0 ppm free residual chlorine at the furthest lateral end.
+  * Shock Chlorination (Severe Clogging): Inject concentrated chlorine solution to maintain 10 to 20 ppm free residual chlorine at the distal lateral ends. Shut system and allow to stand for 4 to 12 hours. Open flush valves and flush pipeline network thoroughly with fresh water before resuming fertigation.

@@ -1,0 +1,122 @@
+ICAR TECHNICAL BULLETIN — Fisheries & Aquaculture Advisory for Coastal & Inland India
+Source: ICAR-Central Institute of Freshwater Aquaculture (CIFA), Bhubaneswar & ICAR-CMFRI, Kochi
+Document Reference: ICAR-FISH/Tech/2024/PAN-IN-01
+
+India is the 2nd largest fish producing country in the world (17.5+ million metric tonnes), with Andhra Pradesh,
+West Bengal, Gujarat, Kerala, Odisha, Tamil Nadu, and Assam as top producers. Aquaculture is the fastest growing
+food sector, generating over ₹60,000 crore in annual seafood exports (dominated by frozen shrimp).
+
+=======================================================================
+SECTION 1: FRESHWATER CARP POLYCULTURE (Composite Fish Culture)
+=======================================================================
+
+Composite fish culture utilizes different ecological water layers to maximize pond productivity without food competition.
+
+1.1 RECOMMENDED SPECIES COMBINATION (Six-Species Culture):
+- Surface Feeders (utilize phytoplankton & zooplankton at water surface):
+  * Catla (Catla catla): 20% stocking ratio; fastest growing Indian major carp.
+  * Silver Carp (Hypophthalmichthys molitrix): 10–15% stocking ratio; controls algal blooms.
+- Column Feeders (utilize organic detritus & plankton in mid-water column):
+  * Rohu (Labeo rohita): 30–35% stocking ratio; most preferred food fish in India; Jayanti Rohu (CIFA improved breed
+    grows 17% faster per generation with high resistance to aeromoniasis).
+  * Grass Carp (Ctenopharyngodon idella): 10% stocking ratio; feeds on submerged aquatic weeds (Hydrilla, Najas).
+- Bottom Feeders (consume benthic organisms, decaying matter at pond floor):
+  * Mrigal (Cirrhinus mrigala): 15–20% stocking ratio.
+  * Common Carp (Cyprinus carpio): 10–15% stocking ratio; scavenger, stirs bottom nutrients.
+
+1.2 POND PREPARATION & LIMING:
+- Pond Drying & Desilting: Dry pond bed until cracked to eliminate pathogens and predators.
+- Liming (Mandatory):
+  * Agricultural Lime (CaCO₃) @ 250–350 kg/ha for neutral soils; 500–1000 kg/ha for acidic soils (pH < 6.5).
+  * Benefits: Neutralizes acidity, stabilizes pH, kills parasites, clarifies water turbidity.
+- Manuring & Fertilization:
+  * Raw Cattle Dung @ 5–10 tonnes/ha incorporated 15 days before stocking.
+  * Inorganic: Urea @ 25 kg/ha + Single Super Phosphate (SSP) @ 50 kg/ha monthly.
+
+1.3 STOCKING DENSITY & FEED MANAGEMENT:
+- Fingerling Size: Stock healthy fingerlings of 8–10 cm length (minimum 25–30 grams).
+- Density: 7,500 to 10,000 fingerlings per hectare (semi-intensive pond system).
+- Feeding Protocol:
+  * Supplementary Feed: Rice bran and Mustard oil cake (1:1 ratio) @ 2–3% of total fish biomass daily.
+  * Extruded Floating Pellets (28% crude protein): Reduces water pollution, improves Feed Conversion Ratio (FCR 1.2–1.5).
+
+=======================================================================
+SECTION 2: CRITICAL WATER QUALITY PARAMETERS (The Pond Health Index)
+=======================================================================
+
+Farmers must test these parameters weekly to prevent mass fish mortality:
+
+| Parameter              | Optimal Range        | Hazard Level        | Immediate Corrective Action              |
+|------------------------|----------------------|---------------------|------------------------------------------|
+| Dissolved Oxygen (DO)  | 5.0 – 8.0 mg/L       | < 3.0 mg/L (Gasping)| Turn on aerators / paddlewheels immediately; pump fresh water |
+| Water pH               | 7.5 – 8.5            | < 6.5 or > 9.0      | Apply agricultural lime (if low) or alum/gypsum (if high) |
+| Water Temperature      | 25°C – 32°C          | < 18°C or > 35°C    | Increase water depth to 1.8–2.0 meters   |
+| Transparency (Secchi)  | 30 – 40 cm           | < 20 cm (Bloom)     | Stop fertilization immediately; exchange 25% water |
+| Total Alkalinity       | 100 – 200 mg/L       | < 50 mg/L           | Add quicklime or sodium bicarbonate      |
+| Ammonia (Un-ionized)   | < 0.05 mg/L          | > 0.1 mg/L          | Add Zeolite @ 50 kg/ha; reduce feeding   |
+
+=======================================================================
+SECTION 3: MAJOR FISH DISEASES & CONTROL
+=======================================================================
+
+3.1 EPIZOOTIC ULCERATIVE SYNDROME (EUS / Red Spot Disease):
+- Causative agent: Oomycete fungus Aphanomyces invadans + secondary Aeromonas hydrophila.
+- Prevalent in winter (December–February) following sudden water temperature drop.
+- Symptoms: Red circular erosions on skin that develop into deep, necrotic, bleeding ulcers.
+- CIFA Approved Treatment:
+  * Apply CIFAX formulation @ 1.0 Litre per hectare-meter water depth.
+  * Water sanitation: Apply Potassium Permanganate (KMnO₄) @ 2–3 mg/L or Quicklime @ 200 kg/ha.
+
+3.2 ARGULOSIS (Fish Louse / Argulus foliaceus):
+- Disc-shaped crustacean parasite visible crawling on skin, gills, and fins; causes irritation, rubbing against dykes.
+- Management:
+  * Apply Ivermectin 1% @ 1.0 ml per kg feed for 3 consecutive days.
+  * Or spray Emamectin benzoate (0.2% EC) @ 100 ml per hectare-meter.
+  * Install bamboo poles in pond: Argulus lays eggs on hard surfaces; remove poles weekly and scrape eggs off.
+
+3.3 GILL ROT (Branchiomyces):
+- Gills become pale, marbled, necrotic, and disintegrate.
+- Management: Add Copper Sulphate @ 0.5 mg/L; aerate continuously.
+
+=======================================================================
+SECTION 4: BIOFLOC & RECIRCULATING AQUACULTURE (RAS)
+=======================================================================
+
+Modern zero-water-exchange intensive technologies for land-constrained farmers.
+
+4.1 BIOFLOC TECHNOLOGY (BFT):
+- Principle: Carbon-Nitrogen ratio (C:N ratio) maintained at 12:1 to 15:1 by adding carbon source (molasses / jaggery).
+- Heterotrophic bacteria convert toxic ammonia into edible microbial protein ("Biofloc").
+- Stocking: High density (Pangasius: 50–70 fish/m³; Tilapia: 80–100 fish/m³; Vannamei shrimp: 150–200/m³).
+- Floc Volume: Maintained at 15–25 ml/L (measured using Imhoff Cone).
+- Electricity: Continuous aeration (blower / venturi) non-negotiable 24×7.
+
+=======================================================================
+SECTION 5: COASTAL BRACKISHWATER SHRIMP FARMING (Litopenaeus vannamei)
+=======================================================================
+
+Andhra Pradesh (Nellore, Krishna, Godavari) & Gujarat lead India's shrimp revolution.
+
+5.1 BIOSECURITY & SPF SEED:
+- Use only Specific Pathogen Free (SPF) Post-Larvae (PL-10 to PL-12) from CAA-registered hatcheries.
+- Polymerase Chain Reaction (PCR) screening for WSSV, EHP, and IHHNV mandatory before stocking.
+- Install crab fencing and bird scaring netting around ponds to block viral vectors.
+
+5.2 WHITE SPOT SYNDROME VIRUS (WSSV):
+- Devastating viral disease; causes 100% mortality in 3–5 days.
+- Symptoms: White spots (0.5–2 mm) inside carapace; reddish body discolouration; lethargy at pond edges.
+- Management: NO CHEMICAL CURE. Emergency harvest if commercial size reached. Prevent vector entry.
+
+=======================================================================
+SECTION 6: PRADHAN MANTRI MATSYA SAMPADA YOJANA (PMMSY)
+=======================================================================
+- Flagship ₹20,050 crore government scheme for fisheries:
+  * Subsidy: 40% for General Category; 60% for SC/ST and Women beneficiaries.
+  * Eligible Projects: Construction of new ponds, Biofloc units, RAS, fish feed mills, solar aerators,
+    refrigerated transport vehicles, ornamental fish units.
+  * Apply through District Fisheries Office or online: pmmsy.dof.gov.in.
+
+Contact: ICAR-CIFA, Kausalyaganga, Bhubaneswar, Odisha — Phone: 0674-2465421 | cifa.nic.in
+ICAR-CMFRI, Post Box 1603, Ernakulam North, Kochi, Kerala — cmfri.org.in
+National Fisheries Development Board (NFDB), Hyderabad — nfdb.gov.in
+=======================================================================

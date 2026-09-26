@@ -1,0 +1,190 @@
+ICAR TECHNICAL BULLETIN — Rice Diseases in Kerala: Identification, Prevention and Management
+Source: Indian Council of Agricultural Research (ICAR), Directorate of Rice Research, Hyderabad
+Document Reference: ICAR-DRR/TB/2023/04
+
+=======================================================================
+SECTION 1: BLAST DISEASE (Pyricularia oryzae)
+=======================================================================
+
+Blast is the most devastating disease of rice worldwide, including Kerala. It is caused by the fungus Pyricularia oryzae.
+
+IDENTIFICATION:
+- Leaf blast: Diamond-shaped lesions with grey centre and brown border on leaves
+- Neck blast: Rotting at the base of the panicle, causing empty grains
+- Node blast: Blackening of internodes leading to collapse
+- The disease appears when temperatures are between 22–28°C with high humidity (>90%)
+
+FAVORABLE CONDITIONS:
+- Prolonged leaf wetness (>10 hours per day)
+- Heavy dew formation
+- High nitrogen fertilizer use
+- Close planting
+
+MANAGEMENT:
+1. Chemical Control:
+   - Tricyclazole 75 WP: Apply 0.6 g/litre of water as foliar spray
+   - Isoprothiolane 40 EC: 1.5 ml/litre, spray at tillering and panicle initiation
+   - Propiconazole 25 EC: 1 ml/litre for neck blast prevention
+   
+2. Cultural Control:
+   - Use blast-resistant varieties: Jyothi, Kanchana, Vyttila-6, Uma
+   - Avoid excess nitrogen application (do not exceed 90 kg N/ha)
+   - Maintain proper spacing (20 cm × 15 cm)
+   - Remove infected plant debris from fields
+
+3. Biological Control:
+   - Apply Pseudomonas fluorescens (Pf1) @ 5 g/litre as seed treatment and foliar spray
+   - Trichoderma viride seed treatment: 4 g/kg seed
+
+ECONOMIC THRESHOLD:
+Spray when 1–2% of leaf area is infected or when neck infection first appears.
+
+=======================================================================
+SECTION 2: BROWN SPOT (Cochliobolus miyabeanus)
+=======================================================================
+
+Brown spot is a fungal disease that causes yield losses of 20–50% in severely affected fields.
+
+IDENTIFICATION:
+- Small, circular to oval brown spots on leaves, 1–5 mm diameter
+- Spots have yellowish-brown centre with dark brown margin
+- Can also infect glumes, causing discoloration of grains
+- Symptoms appear on leaves, sheaths, panicles, and grains
+
+PREDISPOSING FACTORS:
+- Soil deficiency in potassium and silica
+- Waterlogged conditions
+- High humidity and warm temperatures (25–30°C)
+- Poor soil nutrition is the primary cause
+
+MANAGEMENT:
+1. Nutritional Management (most important):
+   - Apply potassium fertilizer @ 62 kg K2O/ha
+   - Spray 1% KCl (potassium chloride) solution on leaves
+   - Apply silica through rice husk ash @ 250 kg/ha
+   
+2. Chemical Control:
+   - Mancozeb 75 WP: 2.5 g/litre foliar spray
+   - Iprodione 50 WP: 1 g/litre
+   - Edifenphos 50 EC: 1 ml/litre
+   
+3. Cultural Control:
+   - Use balanced fertilizers (avoid excess nitrogen without potassium)
+   - Seed treatment with Thiram 75 WS @ 3 g/kg
+   - Grow resistant varieties where available
+
+=======================================================================
+SECTION 3: BACTERIAL LEAF BLIGHT (Xanthomonas oryzae pv. oryzae)
+=======================================================================
+
+Bacterial Leaf Blight (BLB) is a major problem in Kerala during Kharif (Virippu) season.
+
+IDENTIFICATION:
+- Water-soaked lesions at leaf margins progressing from tip
+- Lesions turn yellowish to white/straw-coloured as they age
+- Margins have wavy/irregular border
+- 'Kresek' phase: seedlings wilt and die in severe infections
+- Bacterial ooze visible as yellowish droplets in early morning
+
+FAVORABLE CONDITIONS:
+- High temperature (28–35°C)
+- Heavy rainfall and flooding
+- High nitrogen application
+- Wounded plants after storm damage
+
+MANAGEMENT:
+1. Chemical Control:
+   - Copper-based bactericides: Copper oxychloride 50 WP @ 3 g/litre
+   - Streptomycin sulphate + Tetracycline combination sprays
+   - Bleaching powder: Apply to irrigation water at 10 kg/ha
+   
+2. Cultural Control:
+   - Drain water during heavy rain
+   - Avoid excess nitrogen (split application of N recommended)
+   - Use BLB-resistant varieties: Improved White Ponni, Jyothi, Kanchana
+   - Avoid mechanical wounding during cultivation
+
+3. Field Hygiene:
+   - Remove and destroy infected leaves and stubble
+   - Do not use infected fields for seedbed preparation
+   - Clean irrigation channels to prevent spread
+
+=======================================================================
+SECTION 4: SHEATH BLIGHT (Rhizoctonia solani)
+=======================================================================
+
+Sheath blight has become increasingly important in Kerala due to high-yielding variety cultivation.
+
+IDENTIFICATION:
+- Oval or irregular greenish-grey lesions on leaf sheath near water line
+- Lesions enlarge to form large irregular patches with grey-white centre and dark brown border
+- Sclerotia (dark brown mustard-sized structures) form on infected tissue
+- Disease progresses upward from sheath to leaves
+
+MANAGEMENT:
+1. Chemical Control:
+   - Hexaconazole 5 EC: 2 ml/litre, spray at tillering
+   - Validamycin 3 SL: 2 ml/litre
+   - Propiconazole 25 EC: 1 ml/litre
+   - Apply at base of plants near water line for best results
+   
+2. Cultural Control:
+   - Reduce plant density (wider spacing)
+   - Drain fields periodically
+   - Avoid excess nitrogen
+   - Grow moderately resistant varieties
+
+=======================================================================
+SECTION 5: FALSE SMUT (Ustilaginoidea virens)
+=======================================================================
+
+False smut affects rice panicles and is a warning sign of mycotoxin contamination.
+
+IDENTIFICATION:
+- Individual grain kernels replaced by orange-yellow to greenish-black balls (chlamydospores)
+- Infected spikelets show green to black velvety balls, 1–4 cm diameter
+- Typically 1–5 grains per panicle are infected
+
+MANAGEMENT:
+- Propiconazole 25 EC: 1 ml/litre at booting stage
+- Copper oxychloride 50 WP: 3 g/litre
+- Do not use infected seed
+- Diseased grains should not be used for food or feed
+
+=======================================================================
+SECTION 6: INTEGRATED DISEASE MANAGEMENT CALENDAR (Kerala)
+=======================================================================
+
+VIRIPPU SEASON (June–September):
+- Pre-sowing: Seed treatment with Pseudomonas fluorescens or Carbendazim
+- Seedling stage (15–20 DAT): Scout for blast; if present, spray Tricyclazole
+- Tillering (30–35 DAT): Scout for sheath blight; spray Validamycin if needed
+- Panicle initiation (50–55 DAT): Preventive spray for neck blast
+
+MUNDAKAN SEASON (September–December):
+- Same scouting protocol
+- Extra vigilance for BLB after heavy rains
+
+PUNCHA SEASON (December–February):
+- Lower disease pressure due to cooler temperatures
+- Main concern: Brown spot in nutritionally deficient soils
+
+=======================================================================
+RECOMMENDED RESISTANT VARIETIES FOR KERALA
+=======================================================================
+
+| Variety         | Blast Resistance | BLB Resistance | Duration (days) |
+|----------------|-----------------|----------------|-----------------|
+| Jyothi         | Moderate         | Moderate        | 120             |
+| Kanchana       | Good             | Moderate        | 130             |
+| Uma            | Good             | Low             | 115             |
+| Vyttila-6      | Moderate         | Moderate        | 125             |
+| Improved W.P.  | Low              | Good            | 140             |
+| Gayathri       | Moderate         | Moderate        | 120             |
+
+=======================================================================
+For technical assistance, contact:
+Regional Agricultural Research Station (RARS), Pattambi, Palakkad, Kerala
+Phone: 0466-2212225 | Email: rars.pattambi@kau.in
+ICAR-NRRI Cuttack: www.nrri.nic.in
+=======================================================================

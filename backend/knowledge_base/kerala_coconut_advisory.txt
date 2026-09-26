@@ -1,0 +1,285 @@
+ICAR TECHNICAL BULLETIN — Coconut Cultivation and Pest Management in Kerala
+Source: ICAR-Central Plantation Crops Research Institute (CPCRI), Kasaragod, Kerala
+Document Reference: ICAR-CPCRI/Tech/2023/KL-05
+
+Kerala accounts for 45% of India's total coconut production. The state has approximately 
+7.7 lakh hectares under coconut cultivation, making it the backbone of Kerala's agricultural economy.
+
+=======================================================================
+SECTION 1: COCONUT VARIETIES FOR KERALA
+=======================================================================
+
+TALL VARIETIES:
+1. West Coast Tall (WCT):
+   - Most widely grown variety in Kerala
+   - Yield: 80–100 nuts/palm/year
+   - Copra content: 165–170 g/nut
+   - Drought tolerant, suitable for all Kerala districts
+   - First bearing: 6–8 years after planting
+
+2. Lakshadweep Ordinary (LCT):
+   - Suitable for Lakshadweep and coastal Kerala
+   - Yield: 70–80 nuts/palm/year
+   - Salt tolerant
+
+HYBRID VARIETIES (High Yielding):
+1. Chandrasankara (WCT × Chowghat Orange Dwarf):
+   - Most popular hybrid in Kerala
+   - Yield: 130–180 nuts/palm/year
+   - First bearing: 3–4 years after planting
+   - Suitable for: Thrissur, Palakkad, Ernakulam
+
+2. Kera Sankara (WCT × Malayan Yellow Dwarf):
+   - Yield: 100–120 nuts/palm/year
+   - Good disease tolerance
+   - Recommended for Wayanad and Kozhikode
+
+3. Kalpa Raksha:
+   - Specifically bred for root wilt disease tolerance
+   - Suitable for root wilt endemic areas (Thiruvananthapuram, Kollam)
+   - Yield: 80–100 nuts/palm/year
+
+4. Kalpa Mitra (WCT × GBGD):
+   - High copra content (200–220 g/nut)
+   - Drought tolerant
+   - Good for Palakkad dry zone
+
+DWARF VARIETIES:
+1. Chowghat Green Dwarf (CGD):
+   - Early bearing: 2–3 years
+   - Used for tender coconut production
+   - Yield: 80–100 green nuts/year
+   - Suitable for kitchen gardens
+
+=======================================================================
+SECTION 2: PLANTING AND MANAGEMENT
+=======================================================================
+
+PLANTING SEASON:
+- Best: June–September (onset of Southwest monsoon)
+- Can also plant December–January if irrigation is available
+
+PIT PREPARATION:
+- Pit size: 1 m × 1 m × 1 m
+- Fill with topsoil + 50 kg FYM/compost + 1 kg rock phosphate
+- Allow pit to weather for 2–4 weeks before planting
+
+SPACING:
+- Square system: 7.5 m × 7.5 m (177 palms/ha)
+- Triangular system: 8 m × 8 m (160 palms/ha) — better light interception
+- For high-density planting: 6 m × 6 m (with intercropping)
+
+IRRIGATION:
+- Young palms (0–3 years): 40–45 litres/palm every 3–4 days in summer
+- Bearing palms: 200 litres/palm/week in summer
+- Drip irrigation: 12–15 litres/day (best practice, saves 50% water)
+- Critical period: February–May (pre-monsoon summer)
+
+INTERCROPPING (recommended for income diversification):
+- Banana: 2 rows between coconut rows (first 3 years)
+- Pineapple: Excellent ground cover under coconut
+- Cacao: Shade-tolerant, grows well under coconut canopy
+- Pepper: Trained on coconut trunk (living standard)
+- Elephant foot yam: High value, shade tolerant
+- Black pepper + banana + cacao combination: Most profitable
+
+=======================================================================
+SECTION 3: FERTILIZER MANAGEMENT
+=======================================================================
+
+FERTILIZER RECOMMENDATION FOR BEARING PALMS (per palm per year):
+
+| Stage          | N (Urea)  | P (SSP)    | K (MOP)    | FYM    |
+|---------------|-----------|------------|------------|--------|
+| 1–3 years     | 130 g     | 200 g      | 200 g      | 20 kg  |
+| 4–6 years     | 330 g     | 500 g      | 800 g      | 25 kg  |
+| 7+ years (full| 660 g     | 1000 g     | 2000 g     | 25 kg  |
+| bearing)      | (= 0.6 kg N)| (= 0.4 kg P₂O₅)| (= 1.2 kg K₂O) | |
+
+SPLIT APPLICATION:
+- Apply in 2 equal splits: June (pre-monsoon onset) and December
+- Apply in 30–50 cm deep trenches around the drip circle (1.5–2 m from trunk)
+- Cover with soil and irrigate
+
+MICRONUTRIENT APPLICATION:
+- Borax: 50 g/palm/year — prevents button shedding and improves nut set
+  * Apply in June along with main fertilizer
+- Magnesium sulphate: 500 g/palm/year — if Mg deficiency observed
+- Zinc sulphate: 50 g/palm/year — for Palakkad and sandy soils
+
+ORGANIC SOURCES:
+- Coir pith compost: 25 kg/palm — excellent for water retention in sandy soils
+- Neem cake: 1 kg/palm — suppresses soil pests (rhinoceros beetle grubs)
+- Wood ash: 2 kg/palm — good potassium source for homestead gardens
+
+=======================================================================
+SECTION 4: MAJOR PESTS AND MANAGEMENT
+=======================================================================
+
+4.1 RHINOCEROS BEETLE (Oryctes rhinoceros)
+The most destructive pest of coconut in Kerala.
+
+IDENTIFICATION:
+- Large black beetle (40–50 mm length) with curved horn
+- Adults bore into the base of unopened spear leaves
+- Characteristic V-shaped or diamond-shaped cuts on newly opened leaves
+- Tunnelling into growing point can kill the palm
+
+LIFE CYCLE:
+- Eggs laid in decaying organic matter, compost heaps, dead palm trunks
+- Larva stage: 3–6 months (white C-shaped grubs in organic matter)
+- Pupa: 3–4 weeks underground
+- Adult: 4–8 months (can fly up to 5 km)
+
+MANAGEMENT:
+1. Cultural Control (most important — prevent breeding):
+   - Remove all dead coconut trunks and decaying organic matter
+   - Compost heaps should be properly covered or treated
+   - Fill hollow stumps with soil or concrete
+   - Wrap young palms with dried leaves to protect crown
+
+2. Biological Control (most sustainable):
+   - Baculovirus oryctes: Spray/apply virus formulation into crown holes
+   - Metarhizium anisopliae (green muscardine fungus): Apply granules (4g) into crown
+   - These biocontrol agents multiply within the beetle population
+
+3. Pheromone Traps:
+   - Use Oryctalure pheromone traps (1 trap/hectare)
+   - Replace lure every 60 days
+   - Best for mass trapping during active season (June–September)
+
+4. Chemical Control (only when infestation is severe):
+   - Pour 1% Carbaryl solution (10 g/litre) into crown holes
+   - Naphthalene balls (5–6 numbers) tied in old gunny bag in crown — repels adults
+
+4.2 RED PALM WEEVIL (Rhynchophorus ferrugineus)
+A lethal pest — infected palms rarely survive if treatment is delayed.
+
+IDENTIFICATION:
+- Adult: Reddish-brown weevil, 25–40 mm with elongated snout
+- External signs: Oozing dark brown, foul-smelling liquid from crown or trunk
+- Chewed fibres and frass at the base of crown leaves
+- Crown collapse or sudden tilting of the palm top
+- Yellowing and drooping of outer leaves before crown collapse
+
+MANAGEMENT:
+1. Pheromone Trapping (for early detection and mass trapping):
+   - Ferrolure+ pheromone: 1 trap/hectare
+   - Install traps at 1.2 m height from ground
+   - Bait with sugarcane pieces or pineapple (enhances attraction)
+   - Replace lure every 60 days
+
+2. Chemical Treatment (trunk injection for early-stage infection):
+   - Monocrotophos 36 WSC: 20 ml in 200 ml water — inject into trunk
+   - Chlorpyrifos 20 EC: 10 ml in 500 ml water — inject into bore holes
+   - Close holes with clay after injection
+   
+3. Preventive Spraying:
+   - Chlorpyrifos 0.1%: spray on crown and upper trunk monthly
+   - Best done from June to October
+
+4. Biological Control:
+   - Entomopathogenic nematodes (Steinernema carpocapsae): Pour into bore holes
+   - Beauveria bassiana: 5 g/litre spray on trunk
+
+5. Severely Infected Palms:
+   - Remove and destroy (burn on site) — do not transport
+   - Treat stump with lime to prevent spread
+
+4.3 COCONUT LEAF BEETLE (Brontispa longissima)
+
+IDENTIFICATION:
+- Adult: Small, flat, yellowish-brown beetle (8–10 mm)
+- Both adults and larvae feed inside unopened (spear) leaves
+- Necrotic brownish streaks on leaves once they unfurl
+- Severe infestation: all leaves show brown-streaked or dried appearance
+
+MANAGEMENT:
+- Apply Dimethoate 30 EC (2 ml/litre) + water into spear leaf
+- Biological control: Release Asecodes hispinarum (parasitoid wasp) — available from CPCRI
+
+4.4 ERIOPHYID MITE (Aceria guerreronis) — Coconut Mite
+
+IDENTIFICATION:
+- Microscopic mites (not visible to naked eye)
+- White triangular patches at the base of nut (perianth area)
+- Nuts become deformed, triangular, and smaller in size (button shedding if severe)
+
+MANAGEMENT:
+- Lime sulphur spray 0.4% (4 ml/litre) + wetting agent on bunches
+- Dicofol 18.5 EC: 5 ml/litre spray on bunches
+- Neem oil 3%: 3 ml/litre + 1 ml Teepol (most eco-friendly option)
+
+=======================================================================
+SECTION 5: DISEASES OF COCONUT
+=======================================================================
+
+5.1 ROOT WILT DISEASE (Phytoplasma suspected)
+The most serious disease in Kerala — no complete cure available.
+
+Endemic in: Thiruvananthapuram, Kollam, Alappuzha, Ernakulam, Kottayam
+
+IDENTIFICATION:
+- Yellowing of lower leaves progressing upward
+- Leaflets fold and droop (inverted V-shape on individual leaflets)
+- Premature nut fall (button shedding)
+- Roots become discoloured and rotten
+- Eventual death of palm over 3–15 years
+
+MANAGEMENT (palliative only):
+- Remove affected palms to prevent spread (rogueing)
+- Fertilize healthy palms to increase resistance
+- Grow tolerant varieties: Kalpa Raksha, Kalpa Mitra
+- Apply micro-irrigation to reduce water stress
+- Spray Monocrotophos 36 WSC (1.5 ml/litre) to control leafhopper vectors (Proutista moesta)
+
+5.2 STEM BLEEDING (Thielaviopsis paradoxa)
+
+IDENTIFICATION:
+- Dark reddish-brown liquid oozing from cracks on the trunk (not from crown like RPW)
+- Tissue under exudate is brown and necrotic
+- Internal trunk cavity in severe cases
+
+MANAGEMENT:
+- Chisel out infected tissue and apply Bordeaux paste (1:1:10) to wound
+- Drench soil with Copper oxychloride 0.2% solution
+- Avoid mechanical injury to trunk
+
+5.3 BUD ROT (Phytophthora palmivora)
+
+IDENTIFICATION:
+- Rotting of central bud (spear leaf) with foul smell
+- Spear leaf pulls out easily
+- Affects mostly young palms and post-cyclone conditions
+
+MANAGEMENT:
+- Remove and destroy affected spear leaf and rotted tissue
+- Apply Bordeaux mixture 1% in the crown
+- Metalaxyl + Mancozeb 72 WP: 3 g/litre spray in crown
+
+=======================================================================
+SECTION 6: COCONUT HARVEST AND PROCESSING
+=======================================================================
+
+HARVESTING:
+- Full nuts for copra/oil: Harvest every 45 days (12 months maturity)
+- Green tender coconuts: Harvest at 7 months (water stage)
+- Climber safety: Use coconut tree climber or mechanical climber
+- Do not allow nuts to fall to ground — reduces copra quality
+
+COPRA PROCESSING:
+- Split nut in half using coconut splitter
+- Sun-dry for 3–4 days (moisture content < 6%)
+- Or kiln-dry: 60°C for 48 hours
+
+COCONUT VALUE-ADDED PRODUCTS (for extra income):
+- Virgin Coconut Oil (VCO): High value, health food market
+- Coir pith compost: From coconut husks
+- Shell charcoal: High-value biomass fuel
+- Neera (palm nectar): Collected from inflorescence — high market value
+
+=======================================================================
+Contact: ICAR-CPCRI, Kasaragod, Kerala — Phone: 04994-232893
+Regional Station, CPCRI, Kayamkulam — Phone: 0479-2442584
+Kerala Coconut Development Board: www.coconutboard.gov.in
+=======================================================================
