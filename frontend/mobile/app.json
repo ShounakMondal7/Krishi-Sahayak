@@ -19,7 +19,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0D1B12"
       },
-      "package": "com.krishisahayak.app",
+      "package": "com.shounakmondal.krishisahayak",
       "permissions": [
         "RECORD_AUDIO",
         "INTERNET",
@@ -33,10 +33,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "apiUrl": "http://localhost:8000",
-      "eas": {
-        "projectId": "your-project-id"
-      }
+      "apiUrl": "http://localhost:8000"
     },
     "plugins": [
       "expo-router",
