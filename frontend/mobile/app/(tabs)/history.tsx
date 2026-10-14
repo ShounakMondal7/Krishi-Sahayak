@@ -19,12 +19,11 @@ import * as Haptics from 'expo-haptics';
 import { ShieldCheck, Volume2 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import { safeHaptics } from '../../services/haptics';
 import Constants from 'expo-constants';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 
 import LanguageSelectorSheet from '../../components/LanguageSelectorSheet';
 import { useTextSize } from '../../context/TextSizeContext';
@@ -473,7 +472,6 @@ export default function HistoryScreen() {
               keyExtractor={(item) => item.id}
               renderItem={renderItem}
               extraData={{ fontSizeScale, expandedIds, playingId, currentLang }}
-              estimatedItemSize={200}
               contentContainerStyle={styles.listContent}
               refreshControl={
                 <RefreshControl

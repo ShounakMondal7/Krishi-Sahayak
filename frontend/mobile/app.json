@@ -7,11 +7,6 @@
     "icon": "./assets/icon.png",
     "scheme": "krishisahayak",
     "userInterfaceStyle": "dark",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0D1B12"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -45,6 +40,14 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#0D1B12"
+        }
+      ],
       [
         "expo-av",
         {

@@ -25,12 +25,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { safeHaptics } from '../services/haptics';
 import { LanguageCode, getTranslation } from '../services/i18n';
-import Constants from 'expo-constants';
-
-const BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL ||
-  (Constants.expoConfig?.extra as any)?.apiUrl ||
-  'http://localhost:8000';
+import { BASE_URL } from '../services/api';
 
 export interface SourceLabel {
   filename: string;

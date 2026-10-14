@@ -2,7 +2,20 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-const BASE_URL =
+// ==============================================================================
+// ⚠️ IMPORTANT: BACKEND API URL CONFIGURATION (FIX FOR STANDALONE APK BUILD)
+// ==============================================================================
+// Standalone APKs on physical Android devices CANNOT reach 'localhost' or '127.0.0.1'
+// because "localhost" refers to the mobile device itself, not your PC.
+//
+// BEFORE TRIGGERING AN EAS APK BUILD:
+// 1. Find your PC's local Wi-Fi IPv4 address (run `ipconfig` in cmd/powershell).
+// 2. Set EXPO_PUBLIC_API_URL in `frontend/mobile/.env` to:
+//       http://<YOUR_LOCAL_WIFI_IP>:8000  (e.g., http://192.168.1.100:8000)
+//    Or use an Ngrok tunnel:
+//       https://your-subdomain.ngrok-free.app
+// ==============================================================================
+export const BASE_URL =
   process.env.EXPO_PUBLIC_API_URL ||
   Constants.expoConfig?.extra?.apiUrl ||
   'http://localhost:8000';

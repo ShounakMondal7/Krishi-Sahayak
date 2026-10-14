@@ -1900,7 +1900,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   modalBackdropTouch: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   profileModalCard: {
     width: '100%',
