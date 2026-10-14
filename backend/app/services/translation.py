@@ -33,7 +33,7 @@ def _load_indictrans2() -> bool:
 
     try:
         from app.config import settings
-        use_flag = str(settings.USE_INDICTRANS2).lower()
+        use_flag = str(getattr(settings, "use_indictrans2", False)).lower()
     except Exception:
         use_flag = os.getenv("USE_INDICTRANS2", "false").lower()
 

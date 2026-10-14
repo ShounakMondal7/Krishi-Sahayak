@@ -44,7 +44,7 @@ def sanitize_text_input(v: str, allow_html: bool = False) -> str:
     """
     if not v:
         return v
-    v = v.strip()
+    v = v.replace("\x00", "").strip()
 
     # Reject SQL injection attack patterns
     if _SQLI_PATTERN.search(v):

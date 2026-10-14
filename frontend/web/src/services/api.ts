@@ -2,9 +2,14 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000/api/v1/analytics';
 
+const adminKey = (import.meta as any).env?.VITE_ADMIN_API_KEY || '';
+
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
+  headers: {
+    ...(adminKey ? { 'X-Admin-Key': adminKey } : {}),
+  },
 });
 
 export interface TopQuery {

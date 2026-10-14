@@ -37,6 +37,7 @@ from app.schemas.query import (
 from app.services import translation, rag, llm, speech, cache as cache_svc
 from app.services import weather as weather_svc
 from app.services import market as market_svc
+from app.services.rate_limiter import rate_limit_query
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -421,12 +422,14 @@ async def _run_rag_pipeline(
     ),
     responses={
         422: {"model": ErrorResponse, "description": "Translation failed"},
+        429: {"description": "Rate limit exceeded (max 30 queries per minute)"},
         503: {"model": ErrorResponse, "description": "LLM service unavailable"},
     },
 )
 async def text_query(
     request: QueryRequest,
     background_tasks: BackgroundTasks,
+    _: None = Depends(rate_limit_query),
     db: AsyncSession = Depends(get_db),
 ) -> QueryResponse:
     return await _run_rag_pipeline(
@@ -453,6 +456,7 @@ async def text_query(
     ),
     responses={
         422: {"model": ErrorResponse, "description": "Translation or STT failed"},
+        429: {"description": "Rate limit exceeded (max 30 queries per minute)"},
         503: {"model": ErrorResponse, "description": "LLM service unavailable"},
     },
 )
@@ -463,6 +467,7 @@ async def voice_query(
     session_id: Optional[str] = Form(default=None),
     conversation_id: Optional[str] = Form(default=None),
     background_tasks: BackgroundTasks = BackgroundTasks(),
+    _: None = Depends(rate_limit_query),
     db: AsyncSession = Depends(get_db),
 ) -> VoiceQueryResponse:
 
@@ -533,6 +538,7 @@ async def voice_query(
     responses={
         400: {"model": ErrorResponse, "description": "Invalid image"},
         422: {"model": ErrorResponse, "description": "Vision or translation failed"},
+        429: {"description": "Rate limit exceeded (max 30 queries per minute)"},
         503: {"model": ErrorResponse, "description": "LLM service unavailable"},
     },
 )
@@ -544,6 +550,7 @@ async def image_query(
     session_id: Optional[str] = Form(default=None),
     conversation_id: Optional[str] = Form(default=None),
     background_tasks: BackgroundTasks = BackgroundTasks(),
+    _: None = Depends(rate_limit_query),
     db: AsyncSession = Depends(get_db),
 ) -> ImageQueryResponse:
 

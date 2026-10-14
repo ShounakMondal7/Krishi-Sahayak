@@ -7,7 +7,7 @@ everywhere you need a config value. Never read os.environ directly.
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import field_validator
-from typing import List
+from typing import List, Optional
 
 
 class Settings(BaseSettings):
@@ -57,11 +57,15 @@ class Settings(BaseSettings):
     chunk_size: int = 500
     chunk_overlap: int = 50
 
-    # ── Cache ─────────────────────────────────────────────────────────
+    # ── Cache & Rate Limiting ─────────────────────────────────────────
     cache_ttl_seconds: int = 300
+    rate_limit_per_minute: int = 30
+
+    # ── Security & Authentication ─────────────────────────────────────
+    admin_api_key: Optional[str] = None
 
     # ── Feature Flags ─────────────────────────────────────────────────
-    use_indictrans2: bool = True
+    use_indictrans2: bool = False
     use_voice: bool = True
 
     @property

@@ -15,7 +15,8 @@ import logging
 from datetime import datetime, timedelta, timezone
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, HTTPException, Security, status
+from fastapi.security import APIKeyHeader
 from sqlalchemy import func, select, desc, cast, Date, Integer
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -26,9 +27,42 @@ from app.schemas.query import (
     UnifiedAnalyticsResponse, TopQueryItem, DistrictDistributionItem,
     DailyVolumeItem, ModalityCounts,
 )
+from app.config import settings
 
 logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/api/v1/analytics", tags=["Analytics"])
+
+api_key_header = APIKeyHeader(name="X-Admin-Key", auto_error=False)
+
+
+async def verify_admin_access(
+    admin_key: Optional[str] = Security(api_key_header),
+) -> None:
+    """
+    Verifies officer authorization for analytics endpoints.
+    - If settings.admin_api_key is set: requires header 'X-Admin-Key' to match.
+    - If in production without key configured: denies access for safety.
+    - In local development mode without key: permits open read-only access.
+    """
+    configured_key = settings.admin_api_key
+    if configured_key:
+        if not admin_key or admin_key != configured_key:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unauthorized: Valid 'X-Admin-Key' header required for analytics access.",
+                headers={"WWW-Authenticate": "ApiKey"},
+            )
+    elif settings.is_production:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Analytics disabled: ADMIN_API_KEY must be configured in production environment.",
+        )
+
+
+router = APIRouter(
+    prefix="/api/v1/analytics",
+    tags=["Analytics"],
+    dependencies=[Depends(verify_admin_access)],
+)
 
 
 # ── Unified Analytics Route (Primary Endpoint for Dashboard) ──────────────────

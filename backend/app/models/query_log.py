@@ -7,7 +7,7 @@ Tables:
 """
 from datetime import datetime, timezone
 from sqlalchemy import (
-    Integer, Text, String, DateTime, Float, Boolean, JSON
+    Integer, Text, String, DateTime, Float, Boolean, JSON, Index
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -30,7 +30,7 @@ class QueryLog(Base):
     # ── Input ──────────────────────────────────────────────────────────
     question_original: Mapped[str] = mapped_column(Text, nullable=False)
     question_english: Mapped[str] = mapped_column(Text, nullable=True)
-    input_mode: Mapped[str] = mapped_column(String(10), default="text")  # "text" | "voice" | "image"
+    input_mode: Mapped[str] = mapped_column(String(10), default="text", index=True)  # "text" | "voice" | "image"
     image_description: Mapped[str] = mapped_column(Text, nullable=True)  # GPT-4o vision output
 
     # ── Output ─────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ class QueryLog(Base):
 
     # ── Context ────────────────────────────────────────────────────────
     language: Mapped[str] = mapped_column(String(5), default="ml")
-    region: Mapped[str] = mapped_column(String(100), nullable=True)
+    region: Mapped[str] = mapped_column(String(100), nullable=True, index=True)
     session_id: Mapped[str] = mapped_column(String(64), nullable=True)   # anonymous session
     conversation_id: Mapped[str] = mapped_column(String(64), nullable=True)  # multi-turn thread
 
@@ -62,6 +62,11 @@ class QueryLog(Base):
         DateTime(timezone=True),
         default=utcnow,
         nullable=False,
+        index=True,
+    )
+
+    __table_args__ = (
+        Index("ix_query_logs_region_created", "region", "created_at"),
     )
 
     def __repr__(self) -> str:
@@ -79,7 +84,7 @@ class ErrorLog(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
 
     # ── Error Context ──────────────────────────────────────────────────
-    error_type: Mapped[str] = mapped_column(String(100), nullable=False)
+    error_type: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     error_message: Mapped[str] = mapped_column(Text, nullable=True)
     stack_trace: Mapped[str] = mapped_column(Text, nullable=True)
     endpoint: Mapped[str] = mapped_column(String(200), nullable=True)
@@ -94,6 +99,7 @@ class ErrorLog(Base):
         DateTime(timezone=True),
         default=utcnow,
         nullable=False,
+        index=True,
     )
 
     def __repr__(self) -> str:
