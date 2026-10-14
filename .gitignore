@@ -6,6 +6,15 @@
 *.env.*.local
 
 # ==============================================
+# Local Databases
+# ==============================================
+*.db
+*.sqlite
+*.sqlite3
+backend/farmer.db
+farmer.db
+
+# ==============================================
 # ChromaDB Vector Store (auto-created)
 # ==============================================
 backend/chroma_store/
