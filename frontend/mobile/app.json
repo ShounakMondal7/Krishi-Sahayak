@@ -21,10 +21,12 @@
       },
       "package": "com.shounakmondal.krishisahayak",
       "permissions": [
-        "RECORD_AUDIO",
-        "INTERNET",
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET",
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
     },
     "web": {
@@ -33,7 +35,11 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "apiUrl": "http://localhost:8000"
+      "apiUrl": "http://localhost:8000",
+      "router": {},
+      "eas": {
+        "projectId": "beba1788-559b-4ba9-a22a-6e9d9006542b"
+      }
     },
     "plugins": [
       "expo-router",
