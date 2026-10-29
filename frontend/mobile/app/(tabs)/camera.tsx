@@ -53,14 +53,11 @@ import {
   translateLocation,
 } from '../../services/locations';
 import { detectDeviceLanguage } from '../../services/languageDetector';
+import { BASE_URL } from '../../services/api';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const RETICLE_SIZE = Math.min(SCREEN_WIDTH * 0.68, SCREEN_HEIGHT * 0.30, 250);
 
-const BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL ||
-  (Constants.expoConfig?.extra as any)?.apiUrl ||
-  'http://localhost:8000';
 
 // Visual Pan-India Crop Reference Chips
 const BOTANICAL_CROPS = [

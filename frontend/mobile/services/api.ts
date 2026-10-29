@@ -1,24 +1,32 @@
 // API service layer — all communication with the FastAPI backend
 import axios from 'axios';
 import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 
 // ==============================================================================
-// ⚠️ IMPORTANT: BACKEND API URL CONFIGURATION (FIX FOR STANDALONE APK BUILD)
+// ⚠️ DYNAMIC BACKEND API URL RESOLUTION
 // ==============================================================================
-// Standalone APKs on physical Android devices CANNOT reach 'localhost' or '127.0.0.1'
-// because "localhost" refers to the mobile device itself, not your PC.
-//
-// BEFORE TRIGGERING AN EAS APK BUILD:
-// 1. Find your PC's local Wi-Fi IPv4 address (run `ipconfig` in cmd/powershell).
-// 2. Set EXPO_PUBLIC_API_URL in `frontend/mobile/.env` to:
-//       http://<YOUR_LOCAL_WIFI_IP>:8000  (e.g., http://192.168.1.100:8000)
-//    Or use an Ngrok tunnel:
-//       https://your-subdomain.ngrok-free.app
+// Android Emulator requires 10.0.2.2 to bridge to the host machine's localhost:8000
+// Web uses standard localhost:8000
+// Physical device uses the configured LAN IPv4 address (e.g., 10.180.41.217:8000)
 // ==============================================================================
-export const BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL ||
-  Constants.expoConfig?.extra?.apiUrl ||
-  'http://localhost:8000';
+export const getBaseUrl = (): string => {
+  const envUrl = process.env.EXPO_PUBLIC_API_URL;
+  if (Platform.OS === 'android') {
+    // If a LAN IP (e.g. 192.168.x.x / 10.x.x.x) or domain is configured, use it
+    if (envUrl && !envUrl.includes('localhost') && !envUrl.includes('127.0.0.1')) {
+      return envUrl;
+    }
+    // Android Studio Emulator loopback bridge to host machine
+    return 'http://10.0.2.2:8000';
+  }
+  if (envUrl) {
+    return envUrl;
+  }
+  return (Constants.expoConfig?.extra as any)?.apiUrl || 'http://localhost:8000';
+};
+
+export const BASE_URL = getBaseUrl();
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -71,7 +79,7 @@ export interface HealthResponse {
 
 export const apiService = {
   /**
-   * Submit a text query in Malayalam.
+   * Submit a text query in Indian languages.
    */
   async query(params: QueryRequest): Promise<QueryResponse> {
     const response = await api.post<QueryResponse>('/api/v1/query', params);

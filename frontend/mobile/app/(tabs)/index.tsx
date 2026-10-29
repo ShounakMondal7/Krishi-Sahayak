@@ -36,6 +36,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../../services/api';
 
 import AdvisoryResponseSheet from '../../components/AdvisoryResponseSheet';
 import LanguageSelectorSheet from '../../components/LanguageSelectorSheet';
@@ -56,10 +58,6 @@ import {
 import { detectDeviceLanguage } from '../../services/languageDetector';
 import { fetchWeather, invalidateWeatherCache, WeatherData } from '../../services/weather';
 
-const BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL ||
-  (Constants.expoConfig?.extra as any)?.apiUrl ||
-  'http://localhost:8000';
 
 // 🌅 Curated regional sunrise farm photography for Hero Banner (Unsplash high-resolution agricultural library)
 const STATE_HERO_SUNRISE_IMAGES: Record<string, string> = {
@@ -466,6 +464,18 @@ export function getTimeOfDayDetails(date = new Date()): TimeOfDayDetails {
 export default function HomeScreen() {
   const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
   const [farmerProfile, setFarmerProfile] = useState<FarmerProfile | null>(null);
+
+  const handleDevReset = async () => {
+    safeHaptics.notificationWarning();
+    setShowProfileModal(false);
+    try {
+      await AsyncStorage.clear();
+      if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.clear();
+      }
+    } catch {}
+    await storageService.resetOnboarding();
+  };
   const [question, setQuestion] = useState('');
   const [selectedState, setSelectedState] = useState<string>('Punjab');
   const [region, setRegion] = useState('Ludhiana');
@@ -1976,6 +1986,27 @@ const styles = StyleSheet.create({
   profileModalActions: {
     flexDirection: 'row',
     gap: 10,
+  },
+  profileModalActionsColumn: {
+    width: '100%',
+    gap: 10,
+  },
+  devResetModalBtn: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: '#FFF7ED',
+    borderWidth: 1.5,
+    borderColor: '#FED7AA',
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  devResetModalBtnText: {
+    color: '#C2410C',
+    fontWeight: '800',
+    fontSize: 13,
   },
   logoutBtn: {
     flex: 1,

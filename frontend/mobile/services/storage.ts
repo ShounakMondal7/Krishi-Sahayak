@@ -7,8 +7,8 @@ import { Platform } from 'react-native';
 const HISTORY_KEY = 'krishi_query_history';
 const OFFLINE_CACHE_KEY = 'krishi_offline_cache';
 const FARMER_PROFILE_KEY = 'krishi_farmer_profile';
-const MAX_HISTORY = 50;         // Increased from 20
-const MAX_OFFLINE_CACHE = 50;   // Separate cap for offline answers
+const MAX_HISTORY = 50;
+const MAX_OFFLINE_CACHE = 50;
 
 // ── Secure Store (CERT-In / OWASP Compliant Hardware Encryption) ─────────────
 
@@ -39,29 +39,26 @@ async function getSecureItem(key: string): Promise<string | null> {
       // Migrate legacy plain-text data if present
       const legacyValue = await AsyncStorage.getItem(key);
       if (legacyValue) {
-        await SecureStore.setItemAsync(key, legacyValue);
-        await AsyncStorage.removeItem(key).catch(() => {});
+        await SecureStore.setItemAsync(key, legacyValue).catch(() => {});
         return legacyValue;
       }
       return null;
     }
   } catch {
-    // Fallback
+    // Fallback to AsyncStorage
   }
   return await AsyncStorage.getItem(key);
 }
 
 /**
- * Encrypts and stores item in hardware-backed SecureStore (iOS Keychain / Android Keystore).
+ * Encrypts and stores item in hardware-backed SecureStore (iOS Keychain / Android Keystore)
+ * with robust secondary AsyncStorage persistence for resilient offline/emulator access.
  */
 async function setSecureItem(key: string, value: string): Promise<void> {
   try {
     const isAvailable = await isSecureStoreAvailable();
     if (isAvailable) {
       await SecureStore.setItemAsync(key, value);
-      // Purge any unencrypted plain-text copy
-      await AsyncStorage.removeItem(key).catch(() => {});
-      return;
     }
   } catch {
     // Fallback
@@ -85,7 +82,7 @@ async function removeSecureItem(key: string): Promise<void> {
 // ── Types ──────────────────────────────────────────────────────────────────
 
 export interface FarmerProfile {
-  farmerId: string;           // e.g., "KISAN-IN-8492" or phone
+  farmerId: string;           // e.g., "KISAN-IN-8492" or phone / Kisan ID
   name: string;               // e.g., "Ramesh Patel"
   phone: string;              // e.g., "9876543210"
   state: string;              // e.g., "Punjab", "Kerala", "Maharashtra"
@@ -118,7 +115,7 @@ export interface HistoryEntry {
 }
 
 export interface OfflineCacheEntry {
-  question: string;             // Original Malayalam question
+  question: string;             // Original question
   questionNormalized: string;   // Lowercase, stripped — for matching
   answer: string;
   sources: string[];
@@ -126,7 +123,7 @@ export interface OfflineCacheEntry {
   cachedAt: string;             // ISO string
 }
 
-// ── History ────────────────────────────────────────────────────────────────
+// ── Storage Service ────────────────────────────────────────────────────────
 
 export const storageService = {
   async getHistory(): Promise<HistoryEntry[]> {
@@ -198,7 +195,7 @@ export const storageService = {
 
   async getFarmerProfile(): Promise<FarmerProfile | null> {
     try {
-      const raw = await getSecureItem(FARMER_PROFILE_KEY);
+      const raw = (await getSecureItem(FARMER_PROFILE_KEY)) || (await AsyncStorage.getItem(FARMER_PROFILE_KEY));
       return raw ? JSON.parse(raw) : null;
     } catch {
       return null;
@@ -207,7 +204,9 @@ export const storageService = {
 
   async setFarmerProfile(profile: FarmerProfile): Promise<void> {
     try {
-      await setSecureItem(FARMER_PROFILE_KEY, JSON.stringify(profile));
+      const serialized = JSON.stringify(profile);
+      await setSecureItem(FARMER_PROFILE_KEY, serialized);
+      await AsyncStorage.setItem(FARMER_PROFILE_KEY, serialized);
       profileListeners.forEach((fn) => fn(profile));
     } catch {}
   },
@@ -215,6 +214,7 @@ export const storageService = {
   async clearFarmerProfile(): Promise<void> {
     try {
       await removeSecureItem(FARMER_PROFILE_KEY);
+      await AsyncStorage.removeItem(FARMER_PROFILE_KEY).catch(() => {});
       profileListeners.forEach((fn) => fn(null));
     } catch {}
   },
@@ -227,10 +227,23 @@ export const storageService = {
     };
   },
 
+  /**
+   * Strictly verifies whether onboarding was completed:
+   * Requires BOTH 'krishi_onboarding_done' === 'true' AND a verified non-empty farmer profile in storage.
+   * If the profile is missing or corrupted, invalidates the stale onboarding flag so onboarding is re-triggered.
+   */
   async hasCompletedOnboarding(): Promise<boolean> {
     try {
       const val = await AsyncStorage.getItem('krishi_onboarding_done');
-      return val === 'true';
+      if (val !== 'true') return false;
+
+      const profile = await storageService.getFarmerProfile();
+      if (!profile || !profile.farmerId || profile.farmerId.trim() === '') {
+        // Invalidate stale onboarding flag without verified profile
+        await AsyncStorage.removeItem('krishi_onboarding_done').catch(() => {});
+        return false;
+      }
+      return true;
     } catch {
       return false;
     }
@@ -246,22 +259,39 @@ export const storageService = {
   async resetOnboarding(): Promise<void> {
     try {
       await removeSecureItem(FARMER_PROFILE_KEY);
-      await AsyncStorage.removeItem('krishi_onboarding_done');
-      await AsyncStorage.removeItem('krishi_saved_location');
+      await AsyncStorage.removeItem(FARMER_PROFILE_KEY).catch(() => {});
+      await AsyncStorage.removeItem('krishi_onboarding_done').catch(() => {});
+      await AsyncStorage.removeItem('krishi_saved_location').catch(() => {});
+      await AsyncStorage.removeItem('krishi_language').catch(() => {});
+      if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.removeItem(FARMER_PROFILE_KEY);
+        window.localStorage.removeItem('krishi_onboarding_done');
+        window.localStorage.removeItem('krishi_saved_location');
+        window.localStorage.removeItem('krishi_language');
+      }
+      profileListeners.forEach((fn) => fn(null));
       onboardingListeners.forEach((fn) => fn('language'));
     } catch {}
   },
 
   async logout(): Promise<void> {
     try {
-      await removeSecureItem(FARMER_PROFILE_KEY);
-      await AsyncStorage.removeItem('krishi_onboarding_done');
-      await AsyncStorage.removeItem('krishi_saved_location');
-      profileListeners.forEach((fn) => fn(null));
-      onboardingListeners.forEach((fn) => fn('language'));
+      await storageService.resetOnboarding();
     } catch (err) {
       console.error('Logout failed:', err);
     }
+  },
+
+  async clearAllStorage(): Promise<void> {
+    try {
+      await removeSecureItem(FARMER_PROFILE_KEY);
+      await AsyncStorage.clear();
+      if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.clear();
+      }
+      profileListeners.forEach((fn) => fn(null));
+      onboardingListeners.forEach((fn) => fn('language'));
+    } catch {}
   },
 
   // Generic Secure Store accessors for tokens or credentials

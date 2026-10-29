@@ -1,15 +1,14 @@
 /**
- * FarmerLoginView — Clean, Decluttered, Isolated Farmer Login View.
+ * FarmerLoginView — Clean, Decluttered, Isolated Farmer Authentication View.
  *
  * Requirements:
- * - Unmissable, working Back button fixed at top-left: position: absolute; top: 20; left: 20; z-index: 999;
- *   Clicking this resets view = 'language'.
- * - Clean Title: "Farmer Login".
- * - Single clean input: 10-digit Mobile Number with "+91" prefix.
- * - Single large primary button: "Send OTP" (and clean 4-digit OTP box when triggered).
- * - Subtle text link below: "Skip & Continue as Guest →".
+ * - Unmissable working Back button fixed at top-left (returns to Step 2: Location Selection).
+ * - Multi-method login support:
+ *   1. 📱 10-digit Mobile Number + OTP (with 1234 test helper).
+ *   2. 🌾 11-digit PM-Kisan ID or 12-digit Aadhaar-linked registration number.
+ *   3. 🚶 Explicit "Continue as Guest Farmer" button.
  * - 1-tap quick demo profile chips for instant evaluation.
- * - Completely isolated: No dashboard background, zero tab bar leaks.
+ * - Persists verified profile to storage and calls onSuccess() only upon completion.
  */
 import React, { useState } from 'react';
 import {
@@ -20,6 +19,7 @@ import {
   ScrollView,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -33,6 +33,8 @@ interface FarmerLoginViewProps {
   onBack: () => void;
   onSuccess: () => void;
 }
+
+type AuthMethod = 'mobile' | 'kisan_id';
 
 const DEMO_PROFILES: FarmerProfile[] = [
   {
@@ -72,17 +74,26 @@ export default function FarmerLoginView({
   onBack,
   onSuccess,
 }: FarmerLoginViewProps) {
+  const [authMethod, setAuthMethod] = useState<AuthMethod>('mobile');
+
+  // Mobile + OTP State
   const [mobileNumber, setMobileNumber] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otpCode, setOtpCode] = useState('');
-  const [loading, setLoading] = useState(false);
   const [otpNotice, setOtpNotice] = useState<string | null>(null);
 
+  // Kisan ID / Aadhaar State
+  const [kisanOrAadhaarId, setKisanOrAadhaarId] = useState('');
+  const [idError, setIdError] = useState<string | null>(null);
+
+  const [loading, setLoading] = useState(false);
+
+  // ── Mobile + OTP Handlers ────────────────────────────────────────────────
   const handleSendOtp = () => {
     safeHaptics.impactLight();
     const cleanNumber = mobileNumber.replace(/\D/g, '');
     if (cleanNumber.length < 10) {
-      alert('Please enter a valid 10-digit mobile number.');
+      Alert.alert('Invalid Number', 'Please enter a valid 10-digit mobile number.');
       return;
     }
     setOtpSent(true);
@@ -98,7 +109,7 @@ export default function FarmerLoginView({
   const handleVerifyOtp = async () => {
     safeHaptics.impactMedium();
     if (otpCode.trim() !== '1234' && otpCode.trim().length < 4) {
-      alert('Please enter 4-digit code (use 1234 for test).');
+      Alert.alert('Invalid OTP', 'Please enter 4-digit code (use 1234 for test).');
       return;
     }
     setLoading(true);
@@ -123,6 +134,49 @@ export default function FarmerLoginView({
     onSuccess();
   };
 
+  // ── Kisan ID / Aadhaar Handlers ──────────────────────────────────────────
+  const handleAutoFillKisanId = () => {
+    safeHaptics.impactLight();
+    setKisanOrAadhaarId('KISAN9842101');
+    setIdError(null);
+  };
+
+  const handleVerifyKisanId = async () => {
+    safeHaptics.impactMedium();
+    const cleaned = kisanOrAadhaarId.trim().replace(/\s+/g, '');
+    if (cleaned.length < 11 || cleaned.length > 14) {
+      setIdError('Please enter a valid 11-digit PM-Kisan ID or 12-digit Aadhaar number.');
+      return;
+    }
+    setIdError(null);
+    setLoading(true);
+
+    const savedLoc = await storageService.getSavedLocation();
+    const finalState = savedLoc?.state || 'Punjab';
+    const finalDistrict = savedLoc?.district || 'Ludhiana';
+
+    const isAadhaar = /^\d{12}$/.test(cleaned);
+    const farmerIdLabel = isAadhaar ? `AADHAAR-XX-${cleaned.slice(-4)}` : cleaned.toUpperCase();
+    const displayName = isAadhaar ? `Farmer (Aadhaar ...${cleaned.slice(-4)})` : `Farmer (${cleaned.slice(-4)})`;
+
+    const profile: FarmerProfile = {
+      farmerId: farmerIdLabel,
+      name: displayName,
+      phone: '9876543210',
+      state: finalState,
+      district: finalDistrict,
+      primaryCrops: ['Wheat', 'Paddy'],
+      language: currentLang,
+      loginTimestamp: new Date().toISOString(),
+    };
+
+    await storageService.setFarmerProfile(profile);
+    await storageService.setOnboardingComplete();
+    setLoading(false);
+    onSuccess();
+  };
+
+  // ── Continue as Guest Handler ────────────────────────────────────────────
   const handleSkipGuest = async () => {
     safeHaptics.impactLight();
     setLoading(true);
@@ -133,7 +187,7 @@ export default function FarmerLoginView({
     const guestProfile: FarmerProfile = {
       farmerId: `KISAN-GUEST-${Math.floor(1000 + Math.random() * 9000)}`,
       name: 'Guest Farmer',
-      phone: '9876543210',
+      phone: '',
       state: finalState,
       district: finalDistrict,
       primaryCrops: ['Wheat', 'Paddy'],
@@ -146,6 +200,7 @@ export default function FarmerLoginView({
     onSuccess();
   };
 
+  // ── 1-Tap Demo Profile Handler ───────────────────────────────────────────
   const handleDemoProfile = async (p: FarmerProfile) => {
     safeHaptics.notificationSuccess();
     setLoading(true);
@@ -164,7 +219,7 @@ export default function FarmerLoginView({
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* ── 🔙 UNMISSABLE FIXED BACK BUTTON (position: absolute, top: 20, left: 20, zIndex: 999) ── */}
+        {/* ── 🔙 UNMISSABLE FIXED BACK BUTTON ── */}
         <TouchableOpacity
           style={styles.fixedBackButton}
           onPress={() => {
@@ -193,157 +248,293 @@ export default function FarmerLoginView({
               <MaterialCommunityIcons name="shield-account" size={32} color="#15803D" />
             </View>
 
-            <Text style={styles.title} allowFontScaling={true} accessibilityRole="header">Farmer Login</Text>
+            <Text style={styles.title} allowFontScaling={true} accessibilityRole="header">
+              Farmer Login
+            </Text>
             <Text style={styles.subtitle} allowFontScaling={true}>
-              Enter your mobile number to access verified ICAR advisories
+              Verify your identity to access localized ICAR advisories
             </Text>
 
-            {/* Single clean input: 10-digit Mobile Number with +91 prefix */}
-            <View style={styles.fieldBox}>
-              <Text style={styles.inputLabel} allowFontScaling={true}>Mobile Number</Text>
-              <View style={styles.phoneInputRow}>
-                <View style={styles.countryCodeBadge} accessible={false}>
-                  <Text style={styles.countryCodeText} allowFontScaling={true}>🇮🇳 +91</Text>
-                </View>
-                <TextInput
-                  style={styles.phoneInput}
-                  value={mobileNumber}
-                  onChangeText={setMobileNumber}
-                  placeholder="98765 43210"
-                  placeholderTextColor="#94A3B8"
-                  keyboardType="phone-pad"
-                  maxLength={10}
-                  editable={!otpSent}
-                  allowFontScaling={true}
-                  accessibilityLabel="10-digit Mobile Number"
-                  accessibilityHint="Enter your 10 digit Indian mobile number without country code"
+            {/* ── Method Segmented Control ── */}
+            <View style={styles.tabContainer}>
+              <TouchableOpacity
+                style={[styles.tabButton, authMethod === 'mobile' && styles.tabButtonActive]}
+                onPress={() => {
+                  safeHaptics.impactLight();
+                  setAuthMethod('mobile');
+                }}
+                activeOpacity={0.8}
+                accessibilityRole="tab"
+                accessibilityState={{ selected: authMethod === 'mobile' }}
+                accessibilityLabel="Mobile OTP Login"
+              >
+                <MaterialCommunityIcons
+                  name="cellphone"
+                  size={18}
+                  color={authMethod === 'mobile' ? '#15803D' : '#64748B'}
                 />
-                {otpSent && (
-                  <View style={styles.checkBadge} accessible={false}>
-                    <MaterialCommunityIcons name="check-circle" size={22} color="#16A34A" />
-                  </View>
-                )}
-              </View>
+                <Text
+                  style={[styles.tabButtonText, authMethod === 'mobile' && styles.tabButtonTextActive]}
+                  allowFontScaling={true}
+                >
+                  Mobile OTP
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.tabButton, authMethod === 'kisan_id' && styles.tabButtonActive]}
+                onPress={() => {
+                  safeHaptics.impactLight();
+                  setAuthMethod('kisan_id');
+                }}
+                activeOpacity={0.8}
+                accessibilityRole="tab"
+                accessibilityState={{ selected: authMethod === 'kisan_id' }}
+                accessibilityLabel="Kisan ID or Aadhaar Login"
+              >
+                <MaterialCommunityIcons
+                  name="card-account-details-outline"
+                  size={18}
+                  color={authMethod === 'kisan_id' ? '#15803D' : '#64748B'}
+                />
+                <Text
+                  style={[styles.tabButtonText, authMethod === 'kisan_id' && styles.tabButtonTextActive]}
+                  allowFontScaling={true}
+                >
+                  Kisan ID / Aadhaar
+                </Text>
+              </TouchableOpacity>
             </View>
 
-            {/* OTP Input Card (If Triggered) */}
-            {otpSent && (
-              <View style={styles.otpCard}>
-                <Text style={styles.inputLabel} allowFontScaling={true}>Enter 4-Digit OTP</Text>
-                <View style={styles.otpRow}>
-                  <TextInput
-                    style={styles.otpInput}
-                    value={otpCode}
-                    onChangeText={setOtpCode}
-                    placeholder="• • • •"
-                    placeholderTextColor="#94A3B8"
-                    keyboardType="number-pad"
-                    maxLength={4}
-                    allowFontScaling={true}
-                    accessibilityLabel="4-Digit OTP code"
-                    accessibilityHint="Enter the 4 digit OTP sent to your phone"
-                  />
+            {/* ── Option A: Mobile Number + OTP Flow ── */}
+            {authMethod === 'mobile' && (
+              <View style={styles.methodBox}>
+                <View style={styles.fieldBox}>
+                  <Text style={styles.inputLabel} allowFontScaling={true}>10-Digit Mobile Number</Text>
+                  <View style={styles.phoneInputRow}>
+                    <View style={styles.countryCodeBadge} accessible={false}>
+                      <Text style={styles.countryCodeText} allowFontScaling={true}>🇮🇳 +91</Text>
+                    </View>
+                    <TextInput
+                      style={styles.phoneInput}
+                      value={mobileNumber}
+                      onChangeText={setMobileNumber}
+                      placeholder="98765 43210"
+                      placeholderTextColor="#94A3B8"
+                      keyboardType="phone-pad"
+                      maxLength={10}
+                      editable={!otpSent}
+                      allowFontScaling={true}
+                      accessibilityLabel="10-digit Mobile Number"
+                      accessibilityHint="Enter your 10 digit Indian mobile number without country code"
+                    />
+                    {otpSent && (
+                      <View style={styles.checkBadge} accessible={false}>
+                        <MaterialCommunityIcons name="check-circle" size={22} color="#16A34A" />
+                      </View>
+                    )}
+                  </View>
+                </View>
+
+                {/* OTP Input Card (If Triggered) */}
+                {otpSent && (
+                  <View style={styles.otpCard}>
+                    <Text style={styles.inputLabel} allowFontScaling={true}>Enter 4-Digit OTP</Text>
+                    <View style={styles.otpRow}>
+                      <TextInput
+                        style={styles.otpInput}
+                        value={otpCode}
+                        onChangeText={setOtpCode}
+                        placeholder="• • • •"
+                        placeholderTextColor="#94A3B8"
+                        keyboardType="number-pad"
+                        maxLength={4}
+                        allowFontScaling={true}
+                        accessibilityLabel="4-Digit OTP code"
+                        accessibilityHint="Enter the 4 digit OTP sent to your phone"
+                      />
+                      <TouchableOpacity
+                        style={styles.verifyBtn}
+                        onPress={handleVerifyOtp}
+                        activeOpacity={0.8}
+                        disabled={loading}
+                        accessibilityRole="button"
+                        accessibilityLabel="Verify OTP"
+                        accessibilityState={{ disabled: loading }}
+                      >
+                        {loading ? (
+                          <ActivityIndicator size="small" color="#FFFFFF" />
+                        ) : (
+                          <Text style={styles.verifyBtnText} allowFontScaling={true}>Verify</Text>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity
+                      style={styles.testOtpHint}
+                      onPress={handleUseTestOtp}
+                      activeOpacity={0.7}
+                      accessibilityRole="button"
+                      accessibilityLabel="Auto-fill test OTP 1234"
+                    >
+                      <Text style={styles.testOtpHpText} allowFontScaling={true}>
+                        👉 Quick test: Auto-fill 1234
+                      </Text>
+                    </TouchableOpacity>
+
+                    {otpNotice && (
+                      <Text style={styles.otpNotice} allowFontScaling={true}>{otpNotice}</Text>
+                    )}
+                  </View>
+                )}
+
+                {/* Primary Action Button: "Send OTP" or "Enter Dashboard" */}
+                {!otpSent ? (
                   <TouchableOpacity
-                    style={styles.verifyBtn}
-                    onPress={handleVerifyOtp}
-                    activeOpacity={0.8}
-                    disabled={loading}
+                    style={[styles.primaryBtn, mobileNumber.length < 10 && styles.primaryBtnDisabled]}
+                    onPress={handleSendOtp}
+                    disabled={mobileNumber.length < 10 || loading}
+                    activeOpacity={0.85}
                     accessibilityRole="button"
-                    accessibilityLabel="Verify OTP"
+                    accessibilityLabel="Send OTP"
+                    accessibilityState={{ disabled: mobileNumber.length < 10 || loading }}
+                  >
+                    <LinearGradient
+                      colors={['#15803D', '#166534']}
+                      style={styles.btnGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                    >
+                      {loading ? (
+                        <ActivityIndicator size="small" color="#FFFFFF" />
+                      ) : (
+                        <Text style={styles.primaryBtnText} allowFontScaling={true}>Send OTP ➔</Text>
+                      )}
+                    </LinearGradient>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.primaryBtn}
+                    onPress={handleVerifyOtp}
+                    disabled={loading}
+                    activeOpacity={0.85}
+                    accessibilityRole="button"
+                    accessibilityLabel="Verify and Enter Dashboard"
                     accessibilityState={{ disabled: loading }}
                   >
-                    {loading ? (
-                      <ActivityIndicator size="small" color="#FFFFFF" />
-                    ) : (
-                      <Text style={styles.verifyBtnText} allowFontScaling={true}>Verify</Text>
-                    )}
+                    <LinearGradient
+                      colors={['#15803D', '#166534']}
+                      style={styles.btnGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                    >
+                      {loading ? (
+                        <ActivityIndicator size="small" color="#FFFFFF" />
+                      ) : (
+                        <Text style={styles.primaryBtnText} allowFontScaling={true}>
+                          Verify & Enter Dashboard ➔
+                        </Text>
+                      )}
+                    </LinearGradient>
                   </TouchableOpacity>
+                )}
+              </View>
+            )}
+
+            {/* ── Option B: Kisan ID / Aadhaar-linked Registration Flow ── */}
+            {authMethod === 'kisan_id' && (
+              <View style={styles.methodBox}>
+                <View style={styles.fieldBox}>
+                  <Text style={styles.inputLabel} allowFontScaling={true}>
+                    11-Digit Kisan ID or 12-Digit Aadhaar
+                  </Text>
+                  <View style={styles.phoneInputRow}>
+                    <View style={styles.countryCodeBadge} accessible={false}>
+                      <MaterialCommunityIcons name="badge-account" size={20} color="#15803D" />
+                    </View>
+                    <TextInput
+                      style={styles.phoneInput}
+                      value={kisanOrAadhaarId}
+                      onChangeText={(val) => {
+                        setKisanOrAadhaarId(val);
+                        if (idError) setIdError(null);
+                      }}
+                      placeholder="e.g. KISAN9482101 or 1234 5678 9012"
+                      placeholderTextColor="#94A3B8"
+                      autoCapitalize="characters"
+                      maxLength={14}
+                      allowFontScaling={true}
+                      accessibilityLabel="Kisan ID or Aadhaar Number"
+                      accessibilityHint="Enter your 11 digit PM Kisan ID or 12 digit Aadhaar number"
+                    />
+                  </View>
+                  {idError && (
+                    <Text style={styles.errorText} allowFontScaling={true}>
+                      {idError}
+                    </Text>
+                  )}
                 </View>
 
                 <TouchableOpacity
                   style={styles.testOtpHint}
-                  onPress={handleUseTestOtp}
+                  onPress={handleAutoFillKisanId}
                   activeOpacity={0.7}
                   accessibilityRole="button"
-                  accessibilityLabel="Auto-fill test OTP 1234"
+                  accessibilityLabel="Auto-fill demo Kisan ID"
                 >
-                  <Text style={styles.testOtpHpText} allowFontScaling={true}>👉 Quick test: Auto-fill 1234</Text>
+                  <Text style={styles.testOtpHpText} allowFontScaling={true}>
+                    👉 Quick test: Auto-fill KISAN9842101
+                  </Text>
                 </TouchableOpacity>
 
-                {otpNotice && (
-                  <Text style={styles.otpNotice} allowFontScaling={true}>{otpNotice}</Text>
-                )}
+                <TouchableOpacity
+                  style={[styles.primaryBtn, kisanOrAadhaarId.trim().length < 11 && styles.primaryBtnDisabled]}
+                  onPress={handleVerifyKisanId}
+                  disabled={kisanOrAadhaarId.trim().length < 11 || loading}
+                  activeOpacity={0.85}
+                  accessibilityRole="button"
+                  accessibilityLabel="Verify Kisan ID and Enter Dashboard"
+                  accessibilityState={{ disabled: kisanOrAadhaarId.trim().length < 11 || loading }}
+                >
+                  <LinearGradient
+                    colors={['#15803D', '#166534']}
+                    style={styles.btnGradient}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                  >
+                    {loading ? (
+                      <ActivityIndicator size="small" color="#FFFFFF" />
+                    ) : (
+                      <Text style={styles.primaryBtnText} allowFontScaling={true}>
+                        Verify & Enter Dashboard ➔
+                      </Text>
+                    )}
+                  </LinearGradient>
+                </TouchableOpacity>
               </View>
             )}
 
-            {/* Single Primary Action Button: "Send OTP" or "Enter Dashboard" */}
-            {!otpSent ? (
-              <TouchableOpacity
-                style={[styles.primaryBtn, mobileNumber.length < 10 && styles.primaryBtnDisabled]}
-                onPress={handleSendOtp}
-                disabled={mobileNumber.length < 10 || loading}
-                activeOpacity={0.85}
-                accessibilityRole="button"
-                accessibilityLabel="Send OTP"
-                accessibilityState={{ disabled: mobileNumber.length < 10 || loading }}
-                accessibilityHint="Double tap to send a verification code to your phone"
-              >
-                <LinearGradient
-                  colors={['#15803D', '#166534']}
-                  style={styles.btnGradient}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                >
-                  {loading ? (
-                    <ActivityIndicator size="small" color="#FFFFFF" />
-                  ) : (
-                    <Text style={styles.primaryBtnText} allowFontScaling={true}>Send OTP ➔</Text>
-                  )}
-                </LinearGradient>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.primaryBtn}
-                onPress={handleVerifyOtp}
-                disabled={loading}
-                activeOpacity={0.85}
-                accessibilityRole="button"
-                accessibilityLabel="Verify and Enter Dashboard"
-                accessibilityState={{ disabled: loading }}
-                accessibilityHint="Double tap to verify OTP and open Krishi Sahayak dashboard"
-              >
-                <LinearGradient
-                  colors={['#15803D', '#166534']}
-                  style={styles.btnGradient}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                >
-                  {loading ? (
-                    <ActivityIndicator size="small" color="#FFFFFF" />
-                  ) : (
-                    <Text style={styles.primaryBtnText} allowFontScaling={true}>Verify & Enter Dashboard ➔</Text>
-                  )}
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
-
-            {/* Subtle text link below: "Skip & Continue as Guest →" */}
+            {/* ── Option C: Explicit "Continue as Guest" Button ── */}
             <TouchableOpacity
               style={styles.skipGuestBtn}
               onPress={handleSkipGuest}
               activeOpacity={0.75}
+              disabled={loading}
               accessibilityRole="button"
-              accessibilityLabel="Skip and Continue as Guest"
-              accessibilityHint="Double tap to browse advisory without logging in"
+              accessibilityLabel="Continue as Guest Farmer"
+              accessibilityHint="Double tap to enter Krishi Sahayak dashboard as a guest"
             >
+              <MaterialCommunityIcons name="account-arrow-right-outline" size={18} color="#15803D" />
               <Text style={styles.skipGuestText} allowFontScaling={true}>
-                Skip & Continue as Guest →
+                Continue as Guest Farmer →
               </Text>
             </TouchableOpacity>
 
-            {/* Clean 1-Tap Quick Demo Profile Chips */}
+            {/* ── 1-Tap Quick Demo Profile Chips ── */}
             <View style={styles.demoChipsSection}>
-              <Text style={styles.demoChipsLabel} allowFontScaling={true}>Instant 1-Tap Profiles:</Text>
+              <Text style={styles.demoChipsLabel} allowFontScaling={true}>
+                Instant 1-Tap Profiles:
+              </Text>
               <View style={styles.chipsRow}>
                 {DEMO_PROFILES.map((p) => (
                   <TouchableOpacity
@@ -378,7 +569,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     position: 'relative',
   },
-  // ── 🔙 UNMISSABLE FIXED BACK BUTTON ──
   fixedBackButton: {
     position: 'absolute',
     top: 20,
@@ -450,13 +640,50 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#64748B',
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: 20,
     lineHeight: 18,
     paddingHorizontal: 12,
   },
+  tabContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: '#F1F5F9',
+    borderRadius: 14,
+    padding: 4,
+    marginBottom: 20,
+    gap: 4,
+  },
+  tabButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  tabButtonActive: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  tabButtonText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#64748B',
+  },
+  tabButtonTextActive: {
+    color: '#15803D',
+  },
+  methodBox: {
+    width: '100%',
+  },
   fieldBox: {
     width: '100%',
-    marginBottom: 18,
+    marginBottom: 14,
   },
   inputLabel: {
     fontSize: 13,
@@ -479,6 +706,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     height: '100%',
     justifyContent: 'center',
+    alignItems: 'center',
     borderRightWidth: 1,
     borderRightColor: '#E2E8F0',
   },
@@ -491,10 +719,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     paddingHorizontal: 14,
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '700',
     color: '#0F172A',
-    letterSpacing: 1,
   },
   checkBadge: {
     paddingRight: 14,
@@ -504,7 +731,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8FAF8',
     borderRadius: 14,
     padding: 14,
-    marginBottom: 18,
+    marginBottom: 16,
     borderWidth: 1.5,
     borderColor: '#BBF7D0',
   },
@@ -540,7 +767,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   testOtpHint: {
-    marginTop: 8,
+    marginTop: 4,
+    marginBottom: 14,
     alignSelf: 'flex-start',
   },
   testOtpHpText: {
@@ -551,6 +779,12 @@ const styles = StyleSheet.create({
   otpNotice: {
     fontSize: 12,
     color: '#166534',
+    marginTop: 6,
+    fontWeight: '600',
+  },
+  errorText: {
+    fontSize: 12,
+    color: '#DC2626',
     marginTop: 6,
     fontWeight: '600',
   },
@@ -577,13 +811,17 @@ const styles = StyleSheet.create({
   },
   primaryBtnText: {
     color: '#FFFFFF',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '800',
     letterSpacing: 0.3,
   },
   skipGuestBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
     paddingVertical: 14,
-    marginTop: 6,
+    marginTop: 10,
   },
   skipGuestText: {
     fontSize: 14,
