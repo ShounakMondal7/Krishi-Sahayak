@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     env: str = "development"
 
     # ── CORS ─────────────────────────────────────────────────────────
-    cors_origins: str = "http://localhost:3000,http://localhost:5173,http://localhost:8081"
+    cors_origins: str = "http://localhost:3000,http://localhost:5173,http://localhost:8081,http://localhost:19006,http://127.0.0.1:8081,http://127.0.0.1:19006,http://127.0.0.1:5173"
 
     @field_validator("cors_origins", mode="before")
     @classmethod

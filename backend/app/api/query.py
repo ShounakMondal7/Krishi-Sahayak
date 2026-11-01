@@ -479,8 +479,10 @@ async def text_query(
     },
 )
 async def voice_query(
-    audio: UploadFile = File(..., description="Malayalam audio file (WEBM_OPUS recommended)"),
+    audio: Optional[UploadFile] = None,
+    audio_file: Optional[UploadFile] = None,
     encoding: str = Form(default="WEBM_OPUS", description="Audio encoding format"),
+    language: str = Form(default="en", description="Target language code"),
     region: Optional[str] = Form(default=None, description="Farmer's region"),
     session_id: Optional[str] = Form(default=None),
     conversation_id: Optional[str] = Form(default=None),
@@ -489,29 +491,22 @@ async def voice_query(
     db: AsyncSession = Depends(get_db),
 ) -> VoiceQueryResponse:
 
-    audio_bytes = await audio.read()
+    upload = audio or audio_file
+    if not upload:
+        raise HTTPException(status_code=400, detail="Empty audio file uploaded.")
+
+    audio_bytes = await upload.read()
     if not audio_bytes:
         raise HTTPException(status_code=400, detail="Empty audio file uploaded.")
 
-    logger.info(f"Received audio: {audio.filename} ({len(audio_bytes)} bytes, {encoding})")
+    logger.info(f"Received audio: {upload.filename} ({len(audio_bytes)} bytes, {encoding}, lang={language})")
 
-    # Transcribe audio
-    credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
-    if not credentials_path or not os.path.exists(credentials_path):
-        transcribed_text = speech.transcribe_demo_mode(audio_bytes)
-    else:
-        try:
-            transcribed_text = speech.transcribe_malayalam_audio(audio_bytes, encoding=encoding)
-        except RuntimeError as exc:
-            await _log_error(
-                db, "STTError", str(exc),
-                endpoint="voice-query",
-                region=region,
-            )
-            raise HTTPException(
-                status_code=422,
-                detail={"error": "Speech transcription failed", "detail": str(exc)},
-            )
+    # Resilient audio transcription (Google STT with fallback)
+    transcribed_text = speech.transcribe_audio_resilient(
+        audio_bytes=audio_bytes,
+        encoding=encoding,
+        language=language,
+    )
 
     # Sanitize inputs (CERT-In / OWASP)
     try:
@@ -526,7 +521,7 @@ async def voice_query(
 
     text_response = await _run_rag_pipeline(
         question_original=transcribed_text,
-        language="ml",
+        language=language,
         region=region,
         session_id=session_id,
         conversation_id=conversation_id,
@@ -539,7 +534,6 @@ async def voice_query(
         **text_response.model_dump(),
         transcribed_text=transcribed_text,
     )
-
 
 # ── ENDPOINT: Image Query ──────────────────────────────────────────────────────
 

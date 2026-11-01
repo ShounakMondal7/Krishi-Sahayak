@@ -71,3 +71,34 @@ def test_query_successful_flow(client):
     assert "sources" in data
     assert "response_time_ms" in data
     assert len(data["answer"]) > 0
+
+
+import io
+
+def test_voice_query_with_audio_file(client):
+    """Validates voice query endpoint using audio_file field name."""
+    fake_audio = io.BytesIO(b"dummy audio webm content for testing")
+    response = client.post(
+        "/api/v1/voice-query",
+        files={"audio_file": ("recording.webm", fake_audio, "audio/webm")},
+        data={"language": "en", "region": "Palakkad"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "transcribed_text" in data
+    assert "answer" in data
+    assert "sources" in data
+
+
+def test_voice_query_with_audio(client):
+    """Validates voice query endpoint using audio field name."""
+    fake_audio = io.BytesIO(b"dummy audio m4a content for testing")
+    response = client.post(
+        "/api/v1/voice-query",
+        files={"audio": ("recording.m4a", fake_audio, "audio/m4a")},
+        data={"language": "en", "region": "Palakkad"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "transcribed_text" in data
+    assert "answer" in data

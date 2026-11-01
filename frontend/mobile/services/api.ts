@@ -6,11 +6,14 @@ import { Platform } from 'react-native';
 // ==============================================================================
 // ⚠️ DYNAMIC BACKEND API URL RESOLUTION
 // ==============================================================================
+// Web uses standard localhost:8000 (avoids LAN IP CORS blocks during local testing)
 // Android Emulator requires 10.0.2.2 to bridge to the host machine's localhost:8000
-// Web uses standard localhost:8000
 // Physical device uses the configured LAN IPv4 address (e.g., 10.180.41.217:8000)
 // ==============================================================================
 export const getBaseUrl = (): string => {
+  if (Platform.OS === 'web') {
+    return 'http://localhost:8000';
+  }
   const envUrl = process.env.EXPO_PUBLIC_API_URL;
   if (Platform.OS === 'android') {
     // If a LAN IP (e.g. 192.168.x.x / 10.x.x.x) or domain is configured, use it
@@ -30,7 +33,7 @@ export const BASE_URL = getBaseUrl();
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 30000,
+  timeout: 35000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -88,31 +91,55 @@ export const apiService = {
 
   /**
    * Submit a voice query as multipart/form-data.
-   * audio: URI of the recorded audio file
+   * Cross-platform support for Web (Blob/File) and Native (URI object).
    */
   async voiceQuery(
-    audioUri: string,
+    audioData: string | Blob,
     region?: string,
+    language: string = 'en',
+    conversationId?: string,
   ): Promise<VoiceQueryResponse> {
     const formData = new FormData();
-    // React Native FormData accepts URI-based file objects
-    formData.append('audio', {
-      uri: audioUri,
-      type: 'audio/webm',
-      name: 'voice_query.webm',
-    } as any);
+
+    if (Platform.OS === 'web') {
+      let blob: Blob;
+      if (typeof audioData === 'string') {
+        blob = await fetch(audioData).then((r) => r.blob());
+      } else {
+        blob = audioData;
+      }
+      formData.append('audio', blob, 'recording.webm');
+      formData.append('audio_file', blob, 'recording.webm');
+    } else {
+      const uri = typeof audioData === 'string' ? audioData : (audioData as any).uri;
+      const fileObj = {
+        uri,
+        type: 'audio/m4a',
+        name: 'recording.m4a',
+      } as any;
+      formData.append('audio', fileObj);
+      formData.append('audio_file', fileObj);
+    }
 
     if (region) {
       formData.append('region', region);
     }
-    formData.append('encoding', 'WEBM_OPUS');
+    formData.append('language', language);
+    if (conversationId) {
+      formData.append('conversation_id', conversationId);
+    }
+    formData.append('encoding', Platform.OS === 'web' ? 'WEBM_OPUS' : 'LINEAR16');
+
+    // On Web, omit Content-Type so Axios/browser automatically sets the multipart boundary
+    const headers: Record<string, string> = {};
+    if (Platform.OS !== 'web') {
+      headers['Content-Type'] = 'multipart/form-data';
+    }
 
     const response = await api.post<VoiceQueryResponse>(
       '/api/v1/voice-query',
       formData,
-      {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      },
+      { headers, timeout: 45000 },
     );
     return response.data;
   },

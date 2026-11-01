@@ -508,7 +508,9 @@ export default function HomeScreen() {
   const [isFollowUp, setIsFollowUp] = useState(false);
 
   const recordingRef = useRef<Audio.Recording | null>(null);
-  const webSpeechRecognitionRef = useRef<any>(null);
+  const mediaRecorderRef = useRef<any>(null);
+  const mediaStreamRef = useRef<any>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
   const durationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const soundRef = useRef<Audio.Sound | null>(null);
   const breatheAnim = useRef(new Animated.Value(1)).current;
@@ -786,99 +788,100 @@ export default function HomeScreen() {
     setTranscribedText(null);
   };
 
-  // ── Voice Recording ────────────────────────────────────────────────────────
-  const startRecording = async () => {
-    // ── 1. WEB BROWSER: Native Web Speech Recognition API (Zero-latency, 100% accurate) ──
-    if (
-      Platform.OS === 'web' &&
-      typeof window !== 'undefined' &&
-      (('SpeechRecognition' in window) || ('webkitSpeechRecognition' in window))
-    ) {
+  // ── Voice Recording Lifecycle ───────────────────────────────────────────────
+  const cleanupRecording = () => {
+    if (durationTimerRef.current) {
+      clearInterval(durationTimerRef.current);
+      durationTimerRef.current = null;
+    }
+    if (mediaStreamRef.current) {
       try {
-        const SpeechRecognition =
-          (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
+        mediaStreamRef.current.getTracks().forEach((track: any) => track.stop());
+      } catch {}
+      mediaStreamRef.current = null;
+    }
+    mediaRecorderRef.current = null;
+    recordingRef.current = null;
+    setIsRecording(false);
+  };
 
-        const langMap: Record<string, string> = {
-          en: 'en-IN',
-          hi: 'hi-IN',
-          ml: 'ml-IN',
-          ta: 'ta-IN',
-          te: 'te-IN',
-          kn: 'kn-IN',
-          bn: 'bn-IN',
-          mr: 'mr-IN',
-          gu: 'gu-IN',
-          pa: 'pa-IN',
-        };
-        recognition.lang = langMap[currentLang] || 'en-IN';
+  const startRecording = async () => {
+    setError(null);
 
-        let capturedTranscript = '';
+    // ── 1. WEB BROWSER RECORDING (Standard MediaRecorder API) ──
+    if (Platform.OS === 'web') {
+      try {
+        if (typeof navigator === 'undefined' || !navigator?.mediaDevices?.getUserMedia) {
+          setError('Microphone recording is not supported in this browser. Please type your question.');
+          return;
+        }
 
-        recognition.onstart = () => {
-          setIsRecording(true);
-          setRecordingDuration(0);
-          setError(null);
-          safeHaptics.impactHeavy();
-          if (durationTimerRef.current) clearInterval(durationTimerRef.current);
-          durationTimerRef.current = setInterval(() => {
-            setRecordingDuration((d) => {
-              if (d >= 29) {
-                stopRecording();
-                return 30;
-              }
-              return d + 1;
-            });
-          }, 1000);
-        };
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStreamRef.current = stream;
+        audioChunksRef.current = [];
 
-        recognition.onresult = (event: any) => {
-          let text = '';
-          for (let i = event.resultIndex; i < event.results.length; ++i) {
-            text += event.results[i][0].transcript;
+        let mimeType = 'audio/webm';
+        if (typeof MediaRecorder !== 'undefined') {
+          if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+            mimeType = 'audio/webm;codecs=opus';
+          } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+            mimeType = 'audio/webm';
+          } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+            mimeType = 'audio/ogg;codecs=opus';
+          } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+            mimeType = 'audio/mp4';
           }
-          if (text) {
-            capturedTranscript = text;
-            setQuestion(text);
+        }
+
+        const mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+        mediaRecorderRef.current = mediaRecorder;
+
+        mediaRecorder.ondataavailable = (event: any) => {
+          if (event.data && event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
           }
         };
 
-        recognition.onerror = (event: any) => {
-          console.warn('SpeechRecognition error:', event.error);
-          if (durationTimerRef.current) clearInterval(durationTimerRef.current);
-          setIsRecording(false);
-          if (event.error === 'not-allowed') {
-            setError('Microphone access blocked. Click the lock/camera icon in your browser address bar to allow microphone.');
-          } else if (event.error !== 'no-speech') {
-            setError(`Voice input notice: ${event.error}. You can also type your question.`);
-          }
+        mediaRecorder.onerror = (event: any) => {
+          console.warn('MediaRecorder error:', event.error);
+          cleanupRecording();
+          setError('Audio recording failed. Please try again or type your question.');
         };
 
-        recognition.onend = () => {
-          if (durationTimerRef.current) clearInterval(durationTimerRef.current);
-          setIsRecording(false);
-          const finalQuery = capturedTranscript.trim() || question.trim();
-          if (finalQuery) {
-            executeQuery(finalQuery);
-          }
-        };
+        mediaRecorder.start(250);
+        setIsRecording(true);
+        setRecordingDuration(0);
+        safeHaptics.impactHeavy();
 
-        webSpeechRecognitionRef.current = recognition;
-        recognition.start();
+        if (durationTimerRef.current) clearInterval(durationTimerRef.current);
+        durationTimerRef.current = setInterval(() => {
+          setRecordingDuration((prev) => {
+            if (prev >= 29) {
+              stopRecording();
+              return 30;
+            }
+            return prev + 1;
+          });
+        }, 1000);
         return;
       } catch (err: any) {
-        console.warn('Web SpeechRecognition init failed, falling back to Audio.Recording:', err);
+        console.warn('Web microphone access error:', err);
+        cleanupRecording();
+        if (err?.name === 'NotAllowedError' || err?.name === 'PermissionDeniedError') {
+          setError('Microphone permission denied. Please allow microphone access in your browser settings.');
+        } else {
+          setError('Could not access microphone. Please check your browser permissions or type your question.');
+        }
+        return;
       }
     }
 
-    // ── 2. NATIVE DEVICE (or fallback) RECORDING ──
+    // ── 2. NATIVE DEVICE RECORDING (expo-av) ──
     try {
       const { granted } = await Audio.requestPermissionsAsync();
       if (!granted) {
         Alert.alert('Permission Required', 'Microphone permission is needed for voice questions.');
+        setError('Microphone permission denied.');
         return;
       }
       await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
@@ -888,73 +891,142 @@ export default function HomeScreen() {
       recordingRef.current = recording;
       setIsRecording(true);
       setRecordingDuration(0);
-      setError(null);
       safeHaptics.impactHeavy();
 
+      if (durationTimerRef.current) clearInterval(durationTimerRef.current);
       durationTimerRef.current = setInterval(() => {
-        setRecordingDuration((d) => {
-          if (d >= 29) { stopRecording(); return 30; }
-          return d + 1;
+        setRecordingDuration((prev) => {
+          if (prev >= 29) {
+            stopRecording();
+            return 30;
+          }
+          return prev + 1;
         });
       }, 1000);
-    } catch {
-      setError('Could not start microphone recording. Click the address bar to allow mic or type your question.');
+    } catch (err: any) {
+      console.warn('Native microphone recording error:', err);
+      cleanupRecording();
+      setError('Could not start microphone recording. Please check permissions or type your question.');
     }
   };
 
   const stopRecording = async () => {
-    if (durationTimerRef.current) clearInterval(durationTimerRef.current);
-
-    // Stop web speech recognition if active
-    if (webSpeechRecognitionRef.current) {
-      try {
-        webSpeechRecognitionRef.current.stop();
-      } catch {}
-      webSpeechRecognitionRef.current = null;
+    if (durationTimerRef.current) {
+      clearInterval(durationTimerRef.current);
+      durationTimerRef.current = null;
     }
+    safeHaptics.impactMedium();
+    setIsRecording(false);
 
-    if (!recordingRef.current) {
-      setIsRecording(false);
+    // ── WEB STOP & UPLOAD ──
+    if (Platform.OS === 'web' && mediaRecorderRef.current) {
+      const recorder = mediaRecorderRef.current;
+      mediaRecorderRef.current = null;
+
+      try {
+        await new Promise<void>((resolve) => {
+          recorder.onstop = () => resolve();
+          if (recorder.state !== 'inactive') {
+            recorder.stop();
+          } else {
+            resolve();
+          }
+        });
+
+        if (mediaStreamRef.current) {
+          try {
+            mediaStreamRef.current.getTracks().forEach((track: any) => track.stop());
+          } catch {}
+          mediaStreamRef.current = null;
+        }
+
+        const chunks = audioChunksRef.current;
+        audioChunksRef.current = [];
+
+        if (!chunks || chunks.length === 0) {
+          setError('No audio recorded. Please hold or tap the mic and speak your question.');
+          return;
+        }
+
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+        await submitVoiceAudio(audioBlob);
+      } catch (err: any) {
+        console.warn('Web audio stop error:', err);
+        setError('Failed to process recorded audio. Please try again.');
+      }
       return;
     }
 
-    safeHaptics.impactMedium();
-    setIsRecording(false);
-    try {
-      await recordingRef.current.stopAndUnloadAsync();
-      const uri = recordingRef.current.getURI();
+    // ── NATIVE STOP & UPLOAD ──
+    if (recordingRef.current) {
+      const recording = recordingRef.current;
       recordingRef.current = null;
-      if (!uri) { setError('Audio recording file not found.'); return; }
-
-      setLoading(true);
-      setResponse(null);
-      setTranscribedText(null);
-      setIsOfflineCached(false);
-      setSheetVisible(true);
-
-      const formData = new FormData();
-      // Handle Web Blob vs Native File object correctly
-      if (Platform.OS === 'web') {
-        const audioBlob = await fetch(uri).then((r) => r.blob());
-        formData.append('audio', audioBlob, 'voice_query.webm');
-      } else {
-        formData.append('audio', { uri, type: 'audio/webm', name: 'voice_query.webm' } as any);
+      try {
+        await recording.stopAndUnloadAsync();
+        const uri = recording.getURI();
+        if (!uri) {
+          setError('Audio recording file not found.');
+          return;
+        }
+        await submitVoiceAudio(uri);
+      } catch (err: any) {
+        console.warn('Native audio stop error:', err);
+        setError('Failed to process voice question.');
       }
+    }
+  };
+
+  const submitVoiceAudio = async (audioSource: Blob | string) => {
+    setLoading(true);
+    setResponse(null);
+    setTranscribedText(null);
+    setIsOfflineCached(false);
+    setSheetVisible(true);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      if (Platform.OS === 'web') {
+        const blob = typeof audioSource === 'string'
+          ? await fetch(audioSource).then((r) => r.blob())
+          : audioSource;
+        formData.append('audio', blob, 'recording.webm');
+        formData.append('audio_file', blob, 'recording.webm');
+      } else {
+        const uri = typeof audioSource === 'string' ? audioSource : (audioSource as any).uri;
+        const fileObj = {
+          uri,
+          type: 'audio/m4a',
+          name: 'recording.m4a',
+        } as any;
+        formData.append('audio', fileObj);
+        formData.append('audio_file', fileObj);
+      }
+
       formData.append('region', region);
       formData.append('language', currentLang);
       if (conversationId) formData.append('conversation_id', conversationId);
+      formData.append('encoding', Platform.OS === 'web' ? 'WEBM_OPUS' : 'LINEAR16');
+
+      const headers: Record<string, string> = {};
+      if (Platform.OS !== 'web') {
+        headers['Content-Type'] = 'multipart/form-data';
+      }
 
       const res = await axios.post<VoiceQueryResponse>(
         `${BASE_URL}/api/v1/voice-query`,
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' }, timeout: 35000 }
+        { headers, timeout: 45000 }
       );
 
       const data = res.data;
       setTranscribedText(data.transcribed_text);
       setQuestion(data.transcribed_text);
       setResponse(data);
-      if (data.conversation_id) { setConversationId(data.conversation_id); setIsFollowUp(true); }
+      if (data.conversation_id) {
+        setConversationId(data.conversation_id);
+        setIsFollowUp(true);
+      }
       fadeIn();
 
       const displayAnswer = currentLang === 'en' ? data.answer_english || data.answer : data.answer;
@@ -973,8 +1045,9 @@ export default function HomeScreen() {
 
       scrollRef.current?.scrollToEnd({ animated: true });
     } catch (err: any) {
-      const msg = err?.response?.data?.detail?.message || err?.message || 'Failed to process voice question.';
-      setError(`Notice: ${msg}`);
+      console.warn('Voice query error:', err);
+      const msg = err?.response?.data?.detail?.message || err?.response?.data?.detail || err?.message || 'Failed to process voice question.';
+      setError(`Notice: ${typeof msg === 'string' ? msg : JSON.stringify(msg)}`);
     } finally {
       setLoading(false);
     }
