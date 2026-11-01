@@ -8,7 +8,7 @@
  * - 📖 Text & Trust: High-contrast typography + official "🛡️ Verified by ICAR Guidelines" badge
  * - 💬 Multi-turn follow-up question input bar
  */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -56,6 +56,112 @@ interface AdvisoryResponseSheetProps {
   currentLang: LanguageCode;
   fontSizeScale?: 'normal' | 'large' | 'xlarge';
   onFollowUpSubmit?: (followUpQuestion: string) => void;
+}
+
+
+interface ParsedAdvisoryItem {
+  label?: string;
+  value: string;
+  isDosage?: boolean;
+}
+
+interface ParsedAdvisorySection {
+  id: 'diagnosis' | 'organic' | 'chemical' | 'safety' | 'other';
+  cleanTitle: string;
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  accentColor: string;
+  bgColor: string;
+  borderColor: string;
+  badgeBg: string;
+  items: ParsedAdvisoryItem[];
+}
+
+function parseAdvisorySections(raw: string): ParsedAdvisorySection[] {
+  if (!raw || !raw.trim()) return [];
+  const headerPat = /(###\s*[^#\n]*\d+\.[^\n]+)/g;
+  const parts = raw.split(headerPat).map((s) => s.trim()).filter(Boolean);
+  if (parts.length <= 1) return [];
+
+  const sections: ParsedAdvisorySection[] = [];
+
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].startsWith('###')) {
+      const rawHeader = parts[i];
+      const body = (i + 1 < parts.length && !parts[i + 1].startsWith('###')) ? parts[i + 1] : '';
+      if (!parts[i + 1]?.startsWith('###')) i++;
+
+      let id: ParsedAdvisorySection['id'] = 'other';
+      let icon: keyof typeof MaterialCommunityIcons.glyphMap = 'leaf';
+      let accentColor = '#475569';
+      let bgColor = '#F8FAFC';
+      let borderColor = '#E2E8F0';
+      let badgeBg = '#F1F5F9';
+
+      if (/1\.|Diagnosis|🛑|നിർണ്ണയം|निदान/i.test(rawHeader)) {
+        id = 'diagnosis';
+        icon = 'alert-decagram';
+        accentColor = '#DC2626';
+        bgColor = '#FEF2F2';
+        borderColor = '#FCA5A5';
+        badgeBg = '#FEE2E2';
+      } else if (/2\.|Organic|🌿|ജൈവ|जैविक/i.test(rawHeader)) {
+        id = 'organic';
+        icon = 'sprout';
+        accentColor = '#16A34A';
+        bgColor = '#F0FDF4';
+        borderColor = '#86EFAC';
+        badgeBg = '#DCFCE7';
+      } else if (/3\.|Chemical|🧪|രാസ|रासायनिक/i.test(rawHeader)) {
+        id = 'chemical';
+        icon = 'flask-round-bottom';
+        accentColor = '#0284C7';
+        bgColor = '#F0F9FF';
+        borderColor = '#7DD3FC';
+        badgeBg = '#E0F2FE';
+      } else if (/4\.|Safety|⚠️|സുരക്ഷ|सुरक्षा/i.test(rawHeader)) {
+        id = 'safety';
+        icon = 'shield-alert';
+        accentColor = '#D97706';
+        bgColor = '#FFFBEB';
+        borderColor = '#FCD34D';
+        badgeBg = '#FEF3C7';
+      }
+
+      const cleanTitle = rawHeader
+        .replace(/^###\s*/, '')
+        .replace(/^[🛑🌿🧪⚠️\u26a0\ufe0f\s]+/, '')
+        .trim();
+
+      const items: ParsedAdvisoryItem[] = [];
+      const lines = body.split('\n').map((l) => l.trim()).filter(Boolean);
+      for (const line of lines) {
+        const bulletMatch = line.match(/^[-*•]?\s*\*\*([^*]+)\*\*:\s*(.*)$/);
+        if (bulletMatch) {
+          const label = bulletMatch[1].trim();
+          const value = bulletMatch[2].trim();
+          const isDosage = /dosage|15-liter|15l|pump/i.test(label) || /15-liter|15l|knapsack/i.test(value);
+          items.push({ label, value, isDosage });
+        } else {
+          const cleanLine = line.replace(/^[-*•]\s*/, '').trim();
+          const isDosage = /15-liter|15l|knapsack/i.test(cleanLine);
+          items.push({ value: cleanLine, isDosage });
+        }
+      }
+
+      sections.push({
+        id,
+        cleanTitle: cleanTitle || rawHeader.replace(/^###\s*/, '').trim(),
+        icon,
+        accentColor,
+        bgColor,
+        borderColor,
+        badgeBg,
+        items,
+      });
+    }
+  }
+
+  return sections;
 }
 
 export default function AdvisoryResponseSheet({
@@ -488,17 +594,40 @@ export default function AdvisoryResponseSheet({
     setShowShopModal(true);
   };
 
-  const getAnswerFontSize = () => {
-    if (fontSizeScale === 'xlarge') return 24;
-    if (fontSizeScale === 'large') return 20;
-    return 17;
-  };
-
   const displayAnswer = response
     ? currentLang === 'en'
       ? response.answer_english || response.answer
       : response.answer
     : '';
+
+
+  const parsedSections = useMemo(() => {
+    return parseAdvisorySections(displayAnswer);
+  }, [displayAnswer]);
+
+  const getCardHeaderFontSize = () => {
+    if (fontSizeScale === 'xlarge') return 20;
+    if (fontSizeScale === 'large') return 18;
+    return 16;
+  };
+
+  const getCardBodyFontSize = () => {
+    if (fontSizeScale === 'xlarge') return 18;
+    if (fontSizeScale === 'large') return 16;
+    return 15;
+  };
+
+  const getDosageFontSize = () => {
+    if (fontSizeScale === 'xlarge') return 20;
+    if (fontSizeScale === 'large') return 18;
+    return 16;
+  };
+
+  const getAnswerFontSize = () => {
+    if (fontSizeScale === 'xlarge') return 24;
+    if (fontSizeScale === 'large') return 20;
+    return 17;
+  };
 
   return (
     <Modal
@@ -1965,5 +2094,88 @@ const styles = StyleSheet.create({
     color: '#166534',
     fontWeight: '600',
     flex: 1,
+  },
+  // ── FARMER-CENTRIC STRUCTURED FIELD ADVISORY CARDS ──
+  structuredCardsContainer: {
+    gap: 12,
+    marginVertical: 4,
+  },
+  fieldAdvisoryCard: {
+    borderRadius: 16,
+    borderWidth: 1.5,
+    borderLeftWidth: 6,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  fieldCardHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 12,
+  },
+  fieldCardIconBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fieldCardTitle: {
+    fontWeight: '800',
+    flex: 1,
+    letterSpacing: 0.2,
+  },
+  fieldCardItemsList: {
+    gap: 10,
+  },
+  fieldCardItemRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  fieldCardBulletDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    marginTop: 8,
+  },
+  fieldCardItemText: {
+    lineHeight: 24,
+    color: '#1E293B',
+  },
+  fieldCardItemLabel: {
+    fontWeight: '700',
+  },
+  fieldCardItemValue: {
+    fontWeight: '500',
+    color: '#0F172A',
+  },
+  knapsackDosageBox: {
+    backgroundColor: '#E0F2FE',
+    borderColor: '#0284C7',
+    borderWidth: 2,
+    borderRadius: 12,
+    padding: 12,
+    marginTop: 4,
+    gap: 6,
+  },
+  knapsackIconRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  knapsackLabel: {
+    color: '#0369A1',
+    fontWeight: '800',
+    letterSpacing: 0.2,
+  },
+  knapsackValue: {
+    color: '#0C4A6E',
+    fontWeight: '800',
+    lineHeight: 24,
   },
 });

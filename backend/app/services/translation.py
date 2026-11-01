@@ -2,13 +2,14 @@
 services/translation.py — Malayalam ↔ English translation.
 
 Primary:  IndicTrans2 (ai4bharat/indictrans2-indic-en-1B)
-Fallback: googletrans (dev only — triggers a WARNING log)
+Fallback: googletrans / deep-translator (dev only — triggers a WARNING log)
 
 The model is loaded ONCE at module import time (not per-request).
 Loading takes ~15–30 seconds on first run; subsequent calls are fast.
 """
 import logging
 import os
+import re
 import time
 from typing import Optional
 
@@ -121,7 +122,9 @@ def _translate_indictrans(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# GOOGLETRANS FALLBACK
+# GOOGLETRANS / DEEP-TRANSLATOR FALLBACK
+# ─────────────────────────────────────────────────────────────────────────────
+
 def is_predominantly_english(text: str) -> bool:
     """Check if text contains primarily English/ASCII characters."""
     alpha = [c for c in text if c.isalpha()]
@@ -130,10 +133,6 @@ def is_predominantly_english(text: str) -> bool:
     ascii_alpha = [c for c in alpha if ord(c) < 128]
     return (len(ascii_alpha) / len(alpha)) >= 0.7
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# GOOGLETRANS / DEEP-TRANSLATOR FALLBACK
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _translate_googletrans(text: str, src: str, dest: str) -> str:
     """Dev fallback translation. Uses deep-translator with fallback."""
@@ -159,6 +158,100 @@ def _translate_googletrans(text: str, src: str, dest: str) -> str:
     except Exception as exc:
         logger.warning(f"Translation fallback failed: {exc}. Returning original text.")
         return text
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# STRUCTURE & UNIT INTEGRITY
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _normalize_units(text: str) -> str:
+    """Keep standard unit notations intact (15L, g/L, ml/L, 1800-180-1551)."""
+    # Standardize 15-Liter pump notations
+    text = re.sub(r"\b15\s*[-–]?\s*(?:liter|litre|l)\b", "15L", text, flags=re.IGNORECASE)
+    # Standardize g/L, ml/L
+    text = re.sub(r"\b(\d+(?:\.\d+)?)\s*g\s*/\s*l(?:iter|itre)?\b", r"\1 g/L", text, flags=re.IGNORECASE)
+    text = re.sub(r"\b(\d+(?:\.\d+)?)\s*ml\s*/\s*l(?:iter|itre)?\b", r"\1 ml/L", text, flags=re.IGNORECASE)
+    return text
+
+
+def _translate_raw_chunk(text: str, tgt_lang: str) -> str:
+    """Translate plain text chunk using active backend."""
+    if _use_indictrans:
+        tgt_map = {
+            "ml": "mal_Mlym", "hi": "hin_Deva", "ta": "tam_Taml",
+            "te": "tel_Telu", "kn": "kan_Knda", "bn": "ben_Beng",
+            "mr": "mar_Deva", "gu": "guj_Gujr", "pa": "pan_Guru",
+            "or": "ory_Orya", "as": "asm_Beng",
+        }
+        tgt_indic = tgt_map.get(tgt_lang, "mal_Mlym")
+        return _translate_indictrans(text, src_lang="eng_Latn", tgt_lang=tgt_indic)
+    else:
+        return _translate_googletrans(text, src="en", dest=tgt_lang)
+
+
+def translate_structured_advisory(text: str, tgt_lang: str) -> str:
+    """
+    Translates an agricultural advisory while preserving:
+    1. Section delimiters (### 🛑 1., ### 🌿 2., ### 🧪 3., ### ⚠️ 4.)
+    2. Bullet prefixes (- **)
+    3. Standard unit notations (15L, g/L, ml/L, toll-free contact numbers)
+    """
+    if tgt_lang == "en" or not text.strip():
+        return text
+
+    # Header matching pattern covering emojis and section numbers
+    header_pat = r"(###\s*[^#\n]*\d+\.[^\n]+)"
+    parts = re.split(header_pat, text)
+    if len(parts) <= 1:
+        # Not a multi-section advisory, translate normally
+        translated = _translate_raw_chunk(text, tgt_lang)
+        return _normalize_units(translated)
+
+    translated_blocks: list[str] = []
+    current_header = ""
+
+    for part in parts:
+        part_str = part.strip()
+        if not part_str:
+            continue
+
+        # If this part is a header, preserve the emoji, number, and markdown delimiter
+        if re.match(r"^###\s*[^#\n]*\d+\.", part_str):
+            header_match = re.match(r"^(###\s*[^#\n]*\d+\.\s*)(.*)$", part_str)
+            if header_match:
+                prefix = header_match.group(1)
+                title = header_match.group(2).strip()
+                translated_title = _translate_raw_chunk(title, tgt_lang) if title else ""
+                current_header = f"{prefix}{translated_title}".strip()
+            else:
+                current_header = part_str
+            translated_blocks.append(current_header)
+            continue
+
+        # Body of the section: parse line by line to protect bullet keys
+        section_lines: list[str] = []
+        for line in part.split("\n"):
+            line_str = line.strip()
+            if not line_str:
+                continue
+
+            bullet_match = re.match(r"^-\s*\*\*([^*]+)\*\*:\s*(.*)$", line_str)
+            if bullet_match:
+                key = bullet_match.group(1).strip()
+                val = bullet_match.group(2).strip()
+                translated_key = _translate_raw_chunk(key, tgt_lang)
+                translated_val = _translate_raw_chunk(val, tgt_lang) if val else ""
+                translated_val = _normalize_units(translated_val)
+                section_lines.append(f"- **{translated_key}:** {translated_val}")
+            else:
+                translated_line = _translate_raw_chunk(line_str, tgt_lang)
+                section_lines.append(_normalize_units(translated_line))
+
+        if section_lines:
+            translated_blocks.append("\n".join(section_lines))
+
+    result = "\n\n".join(translated_blocks)
+    return _normalize_units(result)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -194,7 +287,7 @@ def translate_to_en(text: str, src_lang: str = "auto") -> str:
 def translate_en_to_lang(text: str, tgt_lang: str) -> str:
     """
     Translate English text to target Indian language.
-    If target is English, returns immediately (0ms, no network call).
+    Preserves markdown section headers, bullet keys, and unit notations.
     """
     text = text.strip()
     if not text:
@@ -203,17 +296,11 @@ def translate_en_to_lang(text: str, tgt_lang: str) -> str:
     if tgt_lang == "en":
         return text
 
-    if _use_indictrans:
-        tgt_map = {
-            "ml": "mal_Mlym", "hi": "hin_Deva", "ta": "tam_Taml",
-            "te": "tel_Telu", "kn": "kan_Knda", "bn": "ben_Beng",
-            "mr": "mar_Deva", "gu": "guj_Gujr", "pa": "pan_Guru",
-            "or": "ory_Orya", "as": "asm_Beng",
-        }
-        tgt_indic = tgt_map.get(tgt_lang, "mal_Mlym")
-        return _translate_indictrans(text, src_lang="eng_Latn", tgt_lang=tgt_indic)
-    else:
-        return _translate_googletrans(text, src="en", dest=tgt_lang)
+    # Check if this text contains the 4-section advisory headers
+    if "### 🛑" in text or "### 🌿" in text or "### 🧪" in text or "### ⚠️" in text or "### 1." in text:
+        return translate_structured_advisory(text, tgt_lang)
+
+    return _translate_raw_chunk(text, tgt_lang)
 
 
 def translate_ml_to_en(text: str) -> str:
