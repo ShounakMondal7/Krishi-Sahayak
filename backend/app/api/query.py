@@ -285,6 +285,24 @@ async def _run_rag_pipeline(
     all_chunks.extend(live_context_chunks)
     all_chunks.extend(chunks)
 
+
+    # ── Pipeline Trace Logging ─────────────────────────────────────────────
+    _openai_configured = (
+        settings.openai_api_key
+        and settings.openai_api_key not in ("your_openai_api_key_here", "")
+        and not settings.openai_api_key.startswith("your_")
+    )
+    logger.info("--- QUERY TRACE ---")
+    logger.info(f"Query: {question_english}")
+    logger.info(f"Retrieved {len(chunks)} chunks from ChromaDB (avg similarity: {avg_score})")
+    for idx, chunk in enumerate(chunks):
+        sim_str = f", sim={scores[idx]:.4f}" if idx < len(scores) else ""
+        logger.info(f"Chunk {idx+1} (preview{sim_str}): {chunk[:120]}...")
+    logger.info(
+        f"Using Engine: {'OpenAI (' + settings.llm_model + ')' if _openai_configured else 'Extractive Fallback'}"
+    )
+    logger.info("--- END TRACE ---")
+
     # ── Step 6: Generate English answer from LLM ───────────────────────────
     t0 = time.time()
     try:

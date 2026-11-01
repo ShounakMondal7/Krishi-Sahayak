@@ -15,7 +15,7 @@ def test_system_prompt_structure_requirements():
     assert "### 🌿 Organic & Cultural Control" in SYSTEM_PROMPT
     assert "### 🧪 Chemical Treatment" in SYSTEM_PROMPT
     assert "Krishi Vigyan Kendra" in SYSTEM_PROMPT
-    assert "under 15 words" in SYSTEM_PROMPT
+    assert "Never fabricate chemical dosages" in SYSTEM_PROMPT
 
 
 def test_build_user_prompt_with_context():
@@ -52,7 +52,9 @@ def test_extract_grounded_fallback():
     fallback_answer = _extract_grounded_fallback([sample_chunk])
     assert fallback_answer is not None
     assert len(fallback_answer) > 20
-    # Must not contain header delimiters
+    # Must contain structured advisory headers
+    assert "### " in fallback_answer or "Diagnosis" in fallback_answer
+    # Must not contain raw header delimiters from source docs
     assert "=====" not in fallback_answer
 
     # Test empty chunks returns KVK referral

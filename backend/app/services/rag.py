@@ -8,6 +8,7 @@ container restarts. Embeddings use sentence-transformers:
 The embedding model is loaded ONCE at module level — it's 500 MB.
 """
 import logging
+import re
 import time
 from typing import Optional
 
@@ -18,6 +19,39 @@ from sentence_transformers import SentenceTransformer
 from app.config import settings as app_settings
 
 logger = logging.getLogger(__name__)
+
+# ── Similarity threshold ───────────────────────────────────────────────────────
+# Chunks with cosine similarity below this threshold are considered irrelevant
+# and excluded from the context passed to the LLM.
+# cosine similarity = 1 - cosine_distance. Threshold of 0.20 means we drop
+# chunks where distance > 0.80.
+MIN_SIMILARITY_THRESHOLD = 0.20
+
+# ── Junk chunk detection patterns ──────────────────────────────────────────────
+_JUNK_PATTERNS = re.compile(
+    r"(?i)^(table\s+of\s+contents|list\s+of\s+(tables|figures|plates)|"
+    r"icar\s+all\s+rights?\s+reserved|acknowledgements?|bibliography|"
+    r"index\s*$|references?\s*$|appendix\s+[a-z]?\s*$)",
+)
+
+
+def _is_junk_chunk(text: str) -> bool:
+    """
+    Returns True if a chunk is likely a boilerplate/index fragment
+    rather than actionable agricultural content.
+    """
+    stripped = text.strip()
+    # Too short to be useful
+    if len(stripped) < 30:
+        return True
+    # Matches a known boilerplate pattern
+    if _JUNK_PATTERNS.match(stripped):
+        return True
+    # Dominated by page numbers / dots (e.g., "Chapter 1 ...... 3")
+    dots_and_digits = sum(1 for c in stripped if c in ".…0123456789")
+    if len(stripped) > 0 and dots_and_digits / len(stripped) > 0.4:
+        return True
+    return False
 
 
 # ── Lazy-loaded singletons ─────────────────────────────────────────────────────
@@ -69,12 +103,14 @@ def retrieve_context(
 
     Returns:
         Tuple of:
-          - list[str]: document chunk texts
+          - list[str]: document chunk texts (filtered for quality)
           - list[str]: source filenames (one per chunk)
           - list[float]: similarity scores (0–1, higher = more similar)
 
     Notes:
         - Never raises even if ChromaDB has 0 documents; returns empty lists.
+        - Chunks below MIN_SIMILARITY_THRESHOLD or matching junk patterns
+          are excluded from the results.
         - The LLM service handles the case of empty context gracefully.
     """
     collection = _get_collection()
@@ -88,8 +124,11 @@ def retrieve_context(
     # Clamp top_k to available documents
     effective_k = min(top_k, doc_count)
 
+    # Clean the query string — strip trailing quotes and excess whitespace
+    clean_query = english_query.strip().strip('"').strip("'").strip()
+
     # Embed the query
-    query_embedding = model.encode(english_query, normalize_embeddings=True).tolist()
+    query_embedding = model.encode(clean_query, normalize_embeddings=True).tolist()
 
     # Query ChromaDB
     results = collection.query(
@@ -98,22 +137,46 @@ def retrieve_context(
         include=["documents", "metadatas", "distances"],
     )
 
-    chunks: list[str] = results["documents"][0]
+    raw_chunks: list[str] = results["documents"][0]
     metadatas: list[dict] = results["metadatas"][0]
     # ChromaDB cosine distance → similarity: similarity = 1 - distance
     distances: list[float] = results["distances"][0]
-    similarities = [round(1.0 - d, 4) for d in distances]
+    raw_similarities = [round(1.0 - d, 4) for d in distances]
 
-    sources: list[str] = [
-        meta.get("source", "unknown") for meta in metadatas
-    ]
+    # ── Filter: remove low-similarity and junk chunks ──────────────────────
+    filtered_chunks: list[str] = []
+    filtered_sources: list[str] = []
+    filtered_similarities: list[float] = []
+
+    for chunk, meta, sim in zip(raw_chunks, metadatas, raw_similarities):
+        source = meta.get("source", "unknown")
+
+        # Skip chunks below similarity threshold
+        if sim < MIN_SIMILARITY_THRESHOLD:
+            logger.debug(
+                f"Dropping chunk (similarity {sim:.4f} < {MIN_SIMILARITY_THRESHOLD}): "
+                f"'{chunk[:60]}…'"
+            )
+            continue
+
+        # Skip junk/boilerplate chunks
+        if _is_junk_chunk(chunk):
+            logger.debug(
+                f"Dropping junk chunk (source={source}): '{chunk[:60]}…'"
+            )
+            continue
+
+        filtered_chunks.append(chunk)
+        filtered_sources.append(source)
+        filtered_similarities.append(sim)
 
     logger.debug(
-        f"Retrieved {len(chunks)} chunks for query '{english_query[:50]}…' "
-        f"— top similarity: {similarities[0] if similarities else 'N/A'}"
+        f"Retrieved {len(raw_chunks)} raw → {len(filtered_chunks)} filtered chunks "
+        f"for query '{clean_query[:50]}…' "
+        f"— top similarity: {filtered_similarities[0] if filtered_similarities else 'N/A'}"
     )
 
-    return chunks, sources, similarities
+    return filtered_chunks, filtered_sources, filtered_similarities
 
 
 def get_document_count() -> int:
