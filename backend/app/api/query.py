@@ -90,12 +90,8 @@ def _pregenerate_tts(query_id: int, text: str, lang: str) -> None:
     /query/{id}/audio endpoint which will generate on-demand as fallback.
     """
     try:
-        from app.services.tts import synthesize_malayalam_speech, synthesize_with_gtts
-        credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
-        if credentials_path and os.path.exists(credentials_path) and lang == "ml":
-            audio_bytes = synthesize_malayalam_speech(text)
-        else:
-            audio_bytes = synthesize_with_gtts(text, lang=lang)
+        from app.services.tts import synthesize_advisory_audio_sync
+        audio_bytes = synthesize_advisory_audio_sync(text, lang=lang)
         _tts_cache_set(query_id, lang, audio_bytes)
         logger.info(f"TTS pre-generated for query {query_id} (lang: {lang}, {len(audio_bytes)} bytes)")
     except Exception as exc:
@@ -712,13 +708,8 @@ async def get_query_audio(
 
     # Generate TTS (on-demand fallback)
     try:
-        from app.services.tts import synthesize_malayalam_speech, synthesize_with_gtts
-        credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
-        if credentials_path and os.path.exists(credentials_path) and target_lang == "ml":
-            audio_bytes = synthesize_malayalam_speech(text_to_speak)
-        else:
-            logger.info(f"Generating spoken audio via gTTS for query {query_id} (lang: {target_lang})")
-            audio_bytes = synthesize_with_gtts(text_to_speak, lang=target_lang)
+        from app.services.tts import synthesize_advisory_audio
+        audio_bytes = await synthesize_advisory_audio(text_to_speak, lang=target_lang)
     except RuntimeError as exc:
         raise HTTPException(
             status_code=503,
