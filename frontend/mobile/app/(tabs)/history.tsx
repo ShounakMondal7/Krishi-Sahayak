@@ -67,6 +67,235 @@ const BASE_URL =
   (Constants.expoConfig?.extra as any)?.apiUrl ||
   'http://localhost:8000';
 
+
+const formatDate = (isoString: string, currentLang: LanguageCode) => {
+  const d = new Date(isoString);
+  const locale = LOCALE_MAP[currentLang] || 'en-IN';
+  return d.toLocaleDateString(locale, {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
+
+const getModeIcon = (mode: string) => {
+  if (mode === 'voice') return 'microphone';
+  if (mode === 'image') return 'camera';
+  return 'keyboard';
+};
+
+interface ConsultationItemProps {
+  item: HistoryEntry;
+  isExpanded: boolean;
+  isPlaying: boolean;
+  multiplier: number;
+  currentLang: LanguageCode;
+  onToggleExpand: (id: string) => void;
+  onPlayAudio: (item: HistoryEntry) => void;
+  t: (key: string) => string;
+}
+
+const ConsultationItem = React.memo<ConsultationItemProps>(
+  ({
+    item,
+    isExpanded,
+    isPlaying,
+    multiplier,
+    currentLang,
+    onToggleExpand,
+    onPlayAudio,
+    t,
+  }) => {
+    return (
+      <View
+        style={styles.card}
+        accessibilityRole="summary"
+        accessibilityLabel={`History record from ${formatDate(item.timestamp, currentLang)}`}
+      >
+        {/* Card Header: Mode + Date + ICAR Grounded Shield + Region */}
+        <View style={styles.cardHeader}>
+          <View style={styles.badgeRow}>
+            <MaterialCommunityIcons
+              name={getModeIcon(item.inputMode)}
+              size={Math.round(14 * multiplier)}
+              color="#166534"
+            />
+            <Text
+              style={[styles.dateText, { fontSize: Math.round(12 * multiplier) }]}
+              allowFontScaling={true}
+            >
+              {formatDate(item.timestamp, currentLang)}
+            </Text>
+          </View>
+
+          {/* ICAR Grounded Trust Badge with Lucide ShieldCheck */}
+          <View style={styles.icarShieldBadge}>
+            <ShieldCheck size={Math.round(12 * multiplier)} color="#16A34A" />
+            <Text
+              style={[
+                styles.icarShieldText,
+                { fontSize: Math.round(11 * multiplier) },
+              ]}
+              allowFontScaling={true}
+            >
+              ICAR Grounded
+            </Text>
+          </View>
+
+          {item.region && (
+            <Text
+              style={[
+                styles.regionText,
+                { fontSize: Math.round(13 * multiplier) },
+              ]}
+              allowFontScaling={true}
+            >
+              📍 {translateLocation(item.region, currentLang)}
+            </Text>
+          )}
+        </View>
+
+        {/* Question Text */}
+        <Text
+          style={[
+            styles.questionText,
+            {
+              fontSize: Math.round(16 * multiplier),
+              lineHeight: Math.round(24 * multiplier),
+            },
+          ]}
+          allowFontScaling={true}
+        >
+          <Text
+            style={[styles.qLabel, { fontSize: Math.round(16 * multiplier) }]}
+            allowFontScaling={true}
+          >
+            {t('transcribedTitle')}{' '}
+          </Text>
+          {translateHistoryQuery(item.question, currentLang)}
+        </Text>
+
+        <View style={styles.divider} />
+
+        {/* Answer Text — Expandable */}
+        <Text
+          style={[
+            styles.answerText,
+            {
+              fontSize: Math.round(15 * multiplier),
+              lineHeight: Math.round(26 * multiplier),
+            },
+          ]}
+          numberOfLines={isExpanded ? undefined : 3}
+          allowFontScaling={true}
+        >
+          <Text
+            style={[styles.aLabel, { fontSize: Math.round(15 * multiplier) }]}
+            allowFontScaling={true}
+          >
+            {t('answerTitle')}:{' '}
+          </Text>
+          {item.answer}
+        </Text>
+
+        {/* Read More / Less Toggle */}
+        <TouchableOpacity
+          style={styles.expandBtn}
+          onPress={() => onToggleExpand(item.id)}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={
+            isExpanded
+              ? t('collapseAnswer') || 'Collapse Answer'
+              : t('expandAnswer') || 'Expand Answer'
+          }
+        >
+          <Text
+            style={[
+              styles.expandBtnText,
+              { fontSize: Math.round(13 * multiplier) },
+            ]}
+            allowFontScaling={true}
+          >
+            {isExpanded ? t('collapseAnswer') : t('expandAnswer')}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Source Labels */}
+        {item.sourceLabels && item.sourceLabels.length > 0 && (
+          <View style={styles.sourceTagsRow}>
+            {item.sourceLabels.slice(0, 3).map((src, idx) => (
+              <View key={idx} style={styles.sourceTag}>
+                <ShieldCheck size={Math.round(12 * multiplier)} color="#16A34A" />
+                <Text
+                  style={[
+                    styles.sourceTagText,
+                    { fontSize: Math.round(12 * multiplier) },
+                  ]}
+                  allowFontScaling={true}
+                >
+                  {src.display_name}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {/* TTS Audio Player Button */}
+        {item.queryId && (
+          <TouchableOpacity
+            style={[styles.listenBtn, isPlaying && styles.listenBtnPlaying]}
+            onPress={() => onPlayAudio(item)}
+            activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityLabel={
+              isPlaying
+                ? t('stopAudio') || 'Stop Audio'
+                : t('listenAudio') || 'Listen to Audio'
+            }
+            accessibilityState={{ busy: isPlaying }}
+            accessibilityHint="Double tap to listen or pause spoken audio response"
+          >
+            {isPlaying ? (
+              <View style={styles.listenRow}>
+                <MaterialCommunityIcons
+                  name="waveform"
+                  size={Math.round(18 * multiplier)}
+                  color="#FFFFFF"
+                />
+                <Text
+                  style={[
+                    styles.listenBtnText,
+                    styles.listenBtnTextPlaying,
+                    { fontSize: Math.round(14 * multiplier) },
+                  ]}
+                  allowFontScaling={true}
+                >
+                  ⏹️ Playing Audio...
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.listenRow}>
+                <Volume2 size={Math.round(16 * multiplier)} color="#166534" />
+                <Text
+                  style={[
+                    styles.listenBtnText,
+                    { fontSize: Math.round(14 * multiplier) },
+                  ]}
+                  allowFontScaling={true}
+                >
+                  🔊 {t('listenAudio') || 'Listen to Advisory'}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  }
+);
+
 export default function HistoryScreen() {
   const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
   const [farmerProfile, setFarmerProfile] = useState<FarmerProfile | null>(null);
@@ -148,10 +377,7 @@ export default function HistoryScreen() {
     return 15;
   };
 
-  const toggleExpand = async (id: string) => {
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch {}
+  const toggleExpand = useCallback((id: string) => {
     safeHaptics.impactLight();
     setExpandedIds((prev) => {
       const next = new Set(prev);
@@ -159,13 +385,10 @@ export default function HistoryScreen() {
       else next.add(id);
       return next;
     });
-  };
+  }, []);
 
-  const playAudio = async (item: HistoryEntry) => {
+  const playAudio = useCallback(async (item: HistoryEntry) => {
     if (!item.queryId) return;
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch {}
     safeHaptics.impactLight();
     try {
       if (soundRef.current) {
@@ -189,9 +412,9 @@ export default function HistoryScreen() {
       setPlayingId(null);
       Alert.alert('', 'Could not play audio.');
     }
-  };
+  }, [playingId, currentLang]);
 
-  const clearHistory = () => {
+  const clearHistory = useCallback(() => {
     Alert.alert(
       t('clearHistoryBtn'),
       t('clearHistoryConfirm'),
@@ -207,168 +430,23 @@ export default function HistoryScreen() {
         },
       ]
     );
-  };
+  }, [t]);
 
-  const formatDate = (isoString: string) => {
-    const d = new Date(isoString);
-    const locale = LOCALE_MAP[currentLang] || 'en-IN';
-    return d.toLocaleDateString(locale, {
-      day: '2-digit',
-      month: 'short',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const getModeIcon = (mode: string) => {
-    if (mode === 'voice') return 'microphone';
-    if (mode === 'image') return 'camera';
-    return 'keyboard';
-  };
-
-  const renderItem = ({ item }: { item: HistoryEntry }) => {
-    const isExpanded = expandedIds.has(item.id);
-    const multiplier = getTextSizeMultiplier();
-
-    return (
-      <View style={styles.card} accessibilityRole="summary" accessibilityLabel={`History record from ${formatDate(item.timestamp)}`}>
-        {/* Card Header: Mode + Date + ICAR Grounded Shield + Region */}
-        <View style={styles.cardHeader}>
-          <View style={styles.badgeRow}>
-            <MaterialCommunityIcons name={getModeIcon(item.inputMode)} size={Math.round(14 * multiplier)} color="#166534" />
-            <Text style={[styles.dateText, { fontSize: Math.round(12 * multiplier) }]} allowFontScaling={true}>
-              {formatDate(item.timestamp)}
-            </Text>
-          </View>
-
-          {/* ICAR Grounded Trust Badge with Lucide ShieldCheck */}
-          <View style={styles.icarShieldBadge}>
-            <ShieldCheck size={Math.round(12 * multiplier)} color="#16A34A" />
-            <Text style={[styles.icarShieldText, { fontSize: Math.round(11 * multiplier) }]} allowFontScaling={true}>
-              ICAR Grounded
-            </Text>
-          </View>
-
-          {item.region && (
-            <Text style={[styles.regionText, { fontSize: Math.round(13 * multiplier) }]} allowFontScaling={true}>
-              📍 {translateLocation(item.region, currentLang)}
-            </Text>
-          )}
-        </View>
-
-        {/* Question Text */}
-        <Text
-          style={[
-            styles.questionText,
-            {
-              fontSize: Math.round(16 * multiplier),
-              lineHeight: Math.round(24 * multiplier),
-            },
-          ]}
-          allowFontScaling={true}
-        >
-          <Text
-            style={[styles.qLabel, { fontSize: Math.round(16 * multiplier) }]}
-            allowFontScaling={true}
-          >
-            {t('transcribedTitle')}{' '}
-          </Text>
-          {translateHistoryQuery(item.question, currentLang)}
-        </Text>
-
-        <View style={styles.divider} />
-
-        {/* Answer Text — Expandable */}
-        <Text
-          style={[
-            styles.answerText,
-            {
-              fontSize: Math.round(15 * multiplier),
-              lineHeight: Math.round(26 * multiplier),
-            },
-          ]}
-          numberOfLines={isExpanded ? undefined : 3}
-          allowFontScaling={true}
-        >
-          <Text
-            style={[styles.aLabel, { fontSize: Math.round(15 * multiplier) }]}
-            allowFontScaling={true}
-          >
-            {t('answerTitle')}:{' '}
-          </Text>
-          {item.answer}
-        </Text>
-
-        {/* Read More / Less Toggle */}
-        <TouchableOpacity
-          style={styles.expandBtn}
-          onPress={() => toggleExpand(item.id)}
-          activeOpacity={0.7}
-          accessibilityRole="button"
-          accessibilityLabel={isExpanded ? (t('collapseAnswer') || 'Collapse Answer') : (t('expandAnswer') || 'Expand Answer')}
-        >
-          <Text
-            style={[styles.expandBtnText, { fontSize: Math.round(13 * multiplier) }]}
-            allowFontScaling={true}
-          >
-            {isExpanded ? t('collapseAnswer') : t('expandAnswer')}
-          </Text>
-        </TouchableOpacity>
-
-        {/* Source Labels */}
-        {item.sourceLabels && item.sourceLabels.length > 0 && (
-          <View style={styles.sourceTagsRow}>
-            {item.sourceLabels.slice(0, 3).map((src, idx) => (
-              <View key={idx} style={styles.sourceTag}>
-                <ShieldCheck size={Math.round(12 * multiplier)} color="#16A34A" />
-                <Text
-                  style={[styles.sourceTagText, { fontSize: Math.round(12 * multiplier) }]}
-                  allowFontScaling={true}
-                >
-                  {src.display_name}
-                </Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        {/* TTS Audio Player Button (+30% scaled touch target) with Dynamic Playing Indicator */}
-        {item.queryId && (
-          <TouchableOpacity
-            style={[styles.listenBtn, playingId === item.id && styles.listenBtnPlaying]}
-            onPress={() => playAudio(item)}
-            activeOpacity={0.8}
-            accessibilityRole="button"
-            accessibilityLabel={playingId === item.id ? (t('stopAudio') || 'Stop Audio') : (t('listenAudio') || 'Listen to Audio')}
-            accessibilityState={{ busy: playingId === item.id }}
-            accessibilityHint="Double tap to listen or pause spoken audio response"
-          >
-            {playingId === item.id ? (
-              <View style={styles.listenRow}>
-                <MaterialCommunityIcons name="waveform" size={Math.round(18 * multiplier)} color="#FFFFFF" />
-                <Text
-                  style={[styles.listenBtnText, styles.listenBtnTextPlaying, { fontSize: Math.round(14 * multiplier) }]}
-                  allowFontScaling={true}
-                >
-                  ⏹️ Playing Audio...
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.listenRow}>
-                <Volume2 size={Math.round(16 * multiplier)} color="#166534" />
-                <Text
-                  style={[styles.listenBtnText, { fontSize: Math.round(14 * multiplier) }]}
-                  allowFontScaling={true}
-                >
-                  🔊 {t('listenAudio') || 'Listen to Advisory'}
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
+  const renderItem = useCallback(
+    ({ item }: { item: HistoryEntry }) => (
+      <ConsultationItem
+        item={item}
+        isExpanded={expandedIds.has(item.id)}
+        isPlaying={playingId === item.id}
+        multiplier={getTextSizeMultiplier()}
+        currentLang={currentLang}
+        onToggleExpand={toggleExpand}
+        onPlayAudio={playAudio}
+        t={t}
+      />
+    ),
+    [expandedIds, playingId, textSizeMultiplier, currentLang, toggleExpand, playAudio, t]
+  );
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -469,7 +547,7 @@ export default function HistoryScreen() {
           ) : (
             <FlashList
               data={history}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item: HistoryEntry) => item.id.toString()}
               renderItem={renderItem}
               extraData={{ fontSizeScale, expandedIds, playingId, currentLang }}
               contentContainerStyle={styles.listContent}

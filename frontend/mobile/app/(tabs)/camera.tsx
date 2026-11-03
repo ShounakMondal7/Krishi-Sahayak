@@ -23,6 +23,7 @@ import {
   Animated,
   Modal,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -219,22 +220,27 @@ export default function CameraScreen() {
     openResultCard();
 
     try {
-      // ── Compress image for rural 3G upload (max 800px wide, 0.7 JPEG) ──
-      const compressed = await ImageManipulator.manipulateAsync(
+      // ── Step 1: Compress & resize image client-side before upload (1024px, 0.7 JPEG) ──
+      const manipulatedImage = await ImageManipulator.manipulateAsync(
         uri,
-        [{ resize: { width: 800 } }],
+        [{ resize: { width: 1024 } }],
         { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
       );
-      const compressedUri = compressed.uri;
+      const compressedUri = manipulatedImage.uri;
 
       const formData = new FormData();
       const filename = compressedUri.split('/').pop() || 'crop.jpg';
 
-      formData.append('image', {
-        uri: compressedUri,
-        type: 'image/jpeg',
-        name: filename,
-      } as any);
+      if (Platform.OS === 'web') {
+        const blob = await fetch(compressedUri).then((r) => r.blob());
+        formData.append('image', blob, filename);
+      } else {
+        formData.append('image', {
+          uri: compressedUri,
+          type: 'image/jpeg',
+          name: filename,
+        } as any);
+      }
 
       formData.append('question', `Diagnose crop disease for ${selectedCrop} and provide ICAR treatment guidelines.`);
       formData.append('language', currentLang);

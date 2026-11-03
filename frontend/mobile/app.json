@@ -15,6 +15,8 @@
       "bundleIdentifier": "com.krishisahayak.app"
     },
     "android": {
+      "jsEngine": "hermes",
+      "enableProguardInReleaseBuilds": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0D1B12"

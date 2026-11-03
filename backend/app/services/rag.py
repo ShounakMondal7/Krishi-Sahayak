@@ -90,28 +90,12 @@ def _get_collection():
     return _collection
 
 
-def retrieve_context(
+def _sync_retrieve_context(
     english_query: str,
     top_k: int = 4,
 ) -> tuple[list[str], list[str], list[float]]:
     """
-    Retrieve the most semantically similar document chunks for a query.
-
-    Args:
-        english_query: The farmer's question translated to English.
-        top_k: Number of top chunks to retrieve (default: 4).
-
-    Returns:
-        Tuple of:
-          - list[str]: document chunk texts (filtered for quality)
-          - list[str]: source filenames (one per chunk)
-          - list[float]: similarity scores (0–1, higher = more similar)
-
-    Notes:
-        - Never raises even if ChromaDB has 0 documents; returns empty lists.
-        - Chunks below MIN_SIMILARITY_THRESHOLD or matching junk patterns
-          are excluded from the results.
-        - The LLM service handles the case of empty context gracefully.
+    Synchronously retrieve document chunks using sentence-transformers and ChromaDB.
     """
     collection = _get_collection()
     model = _get_embedding_model()
@@ -177,6 +161,29 @@ def retrieve_context(
     )
 
     return filtered_chunks, filtered_sources, filtered_similarities
+
+
+def retrieve_context(
+    english_query: str,
+    top_k: int = 4,
+) -> tuple[list[str], list[str], list[float]]:
+    """
+    Synchronous interface for document chunk retrieval.
+    """
+    return _sync_retrieve_context(english_query, top_k=top_k)
+
+
+async def retrieve_context_async(
+    english_query: str,
+    top_k: int = 4,
+) -> tuple[list[str], list[str], list[float]]:
+    """
+    Asynchronously retrieve document chunks by offloading heavy CPU embedding
+    and ChromaDB vector queries to a worker thread via asyncio.to_thread.
+    This prevents blocking concurrent network requests in the FastAPI event loop.
+    """
+    import asyncio
+    return await asyncio.to_thread(_sync_retrieve_context, english_query, top_k)
 
 
 def get_document_count() -> int:

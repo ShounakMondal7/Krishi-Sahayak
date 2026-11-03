@@ -204,9 +204,15 @@ async def _run_rag_pipeline(
     # ── Step 2: Check cache (skip for image queries — always fresh) ────────
     weather_used = False
     market_used = False
+    is_msp: Optional[bool] = None
+    market_badge_label: Optional[str] = None
+
+    # Detect farmer query intent: 'MARKET_PRICE' | 'WEATHER' | 'DISEASE_DIAGNOSIS'
+    intent = market_svc.classify_query_intent(question_english, input_mode=input_mode)
+    logger.info(f"Classified query intent: {intent}")
 
     if input_mode != "image":
-        cached = cache_svc.query_cache.get(question_english, region)
+        cached = cache_svc.query_cache.get(question_english, region=region, language=language)
         if cached:
             logger.info("Serving from cache.")
             return QueryResponse(
@@ -218,6 +224,10 @@ async def _run_rag_pipeline(
                 from_cache=True,
                 weather_context_used=cached.get("weather_context_used", False),
                 market_context_used=cached.get("market_context_used", False),
+                is_msp=cached.get("is_msp"),
+                market_badge_label=cached.get("market_badge_label"),
+                intent=cached.get("intent", intent),
+                follow_up_questions=cached.get("follow_up_questions", []),
                 conversation_id=conversation_id,
                 timing=cached.get("timing"),
             )
@@ -227,16 +237,33 @@ async def _run_rag_pipeline(
     weather_task = None
     market_task = None
 
-    if region and weather_svc.is_weather_related(question_english):
-        weather_task = asyncio.create_task(
-            weather_svc.fetch_weather_advisory(region)
-        )
-    if market_svc.is_market_related(question_english):
-        crop = market_svc.detect_crop_in_query(question_english)
-        if crop and region:
+    if intent == "MARKET_PRICE":
+        crop = market_svc.extract_crop_from_query(question_english)
+        if crop:
             market_task = asyncio.create_task(
-                market_svc.fetch_current_price(crop, region)
+                market_svc.fetch_current_price(crop, region or "Gautam Buddha Nagar")
             )
+        else:
+            market_task = asyncio.create_task(
+                market_svc.fetch_current_price("general", region or "Gautam Buddha Nagar")
+            )
+    elif intent == "WEATHER":
+        if region:
+            weather_task = asyncio.create_task(
+                weather_svc.fetch_weather_advisory(region)
+            )
+    else:
+        # Disease diagnosis or agronomic inquiries: check for secondary context
+        if region and weather_svc.is_weather_related(question_english):
+            weather_task = asyncio.create_task(
+                weather_svc.fetch_weather_advisory(region)
+            )
+        if market_svc.is_market_related(question_english):
+            crop = market_svc.detect_crop_in_query(question_english)
+            if crop and region:
+                market_task = asyncio.create_task(
+                    market_svc.fetch_current_price(crop, region)
+                )
 
     if weather_task:
         try:
@@ -252,7 +279,9 @@ async def _run_rag_pipeline(
             price_data = await market_task
             live_context_chunks.append(market_svc.format_price_context(price_data))
             market_used = True
-            logger.info(f"Market price context injected")
+            is_msp = price_data.get("is_msp", False)
+            market_badge_label = "📈 e-NAM: MSP" if is_msp else "📈 APMC Mandi Rate"
+            logger.info(f"Market price context injected (crop: {price_data.get('crop')}, is_msp: {is_msp})")
         except Exception as exc:
             logger.warning(f"Market fetch failed (non-fatal): {exc}")
 
@@ -260,9 +289,9 @@ async def _run_rag_pipeline(
     conv_history = _get_conversation_history(conversation_id)
     conv_context = _format_conversation_context(conv_history)
 
-    # ── Step 5: Retrieve context from ChromaDB ─────────────────────────────
+    # ── Step 5: Retrieve context from ChromaDB (Non-blocking async worker) ──
     t0 = time.time()
-    chunks, sources, scores = rag.retrieve_context(
+    chunks, sources, scores = await rag.retrieve_context_async(
         english_query=question_english,
         top_k=settings.rag_top_k,
     )
@@ -302,7 +331,7 @@ async def _run_rag_pipeline(
     # ── Step 6: Generate English answer from LLM ───────────────────────────
     t0 = time.time()
     try:
-        answer_english = llm.generate_answer(question_english, all_chunks)
+        answer_english = llm.generate_answer(question_english, all_chunks, intent=intent)
     except RuntimeError as exc:
         await _log_error(
             db, "LLMError", str(exc),
@@ -380,6 +409,39 @@ async def _run_rag_pipeline(
 
     source_labels = make_source_labels(unique_sources, scores)
 
+    # Contextual follow-up suggestions for high farmer engagement
+    follow_up_questions: List[str] = []
+    if intent == "MARKET_PRICE":
+        follow_up_crop = (
+            price_data.get("crop")
+            if "price_data" in locals() and price_data and price_data.get("crop") and price_data.get("crop") != "Agricultural Produce"
+            else None
+        )
+        if follow_up_crop:
+            follow_up_questions = [
+                f"Where is the nearest APMC Mandi auction for {follow_up_crop}?",
+                f"What are the grading criteria and storage guidelines for {follow_up_crop}?",
+                "How can I register and check live prices on the e-NAM portal?",
+            ]
+        else:
+            follow_up_questions = [
+                "Where is the nearest APMC Mandi auction in my district?",
+                "What are the official grading standards and MSP rates on e-NAM?",
+                "How can I register and sell my crop on the e-NAM portal?",
+            ]
+    elif weather_used:
+        follow_up_questions = [
+            "Will the expected rain affect my pesticide or fertilizer schedule?",
+            f"What is the 3-day agricultural weather forecast for {region}?",
+            "What preventive measures should I take against high humidity?",
+        ]
+    else:
+        follow_up_questions = [
+            "What is the exact dosage per 15-liter backpack spray pump?",
+            "What is the best time of day to spray (early morning or evening)?",
+            "What low-cost organic or bio-control remedies can prevent recurrence?",
+        ]
+
     response = QueryResponse(
         query_id=query_id,
         conversation_id=conversation_id,
@@ -391,6 +453,10 @@ async def _run_rag_pipeline(
         from_cache=False,
         weather_context_used=weather_used,
         market_context_used=market_used,
+        is_msp=is_msp,
+        market_badge_label=market_badge_label,
+        intent=intent,
+        follow_up_questions=follow_up_questions,
         timing=timing_obj,
     )
 
@@ -405,9 +471,14 @@ async def _run_rag_pipeline(
                 "response_time_ms": total_ms,
                 "weather_context_used": weather_used,
                 "market_context_used": market_used,
+                "is_msp": is_msp,
+                "market_badge_label": market_badge_label,
+                "intent": intent,
+                "follow_up_questions": follow_up_questions,
                 "timing": timing_obj.model_dump(),
             },
-            region,
+            region=region,
+            language=language,
         )
 
     # ── Step 11: Schedule background TTS pre-generation ─────────────────────

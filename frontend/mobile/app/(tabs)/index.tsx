@@ -10,7 +10,7 @@
  * - 🔊 Instant Audio TTS Playback on ICAR Grounded Answers
  * - ⚡ Multi-turn follow-up conversations & verified ICAR source citations
  */
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -22,12 +22,18 @@ import {
   Alert,
   Platform,
   KeyboardAvoidingView,
-  Animated,
-  Easing,
   Image,
   ImageBackground,
   Modal,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  withSequence,
+  Easing as ReanimatedEasing,
+} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
@@ -195,6 +201,10 @@ interface QueryResponse {
   from_cache: boolean;
   weather_context_used: boolean;
   market_context_used: boolean;
+  is_msp?: boolean;
+  market_badge_label?: string;
+  intent?: string;
+  follow_up_questions?: string[];
 }
 
 interface VoiceQueryResponse extends QueryResponse {
@@ -461,6 +471,278 @@ export function getTimeOfDayDetails(date = new Date()): TimeOfDayDetails {
   }
 }
 
+// ── MEMOIZED SUBCOMPONENTS (Zero unnecessary re-renders) ────────────────────
+
+interface WeatherWidgetProps {
+  region: string;
+  selectedState: string;
+  currentLang: LanguageCode;
+  weatherLoading: boolean;
+  temperature: string | null;
+  weatherIcon: string;
+  onPress: () => void;
+  t: (key: string) => string;
+  styles: any;
+}
+
+const WeatherWidget = React.memo<WeatherWidgetProps>(({
+  region,
+  selectedState,
+  currentLang,
+  weatherLoading,
+  temperature,
+  weatherIcon,
+  onPress,
+  t,
+  styles,
+}) => {
+  const locationLabel = `${translateLocation(region, currentLang)}${region !== selectedState ? `, ${translateLocation(selectedState, currentLang)}` : ''}`;
+  const weatherLabel = weatherLoading
+    ? '⛅ Fetching...'
+    : temperature !== null
+      ? `${weatherIcon} ${temperature}`
+      : `⛅ ${t('weatherUnavailable') || 'Weather unavailable'}`;
+
+  return (
+    <TouchableOpacity
+      style={styles.locationWeatherBadge}
+      onPress={onPress}
+      activeOpacity={0.75}
+      accessibilityRole="button"
+      accessibilityLabel={`Farm location: ${locationLabel}`}
+      accessibilityHint="Double tap to change farm location"
+    >
+      <MaterialCommunityIcons name="map-marker" size={16} color="#15803D" />
+      <Text style={styles.locationWeatherText} numberOfLines={1} allowFontScaling={true}>
+        {locationLabel} • {weatherLabel}
+      </Text>
+      <MaterialCommunityIcons name="chevron-down" size={14} color="#15803D" />
+    </TouchableOpacity>
+  );
+});
+
+interface WeatherHeroTagProps {
+  weatherLoading: boolean;
+  temperature: string | null;
+  weatherDesc: string | null;
+  weatherIcon: string;
+  t: (k: string) => string;
+  styles: any;
+}
+
+const WeatherHeroTag = React.memo<WeatherHeroTagProps>(({
+  weatherLoading,
+  temperature,
+  weatherDesc,
+  weatherIcon,
+  t,
+  styles,
+}) => {
+  if (weatherLoading) {
+    return (
+      <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
+        • ⛅ Fetching...
+      </Text>
+    );
+  }
+  if (temperature !== null && weatherDesc) {
+    return (
+      <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
+        • {weatherIcon} {temperature} ({weatherDesc})
+      </Text>
+    );
+  }
+  return (
+    <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
+      • ⛅ {t('weatherUnavailable') || 'Weather unavailable'}
+    </Text>
+  );
+});
+
+interface RecordingTimerProps {
+  isRecording: boolean;
+  onTimeout: () => void;
+  t: (key: string) => string;
+  styles: any;
+}
+
+const RecordingTimer = React.memo<RecordingTimerProps>(({
+  isRecording,
+  onTimeout,
+  t,
+  styles,
+}) => {
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    if (!isRecording) {
+      setDuration(0);
+      return;
+    }
+    setDuration(0);
+    const interval = setInterval(() => {
+      setDuration((prev) => {
+        if (prev >= 29) {
+          onTimeout();
+          return 30;
+        }
+        return prev + 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRecording, onTimeout]);
+
+  if (!isRecording) {
+    return (
+      <Text style={styles.tapToSpeakInstruction} allowFontScaling={true}>
+        {t('tapToSpeak')}
+      </Text>
+    );
+  }
+
+  return (
+    <View style={styles.recordingTimerBadge} accessibilityRole="timer">
+      <View style={styles.recordingRedDot} />
+      <Text style={styles.recordingTimerLabel} allowFontScaling={true}>
+        {t('recordingProgress')} {duration}s / 30s
+      </Text>
+    </View>
+  );
+});
+
+interface RegionalCropsListProps {
+  crops: Array<any>;
+  selectedCropId: string;
+  onSelectCrop: (crop: any) => void;
+  t: (key: string) => string;
+  styles: any;
+}
+
+const RegionalCropsList = React.memo<RegionalCropsListProps>(({
+  crops,
+  selectedCropId,
+  onSelectCrop,
+  t,
+  styles,
+}) => {
+  return (
+    <View style={styles.cropsSection}>
+      <View style={styles.cropSectionHeader} accessibilityRole="header">
+        <Text style={styles.cropSectionTitle} allowFontScaling={true}>
+          🌾 {t('keyCropsLabel') || 'Key Regional Crops'}
+        </Text>
+        <Text style={styles.cropSectionSubtitle} allowFontScaling={true}>
+          {t('popularInYourRegion') || 'Popular in your region'}
+        </Text>
+      </View>
+
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cropScroll}>
+        {crops.map((crop) => {
+          const isSelected = selectedCropId === crop.id;
+          return (
+            <TouchableOpacity
+              key={crop.id}
+              style={[
+                styles.cropCard,
+                isSelected && styles.cropCardSelected,
+                crop.isRegional && styles.cropCardRegional,
+              ]}
+              onPress={() => onSelectCrop(crop)}
+              activeOpacity={0.82}
+              accessibilityRole="button"
+              accessibilityLabel={`${t('crop_' + crop.id) || crop.name}, ${crop.tag}`}
+              accessibilityState={{ selected: isSelected }}
+              accessibilityHint="Double tap to ask advice for this crop"
+            >
+              <View style={styles.cropImageWrapper} accessible={false}>
+                <Image
+                  source={{ uri: crop.imageUrl }}
+                  style={styles.cropCardImage}
+                  resizeMode="cover"
+                />
+                {isSelected ? (
+                  <View style={styles.activeCropBadge} accessible={false}>
+                    <Text style={styles.activeCropBadgeText} allowFontScaling={false}>
+                      ACTIVE
+                    </Text>
+                  </View>
+                ) : crop.isRegional ? (
+                  <View style={styles.regionalCropBadge} accessible={false}>
+                    <Text style={styles.regionalCropBadgeText} allowFontScaling={false}>
+                      POPULAR
+                    </Text>
+                  </View>
+                ) : null}
+                <View style={[styles.cropTagPill, { backgroundColor: `${crop.color}E6` }]}>
+                  <Text style={styles.cropTagText} allowFontScaling={false}>
+                    {crop.tag}
+                  </Text>
+                </View>
+              </View>
+              <Text style={styles.cropCardTitle} numberOfLines={2} allowFontScaling={true}>
+                {t('crop_' + crop.id) || crop.name}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+});
+
+interface QuickTopicsProps {
+  region: string;
+  loading: boolean;
+  onSelectTopic: (query: string) => void;
+  t: (key: string) => string;
+  styles: any;
+}
+
+const QuickTopics = React.memo<QuickTopicsProps>(({
+  region,
+  loading,
+  onSelectTopic,
+  t,
+  styles,
+}) => {
+  const topics = useMemo(() => [
+    { label: t('topicPaddy'), query: 'Why are paddy leaves turning yellow and what pesticide or fertilizer is recommended?' },
+    { label: t('topicWheat'), query: 'What is the optimal nitrogen urea schedule and yellow rust prevention for wheat?' },
+    { label: t('topicCoconut'), query: 'How to manage root wilt and rhinoceros beetle in coconut trees?' },
+    { label: t('topicCotton'), query: 'How to manage pink bollworm and sucking pests in cotton?' },
+    { label: t('topicPest'), query: 'What are organic neem-based treatments for caterpillar and stem borer control?' },
+    { label: t('topicWeather'), query: `What is the current weather forecast and agricultural advisory for ${region}?` },
+    { label: t('topicMsp'), query: 'What are the current minimum support price (MSP) rates declared by the Government of India?' },
+    { label: t('topicPmKisan'), query: 'How to check PM-Kisan installment status and eKYC requirements?' },
+    { label: t('topicDairy'), query: 'What are the preventive measures and antibiotic-free treatments for bovine mastitis?' },
+  ], [region, t]);
+
+  return (
+    <View style={styles.quickTopicsContainer}>
+      <Text style={styles.quickTopicsHeading} allowFontScaling={true}>{t('quickTopicsLabel')}</Text>
+      <View style={styles.quickChipsWrap}>
+        {topics.map((item, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.quickChip}
+            onPress={() => onSelectTopic(item.query)}
+            disabled={loading}
+            activeOpacity={0.75}
+            accessibilityRole="button"
+            accessibilityLabel={item.label}
+            accessibilityState={{ disabled: loading }}
+            accessibilityHint="Double tap to ask this topic"
+          >
+            <MaterialCommunityIcons name="leaf" size={16} color="#16A34A" />
+            <Text style={styles.quickChipText} allowFontScaling={true}>{item.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
+  );
+});
+
 export default function HomeScreen() {
   const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
   const [farmerProfile, setFarmerProfile] = useState<FarmerProfile | null>(null);
@@ -499,7 +781,6 @@ export default function HomeScreen() {
   const [response, setResponse] = useState<QueryResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [recordingDuration, setRecordingDuration] = useState(0);
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
   const [isOffline, setIsOffline] = useState(false);
   const [isOfflineCached, setIsOfflineCached] = useState(false);
@@ -511,17 +792,18 @@ export default function HomeScreen() {
   const mediaRecorderRef = useRef<any>(null);
   const mediaStreamRef = useRef<any>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const durationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const soundRef = useRef<Audio.Sound | null>(null);
-  const breatheAnim = useRef(new Animated.Value(1)).current;
-  const soilRippleAnim = useRef(new Animated.Value(0)).current;
-  const recordingPulseAnim = useRef(new Animated.Value(1)).current;
-  const recordingRippleAnim = useRef(new Animated.Value(0)).current;
-  const fadeAnim = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
 
+  // Reanimated native thread animation shared values
+  const breatheScale = useSharedValue(1);
+  const soilRipple = useSharedValue(0);
+  const recordingPulse = useSharedValue(1);
+  const recordingRipple = useSharedValue(0);
+  const answerFade = useSharedValue(0);
+
   // Translation helper
-  const t = (key: string) => getTranslation(currentLang, key);
+  const t = useCallback((key: string) => getTranslation(currentLang, key), [currentLang]);
 
   // Initial Load: Load Language, Location & Farmer Profile
   useEffect(() => {
@@ -690,81 +972,66 @@ export default function HomeScreen() {
 
   // 🌿 Living Soil Continuous Microphone Animation (Breathing pulse + soft emerald ripple)
   useEffect(() => {
-    // 1. Gentle continuous breathing pulse
-    const breatheAnimation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(breatheAnim, {
-          toValue: 1.06,
-          duration: 1600,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-        Animated.timing(breatheAnim, {
-          toValue: 1.0,
-          duration: 1600,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-      ])
+    breatheScale.value = withRepeat(
+      withSequence(
+        withTiming(1.06, { duration: 1600, easing: ReanimatedEasing.inOut(ReanimatedEasing.ease) }),
+        withTiming(1.0, { duration: 1600, easing: ReanimatedEasing.inOut(ReanimatedEasing.ease) })
+      ),
+      -1,
+      true
     );
 
-    // 2. Continuous calming soundwave/ripple effect in soft emerald
-    const rippleAnimation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(soilRippleAnim, {
-          toValue: 1,
-          duration: 2200,
-          easing: Easing.out(Easing.ease),
-          useNativeDriver: true,
-        }),
-        Animated.timing(soilRippleAnim, {
-          toValue: 0,
-          duration: 0,
-          useNativeDriver: true,
-        }),
-      ])
+    soilRipple.value = withRepeat(
+      withTiming(1, { duration: 2200, easing: ReanimatedEasing.out(ReanimatedEasing.ease) }),
+      -1,
+      false
     );
-
-    breatheAnimation.start();
-    rippleAnimation.start();
-
-    return () => {
-      breatheAnimation.stop();
-      rippleAnimation.stop();
-    };
-  }, []);
+  }, [breatheScale, soilRipple]);
 
   // Intense pulse & ripple animation when actively recording voice
   useEffect(() => {
-    let recordingAnim: Animated.CompositeAnimation | null = null;
     if (isRecording) {
-      recordingAnim = Animated.loop(
-        Animated.parallel([
-          Animated.sequence([
-            Animated.timing(recordingPulseAnim, { toValue: 1.18, duration: 500, useNativeDriver: true }),
-            Animated.timing(recordingPulseAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
-          ]),
-          Animated.sequence([
-            Animated.timing(recordingRippleAnim, { toValue: 1, duration: 1000, useNativeDriver: true }),
-            Animated.timing(recordingRippleAnim, { toValue: 0, duration: 0, useNativeDriver: true }),
-          ]),
-        ])
+      recordingPulse.value = withRepeat(
+        withSequence(
+          withTiming(1.18, { duration: 500 }),
+          withTiming(1, { duration: 500 })
+        ),
+        -1,
+        true
       );
-      recordingAnim.start();
+      recordingRipple.value = withRepeat(
+        withTiming(1, { duration: 1000 }),
+        -1,
+        false
+      );
     } else {
-      recordingPulseAnim.setValue(1);
-      recordingRippleAnim.setValue(0);
+      recordingPulse.value = 1;
+      recordingRipple.value = 0;
     }
+  }, [isRecording, recordingPulse, recordingRipple]);
 
-    return () => {
-      if (recordingAnim) recordingAnim.stop();
-    };
-  }, [isRecording]);
+  const soilRippleStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: 1 + soilRipple.value * 0.48 }],
+    opacity: (1 - soilRipple.value) * 0.65,
+  }), [soilRipple]);
 
-  const fadeIn = () => {
-    fadeAnim.setValue(0);
-    Animated.timing(fadeAnim, { toValue: 1, duration: 400, useNativeDriver: true }).start();
-  };
+  const acousticRippleStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: 1 + recordingRipple.value * 1.1 }],
+    opacity: (1 - recordingRipple.value) * 0.8,
+  }), [recordingRipple]);
+
+  const micPulseStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: isRecording ? recordingPulse.value : breatheScale.value }],
+  }), [isRecording, recordingPulse, breatheScale]);
+
+  const answerCardStyle = useAnimatedStyle(() => ({
+    opacity: answerFade.value,
+  }), [answerFade]);
+
+  const fadeIn = useCallback(() => {
+    answerFade.value = 0;
+    answerFade.value = withTiming(1, { duration: 400 });
+  }, [answerFade]);
 
   const cycleFontSize = () => {
     safeHaptics.impactLight();
@@ -789,11 +1056,7 @@ export default function HomeScreen() {
   };
 
   // ── Voice Recording Lifecycle ───────────────────────────────────────────────
-  const cleanupRecording = () => {
-    if (durationTimerRef.current) {
-      clearInterval(durationTimerRef.current);
-      durationTimerRef.current = null;
-    }
+  const cleanupRecording = useCallback(() => {
     if (mediaStreamRef.current) {
       try {
         mediaStreamRef.current.getTracks().forEach((track: any) => track.stop());
@@ -803,180 +1066,9 @@ export default function HomeScreen() {
     mediaRecorderRef.current = null;
     recordingRef.current = null;
     setIsRecording(false);
-  };
+  }, []);
 
-  const startRecording = async () => {
-    setError(null);
-
-    // ── 1. WEB BROWSER RECORDING (Standard MediaRecorder API) ──
-    if (Platform.OS === 'web') {
-      try {
-        if (typeof navigator === 'undefined' || !navigator?.mediaDevices?.getUserMedia) {
-          setError('Microphone recording is not supported in this browser. Please type your question.');
-          return;
-        }
-
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaStreamRef.current = stream;
-        audioChunksRef.current = [];
-
-        let mimeType = 'audio/webm';
-        if (typeof MediaRecorder !== 'undefined') {
-          if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-            mimeType = 'audio/webm;codecs=opus';
-          } else if (MediaRecorder.isTypeSupported('audio/webm')) {
-            mimeType = 'audio/webm';
-          } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
-            mimeType = 'audio/ogg;codecs=opus';
-          } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-            mimeType = 'audio/mp4';
-          }
-        }
-
-        const mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
-        mediaRecorderRef.current = mediaRecorder;
-
-        mediaRecorder.ondataavailable = (event: any) => {
-          if (event.data && event.data.size > 0) {
-            audioChunksRef.current.push(event.data);
-          }
-        };
-
-        mediaRecorder.onerror = (event: any) => {
-          console.warn('MediaRecorder error:', event.error);
-          cleanupRecording();
-          setError('Audio recording failed. Please try again or type your question.');
-        };
-
-        mediaRecorder.start(250);
-        setIsRecording(true);
-        setRecordingDuration(0);
-        safeHaptics.impactHeavy();
-
-        if (durationTimerRef.current) clearInterval(durationTimerRef.current);
-        durationTimerRef.current = setInterval(() => {
-          setRecordingDuration((prev) => {
-            if (prev >= 29) {
-              stopRecording();
-              return 30;
-            }
-            return prev + 1;
-          });
-        }, 1000);
-        return;
-      } catch (err: any) {
-        console.warn('Web microphone access error:', err);
-        cleanupRecording();
-        if (err?.name === 'NotAllowedError' || err?.name === 'PermissionDeniedError') {
-          setError('Microphone permission denied. Please allow microphone access in your browser settings.');
-        } else {
-          setError('Could not access microphone. Please check your browser permissions or type your question.');
-        }
-        return;
-      }
-    }
-
-    // ── 2. NATIVE DEVICE RECORDING (expo-av) ──
-    try {
-      const { granted } = await Audio.requestPermissionsAsync();
-      if (!granted) {
-        Alert.alert('Permission Required', 'Microphone permission is needed for voice questions.');
-        setError('Microphone permission denied.');
-        return;
-      }
-      await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
-      recordingRef.current = recording;
-      setIsRecording(true);
-      setRecordingDuration(0);
-      safeHaptics.impactHeavy();
-
-      if (durationTimerRef.current) clearInterval(durationTimerRef.current);
-      durationTimerRef.current = setInterval(() => {
-        setRecordingDuration((prev) => {
-          if (prev >= 29) {
-            stopRecording();
-            return 30;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-    } catch (err: any) {
-      console.warn('Native microphone recording error:', err);
-      cleanupRecording();
-      setError('Could not start microphone recording. Please check permissions or type your question.');
-    }
-  };
-
-  const stopRecording = async () => {
-    if (durationTimerRef.current) {
-      clearInterval(durationTimerRef.current);
-      durationTimerRef.current = null;
-    }
-    safeHaptics.impactMedium();
-    setIsRecording(false);
-
-    // ── WEB STOP & UPLOAD ──
-    if (Platform.OS === 'web' && mediaRecorderRef.current) {
-      const recorder = mediaRecorderRef.current;
-      mediaRecorderRef.current = null;
-
-      try {
-        await new Promise<void>((resolve) => {
-          recorder.onstop = () => resolve();
-          if (recorder.state !== 'inactive') {
-            recorder.stop();
-          } else {
-            resolve();
-          }
-        });
-
-        if (mediaStreamRef.current) {
-          try {
-            mediaStreamRef.current.getTracks().forEach((track: any) => track.stop());
-          } catch {}
-          mediaStreamRef.current = null;
-        }
-
-        const chunks = audioChunksRef.current;
-        audioChunksRef.current = [];
-
-        if (!chunks || chunks.length === 0) {
-          setError('No audio recorded. Please hold or tap the mic and speak your question.');
-          return;
-        }
-
-        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
-        await submitVoiceAudio(audioBlob);
-      } catch (err: any) {
-        console.warn('Web audio stop error:', err);
-        setError('Failed to process recorded audio. Please try again.');
-      }
-      return;
-    }
-
-    // ── NATIVE STOP & UPLOAD ──
-    if (recordingRef.current) {
-      const recording = recordingRef.current;
-      recordingRef.current = null;
-      try {
-        await recording.stopAndUnloadAsync();
-        const uri = recording.getURI();
-        if (!uri) {
-          setError('Audio recording file not found.');
-          return;
-        }
-        await submitVoiceAudio(uri);
-      } catch (err: any) {
-        console.warn('Native audio stop error:', err);
-        setError('Failed to process voice question.');
-      }
-    }
-  };
-
-  const submitVoiceAudio = async (audioSource: Blob | string) => {
+  const submitVoiceAudio = useCallback(async (audioSource: Blob | string) => {
     setLoading(true);
     setResponse(null);
     setTranscribedText(null);
@@ -1051,28 +1143,177 @@ export default function HomeScreen() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentLang, region, conversationId, fadeIn]);
 
-  const toggleRecording = () => (isRecording ? stopRecording() : startRecording());
+  const stopRecording = useCallback(async () => {
+    safeHaptics.impactMedium();
+    setIsRecording(false);
 
-  // ── Text Query Execution ───────────────────────────────────────────────────
-  const executeQuery = async (queryText: string) => {
-    const trimmed = queryText.trim();
-    if (!trimmed) {
+    // ── WEB STOP & UPLOAD ──
+    if (Platform.OS === 'web' && mediaRecorderRef.current) {
+      const recorder = mediaRecorderRef.current;
+      mediaRecorderRef.current = null;
+
+      try {
+        await new Promise<void>((resolve) => {
+          recorder.onstop = () => resolve();
+          if (recorder.state !== 'inactive') {
+            recorder.stop();
+          } else {
+            resolve();
+          }
+        });
+
+        if (mediaStreamRef.current) {
+          try {
+            mediaStreamRef.current.getTracks().forEach((track: any) => track.stop());
+          } catch {}
+          mediaStreamRef.current = null;
+        }
+
+        const chunks = audioChunksRef.current;
+        audioChunksRef.current = [];
+
+        if (!chunks || chunks.length === 0) {
+          setError('No audio recorded. Please hold or tap the mic and speak your question.');
+          return;
+        }
+
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+        await submitVoiceAudio(audioBlob);
+      } catch (err: any) {
+        console.warn('Web audio stop error:', err);
+        setError('Failed to process recorded audio. Please try again.');
+      }
+      return;
+    }
+
+    // ── NATIVE STOP & UPLOAD ──
+    if (recordingRef.current) {
+      const recording = recordingRef.current;
+      recordingRef.current = null;
+      try {
+        await recording.stopAndUnloadAsync();
+        const uri = recording.getURI();
+        if (!uri) {
+          setError('Audio recording file not found.');
+          return;
+        }
+        await submitVoiceAudio(uri);
+      } catch (err: any) {
+        console.warn('Native audio stop error:', err);
+        setError('Failed to process voice question.');
+      }
+    }
+  }, [submitVoiceAudio]);
+
+  const startRecording = useCallback(async () => {
+    setError(null);
+
+    // ── 1. WEB BROWSER RECORDING (Standard MediaRecorder API) ──
+    if (Platform.OS === 'web') {
+      try {
+        if (typeof navigator === 'undefined' || !navigator?.mediaDevices?.getUserMedia) {
+          setError('Microphone recording is not supported in this browser. Please type your question.');
+          return;
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStreamRef.current = stream;
+        audioChunksRef.current = [];
+
+        let mimeType = 'audio/webm';
+        if (typeof MediaRecorder !== 'undefined') {
+          if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+            mimeType = 'audio/webm;codecs=opus';
+          } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+            mimeType = 'audio/webm';
+          } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+            mimeType = 'audio/ogg;codecs=opus';
+          } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+            mimeType = 'audio/mp4';
+          }
+        }
+
+        const mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+        mediaRecorderRef.current = mediaRecorder;
+
+        mediaRecorder.ondataavailable = (event: any) => {
+          if (event.data && event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
+          }
+        };
+
+        mediaRecorder.onerror = (event: any) => {
+          console.warn('MediaRecorder error:', event.error);
+          cleanupRecording();
+          setError('Audio recording failed. Please try again or type your question.');
+        };
+
+        mediaRecorder.start(250);
+        setIsRecording(true);
+        safeHaptics.impactHeavy();
+        return;
+      } catch (err: any) {
+        console.warn('Web microphone access error:', err);
+        cleanupRecording();
+        if (err?.name === 'NotAllowedError' || err?.name === 'PermissionDeniedError') {
+          setError('Microphone permission denied. Please allow microphone access in your browser settings.');
+        } else {
+          setError('Could not access microphone. Please check your browser permissions or type your question.');
+        }
+        return;
+      }
+    }
+
+    // ── 2. NATIVE DEVICE RECORDING (expo-av) ──
+    try {
+      const { granted } = await Audio.requestPermissionsAsync();
+      if (!granted) {
+        Alert.alert('Permission Required', 'Microphone permission is needed for voice questions.');
+        setError('Microphone permission denied.');
+        return;
+      }
+      await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
+      const { recording } = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
+      );
+      recordingRef.current = recording;
+      setIsRecording(true);
+      safeHaptics.impactHeavy();
+    } catch (err: any) {
+      console.warn('Native microphone recording error:', err);
+      cleanupRecording();
+      setError('Could not start microphone recording. Please check permissions or type your question.');
+    }
+  }, [cleanupRecording]);
+
+  const toggleRecording = useCallback(() => (isRecording ? stopRecording() : startRecording()), [isRecording, stopRecording, startRecording]);
+
+  // ── Text Query Execution (Supports direct query or state fallback) ────────
+  const executeQuery = useCallback(async (overrideQuery?: string) => {
+    const textToSubmit = (typeof overrideQuery === 'string' ? overrideQuery : question || '').trim();
+    if (!textToSubmit) {
       Alert.alert('', 'Please enter a farming question.');
       return;
     }
 
-    setLoading(true);
+    // 1. Immediately update input field if called from a follow-up chip / topic
+    if (overrideQuery) {
+      setQuestion(overrideQuery);
+    }
+
+    // 2. Clear old advisory data & trigger loading state immediately
     setResponse(null);
+    setLoading(true);
     setError(null);
-    setTranscribedText(trimmed);
+    setTranscribedText(textToSubmit);
     setIsOfflineCached(false);
     setSheetVisible(true);
     safeHaptics.impactLight();
 
     if (isOffline) {
-      const cached = await offlineCacheService.findBestMatch(trimmed);
+      const cached = await offlineCacheService.findBestMatch(textToSubmit);
       if (cached) {
         setResponse({
           answer: cached.answer,
@@ -1100,7 +1341,7 @@ export default function HomeScreen() {
       const res = await axios.post<QueryResponse>(
         `${BASE_URL}/api/v1/query`,
         {
-          question: trimmed,
+          question: textToSubmit,
           language: currentLang,
           region,
           conversation_id: conversationId,
@@ -1116,7 +1357,7 @@ export default function HomeScreen() {
       const displayAnswer = currentLang === 'en' ? data.answer_english || data.answer : data.answer;
 
       await storageService.addToHistory({
-        question: trimmed,
+        question: textToSubmit,
         answer: displayAnswer,
         sources: data.sources,
         sourceLabels: data.source_labels,
@@ -1134,7 +1375,21 @@ export default function HomeScreen() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [question, isOffline, currentLang, region, conversationId, fadeIn]);
+
+  const handleFollowUpSelect = useCallback((followUpQuestion: string) => {
+    // Pass question directly to bypass async setState delay
+    executeQuery(followUpQuestion);
+  }, [executeQuery]);
+
+  const handleSelectCrop = useCallback((crop: any) => {
+    setSelectedCropId(crop.id);
+    executeQuery(crop.query);
+  }, [executeQuery]);
+
+  const handleSelectTopic = useCallback((topicQuery: string) => {
+    executeQuery(topicQuery);
+  }, [executeQuery]);
 
   // ── Audio TTS Playback ─────────────────────────────────────────────────────
   const playAudio = async (queryId?: number) => {
@@ -1179,23 +1434,20 @@ export default function HomeScreen() {
         {/* ── TOP BAR (Sunlight-Readable & Decluttered) ── */}
         <View style={styles.topBar}>
           {/* Weather / Location Indicator (Clickable to change farm location) */}
-          <TouchableOpacity
-            style={styles.locationWeatherBadge}
+          <WeatherWidget
+            region={region}
+            selectedState={selectedState}
+            currentLang={currentLang}
+            weatherLoading={weatherLoading}
+            temperature={temperature}
+            weatherIcon={weatherIcon}
             onPress={() => {
               safeHaptics.impactLight();
               setShowLocationModal(true);
             }}
-            activeOpacity={0.75}
-            accessibilityRole="button"
-            accessibilityLabel={`Farm location: ${translateLocation(region, currentLang)}${region !== selectedState ? `, ${translateLocation(selectedState, currentLang)}` : ''}`}
-            accessibilityHint="Double tap to change farm location"
-          >
-            <MaterialCommunityIcons name="map-marker" size={16} color="#15803D" />
-            <Text style={styles.locationWeatherText} numberOfLines={1} allowFontScaling={true}>
-              {translateLocation(region, currentLang)}{region !== selectedState ? `, ${translateLocation(selectedState, currentLang)}` : ''} • {weatherLoading ? '⛅ Fetching...' : (temperature !== null ? `${weatherIcon} ${temperature}` : `⛅ ${t('weatherUnavailable') || 'Weather unavailable'}`)}
-            </Text>
-            <MaterialCommunityIcons name="chevron-down" size={14} color="#15803D" />
-          </TouchableOpacity>
+            t={t}
+            styles={styles}
+          />
 
           {/* Right Actions: Persistent Language Changer + Minimal Profile Icon */}
           <View style={styles.topBarRight}>
@@ -1397,19 +1649,14 @@ export default function HomeScreen() {
                       <Text style={styles.sunriseGreetingBadgeText} allowFontScaling={true}>
                         {farmerGreeting.advisoryTitle}
                       </Text>
-                      {weatherLoading ? (
-                        <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
-                          • ⛅ Fetching...
-                        </Text>
-                      ) : temperature !== null && weatherDesc ? (
-                        <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
-                          • {weatherIcon} {temperature} ({weatherDesc})
-                        </Text>
-                      ) : (
-                        <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
-                          • ⛅ {t('weatherUnavailable') || 'Weather unavailable'}
-                        </Text>
-                      )}
+                      <WeatherHeroTag
+                        weatherLoading={weatherLoading}
+                        temperature={temperature}
+                        weatherDesc={weatherDesc}
+                        weatherIcon={weatherIcon}
+                        t={t}
+                        styles={styles}
+                      />
                     </View>
                     <Text style={styles.sunriseGreetingTitle} numberOfLines={1} allowFontScaling={true}>
                       {farmerGreeting.greetingTitle}
@@ -1440,18 +1687,7 @@ export default function HomeScreen() {
                 <Animated.View
                   style={[
                     styles.livingSoilRipple,
-                    {
-                      transform: [{
-                        scale: soilRippleAnim.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [1, 1.48],
-                        }),
-                      }],
-                      opacity: soilRippleAnim.interpolate({
-                        inputRange: [0, 0.25, 0.75, 1],
-                        outputRange: [0.65, 0.45, 0.15, 0],
-                      }),
-                    },
+                    soilRippleStyle,
                   ]}
                 />
 
@@ -1460,24 +1696,13 @@ export default function HomeScreen() {
                   <Animated.View
                     style={[
                       styles.acousticRipple,
-                      {
-                        transform: [{
-                          scale: recordingRippleAnim.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [1, 2.1],
-                          }),
-                        }],
-                        opacity: recordingRippleAnim.interpolate({
-                          inputRange: [0, 1],
-                          outputRange: [0.8, 0],
-                        }),
-                      },
+                      acousticRippleStyle,
                     ]}
                   />
                 )}
 
                 {/* Living Soil Breathing Animated Wrapper */}
-                <Animated.View style={{ transform: [{ scale: isRecording ? recordingPulseAnim : breatheAnim }] }}>
+                <Animated.View style={micPulseStyle}>
                   {/* Outer Emerald Halo Ring */}
                   <View style={[styles.livingMicOuterRing, isRecording && styles.livingMicOuterRingActive]}>
                     <TouchableOpacity
@@ -1507,16 +1732,12 @@ export default function HomeScreen() {
                 </Animated.View>
               </View>
 
-              {isRecording ? (
-                <View style={styles.recordingTimerBadge} accessibilityRole="timer">
-                  <View style={styles.recordingRedDot} />
-                  <Text style={styles.recordingTimerLabel} allowFontScaling={true}>
-                    {t('recordingProgress')} {recordingDuration}s / 30s
-                  </Text>
-                </View>
-              ) : (
-                <Text style={styles.tapToSpeakInstruction} allowFontScaling={true}>{t('tapToSpeak')}</Text>
-              )}
+              <RecordingTimer
+                isRecording={isRecording}
+                onTimeout={stopRecording}
+                t={t}
+                styles={styles}
+              />
 
               {/* ✏️ VISUALLY DEMOTED SECONDARY TEXT QUERY LINK */}
               {!showTextInput ? (
@@ -1596,106 +1817,22 @@ export default function HomeScreen() {
             </View>
 
             {/* 🌿 2. VIBRANT, TACTILE CROP CARDS */}
-            <View style={styles.cropsSection}>
-              <View style={styles.cropSectionHeader} accessibilityRole="header">
-                <Text style={styles.cropSectionTitle} allowFontScaling={true}>
-                  🌾 {t('keyCropsLabel') || 'Key Regional Crops'}
-                </Text>
-                <Text style={styles.cropSectionSubtitle} allowFontScaling={true}>
-                  {t('popularInYourRegion') || 'Popular in your region'}
-                </Text>
-              </View>
-
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cropScroll}>
-                {regionalCrops.map((crop) => {
-                  const isSelected = selectedCropId === crop.id;
-                  return (
-                    <TouchableOpacity
-                      key={crop.id}
-                      style={[
-                        styles.cropCard,
-                        isSelected && styles.cropCardSelected,
-                        crop.isRegional && styles.cropCardRegional,
-                      ]}
-                      onPress={() => {
-                        setSelectedCropId(crop.id);
-                        executeQuery(crop.query);
-                      }}
-                      activeOpacity={0.82}
-                      accessibilityRole="button"
-                      accessibilityLabel={`${t('crop_' + crop.id) || crop.name}, ${crop.tag}`}
-                      accessibilityState={{ selected: isSelected }}
-                      accessibilityHint="Double tap to ask advice for this crop"
-                    >
-                      <View style={styles.cropImageWrapper} accessible={false}>
-                        <Image
-                          source={{ uri: crop.imageUrl }}
-                          style={styles.cropCardImage}
-                          resizeMode="cover"
-                        />
-                        {/* Status Floating Badge (Top-Right) */}
-                        {isSelected ? (
-                          <View style={styles.activeCropBadge} accessible={false}>
-                            <Text style={styles.activeCropBadgeText} allowFontScaling={false}>
-                              ACTIVE
-                            </Text>
-                          </View>
-                        ) : crop.isRegional ? (
-                          <View style={styles.regionalCropBadge} accessible={false}>
-                            <Text style={styles.regionalCropBadgeText} allowFontScaling={false}>
-                              POPULAR
-                            </Text>
-                          </View>
-                        ) : null}
-
-                        {/* Season / Category Tag Pill (Bottom-Left) */}
-                        <View style={[styles.cropTagPill, { backgroundColor: `${crop.color}E6` }]}>
-                          <Text style={styles.cropTagText} allowFontScaling={false}>
-                            {crop.tag}
-                          </Text>
-                        </View>
-                      </View>
-                      <Text style={styles.cropCardTitle} numberOfLines={2} allowFontScaling={true}>
-                        {t('crop_' + crop.id) || crop.name}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </ScrollView>
-            </View>
+            <RegionalCropsList
+              crops={regionalCrops}
+              selectedCropId={selectedCropId}
+              onSelectCrop={handleSelectCrop}
+              t={t}
+              styles={styles}
+            />
 
             {/* 1-Tap Quick Topics (+30% Scaled Up Touch Targets) */}
-            <View style={styles.quickTopicsContainer}>
-              <Text style={styles.quickTopicsHeading} allowFontScaling={true}>{t('quickTopicsLabel')}</Text>
-              <View style={styles.quickChipsWrap}>
-                {[
-                  { label: t('topicPaddy'), query: 'Why are paddy leaves turning yellow and what pesticide or fertilizer is recommended?' },
-                  { label: t('topicWheat'), query: 'What is the optimal nitrogen urea schedule and yellow rust prevention for wheat?' },
-                  { label: t('topicCoconut'), query: 'How to manage root wilt and rhinoceros beetle in coconut trees?' },
-                  { label: t('topicCotton'), query: 'How to manage pink bollworm and sucking pests in cotton?' },
-                  { label: t('topicPest'), query: 'What are organic neem-based treatments for caterpillar and stem borer control?' },
-                  { label: t('topicWeather'), query: `What is the current weather forecast and agricultural advisory for ${region}?` },
-                  { label: t('topicMsp'), query: 'What are the current minimum support price (MSP) rates declared by the Government of India?' },
-                  { label: t('topicPmKisan'), query: 'How to check PM-Kisan installment status and eKYC requirements?' },
-                  { label: t('topicDairy'), query: 'What are the preventive measures and antibiotic-free treatments for bovine mastitis?' },
-                ].map((item, idx) => (
-                  <TouchableOpacity
-                    key={idx}
-                    style={styles.quickChip}
-                    onPress={() => executeQuery(item.query)}
-                    disabled={loading}
-                    activeOpacity={0.75}
-                    accessibilityRole="button"
-                    accessibilityLabel={item.label}
-                    accessibilityState={{ disabled: loading }}
-                    accessibilityHint="Double tap to ask this topic"
-                  >
-                    <MaterialCommunityIcons name="leaf" size={16} color="#16A34A" />
-                    <Text style={styles.quickChipText} allowFontScaling={true}>{item.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
+            <QuickTopics
+              region={region}
+              loading={loading}
+              onSelectTopic={handleSelectTopic}
+              t={t}
+              styles={styles}
+            />
 
             {/* Loading Box */}
             {loading && (
@@ -1729,7 +1866,7 @@ export default function HomeScreen() {
 
             {/* 🌿 Grounded Answer Card (Sunlight-Readable White Card) */}
             {response && !loading && (
-              <Animated.View style={[styles.answerCard, { opacity: fadeAnim }]} accessibilityRole="summary" accessibilityLabel="Agricultural advisory response">
+              <Animated.View style={[styles.answerCard, answerCardStyle]} accessibilityRole="summary" accessibilityLabel="Agricultural advisory response">
                 {isOfflineCached && (
                   <View style={styles.offlineAnswerPill}>
                     <MaterialCommunityIcons name="database-clock" size={14} color="#DC2626" />
@@ -1784,7 +1921,9 @@ export default function HomeScreen() {
                   {response.market_context_used && (
                     <View style={styles.contextBadgeMandi}>
                       <MaterialCommunityIcons name="currency-inr" size={15} color="#D97706" />
-                      <Text style={styles.contextBadgeMandiText} allowFontScaling={true}>{t('enamMarketPrice')}</Text>
+                      <Text style={styles.contextBadgeMandiText} allowFontScaling={true}>
+                        {response.market_badge_label || (response.is_msp === false ? 'APMC Mandi Rate' : t('enamMarketPrice'))}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -1831,10 +1970,8 @@ export default function HomeScreen() {
           error={error}
           currentLang={currentLang}
           fontSizeScale={fontSizeScale}
-          onFollowUpSubmit={(followUpQuery) => {
-            setQuestion(followUpQuery);
-            executeQuery(followUpQuery);
-          }}
+          onFollowUpSubmit={handleFollowUpSelect}
+          onSelectFollowUp={handleFollowUpSelect}
         />
  
         {/* ── 🌐 GLOBAL LANGUAGE SELECTOR BOTTOM SHEET ── */}

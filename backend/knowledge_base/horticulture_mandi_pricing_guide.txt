@@ -1,0 +1,41 @@
+================================================================================
+HORTICULTURAL COMMODITY MANDI PRICING & MARKET GUIDELINES
+Ministry of Agriculture & Farmers Welfare, Government of India & APMC Guidelines
+================================================================================
+
+1. CRITICAL DISTINCTION: MSP CROPS VS. PERISHABLE HORTICULTURAL CROPS
+In India, agricultural commodity pricing operates under two fundamentally different legal and economic frameworks:
+
+A. Central Government MSP (Minimum Support Price) Crops:
+- The Government of India fixes official Minimum Support Prices (MSP) for 23 mandated commodities annually based on Commission for Agricultural Costs and Prices (CACP) recommendations.
+- Mandated MSP crops include Cereals (Paddy, Wheat, Maize, Bajra, Jowar, Ragi, Barley), Pulses (Gram, Tur/Arhar, Moong, Urad, Lentil), Oilseeds (Mustard, Groundnut, Soybean, Sunflower, Sesame, Nigerseed, Safflower), and Commercial Crops (Cotton, Jute, Sugarcane - FRP, Copra).
+- When market prices dip below MSP, public procurement agencies (FCI, NAFED, Cotton Corporation of India) purchase eligible produce directly at the declared MSP floor price.
+
+B. Horticultural & Perishable Crops (Non-MSP Open Mandi Auction):
+- Perishable horticulture crops such as Potato (Aloo), Onion (Pyaaz), Tomato (Tamatar), Green Chilli, Garlic, Ginger, Cabbage, and Cauliflower DO NOT have a Central Government Minimum Support Price (MSP).
+- Horticultural crops are not covered under mandatory CACP MSP procurement.
+- Instead, prices are determined strictly through open dynamic bidding and auctions in Agricultural Produce Market Committee (APMC) Mandis across India.
+- Electronic trading takes place on the National Agriculture Market (e-NAM) portal (enam.gov.in).
+- Government interventions in horticulture operate through Market Intervention Schemes (MIS) or Operation Greens (TOP - Tomato, Onion, Potato) rather than guaranteed MSP.
+
+2. POTATO MANDI PRICING MECHANISM & COMMERCIAL GRADING
+Potato wholesale prices are quoted per Quintal (100 kilograms) in wholesale mandis and in Rupees per kilogram at farmgate and retail level.
+Standard Commercial Grading for Potato:
+- Grade A (Large / Super Quality): Tubers with diameter > 45-55 mm, uniform shape, free from scab, greening, cuts, insect damage, or rot. These command premium wholesale prices (typically ₹1,500 - ₹1,900 per quintal in North Indian mandis).
+- Grade B (Medium / General Table Grade): Tubers with diameter 30-45 mm, healthy skin. Represents the standard modal trading price (typically ₹1,200 - ₹1,550 per quintal).
+- Grade C (Small / Seed or Chhanta Grade): Tubers < 30 mm, often sold for seed planting or animal feed / starch at discounted rates (typically ₹700 - ₹1,050 per quintal).
+
+3. KEY POTATO WHOLESALE APMC MANDIS IN NORTH INDIA & UTTAR PRADESH
+Uttar Pradesh is India's largest potato producing state, contributing over 30% of total production.
+Key regional trading hubs and wholesale markets:
+- Dadri Mandi & Noida APMC (Gautam Buddha Nagar, UP): Primary trading and consumption wholesale hub servicing Greater Noida, Gautam Buddha Nagar, Ghaziabad, and NCR region. Typical modal potato wholesale range: ₹1,350 - ₹1,750 per quintal (approx. ₹14 - ₹18/kg wholesale; ₹22 - ₹28/kg retail).
+- Agra Mandi (Khandauli & Fatehabad belt, UP): Largest cold storage and production belt in India. Sets national modal price benchmarks.
+- Farrukhabad & Kannauj Mandi (UP): Major production and shipment hub for potato across Eastern and Southern India.
+- Meerut Mandi & Hapur Mandi (Western UP): Key Western UP transit markets with substantial trading volumes.
+- Azadpur Mandi (Delhi): Asia's largest fruit and vegetable market, determining day-to-day demand-supply spot rates for North India.
+
+4. FARMER SELLING BEST PRACTICES & VALUE MAXIMIZATION
+- Sorting & Cleaning: Remove soil clods, damaged, greened, or blighted tubers at farm level before transport. Sending uncleaned or rotting tubers lowers the entire batch from Grade A to Grade C price.
+- Proper Packaging: Pack in standard 50 kg breathable leno mesh or jute bags. Transparent mesh bags allow buyers to inspect quality without opening, speeding auctions.
+- Tracking Live Mandi Rates: Farmers can monitor live auction spot prices on the official e-NAM portal (enam.gov.in) or by dialing the Kisan Call Centre toll-free at 1800-180-1551.
+- Staggered Marketing via Cold Storage: Rather than distress-selling immediately during peak February-March harvest gluts, store cured Grade-A tubers in certified cold storage facilities (3-4°C) to sell during off-season months (July-October) when prices typically rise.

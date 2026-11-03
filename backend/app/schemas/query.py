@@ -185,6 +185,13 @@ class QueryResponse(BaseModel):
     from_cache: bool = Field(default=False, description="True if served from in-memory cache")
     weather_context_used: bool = Field(default=False, description="True if live weather data was injected")
     market_context_used: bool = Field(default=False, description="True if live price data was injected")
+    is_msp: Optional[bool] = Field(default=None, description="True if official Central MSP applies, False for open APMC market")
+    market_badge_label: Optional[str] = Field(default=None, description="Badge text e.g. 'eNAM: MSP' or 'APMC Mandi Rate'")
+    intent: Optional[str] = Field(default=None, description="Classified intent: MARKET_PRICE, WEATHER, or DISEASE_DIAGNOSIS")
+    follow_up_questions: Optional[List[str]] = Field(
+        default_factory=list,
+        description="Suggested follow-up questions tailored to the query and context",
+    )
     timing: Optional[TimingBreakdown] = None
 
     model_config = {"json_schema_extra": {

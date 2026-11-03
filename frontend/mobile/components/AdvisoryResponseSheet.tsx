@@ -44,6 +44,10 @@ export interface AdvisoryResponseData {
   from_cache?: boolean;
   weather_context_used?: boolean;
   market_context_used?: boolean;
+  is_msp?: boolean;
+  market_badge_label?: string;
+  intent?: string;
+  follow_up_questions?: string[];
 }
 
 interface AdvisoryResponseSheetProps {
@@ -56,6 +60,7 @@ interface AdvisoryResponseSheetProps {
   currentLang: LanguageCode;
   fontSizeScale?: 'normal' | 'large' | 'xlarge';
   onFollowUpSubmit?: (followUpQuestion: string) => void;
+  onSelectFollowUp?: (followUpQuestion: string) => void;
 }
 
 
@@ -66,7 +71,7 @@ interface ParsedAdvisoryItem {
 }
 
 interface ParsedAdvisorySection {
-  id: 'diagnosis' | 'organic' | 'chemical' | 'safety' | 'other';
+  id: 'diagnosis' | 'organic' | 'chemical' | 'safety' | 'market_status' | 'mandi_rates' | 'selling_advice' | 'market_support' | 'other';
   cleanTitle: string;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
   accentColor: string;
@@ -97,7 +102,35 @@ function parseAdvisorySections(raw: string): ParsedAdvisorySection[] {
       let borderColor = '#E2E8F0';
       let badgeBg = '#F1F5F9';
 
-      if (/1\.|Diagnosis|🛑|നിർണ്ണയം|निदान/i.test(rawHeader)) {
+      if (/Market|Commodity|📊/i.test(rawHeader)) {
+        id = 'market_status';
+        icon = 'chart-line';
+        accentColor = '#0284C7';
+        bgColor = '#F0F9FF';
+        borderColor = '#BAE6FD';
+        badgeBg = '#E0F2FE';
+      } else if (/Mandi|Rate|Rates|Estimated|💰/i.test(rawHeader)) {
+        id = 'mandi_rates';
+        icon = 'currency-inr';
+        accentColor = '#D97706';
+        bgColor = '#FFFBEB';
+        borderColor = '#FDE68A';
+        badgeBg = '#FEF3C7';
+      } else if (/Selling|Storage|Guidelines|🚛/i.test(rawHeader)) {
+        id = 'selling_advice';
+        icon = 'truck-delivery-outline';
+        accentColor = '#16A34A';
+        bgColor = '#F0FDF4';
+        borderColor = '#BBF7D0';
+        badgeBg = '#DCFCE7';
+      } else if (/Gateway|Support|Portal|🏛️/i.test(rawHeader)) {
+        id = 'market_support';
+        icon = 'bank-outline';
+        accentColor = '#7C3AED';
+        bgColor = '#F5F3FF';
+        borderColor = '#DDD6FE';
+        badgeBg = '#EDE9FE';
+      } else if (/1\.|Diagnosis|🛑|നിർണ്ണയം|निदान/i.test(rawHeader)) {
         id = 'diagnosis';
         icon = 'alert-decagram';
         accentColor = '#DC2626';
@@ -129,15 +162,15 @@ function parseAdvisorySections(raw: string): ParsedAdvisorySection[] {
 
       const cleanTitle = rawHeader
         .replace(/^###\s*/, '')
-        .replace(/^[🛑🌿🧪⚠️\u26a0\ufe0f\s]+/, '')
+        .replace(/^[🛑🌿🧪⚠️📊💰🚛🏛️\u26a0\ufe0f\s]+/, '')
         .trim();
 
       const items: ParsedAdvisoryItem[] = [];
       const lines = body.split('\n').map((l) => l.trim()).filter(Boolean);
       for (const line of lines) {
-        const bulletMatch = line.match(/^[-*•]?\s*\*\*([^*]+)\*\*:\s*(.*)$/);
+        const bulletMatch = line.match(/^[-*•]?\s*\*\*([^*]+)\*\*(?:\s*:\s*|\s*—\s*|\s*-\s*)(.*)$/);
         if (bulletMatch) {
-          const label = bulletMatch[1].trim();
+          const label = bulletMatch[1].replace(/\*\*/g, '').trim();
           const value = bulletMatch[2].trim();
           const isDosage = /dosage|15-liter|15l|pump/i.test(label) || /15-liter|15l|knapsack/i.test(value);
           items.push({ label, value, isDosage });
@@ -164,6 +197,37 @@ function parseAdvisorySections(raw: string): ParsedAdvisorySection[] {
   return sections;
 }
 
+/**
+ * Helper to parse inline markdown **bold** segments into styled Text nodes.
+ * Avoids rendering literal asterisks on screen.
+ */
+function renderFormattedText(text: string, baseStyle: any, boldStyle: any) {
+  if (!text) return null;
+  if (!text.includes('**')) {
+    return <Text style={baseStyle}>{text}</Text>;
+  }
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          const content = part.slice(2, -2);
+          return (
+            <Text key={index} style={boldStyle}>
+              {content}
+            </Text>
+          );
+        }
+        return (
+          <Text key={index} style={baseStyle}>
+            {part}
+          </Text>
+        );
+      })}
+    </>
+  );
+}
+
 export default function AdvisoryResponseSheet({
   visible,
   onClose,
@@ -174,10 +238,14 @@ export default function AdvisoryResponseSheet({
   currentLang,
   fontSizeScale = 'normal',
   onFollowUpSubmit,
+  onSelectFollowUp,
 }: AdvisoryResponseSheetProps) {
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [followUpText, setFollowUpText] = useState('');
   const [loadingCycleIndex, setLoadingCycleIndex] = useState(0);
+
+  // Persistent ScrollView reference for auto-scrolling to top on new query
+  const sheetScrollRef = useRef<ScrollView>(null);
 
   // Task 1: Persistent HTMLAudioElement instance for Web & Sound for Native
   const htmlAudioRef = useRef<any>(null);
@@ -222,6 +290,8 @@ export default function AdvisoryResponseSheet({
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (loading) {
+      stopAudio();
+      sheetScrollRef.current?.scrollTo({ y: 0, animated: true });
       setLoadingCycleIndex(0);
       interval = setInterval(() => {
         setLoadingCycleIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
@@ -500,12 +570,15 @@ export default function AdvisoryResponseSheet({
   };
 
   const handleSendFollowUp = () => {
-    if (!followUpText.trim()) return;
+    const text = followUpText.trim();
+    if (!text) return;
     safeHaptics.impactMedium();
-    if (onFollowUpSubmit) {
-      onFollowUpSubmit(followUpText.trim());
-      setFollowUpText('');
+    if (onSelectFollowUp) {
+      onSelectFollowUp(text);
+    } else if (onFollowUpSubmit) {
+      onFollowUpSubmit(text);
     }
+    setFollowUpText('');
   };
 
   const handleVoiceFollowUp = () => {
@@ -605,6 +678,61 @@ export default function AdvisoryResponseSheet({
     return parseAdvisorySections(displayAnswer);
   }, [displayAnswer]);
 
+  const followUpQuestions = useMemo(() => {
+    if (response?.follow_up_questions && response.follow_up_questions.length > 0) {
+      return response.follow_up_questions;
+    }
+    if (currentLang === 'hi') {
+      if (response?.intent === 'MARKET_PRICE') {
+        return [
+          'पास की APMC मंडी में इस फसल का क्या भाव है?',
+          'फसल को सुरक्षित रखने और ग्रेडिंग के क्या नियम हैं?',
+          'e-NAM पोर्टल पर अपनी फसल का पंजीकरण कैसे करें?',
+        ];
+      }
+      return [
+        '15 लीटर स्प्रे पंप में दवा की सही मात्रा क्या है?',
+        'कीटनाशक छिड़कने का सबसे सही समय (सुबह या शाम) क्या है?',
+        'कम खर्च में जैविक या नीम का घोल कैसे तैयार करें?',
+      ];
+    }
+    if (currentLang === 'ml') {
+      if (response?.intent === 'MARKET_PRICE') {
+        return [
+          'അടുത്തുള്ള APMC മാർക്കറ്റിലെ ഇപ്പോഴത്തെ നിരക്ക് എത്രയാണ്?',
+          'ശീതീകരണ സംഭരണശാലയിൽ സൂക്ഷിക്കുന്നതിനുള്ള മാർഗ്ഗങ്ങൾ എന്തൊക്കെയാണ്?',
+          'e-NAM പോർട്ടലിൽ എങ്ങനെ രജിസ്റ്റർ ചെയ്യാം?',
+        ];
+      }
+      return [
+        '15 ലിറ്റർ പമ്പിൽ തളിക്കേണ്ട കൃത്യമായ അളവ് എത്രയാണ്?',
+        'മരുന്ന് തളിക്കാൻ ഏറ്റവും അനുയോജ്യമായ സമയം എപ്പോഴാണ്?',
+        'ചിലവ് കുറഞ്ഞ ജൈവ നിയന്ത്രണ മാർഗ്ഗങ്ങൾ എന്തൊക്കെയാണ്?',
+      ];
+    }
+    if (response?.intent === 'MARKET_PRICE') {
+      return [
+        'Where is the nearest APMC Mandi auction?',
+        'What are the cold storage guidelines and rates?',
+        'How to register and check prices on e-NAM?',
+      ];
+    }
+    return [
+      'What is the exact dosage per 15-liter backpack pump?',
+      'What is the best time of day to spray (morning or evening)?',
+      'What low-cost organic remedies can prevent recurrence?',
+    ];
+  }, [response?.follow_up_questions, response?.intent, currentLang]);
+
+  const handleFollowUpChipPress = (item: string) => {
+    safeHaptics.impactMedium();
+    if (onSelectFollowUp) {
+      onSelectFollowUp(item);
+    } else if (onFollowUpSubmit) {
+      onFollowUpSubmit(item);
+    }
+  };
+
   const getCardHeaderFontSize = () => {
     if (fontSizeScale === 'xlarge') return 20;
     if (fontSizeScale === 'large') return 18;
@@ -691,6 +819,7 @@ export default function AdvisoryResponseSheet({
           </View>
 
           <ScrollView
+            ref={sheetScrollRef}
             style={styles.sheetScrollView}
             contentContainerStyle={styles.sheetScrollContent}
             showsVerticalScrollIndicator={false}
@@ -807,10 +936,26 @@ export default function AdvisoryResponseSheet({
                   </View>
 
                   {/* Mandi Context Badge */}
-                  <View style={styles.badgeMandi} accessibilityRole="text" accessibilityLabel={response.market_context_used ? t('enamMandiChip') : 'eNAM Live Mandi Rates context used'}>
+                  <View
+                    style={styles.badgeMandi}
+                    accessibilityRole="text"
+                    accessibilityLabel={
+                      response.market_badge_label ||
+                      (response.is_msp === false
+                        ? 'APMC Mandi Rate'
+                        : response.market_context_used
+                        ? t('enamMandiChip')
+                        : 'eNAM Live Mandi Rates')
+                    }
+                  >
                     <MaterialCommunityIcons name="currency-inr" size={15} color="#D97706" />
                     <Text allowFontScaling={true} style={styles.badgeMandiText}>
-                      {response.market_context_used ? t('enamMandiChip') : '📈 eNAM: Live Mandi Rates'}
+                      {response.market_badge_label ||
+                        (response.is_msp === false
+                          ? '📈 APMC Mandi Rate'
+                          : response.market_context_used
+                          ? t('enamMandiChip')
+                          : '📈 eNAM: Live Mandi Rates')}
                     </Text>
                   </View>
 
@@ -829,12 +974,88 @@ export default function AdvisoryResponseSheet({
                   </View>
                 </View>
 
-                {/* ── WRITTEN ADVISORY TEXT ── */}
-                <View style={styles.advisoryContentBox}>
-                  <Text allowFontScaling={true} style={[styles.advisoryBodyText, { fontSize: getAnswerFontSize() }]}>
-                    {displayAnswer}
-                  </Text>
-                </View>
+                {/* ── WRITTEN ADVISORY TEXT / STRUCTURED FIELD CARDS ── */}
+                {parsedSections.length > 0 ? (
+                  <View style={styles.structuredCardsContainer}>
+                    {parsedSections.map((sec, idx) => (
+                      <View
+                        key={idx}
+                        style={[
+                          styles.fieldAdvisoryCard,
+                          {
+                            backgroundColor: sec.bgColor,
+                            borderColor: sec.borderColor,
+                            borderLeftColor: sec.accentColor,
+                          },
+                        ]}
+                      >
+                        <View style={styles.fieldCardHeaderRow}>
+                          <View style={[styles.fieldCardIconBadge, { backgroundColor: sec.badgeBg }]}>
+                            <MaterialCommunityIcons name={sec.icon} size={20} color={sec.accentColor} />
+                          </View>
+                          <Text
+                            allowFontScaling={true}
+                            style={[
+                              styles.fieldCardTitle,
+                              { color: sec.accentColor, fontSize: getCardHeaderFontSize() },
+                            ]}
+                          >
+                            {sec.cleanTitle}
+                          </Text>
+                        </View>
+
+                        <View style={styles.fieldCardItemsList}>
+                          {sec.items.map((item, itemIdx) => {
+                            if (item.isDosage) {
+                              return (
+                                <View key={itemIdx} style={styles.knapsackDosageBox}>
+                                  <View style={styles.knapsackIconRow}>
+                                    <MaterialCommunityIcons name="gas-cylinder" size={20} color="#0284C7" />
+                                    <Text
+                                      allowFontScaling={true}
+                                      style={[styles.knapsackLabel, { fontSize: getDosageFontSize() - 2 }]}
+                                    >
+                                      {item.label ? item.label.replace(/\*\*/g, '') : '15-Liter Backpack Pump Dosage'}
+                                    </Text>
+                                  </View>
+                                  <Text
+                                    allowFontScaling={true}
+                                    style={[styles.knapsackValue, { fontSize: getDosageFontSize() }]}
+                                  >
+                                    {renderFormattedText(item.value, styles.knapsackValue, [styles.knapsackValue, { fontWeight: '900' }])}
+                                  </Text>
+                                </View>
+                              );
+                            }
+
+                            return (
+                              <View key={itemIdx} style={styles.fieldCardItemRow}>
+                                <View
+                                  style={[styles.fieldCardBulletDot, { backgroundColor: sec.accentColor }]}
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  style={[styles.fieldCardItemText, { fontSize: getCardBodyFontSize() }]}
+                                >
+                                  {item.label ? (
+                                    <Text style={styles.fieldCardItemLabel}>{item.label.replace(/\*\*/g, '')}: </Text>
+                                  ) : null}
+                                  {renderFormattedText(item.value, styles.fieldCardItemValue, [styles.fieldCardItemValue, styles.fieldCardItemValueBold])}
+                                </Text>
+                              </View>
+                            );
+                          })}
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                ) : (
+                  <View style={styles.advisoryContentBox}>
+                    <Text allowFontScaling={true} style={[styles.advisoryBodyText, { fontSize: getAnswerFontSize() }]}>
+                      {renderFormattedText(displayAnswer, styles.advisoryBodyText, [styles.advisoryBodyText, { fontWeight: '700' }])}
+                    </Text>
+                  </View>
+                )}
 
                 {/* ── OFFICIAL ICAR VERIFIED TRUST BADGE ── */}
                 <View style={styles.icarTrustBadge} accessibilityRole="summary">
@@ -911,41 +1132,108 @@ export default function AdvisoryResponseSheet({
                   {/* 2. ACTIONABLE NEXT STEPS (Side-by-side Action Chips) */}
                   <View style={styles.actionStepsContainer}>
                     <Text allowFontScaling={true} style={styles.actionStepsHeading}>⚡ Actionable Next Steps:</Text>
-                    <View style={styles.actionChipsRow}>
-                      <TouchableOpacity
-                        style={styles.actionChipSpray}
-                        onPress={handleSetSprayReminder}
-                        activeOpacity={0.85}
-                        accessibilityRole="button"
-                        accessibilityLabel="Set spray reminder"
-                        accessibilityHint="Schedule a reminder for crop treatment spray"
-                      >
-                        <MaterialCommunityIcons name="calendar-clock" size={22} color="#D97706" />
-                        <View style={{ flex: 1 }}>
-                          <Text allowFontScaling={true} style={styles.actionChipTitle}>📅 Spray Reminder</Text>
-                          <Text allowFontScaling={true} style={styles.actionChipSub}>Schedule treatment</Text>
-                        </View>
-                      </TouchableOpacity>
+                    {response.intent === 'MARKET_PRICE' || (response.market_context_used && !response.sources?.some(s => /crop_disease|fungi|pest/i.test(s))) ? (
+                      <View style={styles.actionChipsRow}>
+                        <TouchableOpacity
+                          style={styles.actionChipSpray}
+                          onPress={() => {
+                            safeHaptics.impactLight();
+                            showToast('🌐 e-NAM Portal: enam.gov.in for live mandi auction bids');
+                          }}
+                          activeOpacity={0.85}
+                          accessibilityRole="button"
+                          accessibilityLabel="Open e-NAM Mandi Portal"
+                          accessibilityHint="Check live mandi trade prices on official e-NAM portal"
+                        >
+                          <MaterialCommunityIcons name="finance" size={22} color="#D97706" />
+                          <View style={{ flex: 1 }}>
+                            <Text allowFontScaling={true} style={styles.actionChipTitle}>📈 e-NAM Portal</Text>
+                            <Text allowFontScaling={true} style={styles.actionChipSub}>Live Mandi Bids</Text>
+                          </View>
+                        </TouchableOpacity>
 
-                      <TouchableOpacity
-                        style={styles.actionChipShop}
-                        onPress={handleFindShops}
-                        activeOpacity={0.85}
-                        accessibilityRole="button"
-                        accessibilityLabel="Find nearest fertilizer shops"
-                        accessibilityHint="Locate verified PM-Kisan Krishi Seva Kendras nearby"
-                      >
-                        <MaterialCommunityIcons name="store-marker-outline" size={22} color="#15803D" />
-                        <View style={{ flex: 1 }}>
-                          <Text allowFontScaling={true} style={styles.actionChipTitle}>📍 Fertilizer Shop</Text>
-                          <Text allowFontScaling={true} style={styles.actionChipSub}>Find Krishi Kendra</Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
+                        <TouchableOpacity
+                          style={styles.actionChipShop}
+                          onPress={() => {
+                            safeHaptics.impactLight();
+                            showToast('📞 Kisan Call Centre: 1800-180-1551 (Toll Free)');
+                          }}
+                          activeOpacity={0.85}
+                          accessibilityRole="button"
+                          accessibilityLabel="Call Kisan Call Centre"
+                          accessibilityHint="Contact official agricultural advisory helpline"
+                        >
+                          <MaterialCommunityIcons name="phone-in-talk" size={22} color="#15803D" />
+                          <View style={{ flex: 1 }}>
+                            <Text allowFontScaling={true} style={styles.actionChipTitle}>📞 Kisan Helpline</Text>
+                            <Text allowFontScaling={true} style={styles.actionChipSub}>1800-180-1551</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View style={styles.actionChipsRow}>
+                        <TouchableOpacity
+                          style={styles.actionChipSpray}
+                          onPress={handleSetSprayReminder}
+                          activeOpacity={0.85}
+                          accessibilityRole="button"
+                          accessibilityLabel="Set spray reminder"
+                          accessibilityHint="Schedule a reminder for crop treatment spray"
+                        >
+                          <MaterialCommunityIcons name="calendar-clock" size={22} color="#D97706" />
+                          <View style={{ flex: 1 }}>
+                            <Text allowFontScaling={true} style={styles.actionChipTitle}>📅 Spray Reminder</Text>
+                            <Text allowFontScaling={true} style={styles.actionChipSub}>Schedule treatment</Text>
+                          </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          style={styles.actionChipShop}
+                          onPress={handleFindShops}
+                          activeOpacity={0.85}
+                          accessibilityRole="button"
+                          accessibilityLabel="Find nearest fertilizer shops"
+                          accessibilityHint="Locate verified PM-Kisan Krishi Seva Kendras nearby"
+                        >
+                          <MaterialCommunityIcons name="store-marker-outline" size={22} color="#15803D" />
+                          <View style={{ flex: 1 }}>
+                            <Text allowFontScaling={true} style={styles.actionChipTitle}>📍 Fertilizer Shop</Text>
+                            <Text allowFontScaling={true} style={styles.actionChipSub}>Find Krishi Kendra</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )}
                   </View>
 
+                  {/* 💡 Suggested Follow-Up Question Chips */}
+                  {followUpQuestions && followUpQuestions.length > 0 && (
+                    <View style={styles.followUpChipsContainer}>
+                      <View style={styles.followUpHeaderRow}>
+                        <MaterialCommunityIcons name="lightbulb-on-outline" size={18} color="#D97706" />
+                        <Text allowFontScaling={true} style={styles.followUpChipsHeading}>
+                          Suggested Follow-Up Questions:
+                        </Text>
+                      </View>
+                      <View style={styles.followUpChipsWrap}>
+                        {followUpQuestions.map((item, index) => (
+                          <TouchableOpacity
+                            key={`followup-${index}`}
+                            onPress={() => handleFollowUpChipPress(item)}
+                            activeOpacity={0.7}
+                            style={styles.followUpChip}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Suggested question: ${item}`}
+                            accessibilityHint="Tapping this immediately submits this follow-up question"
+                          >
+                            <Text allowFontScaling={true} style={styles.followUpText}>💡 {item}</Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  )}
+
                   {/* 3. VOICE-FIRST FLOATING FOLLOW-UP ACTION BAR */}
-                  {onFollowUpSubmit && (
+                  {(onFollowUpSubmit || onSelectFollowUp) && (
                     <View style={styles.voiceFollowUpSection}>
                       <Text allowFontScaling={true} style={styles.voiceFollowUpHeading}>💬 Have a follow-up question?</Text>
 
@@ -1819,6 +2107,47 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 
+  // Suggested Follow-Up Question Chips
+  followUpChipsContainer: {
+    marginBottom: 16,
+    gap: 8,
+  },
+  followUpHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  followUpChipsHeading: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#92400E',
+    letterSpacing: 0.1,
+  },
+  followUpChipsWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  followUpChip: {
+    backgroundColor: '#FEF3C7',
+    borderWidth: 1,
+    borderColor: '#FDE68A',
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  followUpText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#78350F',
+    lineHeight: 18,
+  },
+
   // 3. Voice-First Floating Follow-Up Bar
   voiceFollowUpSection: {
     gap: 8,
@@ -2152,6 +2481,10 @@ const styles = StyleSheet.create({
   },
   fieldCardItemValue: {
     fontWeight: '500',
+    color: '#0F172A',
+  },
+  fieldCardItemValueBold: {
+    fontWeight: '800',
     color: '#0F172A',
   },
   knapsackDosageBox: {

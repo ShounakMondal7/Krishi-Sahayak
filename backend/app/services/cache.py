@@ -34,14 +34,24 @@ class TTLCache:
         self._hits = 0
         self._misses = 0
 
-    def _make_key(self, question_english: str, region: Optional[str] = None) -> str:
-        """Deterministic cache key from English question + region."""
-        raw = f"{question_english.strip().lower()}::{(region or '').lower()}"
+    def _make_key(
+        self,
+        question_english: str,
+        region: Optional[str] = None,
+        language: Optional[str] = None,
+    ) -> str:
+        """Deterministic cache key from English question + region + language."""
+        raw = f"{question_english.strip().lower()}::{(region or '').lower()}::{(language or 'en').lower()}"
         return hashlib.sha256(raw.encode()).hexdigest()
 
-    def get(self, question_english: str, region: Optional[str] = None) -> Optional[Any]:
-        """Returns cached value or None if missing/expired."""
-        key = self._make_key(question_english, region)
+    def get(
+        self,
+        question_english: str,
+        region: Optional[str] = None,
+        language: Optional[str] = None,
+    ) -> Optional[Any]:
+        """Returns cached value or None if missing/expired. Fast-path in-memory lookup (<50ms)."""
+        key = self._make_key(question_english, region, language)
         with self._lock:
             entry = self._store.get(key)
             if entry is None:
@@ -56,9 +66,15 @@ class TTLCache:
             logger.debug(f"Cache HIT for key {key[:8]}…")
             return value
 
-    def set(self, question_english: str, value: Any, region: Optional[str] = None) -> None:
+    def set(
+        self,
+        question_english: str,
+        value: Any,
+        region: Optional[str] = None,
+        language: Optional[str] = None,
+    ) -> None:
         """Stores a value with TTL expiry. Evicts oldest if at max capacity."""
-        key = self._make_key(question_english, region)
+        key = self._make_key(question_english, region, language)
         expires_at = time.monotonic() + self._ttl
         with self._lock:
             # Simple eviction: remove oldest entry if full
