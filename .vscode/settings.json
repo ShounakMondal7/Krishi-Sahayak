@@ -1,0 +1,6 @@
+{
+  "totalTypeScript.hideDiagnostics": true,
+  "totalTypeScript.hideAllTips": true,
+  "totalTypeScript.hiddenTips": ["*"],
+  "problems.autoReveal": false
+}

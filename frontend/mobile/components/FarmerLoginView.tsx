@@ -28,13 +28,13 @@ import { safeHaptics } from '../services/haptics';
 import { LanguageCode } from '../services/i18n';
 import { storageService, FarmerProfile } from '../services/storage';
 
-interface FarmerLoginViewProps {
+export interface FarmerLoginViewProps {
   currentLang?: LanguageCode;
   onBack: () => void;
   onSuccess: () => void;
 }
 
-type AuthMethod = 'mobile' | 'kisan_id';
+export type AuthMethod = 'mobile' | 'kisan_id';
 
 const DEMO_PROFILES: FarmerProfile[] = [
   {
@@ -69,29 +69,29 @@ const DEMO_PROFILES: FarmerProfile[] = [
   },
 ];
 
-export default function FarmerLoginView({
+export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
   currentLang = 'en',
   onBack,
   onSuccess,
-}: FarmerLoginViewProps) {
+}: FarmerLoginViewProps): React.ReactElement => {
   const [authMethod, setAuthMethod] = useState<AuthMethod>('mobile');
 
   // Mobile + OTP State
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpCode, setOtpCode] = useState('');
+  const [mobileNumber, setMobileNumber] = useState<string>('');
+  const [otpSent, setOtpSent] = useState<boolean>(false);
+  const [otpCode, setOtpCode] = useState<string>('');
   const [otpNotice, setOtpNotice] = useState<string | null>(null);
 
   // Kisan ID / Aadhaar State
-  const [kisanOrAadhaarId, setKisanOrAadhaarId] = useState('');
+  const [kisanOrAadhaarId, setKisanOrAadhaarId] = useState<string>('');
   const [idError, setIdError] = useState<string | null>(null);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // ── Mobile + OTP Handlers ────────────────────────────────────────────────
-  const handleSendOtp = () => {
+  const handleSendOtp = (): void => {
     safeHaptics.impactLight();
-    const cleanNumber = mobileNumber.replace(/\D/g, '');
+    const cleanNumber: string = mobileNumber.replace(/\D/g, '');
     if (cleanNumber.length < 10) {
       Alert.alert('Invalid Number', 'Please enter a valid 10-digit mobile number.');
       return;
@@ -100,13 +100,13 @@ export default function FarmerLoginView({
     setOtpNotice('OTP sent via SMS. Enter 1234 for instant verification.');
   };
 
-  const handleUseTestOtp = () => {
+  const handleUseTestOtp = (): void => {
     safeHaptics.impactLight();
     setOtpCode('1234');
     setOtpNotice('✅ OTP 1234 auto-filled');
   };
 
-  const handleVerifyOtp = async () => {
+  const handleVerifyOtp = async (): Promise<void> => {
     safeHaptics.impactMedium();
     if (otpCode.trim() !== '1234' && otpCode.trim().length < 4) {
       Alert.alert('Invalid OTP', 'Please enter 4-digit code (use 1234 for test).');
@@ -114,10 +114,10 @@ export default function FarmerLoginView({
     }
     setLoading(true);
     const savedLoc = await storageService.getSavedLocation();
-    const finalState = savedLoc?.state || 'Punjab';
-    const finalDistrict = savedLoc?.district || 'Ludhiana';
+    const finalState: string = savedLoc?.state || 'Punjab';
+    const finalDistrict: string = savedLoc?.district || 'Ludhiana';
 
-    const cleanNumber = mobileNumber.replace(/\D/g, '').slice(-10) || '9876543210';
+    const cleanNumber: string = mobileNumber.replace(/\D/g, '').slice(-10) || '9876543210';
     const profile: FarmerProfile = {
       farmerId: `KISAN-IN-${cleanNumber.slice(-4)}`,
       name: `Kisan Bandhu (${cleanNumber.slice(-4)})`,
@@ -135,15 +135,15 @@ export default function FarmerLoginView({
   };
 
   // ── Kisan ID / Aadhaar Handlers ──────────────────────────────────────────
-  const handleAutoFillKisanId = () => {
+  const handleAutoFillKisanId = (): void => {
     safeHaptics.impactLight();
     setKisanOrAadhaarId('KISAN9842101');
     setIdError(null);
   };
 
-  const handleVerifyKisanId = async () => {
+  const handleVerifyKisanId = async (): Promise<void> => {
     safeHaptics.impactMedium();
-    const cleaned = kisanOrAadhaarId.trim().replace(/\s+/g, '');
+    const cleaned: string = kisanOrAadhaarId.trim().replace(/\s+/g, '');
     if (cleaned.length < 11 || cleaned.length > 14) {
       setIdError('Please enter a valid 11-digit PM-Kisan ID or 12-digit Aadhaar number.');
       return;
@@ -152,12 +152,13 @@ export default function FarmerLoginView({
     setLoading(true);
 
     const savedLoc = await storageService.getSavedLocation();
-    const finalState = savedLoc?.state || 'Punjab';
-    const finalDistrict = savedLoc?.district || 'Ludhiana';
+    const finalState: string = savedLoc?.state || 'Punjab';
+    const finalDistrict: string = savedLoc?.district || 'Ludhiana';
 
-    const isAadhaar = /^\d{12}$/.test(cleaned);
-    const farmerIdLabel = isAadhaar ? `AADHAAR-XX-${cleaned.slice(-4)}` : cleaned.toUpperCase();
-    const displayName = isAadhaar ? `Farmer (Aadhaar ...${cleaned.slice(-4)})` : `Farmer (${cleaned.slice(-4)})`;
+    const isAadhaar: boolean = /^\d{12}$/.test(cleaned);
+    const suffix: string = cleaned.length >= 4 ? cleaned.slice(-4) : cleaned;
+    const farmerIdLabel: string = isAadhaar ? `AADHAAR-XX-${suffix}` : cleaned.toUpperCase();
+    const displayName: string = isAadhaar ? `Farmer (Aadhaar ...${suffix})` : `Farmer (${suffix})`;
 
     const profile: FarmerProfile = {
       farmerId: farmerIdLabel,
@@ -177,12 +178,12 @@ export default function FarmerLoginView({
   };
 
   // ── Continue as Guest Handler ────────────────────────────────────────────
-  const handleSkipGuest = async () => {
+  const handleSkipGuest = async (): Promise<void> => {
     safeHaptics.impactLight();
     setLoading(true);
     const savedLoc = await storageService.getSavedLocation();
-    const finalState = savedLoc?.state || 'Punjab';
-    const finalDistrict = savedLoc?.district || 'Ludhiana';
+    const finalState: string = savedLoc?.state || 'Punjab';
+    const finalDistrict: string = savedLoc?.district || 'Ludhiana';
 
     const guestProfile: FarmerProfile = {
       farmerId: `KISAN-GUEST-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -201,7 +202,7 @@ export default function FarmerLoginView({
   };
 
   // ── 1-Tap Demo Profile Handler ───────────────────────────────────────────
-  const handleDemoProfile = async (p: FarmerProfile) => {
+  const handleDemoProfile = async (p: FarmerProfile): Promise<void> => {
     safeHaptics.notificationSuccess();
     setLoading(true);
     await storageService.saveLocation(p.state, p.district);
@@ -455,7 +456,7 @@ export default function FarmerLoginView({
                     <TextInput
                       style={styles.phoneInput}
                       value={kisanOrAadhaarId}
-                      onChangeText={(val) => {
+                      onChangeText={(val: string) => {
                         setKisanOrAadhaarId(val);
                         if (idError) setIdError(null);
                       }}
@@ -536,7 +537,7 @@ export default function FarmerLoginView({
                 Instant 1-Tap Profiles:
               </Text>
               <View style={styles.chipsRow}>
-                {DEMO_PROFILES.map((p) => (
+                {DEMO_PROFILES.map((p: FarmerProfile) => (
                   <TouchableOpacity
                     key={p.farmerId}
                     style={styles.demoChip}
@@ -557,7 +558,9 @@ export default function FarmerLoginView({
       </View>
     </SafeAreaView>
   );
-}
+};
+
+export default FarmerLoginView;
 
 const styles = StyleSheet.create({
   safeArea: {
