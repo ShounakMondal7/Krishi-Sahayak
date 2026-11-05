@@ -14,6 +14,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
@@ -28,6 +29,7 @@ import {
   getDistrictsForState,
   getStateDetails,
   detectLocationGPS,
+  lookupLocationByPincode,
   translateLocation,
 } from '../services/locations';
 import { LanguageCode, getTranslation } from '../services/i18n';
@@ -46,8 +48,29 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
   const [districts, setDistricts] = useState<string[]>([]);
   const [detecting, setDetecting] = useState(false);
   const [detectedInfo, setDetectedInfo] = useState<string | null>(null);
+  const [gpsWarning, setGpsWarning] = useState<string | null>(null);
   const [showStatePicker, setShowStatePicker] = useState(false);
   const [showDistrictPicker, setShowDistrictPicker] = useState(false);
+
+  // 📮 6-Digit Indian PIN Code State
+  const [pincode, setPincode] = useState('');
+  const [pincodeLoading, setPincodeLoading] = useState(false);
+  const [pincodeNotice, setPincodeNotice] = useState<string | null>(null);
+  const [pincodeError, setPincodeError] = useState<string | null>(null);
+
+  // Pre-fill previously stored manual location if available (prevent unnecessary auto-detect overrides)
+  useEffect(() => {
+    (async () => {
+      const savedLoc = await storageService.getSavedLocation();
+      if (savedLoc?.state && savedLoc?.district) {
+        setSelectedState(savedLoc.state);
+        setSelectedDistrict(savedLoc.district);
+        if (savedLoc.pincode) {
+          setPincode(savedLoc.pincode);
+        }
+      }
+    })();
+  }, []);
 
   // Keep language in sync with prop and storageService events
   useEffect(() => {
@@ -78,13 +101,56 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
     }
   }, [selectedState]);
 
+  // 📮 PIN Code Instant Lookup Handler
+  const handlePincodeChange = async (val: string) => {
+    const clean = val.replace(/\D/g, '').slice(0, 6);
+    setPincode(clean);
+    setPincodeError(null);
+    setPincodeNotice(null);
+
+    if (clean.length === 6) {
+      setPincodeLoading(true);
+      try {
+        const res = await lookupLocationByPincode(clean);
+        if (res) {
+          setSelectedState(res.state);
+          setSelectedDistrict(res.district);
+          setGpsWarning(null);
+          setPincodeNotice(
+            `✅ PIN ${clean}: ${translateLocation(res.district, activeLang)}, ${translateLocation(res.state, activeLang)}${res.postOfficeName ? ` (${res.postOfficeName})` : ''}`
+          );
+        } else {
+          setPincodeError(
+            activeLang === 'hi'
+              ? '⚠️ पिन कोड नहीं मिला। कृपया सीधे राज्य/जिला चुनें।'
+              : '⚠️ PIN code not found. Please verify digits or select State/District manually.'
+          );
+        }
+      } catch {
+        setPincodeError(
+          activeLang === 'hi'
+            ? '⚠️ पिन कोड सत्यापन विफल। कृपया सीधे राज्य/जिला चुनें।'
+            : '⚠️ Could not verify PIN code. Please select State/District manually.'
+        );
+      } finally {
+        setPincodeLoading(false);
+      }
+    }
+  };
+
   const handleGPSDetect = async () => {
     setDetecting(true);
     setDetectedInfo(null);
+    setGpsWarning(null);
     try {
       const result = await detectLocationGPS();
       setSelectedState(result.state);
       setSelectedDistrict(result.district);
+
+      if (result.warning) {
+        setGpsWarning(result.warning);
+      }
+
       const sourceLabel = result.source === 'gps_reverse'
         ? `📡 ${t('gpsDetected') || 'GPS Detected'}`
         : result.source === 'gps_centroid'
@@ -174,6 +240,55 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
               <Text style={styles.detectedBadgeText} allowFontScaling={true}>{detectedInfo}</Text>
             </View>
           )}
+
+          {/* ⚠️ High-accuracy / Privacy Geolocation Warning */}
+          {gpsWarning && (
+            <View style={styles.warningBox} accessibilityRole="alert">
+              <MaterialCommunityIcons name="alert-circle-outline" size={20} color="#D97706" />
+              <Text style={styles.warningBoxText} allowFontScaling={true}>
+                {gpsWarning}
+              </Text>
+            </View>
+          )}
+
+          {/* 📮 Instant 6-Digit PIN Code Lookup (100% Browser/Brave Proof) */}
+          <View style={styles.pincodeSection}>
+            <View style={styles.pincodeHeaderRow}>
+              <MaterialCommunityIcons name="mailbox" size={18} color="#15803D" />
+              <Text style={styles.pincodeLabel} allowFontScaling={true}>
+                {activeLang === 'hi' ? '6-अंकों का पिन कोड (सटीक जिला खोज)' : 'Enter 6-Digit PIN Code (Instant District Match)'}
+              </Text>
+            </View>
+            <View style={styles.pincodeInputRow}>
+              <TextInput
+                style={styles.pincodeInput}
+                value={pincode}
+                onChangeText={handlePincodeChange}
+                placeholder={activeLang === 'hi' ? 'उदा. 201310 या 141001' : 'e.g. 201310 or 141001'}
+                placeholderTextColor="#94A3B8"
+                keyboardType="number-pad"
+                maxLength={6}
+                allowFontScaling={true}
+              />
+              {pincodeLoading && (
+                <View style={styles.pincodeSpinner}>
+                  <ActivityIndicator size="small" color="#15803D" />
+                </View>
+              )}
+            </View>
+            {pincodeNotice && (
+              <View style={styles.pincodeSuccessBadge} accessibilityRole="text">
+                <MaterialCommunityIcons name="check-circle" size={16} color="#15803D" />
+                <Text style={styles.pincodeSuccessText} allowFontScaling={true}>{pincodeNotice}</Text>
+              </View>
+            )}
+            {pincodeError && (
+              <View style={styles.pincodeErrorBadge} accessibilityRole="alert">
+                <MaterialCommunityIcons name="alert-circle" size={16} color="#DC2626" />
+                <Text style={styles.pincodeErrorText} allowFontScaling={true}>{pincodeError}</Text>
+              </View>
+            )}
+          </View>
 
           {/* Divider */}
           <View style={styles.dividerRow}>
@@ -323,8 +438,16 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
         <View style={styles.bottomBtnWrap}>
           <TouchableOpacity
             style={[styles.continueBtn, !canContinue && styles.continueBtnDisabled]}
-            onPress={() => {
-              if (canContinue) onContinue(selectedState!, selectedDistrict!);
+            onPress={async () => {
+              if (canContinue) {
+                await storageService.saveLocation(
+                  selectedState!,
+                  selectedDistrict!,
+                  true,
+                  pincode.length === 6 ? pincode : undefined
+                );
+                onContinue(selectedState!, selectedDistrict!);
+              }
             }}
             disabled={!canContinue}
             activeOpacity={0.85}
@@ -453,6 +576,99 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#166534',
     textAlign: 'center',
+  },
+  warningBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: '#FEF3C7',
+    borderWidth: 1.5,
+    borderColor: '#F59E0B',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
+    gap: 8,
+  },
+  warningBoxText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#92400E',
+    lineHeight: 18,
+    fontWeight: '600',
+  },
+  pincodeSection: {
+    backgroundColor: '#F8FAFC',
+    borderRadius: 16,
+    padding: 14,
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
+    marginTop: 4,
+    marginBottom: 12,
+    gap: 10,
+  },
+  pincodeHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  pincodeLabel: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#1E293B',
+    flex: 1,
+  },
+  pincodeInputRow: {
+    position: 'relative',
+    justifyContent: 'center',
+  },
+  pincodeInput: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1.5,
+    borderColor: '#CBD5E1',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#0F172A',
+    letterSpacing: 2,
+  },
+  pincodeSpinner: {
+    position: 'absolute',
+    right: 14,
+  },
+  pincodeSuccessBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#DCFCE7',
+    borderWidth: 1,
+    borderColor: '#86EFAC',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    gap: 6,
+  },
+  pincodeSuccessText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#166534',
+    flex: 1,
+  },
+  pincodeErrorBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FEF2F2',
+    borderWidth: 1,
+    borderColor: '#FCA5A5',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    gap: 6,
+  },
+  pincodeErrorText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#DC2626',
+    flex: 1,
   },
   dividerRow: {
     flexDirection: 'row',

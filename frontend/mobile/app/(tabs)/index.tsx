@@ -805,33 +805,44 @@ export default function HomeScreen() {
   // Translation helper
   const t = useCallback((key: string) => getTranslation(currentLang, key), [currentLang]);
 
-  // Initial Load: Load Language, Location & Farmer Profile
+  // Initial Load: Load Language, Location & Farmer Profile with Strict Precedence
   useEffect(() => {
     (async () => {
+      // 1. Language Precedence: saved language -> detected device language
       const savedLang = await storageService.getSavedLanguage();
       if (savedLang) {
         setCurrentLang(savedLang as LanguageCode);
       } else {
         const detected = detectDeviceLanguage();
         setCurrentLang(detected.code);
-        setSelectedState(detected.defaultState);
-        setRegion(detected.defaultDistrict);
       }
 
+      // 2. Location Precedence: saved location (manual lock) -> profile -> language default
+      // CRITICAL: Never invoke GPS or IP auto-detection silently on startup
       const savedLoc = await storageService.getSavedLocation();
-      if (savedLoc) {
-        setSelectedState(savedLoc.state);
-        setRegion(savedLoc.district);
-      }
-
       const profile = await storageService.getFarmerProfile();
+
       if (profile) {
         setFarmerProfile(profile);
-        if (!savedLoc) {
-          const actualState = profile.state || findStateForDistrict(profile.district) || 'Punjab';
-          setSelectedState(actualState);
-          setRegion(profile.district || profile.state || 'Ludhiana');
-        }
+      }
+
+      if (savedLoc?.state && savedLoc?.district) {
+        setSelectedState(savedLoc.state);
+        setRegion(savedLoc.district);
+      } else if (profile?.state && profile?.district) {
+        setSelectedState(profile.state);
+        setRegion(profile.district);
+        await storageService.saveLocation(profile.state, profile.district, true);
+      } else if (profile?.district) {
+        const actualState = profile.state || findStateForDistrict(profile.district) || 'Punjab';
+        setSelectedState(actualState);
+        setRegion(profile.district);
+        await storageService.saveLocation(actualState, profile.district, true);
+      } else {
+        // Only if absolutely no prior location was chosen
+        const detected = detectDeviceLanguage();
+        setSelectedState(detected.defaultState);
+        setRegion(detected.defaultDistrict);
       }
     })();
 

@@ -95,6 +95,14 @@ export interface FarmerProfile {
 
 export type OnboardingView = 'language' | 'location' | 'login' | 'dashboard';
 
+export interface SavedLocation {
+  state: string;
+  district: string;
+  pincode?: string;
+  isManualLock?: boolean;
+  updatedAt?: string;
+}
+
 const languageListeners: Array<(lang: string) => void> = [];
 const profileListeners: Array<(profile: FarmerProfile | null) => void> = [];
 const onboardingListeners: Array<(view: OnboardingView) => void> = [];
@@ -164,7 +172,11 @@ export const storageService = {
 
   async getSavedLanguage(): Promise<string | null> {
     try {
-      return await AsyncStorage.getItem('krishi_language');
+      let lang = await AsyncStorage.getItem('krishi_language');
+      if (!lang && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        lang = window.localStorage.getItem('krishi_language');
+      }
+      return lang;
     } catch {
       return null;
     }
@@ -172,7 +184,11 @@ export const storageService = {
 
   async getLanguage(): Promise<string> {
     try {
-      return (await AsyncStorage.getItem('krishi_language')) || 'en';
+      let lang = await AsyncStorage.getItem('krishi_language');
+      if (!lang && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        lang = window.localStorage.getItem('krishi_language');
+      }
+      return lang || 'en';
     } catch {
       return 'en';
     }
@@ -181,6 +197,9 @@ export const storageService = {
   async setLanguage(lang: string): Promise<void> {
     try {
       await AsyncStorage.setItem('krishi_language', lang);
+      if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem('krishi_language', lang);
+      }
       languageListeners.forEach((fn) => fn(lang));
     } catch {}
   },
@@ -195,7 +214,10 @@ export const storageService = {
 
   async getFarmerProfile(): Promise<FarmerProfile | null> {
     try {
-      const raw = (await getSecureItem(FARMER_PROFILE_KEY)) || (await AsyncStorage.getItem(FARMER_PROFILE_KEY));
+      let raw = (await getSecureItem(FARMER_PROFILE_KEY)) || (await AsyncStorage.getItem(FARMER_PROFILE_KEY));
+      if (!raw && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        raw = window.localStorage.getItem(FARMER_PROFILE_KEY);
+      }
       return raw ? JSON.parse(raw) : null;
     } catch {
       return null;
@@ -207,6 +229,9 @@ export const storageService = {
       const serialized = JSON.stringify(profile);
       await setSecureItem(FARMER_PROFILE_KEY, serialized);
       await AsyncStorage.setItem(FARMER_PROFILE_KEY, serialized);
+      if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem(FARMER_PROFILE_KEY, serialized);
+      }
       profileListeners.forEach((fn) => fn(profile));
     } catch {}
   },
@@ -312,18 +337,75 @@ export const storageService = {
   },
 
   // ── Location Persistence ──────────────────────────────────────────────
-  async saveLocation(state: string, district: string): Promise<void> {
+  async saveLocation(
+    state: string,
+    district: string,
+    isManualLock: boolean = true,
+    pincode?: string
+  ): Promise<void> {
     try {
-      const loc = { state, district };
-      await AsyncStorage.setItem('krishi_saved_location', JSON.stringify(loc));
-      locationListeners.forEach((fn) => fn(loc));
-    } catch {}
+      const loc: SavedLocation = {
+        state,
+        district,
+        pincode,
+        isManualLock,
+        updatedAt: new Date().toISOString(),
+      };
+      const serialized = JSON.stringify(loc);
+      await AsyncStorage.setItem('krishi_saved_location', serialized);
+      if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem('krishi_saved_location', serialized);
+      }
+
+      // Synchronize farmer profile state & district if profile exists
+      try {
+        const rawProfile = (await getSecureItem(FARMER_PROFILE_KEY)) || (await AsyncStorage.getItem(FARMER_PROFILE_KEY));
+        if (rawProfile) {
+          const profile: FarmerProfile = JSON.parse(rawProfile);
+          if (profile.state !== state || profile.district !== district) {
+            profile.state = state;
+            profile.district = district;
+            const updatedProfile = JSON.stringify(profile);
+            await setSecureItem(FARMER_PROFILE_KEY, updatedProfile);
+            await AsyncStorage.setItem(FARMER_PROFILE_KEY, updatedProfile);
+            if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+              window.localStorage.setItem(FARMER_PROFILE_KEY, updatedProfile);
+            }
+            profileListeners.forEach((fn) => fn(profile));
+          }
+        }
+      } catch {}
+
+      locationListeners.forEach((fn) => fn({ state, district }));
+    } catch (err) {
+      console.warn('Failed to save location to storage:', err);
+    }
   },
 
-  async getSavedLocation(): Promise<{ state: string; district: string } | null> {
+  async getSavedLocation(): Promise<SavedLocation | null> {
     try {
-      const raw = await AsyncStorage.getItem('krishi_saved_location');
-      return raw ? JSON.parse(raw) : null;
+      let raw = await AsyncStorage.getItem('krishi_saved_location');
+      if (!raw && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
+        raw = window.localStorage.getItem('krishi_saved_location');
+      }
+      if (raw) {
+        return JSON.parse(raw);
+      }
+
+      // Fallback: Check if active farmer profile has state and district
+      const profile = await storageService.getFarmerProfile();
+      if (profile?.state && profile?.district) {
+        const fallbackLoc: SavedLocation = {
+          state: profile.state,
+          district: profile.district,
+          isManualLock: true,
+          updatedAt: profile.loginTimestamp || new Date().toISOString(),
+        };
+        await storageService.saveLocation(fallbackLoc.state, fallbackLoc.district, true);
+        return fallbackLoc;
+      }
+
+      return null;
     } catch {
       return null;
     }

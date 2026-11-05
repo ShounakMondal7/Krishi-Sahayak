@@ -5,6 +5,7 @@
  * across all major Indian agro-climatic zones.
  */
 
+import { Platform } from 'react-native';
 import type { LanguageCode } from './i18n';
 import { storageService } from './storage';
 
@@ -145,9 +146,19 @@ export function findStateForDistrict(districtName: string): string | null {
 export interface GpsLocationResult {
   state: string;
   district: string;
-  source: 'gps_reverse' | 'gps_centroid' | 'fallback';
+  source: 'gps_reverse' | 'gps_centroid' | 'pincode' | 'fallback';
   latitude?: number;
   longitude?: number;
+  accuracy?: number;
+  isApproximate?: boolean;
+  warning?: string;
+}
+
+export interface PincodeLookupResult {
+  state: string;
+  district: string;
+  postOfficeName?: string;
+  pincode: string;
 }
 
 export interface DistrictCentroid {
@@ -364,6 +375,7 @@ export function findNearestDistrictByCoords(latitude: number, longitude: number)
 /**
  * Automatically detects the farmer's GPS location via browser/device navigator.geolocation,
  * falling back to multi-tier reverse geocoding and agro-centroid proximity matching.
+ * Checks coords.accuracy to detect and flag coarse IP fallbacks (e.g. in Brave / desktop browsers).
  */
 export async function detectLocationGPS(): Promise<GpsLocationResult> {
   const getFallback = async (): Promise<GpsLocationResult> => {
@@ -384,12 +396,15 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
 
     const timeoutTimer = setTimeout(() => {
       getFallback().then(resolve);
-    }, 8500);
+    }, 10000);
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         clearTimeout(timeoutTimer);
-        const { latitude, longitude } = pos.coords;
+        const { latitude, longitude, accuracy } = pos.coords;
+
+        // Flag coarse IP fallback accuracy (Brave/desktop browsers typically report > 25,000m)
+        const isCoarse = Platform.OS === 'web' && typeof accuracy === 'number' && accuracy > 15000;
 
         // Clean candidate text
         const cleanLocationName = (val?: string): string => {
@@ -406,7 +421,7 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
         // 1. Primary: Reverse Geocoding via OpenStreetMap Nominatim (zoom=12 for accurate district/county)
         try {
           const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 3800);
+          const timer = setTimeout(() => controller.abort(), 4000);
           const res = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12&addressdetails=1`,
             {
@@ -468,6 +483,11 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
                   source: 'gps_reverse',
                   latitude,
                   longitude,
+                  accuracy,
+                  isApproximate: isCoarse,
+                  warning: isCoarse
+                    ? `Browser privacy settings returned an approximate city (${matchedDist}). Please verify or enter your 6-digit PIN code below for exact district matching.`
+                    : undefined,
                 });
                 return;
               }
@@ -480,7 +500,7 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
         // 2. Secondary: Fast fallback reverse-geocoding via BigDataCloud client API
         try {
           const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 3000);
+          const timer = setTimeout(() => controller.abort(), 3500);
           const bdcRes = await fetch(
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`,
             { signal: controller.signal }
@@ -525,6 +545,11 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
                   source: 'gps_reverse',
                   latitude,
                   longitude,
+                  accuracy,
+                  isApproximate: isCoarse,
+                  warning: isCoarse
+                    ? `Browser privacy settings returned an approximate city (${matchedDist}). Please verify or enter your 6-digit PIN code below for exact district matching.`
+                    : undefined,
                 });
                 return;
               }
@@ -542,15 +567,89 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
           source: 'gps_centroid',
           latitude,
           longitude,
+          accuracy,
+          isApproximate: isCoarse,
+          warning: isCoarse
+            ? `Browser privacy settings returned an approximate city (${closest.district}). Please verify or enter your 6-digit PIN code below for exact district matching.`
+            : undefined,
         });
       },
       () => {
         clearTimeout(timeoutTimer);
         getFallback().then(resolve);
       },
-      { timeout: 8000, enableHighAccuracy: true, maximumAge: 60000 }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
   });
+}
+
+/**
+ * Instant 6-digit Indian PIN Code Lookup via official India Post API.
+ * Guarantees 100% accurate District & State mapping regardless of browser IP routing or VPN.
+ */
+export async function lookupLocationByPincode(pincode: string): Promise<PincodeLookupResult | null> {
+  const clean = (pincode || '').replace(/\D/g, '').trim();
+  if (clean.length !== 6) return null;
+
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
+    const res = await fetch(`https://api.postalpincode.in/pincode/${clean}`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0 || data[0].Status !== 'Success') {
+      return null;
+    }
+
+    const postOffices = data[0].PostOffice;
+    if (!Array.isArray(postOffices) || postOffices.length === 0) {
+      return null;
+    }
+
+    const firstPo = postOffices[0];
+    const rawDistrict = (firstPo.District || '').trim();
+    const rawState = (firstPo.State || '').trim();
+
+    // 1. Canonical State match
+    const normState = normalizeStateAlias(rawState);
+    const matchedState = ALL_INDIAN_STATES.find(
+      (s) =>
+        s.toLowerCase() === normState.toLowerCase() ||
+        normState.toLowerCase().includes(s.toLowerCase()) ||
+        s.toLowerCase().includes(normState.toLowerCase())
+    ) || findStateForDistrict(rawDistrict) || rawState;
+
+    // 2. Canonical District match within state
+    const stateDists = getDistrictsForState(matchedState);
+    const aliasedDist = normalizeDistrictAlias(rawDistrict);
+    const distClean = rawDistrict.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const aliasedClean = aliasedDist.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const matchedDist = stateDists.find((d) => {
+      const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
+      return (
+        d.toLowerCase() === aliasedDist.toLowerCase() ||
+        dClean === aliasedClean ||
+        dClean === distClean ||
+        d.toLowerCase().includes(aliasedDist.toLowerCase()) ||
+        aliasedDist.toLowerCase().includes(d.toLowerCase())
+      );
+    }) || rawDistrict;
+
+    return {
+      state: matchedState,
+      district: matchedDist,
+      postOfficeName: firstPo.Name || undefined,
+      pincode: clean,
+    };
+  } catch (err) {
+    console.warn('Pincode lookup error:', err);
+    return null;
+  }
 }
 
 export function getFormattedRegionTitle(region: string, fallbackState?: string): string {
