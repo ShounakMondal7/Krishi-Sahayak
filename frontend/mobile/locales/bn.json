@@ -73,7 +73,7 @@
   "responseTime": "প্রতিক্রিয়া সময়:",
   "cachedAnswer": "অফলাইন ক্যাশ",
   "tabAsk": "জিজ্ঞাসা",
-  "tabPhoto": "ফসলের ছবি",
+  "tabPhoto": "ফসল স্ক্যান",
   "tabHistory": "ইতিহাস",
   "photoTitle": "ফসলের ছবি রোগ নির্ণয়",
   "photoSubtitle": "ছবি দেখে ফসলের রোগ শনাক্তকরণ",
@@ -237,5 +237,16 @@
   "instantRagChip": "⚡ Instant RAG Advisory",
   "followUpPlaceholder": "Ask a follow-up question regarding this advice...",
   "askFollowUpBtn": "Ask Follow-up",
-  "closeAdvisoryBtn": "Done / Close Advisory"
+  "closeAdvisoryBtn": "Done / Close Advisory",
+  "searchHistory": "পুরানো প্রশ্ন খুঁজুন...",
+  "fullSheet": "সম্পূর্ণ বিবরণ",
+  "icarGrounded": "ICAR প্রমাণিত",
+  "holdToSpeak": "কথা বলতে চেপে ধরুন",
+  "sprayAction": "📅 স্প্রে রিমাইন্ডার",
+  "fertilizerAction": "📍 সারের দোকান",
+  "matchBadge": "মিল",
+  "pincodeLabel": "৬-সংখ্যার পিন কোড লিখুন (তাত্ক্ষণিক জেলা মিল)",
+  "pincodePlaceholder": "যেমন 201310 বা 141001",
+  "searchStatePlaceholder": "রাজ্য অনুসন্ধান করুন (যেমন পাঞ্জাব, উত্তর প্রদেশ)...",
+  "searchDistrictPlaceholder": "জেলা অনুসন্ধান করুন..."
 }

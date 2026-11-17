@@ -73,7 +73,7 @@
   "responseTime": "प्रतिक्रिया समय:",
   "cachedAnswer": "ऑफ़लाइन कैश",
   "tabAsk": "पूछें",
-  "tabPhoto": "फोटो जांच",
+  "tabPhoto": "फसल जांच",
   "tabHistory": "इतिहास",
   "photoTitle": "फसल फोटो रोग निदान",
   "photoSubtitle": "कैमरे द्वारा फसल रोग की तुरंत पहचान",
@@ -237,5 +237,16 @@
   "autoDetectGpsBtn": "📍 Auto-Detect My Location (GPS)",
   "gpsDetecting": "Locating via GPS coordinates…",
   "gpsSuccess": "Location detected successfully!",
-  "completeSetupBtn": "Complete Setup & Enter Farm Advisory 🚀"
+  "completeSetupBtn": "Complete Setup & Enter Farm Advisory 🚀",
+  "searchHistory": "पुराने प्रश्न खोजें...",
+  "fullSheet": "पूरा विवरण",
+  "icarGrounded": "ICAR प्रमाणित",
+  "holdToSpeak": "बोलने के लिए दबाएं",
+  "sprayAction": "📅 छिड़काव रिमाइंडर",
+  "fertilizerAction": "📍 उर्वरक दुकान",
+  "matchBadge": "मिलान",
+  "pincodeLabel": "6-अंकों का पिन कोड दर्ज करें (सटीक जिला खोज)",
+  "pincodePlaceholder": "उदा. 201310 या 141001",
+  "searchStatePlaceholder": "राज्य खोजें (उदा. पंजाब, उत्तर प्रदेश)...",
+  "searchDistrictPlaceholder": "ज़िला खोजें..."
 }

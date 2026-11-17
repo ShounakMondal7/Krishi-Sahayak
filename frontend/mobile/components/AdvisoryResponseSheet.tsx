@@ -384,7 +384,7 @@ export default function AdvisoryResponseSheet({
   const [loadingCycleIndex, setLoadingCycleIndex] = useState(0);
 
   // Persistent ScrollView reference for auto-scrolling to top on new query
-  const sheetScrollRef = useRef<ScrollView>(null);
+  const sheetScrollRef = useRef<any>(null);
 
   // Toast Notification state
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -754,9 +754,9 @@ export default function AdvisoryResponseSheet({
                 <View style={styles.sheetIconBadge}>
                   <MaterialCommunityIcons name="sprout" size={20} color="#16A34A" />
                 </View>
-                <View>
-                  <Text allowFontScaling={true} style={styles.sheetHeaderTitle}>Krishi Sahayak Advisory</Text>
-                  <Text allowFontScaling={true} style={styles.sheetHeaderSub}>{t('icarGroundedLiveResponse') || 'ICAR Grounded • Live Response'}</Text>
+                <View style={{ flex: 1, minWidth: 0, marginHorizontal: 4 }}>
+                  <Text allowFontScaling={true} numberOfLines={1} ellipsizeMode="tail" style={styles.sheetHeaderTitle}>Krishi Sahayak Advisory</Text>
+                  <Text allowFontScaling={true} numberOfLines={1} ellipsizeMode="tail" style={styles.sheetHeaderSub}>{t('icarGroundedLiveResponse') || 'ICAR Grounded • Live Response'}</Text>
                 </View>
               </View>
             </View>
@@ -1190,7 +1190,7 @@ export default function AdvisoryResponseSheet({
                                 <Text allowFontScaling={true} style={styles.matchScoreText}>
                                   {(src.relevance_score * 100).toFixed(0)}%
                                 </Text>
-                                <Text allowFontScaling={true} style={styles.matchScoreSub}>match</Text>
+                                <Text allowFontScaling={true} style={styles.matchScoreSub}>{t('matchBadge') || 'match'}</Text>
                               </View>
                             )}
 
@@ -1258,7 +1258,7 @@ export default function AdvisoryResponseSheet({
                         >
                           <MaterialCommunityIcons name="calendar-clock" size={22} color="#D97706" />
                           <View style={{ flex: 1 }}>
-                            <Text allowFontScaling={true} style={styles.actionChipTitle}>📅 Spray Reminder</Text>
+                            <Text allowFontScaling={true} style={styles.actionChipTitle}>{t('sprayAction') || '📅 Spray Reminder'}</Text>
                             <Text allowFontScaling={true} style={styles.actionChipSub}>Schedule treatment</Text>
                           </View>
                         </TouchableOpacity>
@@ -1273,7 +1273,7 @@ export default function AdvisoryResponseSheet({
                         >
                           <MaterialCommunityIcons name="store-marker-outline" size={22} color="#15803D" />
                           <View style={{ flex: 1 }}>
-                            <Text allowFontScaling={true} style={styles.actionChipTitle}>📍 Fertilizer Shop</Text>
+                            <Text allowFontScaling={true} style={styles.actionChipTitle}>{t('fertilizerAction') || '📍 Fertilizer Shop'}</Text>
                             <Text allowFontScaling={true} style={styles.actionChipSub}>Find Krishi Kendra</Text>
                           </View>
                         </TouchableOpacity>
@@ -1364,7 +1364,7 @@ export default function AdvisoryResponseSheet({
                             color="#FFFFFF"
                           />
                           <Text allowFontScaling={true} style={styles.dominantVoiceBtnText}>
-                            {isRecordingFollowUp ? 'Listening...' : 'Hold to Speak'}
+                            {isRecordingFollowUp ? (t('listening') || 'Listening...') : (t('holdToSpeak') || 'Hold to Speak')}
                           </Text>
                         </TouchableOpacity>
                       </View>
@@ -1672,6 +1672,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     flex: 1,
+    minWidth: 0,
+    marginRight: 8,
   },
   sheetBackBtn: {
     flexDirection: 'row',
@@ -1695,6 +1697,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     flex: 1,
+    minWidth: 0,
   },
   sheetIconBadge: {
     width: 36,

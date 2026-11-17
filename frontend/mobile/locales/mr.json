@@ -72,8 +72,8 @@
   "sourcesTitle": "📚 सरकारी / ICAR स्रोत:",
   "responseTime": "वेळ:",
   "cachedAnswer": "ऑफलाईन उत्तर",
-  "tabAsk": "प्रश्न विचारा",
-  "tabPhoto": "पीक फोटो",
+  "tabAsk": "विचारा",
+  "tabPhoto": "पीक तपासणी",
   "tabHistory": "इतिहास",
   "photoTitle": "पीक रोग निदान",
   "photoSubtitle": "कॅमेऱ्याने रोग ओळखा",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "मागील प्रश्न शोधा...",
+  "fullSheet": "पूर्ण तपशील",
+  "icarGrounded": "ICAR प्रमाणित",
+  "holdToSpeak": "बोलण्यासाठी दाबून ठेवा",
+  "sprayAction": "📅 फवारणी रिमाइंडर",
+  "fertilizerAction": "📍 खतांचे दुकान",
+  "matchBadge": "जुळणी",
+  "pincodeLabel": "६-अंकी पिन कोड प्रविष्ट करा (त्वरित जिल्हा शोध)",
+  "pincodePlaceholder": "उदा. २०१३१० किंवा १४१००१",
+  "searchStatePlaceholder": "राज्य शोधा (उदा. पंजाब, उत्तर प्रदेश)...",
+  "searchDistrictPlaceholder": "जिल्हा शोधा..."
 }

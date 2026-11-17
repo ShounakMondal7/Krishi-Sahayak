@@ -258,7 +258,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
             <View style={styles.pincodeHeaderRow}>
               <MaterialCommunityIcons name="mailbox" size={18} color="#15803D" />
               <Text style={styles.pincodeLabel} allowFontScaling={true}>
-                {activeLang === 'hi' ? '6-अंकों का पिन कोड (सटीक जिला खोज)' : 'Enter 6-Digit PIN Code (Instant District Match)'}
+                {t('pincodeLabel') || 'Enter 6-Digit PIN Code (Instant District Match)'}
               </Text>
             </View>
             <View style={styles.pincodeInputRow}>
@@ -266,7 +266,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
                 style={styles.pincodeInput}
                 value={pincode}
                 onChangeText={handlePincodeChange}
-                placeholder={activeLang === 'hi' ? 'उदा. 201310 या 141001' : 'e.g. 201310 or 141001'}
+                placeholder={t('pincodePlaceholder') || 'e.g. 201310 or 141001'}
                 placeholderTextColor="#94A3B8"
                 keyboardType="number-pad"
                 maxLength={6}
@@ -326,7 +326,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
             visible={showStatePicker}
             title={t('selectState') || 'Select State'}
             icon="map"
-            searchPlaceholder={activeLang === 'hi' ? 'राज्य खोजें (उदा. पंजाब, उत्तर प्रदेश)...' : 'Search state (e.g. Punjab, Uttar Pradesh)...'}
+            searchPlaceholder={t('searchStatePlaceholder') || 'Search state (e.g. Punjab, Uttar Pradesh)...'}
             items={getAllStates().map((st) => ({
               id: st,
               label: translateLocation(st, activeLang),
@@ -370,7 +370,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
                 visible={showDistrictPicker}
                 title={`${t('selectDistrict') || 'Select District'} - ${translateLocation(selectedState, activeLang)}`}
                 icon="map-marker"
-                searchPlaceholder={activeLang === 'hi' ? 'ज़िला खोजें...' : 'Search district...'}
+                searchPlaceholder={t('searchDistrictPlaceholder') || 'Search district...'}
                 items={districts.map((dist) => ({
                   id: dist,
                   label: translateLocation(dist, activeLang),

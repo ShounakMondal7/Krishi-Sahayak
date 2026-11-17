@@ -100,7 +100,7 @@
   "responseTime": "Response Time:",
   "cachedAnswer": "Cached answer",
   "tabAsk": "Ask Query",
-  "tabPhoto": "Crop Photo",
+  "tabPhoto": "Crop Scan",
   "tabHistory": "History",
   "photoTitle": "Crop Photo Diagnosis",
   "photoSubtitle": "Instant visual disease identification",
@@ -237,5 +237,16 @@
   "verifyIdArrow": "Verify ID & Enter ➔",
   "orChooseGuest": "OR EXPLORE AS GUEST",
   "guestFarmerBtn": "Continue as Guest Farmer",
-  "demoProfilesTitle": "1-Tap Quick Demo Profiles:"
+  "demoProfilesTitle": "1-Tap Quick Demo Profiles:",
+  "searchHistory": "Search past questions...",
+  "fullSheet": "Full Sheet",
+  "icarGrounded": "ICAR Grounded",
+  "holdToSpeak": "Hold to Speak",
+  "sprayAction": "📅 Spray Reminder",
+  "fertilizerAction": "📍 Fertilizer Shop",
+  "matchBadge": "match",
+  "pincodeLabel": "Enter 6-Digit PIN Code (Instant District Match)",
+  "pincodePlaceholder": "e.g. 201310 or 141001",
+  "searchStatePlaceholder": "Search state (e.g. Punjab, Uttar Pradesh)...",
+  "searchDistrictPlaceholder": "Search district..."
 }

@@ -73,7 +73,7 @@
   "responseTime": "સમય:",
   "cachedAnswer": "ઑફલાઇન માહિતી",
   "tabAsk": "પૂછો",
-  "tabPhoto": "પાક ફોટો",
+  "tabPhoto": "પાક સ્કેન",
   "tabHistory": "ઇતિહાસ",
   "photoTitle": "પાક રોગ નિદાન",
   "photoSubtitle": "ફોટો દ્વારા પાક રોગની ઓળખ",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "પાછલા પ્રશ્નો શોધો...",
+  "fullSheet": "સંપૂર્ણ વિગત",
+  "icarGrounded": "ICAR પ્રમાણિત",
+  "holdToSpeak": "બોલવા માટે દબાવી રાખો",
+  "sprayAction": "📅 છંટકાવ રીમાઇન્ડર",
+  "fertilizerAction": "📍 ખાતરની દુકાન",
+  "matchBadge": "મેળ",
+  "pincodeLabel": "૬-અંકનો પિન કોડ દાખલ કરો (ત્વરિત જિલ્લો મેળવો)",
+  "pincodePlaceholder": "દા.ત. 201310 અથવા 141001",
+  "searchStatePlaceholder": "રાજ્ય શોધો (દા.ત. પંજાબ, ઉત્તર પ્રદેશ)...",
+  "searchDistrictPlaceholder": "જિલ્લો શોધો..."
 }

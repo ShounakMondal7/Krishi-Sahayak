@@ -73,7 +73,7 @@
   "responseTime": "ସମୟ:",
   "cachedAnswer": "ଅଫଲାଇନ୍ ତଥ୍ୟ",
   "tabAsk": "ପଚାରନ୍ତୁ",
-  "tabPhoto": "ଫସଲ ଫଟୋ",
+  "tabPhoto": "ଫସଲ ଯାଞ୍ଚ",
   "tabHistory": "ଇତିହାସ",
   "photoTitle": "ଫସଲ ରୋଗ ନିରୂପଣ",
   "photoSubtitle": "ଫଟୋ ମାଧ୍ୟମରେ ରୋଗ ଚିହ୍ନଟ",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "ପୂର୍ବ ପ୍ରଶ୍ନ ଖୋଜନ୍ତୁ...",
+  "fullSheet": "ସମ୍ପୂର୍ଣ୍ଣ ବିବରଣୀ",
+  "icarGrounded": "ICAR ପ୍ରମାଣିତ",
+  "holdToSpeak": "କହିବା ପାଇଁ ଦବାଇ ଧରନ୍ତୁ",
+  "sprayAction": "📅 ସ୍ପ୍ରେ ରିମାଇଣ୍ଡର",
+  "fertilizerAction": "📍 ସାର ଦୋକାନ",
+  "matchBadge": "ମେଳ",
+  "pincodeLabel": "୬-ଅଙ୍କ ବିଶିଷ୍ଟ ପିନ୍ କୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ (ତୁରନ୍ତ ଜିଲ୍ଲା ମେଳ)",
+  "pincodePlaceholder": "ଯଥା. 201310 କିମ୍ବା 141001",
+  "searchStatePlaceholder": "ରାଜ୍ୟ ଖୋଜନ୍ତୁ (ଯଥା. ପଞ୍ଜାବ, ଉତ୍ତର ପ୍ରଦେଶ)...",
+  "searchDistrictPlaceholder": "ଜିଲ୍ଲା ଖୋଜନ୍ତୁ..."
 }

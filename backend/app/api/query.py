@@ -398,7 +398,17 @@ async def _run_rag_pipeline(
             live_context_chunks.append(market_svc.format_price_context(price_data))
             market_used = True
             is_msp = price_data.get("is_msp", False)
-            market_badge_label = "📈 e-NAM: MSP" if is_msp else "📈 APMC Mandi Rate"
+            if language == "hi":
+                market_badge_label = "📈 ई-नाम: MSP (न्यूनतम समर्थन मूल्य)" if is_msp else "📈 APMC मंडी भाव"
+            elif language != "en":
+                base_label = "e-NAM: MSP" if is_msp else "APMC Mandi Rate"
+                try:
+                    tr_badge = translation.translate_en_to_lang(base_label, tgt_lang=language)
+                    market_badge_label = f"📈 {tr_badge}"
+                except Exception:
+                    market_badge_label = "📈 e-NAM: MSP" if is_msp else "📈 APMC Mandi Rate"
+            else:
+                market_badge_label = "📈 e-NAM: MSP" if is_msp else "📈 APMC Mandi Rate"
             logger.info(f"Market price context injected (crop: {price_data.get('crop')}, is_msp: {is_msp})")
         except Exception as exc:
             logger.warning(f"Market fetch failed (non-fatal): {exc}")
@@ -564,6 +574,22 @@ async def _run_rag_pipeline(
             "What is the best time of day to spray (early morning or evening)?",
             "What low-cost organic or bio-control remedies can prevent recurrence?",
         ]
+
+    # Translate follow-up questions to target language if not English
+    if language != "en" and follow_up_questions:
+        try:
+            tasks = [
+                asyncio.to_thread(translation.translate_en_to_lang, q, language)
+                for q in follow_up_questions
+            ]
+            translated = await asyncio.gather(*tasks, return_exceptions=True)
+            follow_up_questions = [
+                res if isinstance(res, str) and res.strip() else orig
+                for res, orig in zip(translated, follow_up_questions)
+            ]
+            logger.info(f"Translated {len(follow_up_questions)} follow-up questions to '{language}'")
+        except Exception as exc:
+            logger.warning(f"Translating follow-up questions failed (non-fatal): {exc}")
 
     response = QueryResponse(
         query_id=query_id,

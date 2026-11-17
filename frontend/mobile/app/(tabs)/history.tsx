@@ -143,7 +143,7 @@ const ConsultationItem = React.memo<ConsultationItemProps>(
               ]}
               allowFontScaling={true}
             >
-              ICAR Grounded
+              {t('icarGrounded') || 'ICAR Grounded'}
             </Text>
           </View>
 
@@ -165,10 +165,12 @@ const ConsultationItem = React.memo<ConsultationItemProps>(
               onPress={() => onPressCard(item)}
               activeOpacity={0.8}
               accessibilityRole="button"
-              accessibilityLabel="View full advisory response sheet"
+              accessibilityLabel={t('fullSheet') || 'Full Sheet'}
             >
               <MaterialCommunityIcons name="open-in-new" size={13} color="#15803D" />
-              <Text style={styles.openSheetText} allowFontScaling={true}>Full Sheet</Text>
+              <Text style={styles.openSheetText} allowFontScaling={true}>
+                {t('fullSheet') || 'Full Sheet'}
+              </Text>
             </TouchableOpacity>
           )}
         </View>

@@ -15,8 +15,6 @@
       "bundleIdentifier": "com.krishisahayak.app"
     },
     "android": {
-      "jsEngine": "hermes",
-      "enableProguardInReleaseBuilds": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0D1B12"
@@ -73,7 +71,10 @@
           "locationAlwaysAndWhenInUsePermission": "Allow Krishi Sahayak to access your location to fetch local mandi prices and weather."
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font",
+      "expo-status-bar",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true

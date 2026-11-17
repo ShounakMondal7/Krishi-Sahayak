@@ -520,7 +520,7 @@ const WeatherWidget = React.memo<WeatherWidgetProps>(({
       accessibilityHint="Double tap to change farm location"
     >
       <MaterialCommunityIcons name="map-marker" size={16} color="#15803D" />
-      <Text style={styles.locationWeatherText} numberOfLines={1} allowFontScaling={true}>
+      <Text style={[styles.locationWeatherText, { flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>
         {locationLabel} • {weatherLabel}
       </Text>
       <MaterialCommunityIcons name="chevron-down" size={14} color="#15803D" />
@@ -810,9 +810,11 @@ const RegionalCropsList = React.memo<RegionalCropsListProps>(({
                   </Text>
                 </View>
               </View>
-              <Text style={styles.cropCardTitle} numberOfLines={2} allowFontScaling={true}>
-                {t('crop_' + crop.id) || crop.name}
-              </Text>
+              <View style={{ minHeight: 34, justifyContent: 'center', width: '100%' }}>
+                <Text style={styles.cropCardTitle} numberOfLines={2} ellipsizeMode="tail" allowFontScaling={true}>
+                  {t('crop_' + crop.id) || crop.name}
+                </Text>
+              </View>
             </TouchableOpacity>
           );
         })}
@@ -930,7 +932,7 @@ export default function HomeScreen() {
   const mediaRecorderRef = useRef<any>(null);
   const mediaStreamRef = useRef<any>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<any>(null);
 
   // Reanimated native thread animation shared values
   const breatheScale = useSharedValue(1);
@@ -2217,7 +2219,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#BBF7D0',
     flexShrink: 1,
-    maxWidth: '52%',
+    maxWidth: '48%',
   },
   locationWeatherText: {
     fontSize: 12,
@@ -2611,11 +2613,12 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   cropCardTitle: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '800',
     color: '#0F172A',
     textAlign: 'center',
     lineHeight: 15,
+    minHeight: 34,
   },
 
   /* 🌅 Sunrise Farm Hero Banner - Compact & Sunlight-Readable */

@@ -72,8 +72,8 @@
   "sourcesTitle": "📚 ਸਰਕਾਰੀ / ICAR ਸਰੋਤ:",
   "responseTime": "ਸਮਾਂ:",
   "cachedAnswer": "ਸੁਰੱਖਿਅਤ ਜਵਾਬ",
-  "tabAsk": "ਸਵਾਲ ਪੁੱਛੋ",
-  "tabPhoto": "ਫ਼ਸਲ ਫ਼ੋਟੋ",
+  "tabAsk": "ਪੁੱਛੋ",
+  "tabPhoto": "ਫ਼ਸਲ ਜਾਂਚ",
   "tabHistory": "ਇਤਿਹਾਸ",
   "photoTitle": "ਫ਼ਸਲ ਬਿਮਾਰੀ ਜਾਂਚ",
   "photoSubtitle": "ਫ਼ੋਟੋ ਖਿੱਚ ਕੇ ਬਿਮਾਰੀ ਦੀ ਪਛਾਣ ਕਰੋ",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "ਪਿਛਲੇ ਸਵਾਲ ਖੋਜੋ...",
+  "fullSheet": "ਪੂਰਾ ਵੇਰਵਾ",
+  "icarGrounded": "ICAR ਪ੍ਰਮਾਣਿਤ",
+  "holdToSpeak": "ਬੋਲਣ ਲਈ ਦਬਾ ਕੇ ਰੱਖੋ",
+  "sprayAction": "📅 ਛਿੜਕਾਅ ਰੀਮਾਈਂਡਰ",
+  "fertilizerAction": "📍 ਖਾਦ ਦੀ ਦੁਕਾਨ",
+  "matchBadge": "ਮੇਲ",
+  "pincodeLabel": "6-ਅੰਕਾਂ ਦਾ ਪਿੰਨ ਕੋਡ ਦਰਜ ਕਰੋ (ਤੁਰੰਤ ਜ਼ਿਲ੍ਹਾ ਮੇਲ)",
+  "pincodePlaceholder": "ਉਦਾ. 201310 ਜਾਂ 141001",
+  "searchStatePlaceholder": "ਰਾਜ ਖੋਜੋ (ਉਦਾ. ਪੰਜਾਬ, ਉੱਤਰ ਪ੍ਰਦੇਸ਼)...",
+  "searchDistrictPlaceholder": "ਜ਼ਿਲ੍ਹਾ ਖੋਜੋ..."
 }

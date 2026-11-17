@@ -73,7 +73,7 @@
   "responseTime": "సమయం:",
   "cachedAnswer": "ఆఫ్‌లైన్ కాష్",
   "tabAsk": "అడగండి",
-  "tabPhoto": "ఫోటో పరీక్ష",
+  "tabPhoto": "పంట స్కాన్",
   "tabHistory": "చరిత్ర",
   "photoTitle": "పంట వ్యాధి నిర్ధారణ",
   "photoSubtitle": "ఫోటో ద్వారా తెగుళ్ల గుర్తింపు",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "గత ప్రశ్నలను శోధించండి...",
+  "fullSheet": "పూర్తి వివరాలు",
+  "icarGrounded": "ICAR ధృవీకరించబడింది",
+  "holdToSpeak": "మాట్లాడటానికి పట్టుకోండి",
+  "sprayAction": "📅 స్ప్రే రిమైండర్",
+  "fertilizerAction": "📍 ఎరువుల దుకాణం",
+  "matchBadge": "సరిపోలిక",
+  "pincodeLabel": "6-అంకెల పిన్ కోడ్‌ను నమోదు చేయండి (తక్షణ జిల్లా గుర్తింపు)",
+  "pincodePlaceholder": "ఉదా. 201310 లేదా 141001",
+  "searchStatePlaceholder": "రాష్ట్రాన్ని శోధించండి (ఉదా. పంజాబ్, ఉత్తరప్రదేశ్)...",
+  "searchDistrictPlaceholder": "జిల్లాను శోధించండి..."
 }

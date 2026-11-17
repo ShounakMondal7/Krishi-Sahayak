@@ -100,9 +100,10 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
         tabBarItemStyle: styles.tabBarItem,
+        tabBarActiveTintColor: '#1B5E20',
+        tabBarInactiveTintColor: '#6B7280',
       }}
     >
       <Tabs.Screen
@@ -110,49 +111,61 @@ export default function TabLayout() {
         options={{
           title: getTranslation(currentLang, 'tabAsk') || 'Ask Query',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabAsk') || 'Ask Query'}, Tab 1 of 3`,
-          tabBarIcon: ({ focused }) => {
-            const title = getTranslation(currentLang, 'tabAsk') || 'Ask Query';
-            return (
-              <View style={focused ? styles.pillActive : styles.pillInactive}>
-                <MaterialCommunityIcons
-                  name={(focused ? 'comment-text' : 'comment-text-outline') as any}
-                  color={focused ? '#15803D' : '#64748B'}
-                  size={focused ? 18 : 22}
-                />
-                <Text
-                  style={focused ? styles.pillTextActive : styles.pillTextInactive}
-                  numberOfLines={1}
-                >
-                  {title}
-                </Text>
-              </View>
-            );
-          },
+          tabBarIcon: ({ focused }) => (
+            <View style={focused ? styles.iconPillActive : styles.iconPillInactive}>
+              <MaterialCommunityIcons
+                name={(focused ? 'comment-text' : 'comment-text-outline') as any}
+                color={focused ? '#1B5E20' : '#6B7280'}
+                size={24}
+              />
+            </View>
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
+              style={{
+                fontSize: 11,
+                fontWeight: focused ? '700' : '500',
+                color: focused ? '#1B5E20' : '#6B7280',
+                marginTop: 2,
+              }}
+            >
+              {getTranslation(currentLang, 'tabAsk') || 'Ask Query'}
+            </Text>
+          ),
         }}
       />
       <Tabs.Screen
         name="camera"
         options={{
-          title: getTranslation(currentLang, 'tabPhoto') || 'Crop Photo',
-          tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabPhoto') || 'Crop Photo'}, Tab 2 of 3`,
-          tabBarIcon: ({ focused }) => {
-            const title = getTranslation(currentLang, 'tabPhoto') || 'Crop Photo';
-            return (
-              <View style={focused ? styles.pillActive : styles.pillInactive}>
-                <MaterialCommunityIcons
-                  name={(focused ? 'camera-iris' : 'camera-outline') as any}
-                  color={focused ? '#15803D' : '#64748B'}
-                  size={focused ? 18 : 22}
-                />
-                <Text
-                  style={focused ? styles.pillTextActive : styles.pillTextInactive}
-                  numberOfLines={1}
-                >
-                  {title}
-                </Text>
-              </View>
-            );
-          },
+          title: getTranslation(currentLang, 'tabPhoto') || 'Crop Scan',
+          tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabPhoto') || 'Crop Scan'}, Tab 2 of 3`,
+          tabBarIcon: ({ focused }) => (
+            <View style={focused ? styles.iconPillActive : styles.iconPillInactive}>
+              <MaterialCommunityIcons
+                name={(focused ? 'camera-iris' : 'camera-outline') as any}
+                color={focused ? '#1B5E20' : '#6B7280'}
+                size={24}
+              />
+            </View>
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
+              style={{
+                fontSize: 11,
+                fontWeight: focused ? '700' : '500',
+                color: focused ? '#1B5E20' : '#6B7280',
+                marginTop: 2,
+              }}
+            >
+              {getTranslation(currentLang, 'tabPhoto') || 'Crop Scan'}
+            </Text>
+          ),
         }}
       />
       <Tabs.Screen
@@ -160,24 +173,30 @@ export default function TabLayout() {
         options={{
           title: getTranslation(currentLang, 'tabHistory') || 'History',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabHistory') || 'History'}, Tab 3 of 3`,
-          tabBarIcon: ({ focused }) => {
-            const title = getTranslation(currentLang, 'tabHistory') || 'History';
-            return (
-              <View style={focused ? styles.pillActive : styles.pillInactive}>
-                <MaterialCommunityIcons
-                  name={(focused ? 'history' : 'clock-outline') as any}
-                  color={focused ? '#15803D' : '#64748B'}
-                  size={focused ? 18 : 22}
-                />
-                <Text
-                  style={focused ? styles.pillTextActive : styles.pillTextInactive}
-                  numberOfLines={1}
-                >
-                  {title}
-                </Text>
-              </View>
-            );
-          },
+          tabBarIcon: ({ focused }) => (
+            <View style={focused ? styles.iconPillActive : styles.iconPillInactive}>
+              <MaterialCommunityIcons
+                name={(focused ? 'history' : 'clock-outline') as any}
+                color={focused ? '#1B5E20' : '#6B7280'}
+                size={24}
+              />
+            </View>
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
+              style={{
+                fontSize: 11,
+                fontWeight: focused ? '700' : '500',
+                color: focused ? '#1B5E20' : '#6B7280',
+                marginTop: 2,
+              }}
+            >
+              {getTranslation(currentLang, 'tabHistory') || 'History'}
+            </Text>
+          ),
         }}
       />
       <Tabs.Screen
@@ -199,11 +218,11 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     backgroundColor: '#FFFFFF',
-    borderTopColor: '#E2E8F0',
-    borderTopWidth: 1.5,
+    borderTopColor: '#E5E7EB',
+    borderTopWidth: 1,
     height: 68,
     paddingTop: 6,
-    paddingBottom: 6,
+    paddingBottom: 8,
     elevation: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
@@ -211,39 +230,23 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   tabBarItem: {
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  pillActive: {
+  iconPillActive: {
     backgroundColor: '#E8F5E9',
-    borderWidth: 1.5,
-    borderColor: '#81C784',
-    borderRadius: 20,
+    borderRadius: 16,
     paddingHorizontal: 14,
-    paddingVertical: 6,
-    flexDirection: 'row',
+    paddingVertical: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
-    alignSelf: 'center',
   },
-  pillInactive: {
-    flexDirection: 'column',
+  iconPillInactive: {
+    borderRadius: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    gap: 2,
-    alignSelf: 'center',
-  },
-  pillTextActive: {
-    color: '#15803D',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  pillTextInactive: {
-    color: '#64748B',
-    fontSize: 11,
-    fontWeight: '600',
   },
 });

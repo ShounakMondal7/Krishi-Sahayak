@@ -100,8 +100,8 @@
   "sourcesTitle": "📚 सरकारी / ICAR स्रोतहरू:",
   "responseTime": "सल्लाह समय:",
   "cachedAnswer": "सुरक्षित गरिएको उत्तर",
-  "tabAsk": "प्रश्न सोध्नुहोस्",
-  "tabPhoto": "बालीको फोटो",
+  "tabAsk": "सोध्नुहोस्",
+  "tabPhoto": "बाली स्क्यान",
   "tabHistory": "इतिहास",
   "photoTitle": "बाली फोटो परीक्षण",
   "photoSubtitle": "रोगको तुरुन्त र सही पहिचान",
@@ -242,5 +242,16 @@
   "verifyIdArrow": "आईडी सत्यापित करें और प्रवेश करें ➔",
   "orChooseGuest": "या अतिथि के रूप में अन्वेषण करें",
   "guestFarmerBtn": "अतिथि किसान के रूप में जारी रखें",
-  "demoProfilesTitle": "1-टैप डेमो प्रोफाइल:"
+  "demoProfilesTitle": "1-टैप डेमो प्रोफाइल:",
+  "searchHistory": "पुराना प्रश्नहरू खोज्नुहोस्...",
+  "fullSheet": "पूरा विवरण",
+  "icarGrounded": "ICAR प्रमाणित",
+  "holdToSpeak": "बोल्न थिच्नुहोस्",
+  "sprayAction": "📅 स्प्रे रिमाइन्डर",
+  "fertilizerAction": "📍 मल पसल",
+  "matchBadge": "मेल",
+  "pincodeLabel": "६-अङ्कको पिन कोड प्रविष्ट गर्नुहोस् (तत्काल जिल्ला मेल)",
+  "pincodePlaceholder": "जस्तै २०१३१० वा १४१००१",
+  "searchStatePlaceholder": "राज्य खोज्नुहोस् (जस्तै पञ्जाब, उत्तर प्रदेश)...",
+  "searchDistrictPlaceholder": "जिल्ला खोज्नुहोस्..."
 }

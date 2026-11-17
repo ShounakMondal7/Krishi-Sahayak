@@ -72,8 +72,8 @@
   "sourcesTitle": "📚 চৰকাৰী আৰু ICAR তথ্য:",
   "responseTime": "সময়:",
   "cachedAnswer": "অফলাইন তথ্য",
-  "tabAsk": "সুধক",
-  "tabPhoto": "শস্যৰ ফটো",
+  "tabAsk": "সোধক",
+  "tabPhoto": "শস্য পৰীক্ষা",
   "tabHistory": "ইতিহাস",
   "photoTitle": "শস্য ৰোগ নিৰ্ণয়",
   "photoSubtitle": "ফটোৰ দ্বাৰা ৰোগ চিনাক্তকৰণ",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "পুৰণি প্ৰশ্ন সন্ধান কৰক...",
+  "fullSheet": "সম্পূৰ্ণ বিৱৰণ",
+  "icarGrounded": "ICAR প্ৰমাণিত",
+  "holdToSpeak": "কথা ক'বলৈ হেঁচি ধৰক",
+  "sprayAction": "📅 স্প্ৰে' সোঁৱৰণী",
+  "fertilizerAction": "📍 সাৰৰ দোকান",
+  "matchBadge": "মিল",
+  "pincodeLabel": "৬-অংকৰ পিন কোড দিয়ক (তাৎক্ষণিক জিলা মিল)",
+  "pincodePlaceholder": "যেনে 201310 বা 141001",
+  "searchStatePlaceholder": "ৰাজ্য সন্ধান কৰক (যেনে পঞ্জাৱ, উত্তৰ প্ৰদেশ)...",
+  "searchDistrictPlaceholder": "জিলা সন্ধান কৰক..."
 }

@@ -72,8 +72,8 @@
   "sourcesTitle": "📚 പരിശോധിച്ച ഔദ്യോഗിക ഉറവിടങ്ങൾ:",
   "responseTime": "പ്രതികരണ സമയം:",
   "cachedAnswer": "ഓഫ്‌ലൈൻ കാഷെ",
-  "tabAsk": "ചോദിക്കൂ",
-  "tabPhoto": "ഫോട്ടോ",
+  "tabAsk": "ചോദിക്കുക",
+  "tabPhoto": "വിള സ്കാൻ",
   "tabHistory": "ചരിത്രം",
   "photoTitle": "ഫോട്ടോ രോഗനിർണയം",
   "photoSubtitle": "ക്യാമറയിലൂടെയുള്ള രോഗ പരിശോധന",
@@ -237,5 +237,16 @@
   "gpsDetecting": "Locating via GPS coordinates…",
   "gpsSuccess": "Location detected successfully!",
   "completeSetupBtn": "Complete Setup & Enter Farm Advisory 🚀",
-  "takePhoto": "Take Photo"
+  "takePhoto": "Take Photo",
+  "searchHistory": "പഴയ ചോദ്യങ്ങൾ തിരയുക...",
+  "fullSheet": "പൂർണ്ണ വിവരങ്ങൾ",
+  "icarGrounded": "ICAR സാക്ഷ്യപ്പെടുത്തിയത്",
+  "holdToSpeak": "സംസാരിക്കാൻ അമർത്തിപ്പിടിക്കുക",
+  "sprayAction": "📅 സ്പ്രേ റിമൈൻഡർ",
+  "fertilizerAction": "📍 വളം കട",
+  "matchBadge": "പൊരുത്തം",
+  "pincodeLabel": "6-അക്ക പിൻ കോഡ് നൽകുക (തൽക്ഷണ ജില്ലാ പൊരുത്തം)",
+  "pincodePlaceholder": "ഉദാ. 201310 അല്ലെങ്കിൽ 141001",
+  "searchStatePlaceholder": "സംസ്ഥാനം തിരയുക (ഉദാ. പഞ്ചാബ്, ഉത്തർപ്രദേശ്)...",
+  "searchDistrictPlaceholder": "ജില്ല തിരയുക..."
 }

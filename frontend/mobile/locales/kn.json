@@ -72,8 +72,8 @@
   "sourcesTitle": "📚 ಸರ್ಕಾರಿ / ICAR ಮೂಲಗಳು:",
   "responseTime": "ಪ್ರತಿಕ್ರಿಯೆ ಸಮಯ:",
   "cachedAnswer": "ಆಫ್‌ಲೈನ್ ಉತ್ತರ",
-  "tabAsk": "ಪ್ರಶ್ನೆ ಕೇಳಿ",
-  "tabPhoto": "ಬೆಳೆ ಫೋಟೋ",
+  "tabAsk": "ಕೇಳಿ",
+  "tabPhoto": "ಬೆಳೆ ಸ್ಕ್ಯಾನ್",
   "tabHistory": "ಇತಿಹಾಸ",
   "photoTitle": "ಬೆಳೆ ರೋಗ ಪತ್ತೆ",
   "photoSubtitle": "ಫೋಟೋ ಮೂಲಕ ರೋಗ ಗುರುತಿಸುವಿಕೆ",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "ಹಿಂದಿನ ಪ್ರಶ್ನೆಗಳನ್ನು ಹುಡುಕಿ...",
+  "fullSheet": "ಪೂರ್ಣ ವಿವರ",
+  "icarGrounded": "ICAR ದೃಢೀಕರಿಸಲಾಗಿದೆ",
+  "holdToSpeak": "ಮಾತನಾಡಲು ಒತ್ತಿ ಹಿಡಿಯಿರಿ",
+  "sprayAction": "📅 ಸಿಂಪರಣೆ ಜ್ಞಾಪನೆ",
+  "fertilizerAction": "📍 ಗೊಬ್ಬರ ಅಂಗಡಿ",
+  "matchBadge": "ಹೊಂದಾಣಿಕೆ",
+  "pincodeLabel": "೬-ಅಂಕಿಯ ಪಿನ್ ಕೋಡ್ ನಮೂದಿಸಿ (ತಕ್ಷಣದ ಜಿಲ್ಲೆ ಹೊಂದಾಣಿಕೆ)",
+  "pincodePlaceholder": "ಉದಾ. 201310 ಅಥವಾ 141001",
+  "searchStatePlaceholder": "ರಾಜ್ಯವನ್ನು ಹುಡುಕಿ (ಉದಾ. ಪಂಜಾಬ್, ಉತ್ತರ ಪ್ರದೇಶ)...",
+  "searchDistrictPlaceholder": "ಜಿಲ್ಲೆಯನ್ನು ಹುಡುಕಿ..."
 }

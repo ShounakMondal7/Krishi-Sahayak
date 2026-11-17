@@ -72,8 +72,8 @@
   "sourcesTitle": "📚 அரசு / ICAR ஆதாரங்கள்:",
   "responseTime": "பதில் நேரம்:",
   "cachedAnswer": "ஆஃப்லைன் தகவல்",
-  "tabAsk": "கேட்க",
-  "tabPhoto": "பயிர் படம்",
+  "tabAsk": "கேளுங்கள்",
+  "tabPhoto": "பயிர் ஸ்கேன்",
   "tabHistory": "வரலாறு",
   "photoTitle": "பயிர் நோய் கண்டறிதல்",
   "photoSubtitle": "புகைப்படம் மூலம் உடனடி நோய் ஆய்வு",
@@ -237,5 +237,16 @@
   "symptomsIdentifiedTitle": "Observed Visual Symptoms:",
   "getTreatmentStepsBtn": "Get ICAR Treatment Steps",
   "scanAnotherBtn": "Scan Another Leaf",
-  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex"
+  "detectedDiseaseDefault": "Leaf Blight & Fungal Spot Complex",
+  "searchHistory": "பழைய கேள்விகளைத் தேடுங்கள்...",
+  "fullSheet": "முழு விவரம்",
+  "icarGrounded": "ICAR சரிபார்க்கப்பட்டது",
+  "holdToSpeak": "பேச அழுத்திப் பிடிக்கவும்",
+  "sprayAction": "📅 தெளிப்பு நினைவூட்டல்",
+  "fertilizerAction": "📍 உரக்கடை",
+  "matchBadge": "பொருத்தம்",
+  "pincodeLabel": "6-இலக்க பின் குறியீட்டை உள்ளிடவும் (உடனடி மாவட்ட பொருத்தம்)",
+  "pincodePlaceholder": "எ.கா. 201310 அல்லது 141001",
+  "searchStatePlaceholder": "மாநிலத்தைத் தேடுங்கள் (எ.கா. பஞ்சாப், உத்தரபிரதேசம்)...",
+  "searchDistrictPlaceholder": "மாவட்டத்தைத் தேடுங்கள்..."
 }
