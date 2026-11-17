@@ -27,8 +27,9 @@
         "android.permission.INTERNET",
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS"
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
       ]
     },
     "web": {
@@ -54,7 +55,7 @@
         }
       ],
       [
-        "expo-av",
+        "expo-audio",
         {
           "microphonePermission": "Allow Krishi Sahayak to access your microphone for voice queries."
         }
@@ -64,6 +65,12 @@
         {
           "photosPermission": "Allow Krishi Sahayak to access your photos to analyze crop images.",
           "cameraPermission": "Allow Krishi Sahayak to use your camera to photograph crops for disease analysis."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Krishi Sahayak to access your location to fetch local mandi prices and weather."
         }
       ],
       "expo-secure-store"

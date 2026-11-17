@@ -1,0 +1,83 @@
+ICAR COMPREHENSIVE VETERINARY, DAIRY CATTLE, GOAT & POULTRY CARE MANUAL
+================================================================================
+Grounded in ICAR-NDRI (National Dairy Research Institute, Karnal) & ICAR-IVRI Norms.
+
+SECTION 1: YEAR-ROUND STATUTORY VACCINATION & DEWORMING CALENDAR
+--------------------------------------------------------------------------------
+Livestock health and reproductive efficiency depend on disciplined preventative immunization. Infectious epidemics can wipe out an entire village dairy herd or goat flock in 48 hours if vaccinations are skipped:
+
+1. Dairy Cattle & Buffalo Statutory Vaccination Schedule:
+   - Foot and Mouth Disease (FMD - Khurpaka-Munhpaka):
+     * Vaccine: Inactivated Quadrivalent / Trivalent FMD Oil Adjuvant Vaccine (under National Animal Disease Control Programme - NADCP).
+     * Timing: First dose at 4 months of age; Booster at 6 months; Revaccinate every 6 months (May-June and November-December).
+     * Administration: 2 ml subcutaneous (SC) or 3 ml deep intramuscular (IM) in neck.
+   - Haemorrhagic Septicaemia (HS - Galghontu):
+     * Cause: Pasteurella multocida. Characterized by high fever, swollen throat, labored grunting respiration, and sudden death.
+     * Vaccine: HS Alum-precipitated or Oil Adjuvant Vaccine.
+     * Timing: Annually in May-June before monsoon rains. Dose: 3 ml SC / 5 ml IM.
+   - Black Quarter (BQ - Langra Bukhar):
+     * Cause: Clostridium chauvoei. Characterized by severe lameness, crepitating gas swellings over heavy muscles of rump and shoulders.
+     * Timing: Annually in May-June (often given as combined HS+BQ vaccine).
+   - Brucellosis (Contagious Abortion in Dairy Cattle):
+     * Vaccine: Brucella abortus Cotton Strain 19 / S-19 Live Vaccine.
+     * Strict Rule: Vaccinate female heifer calves strictly between 4 and 8 months of age ONCE in their lifetime. Never vaccinate adult pregnant cows or male calves!
+   - Theileriosis (Tick-borne Protozoan Infection in Crossbred HF/Jersey):
+     * Vaccine: Rakshavac-T (Theileria annulata schizont cell-culture vaccine) given once at 2-3 months of age.
+
+2. Goat & Sheep Statutory Vaccination Schedule:
+   - Peste des Petits Ruminants (PPR - Goat Plague):
+     * Vaccine: Live Attenuated PPR Vaccine (Sungri 96 strain).
+     * Timing: At 3-4 months of age; provides solid immunity for 3 years. Dose: 1 ml SC.
+   - Enterotoxemia (ET - Pulpy Kidney Disease):
+     * Vaccine: Clostridium perfringens Type D toxoid vaccine.
+     * Timing: Pre-monsoon in May; booster after 15 days; annual revaccination.
+   - Goat Pox & Sheep Pox:
+     * Timing: Annually in December-January before spring. Dose: 1 ml SC.
+
+3. Poultry (Broiler & Layer) Vaccination Schedule:
+   - Day 1 (Hatchery): Marek's Disease (HVT) @ 0.2 ml SC in neck.
+   - Day 5-7: Ranikhet Disease (Newcastle) - F1 / Lasota strain eye-drop (1 drop per chick in eye/nostril).
+   - Day 14: Infectious Bursal Disease (IBD / Gumboro) - Georgia / MB strain via eye-drop or drinking water.
+   - Day 28: Ranikhet Lasota booster via clean chlorine-free drinking water with skimmed milk powder (2.5g/L water as stabilizer).
+   - Week 8 & 16 (Layers): Ranikhet R2B / Mukteshwar strain (0.5 ml IM in breast/thigh).
+
+4. Systematic Deworming Protocol (All Ruminants):
+   - Deworm twice annually: Once before monsoon (May) and once after monsoon (October-November) to break roundworm (Haemonchus contortus), tapeworm, and liver fluke (Fasciola hepatica) cycles.
+   - Drug Rotation Strategy (Prevents anthelmintic resistance):
+     * Broad Spectrum Roundworms: Fenbendazole @ 7.5 to 10 mg/kg body weight (e.g. Panacur / Fentas bolus 1.5g for 300-400 kg cow; 150 mg for 20-30 kg goat) OR Albendazole @ 10 mg/kg.
+     * Flukes & Tapeworms: Oxyclozanide (10-15 mg/kg) + Levamisole (7.5 mg/kg) combination suspension.
+     * External & Internal Parasites (Mange, Ticks, Sucking Lice): Ivermectin 1% injectable @ 1 ml per 50 kg body weight strictly subcutaneous. (Observe 28-day milk/meat withholding period).
+
+SECTION 2: EMERGENCY TREATMENT OF BLOAT / TYMPANY (AFARA)
+--------------------------------------------------------------------------------
+Acute ruminal tympany is a life-threatening veterinary emergency where fermented gases (frothy or free gas) become trapped in the rumen, causing massive left-flank distension, respiratory suffocation, and circulatory collapse within 1-2 hours:
+- Emergency Immediate First-Aid:
+  1. Open Free-Gas Bloat: Pass a clean, smooth stomach tube (or 1.5 cm diameter garden hose) through the mouth into the rumen to relieve free gas pressure.
+  2. Frothy Bloat Drench: If caused by grazing lush green legumes (Berseem, Lucerne) or gorging grains:
+     * Drench animal with 250 to 500 ml of Vegetable Oil (Mustard oil, Groundnut oil, or Sweet oil) mixed with 30 to 50 ml Turpentine Oil (breaks up surface tension of frothy bubbles).
+     * OR Drench 100 ml Simethicone / Poloxalene suspension (Tympanol / Bloatosil) orally.
+     * Keep animal moving; elevate front legs; tie a wooden bit across the mouth to stimulate continuous chewing and salivation.
+  3. Last-Resort Emergency Puncture (When Suffocation Is Imminent):
+     * When animal falls in lateral recumbency and asphyxiation is minutes away: Puncture the left paralumbar fossa (the triangular depression on the animal's left flank, equidistant from last rib, lumbar vertebrae, and hip hook bone) using a sharp sterile Trocar and Cannula. Remove trocar, leaving cannula in place to vent high-pressure gas.
+
+SECTION 3: MASTITIS DETECTION, PREVENTION & MILK QUALITY HYGIENE
+--------------------------------------------------------------------------------
+Subclinical and clinical mastitis (Thanailla Rog) causes the single greatest financial loss to dairy farmers by destroying milk-producing alveolar tissue:
+- California Mastitis Test (CMT): Screen milk weekly using CMT reagent in a 4-well paddle. Gel formation indicates elevated somatic cell count (subclinical mastitis) before milk visibly curdles.
+- Post-Milking Teat Dipping (The #1 Prevention Practice):
+  * Dip teats immediately after milking in a 0.5% Povidone-Iodine solution containing 10% Glycerine using a non-return teat dip cup.
+  * Keep cows standing on dry clean concrete for at least 30 minutes after milking (feed fresh green fodder immediately after milking to encourage standing) while teat sphincter muscles close.
+- Clinical Mastitis Emergency: If quarter is hot, swollen, painful, or discharging watery yellow clots, strip quarter out clean, apply ice packs to reduce edema, and consult veterinary surgeon immediately for intramammary infusion of Ceftiofur sodium / Cloxacillin combined with systemic antibiotic and anti-inflammatory (Meloxicam 0.5 mg/kg IM).
+
+SECTION 4: BALANCED DAIRY NUTRITION, TMR & AZOLLA FODDER PRODUCTION
+--------------------------------------------------------------------------------
+1. Total Mixed Ration (TMR) Principles for High-Yielding Dairy Cows (15-25 Liters/Day):
+   - Thumb Rule: Daily dry matter (DM) intake = 3% of body weight (for 450 kg cow = 13.5 kg DM).
+   - Component Ratio: 60% Good Quality Roughage (30-35 kg succulent green fodder like Napier hybrid, Silage, or Berseem + 4-5 kg dry wheat straw) + 40% Balanced Concentrate Cattle Feed (1 kg feed for body maintenance + 1 kg feed for every 2.5 liters of milk produced).
+   - Mandatory Daily Mineral Mixture: Feed 50g to 75g ISI-grade Chelated Mineral Mixture (Agimin Forte / Minfa Gold) + 30g common salt daily to prevent silent heat, repeat breeding, and retention of placenta.
+   - Sodium Bicarbonate (Baking Soda): Feed 50-75g daily during hot summer months to prevent ruminal acidosis and maintain 3.8-4.2% milk fat.
+2. Azolla Micro-Fodder Production (Azolla caroliniana):
+   - Superb low-cost biological protein supplement (25-30% crude protein, rich in essential amino acids, calcium, and beta-carotene). Feeding 1.5 to 2.0 kg fresh Azolla daily saves 20-25% commercial concentrate feed and boosts milk yield by 10-15%.
+   - Pit Construction: 2m x 2m x 0.2m deep pit lined with 150-micron silpaulin sheet.
+   - Inoculation: Add 15 kg fertile sieved garden soil + 1.5 kg fresh cow dung dissolved in water + 30g Single Super Phosphate (SSP). Maintain water depth at 10 cm. Inoculate with 1 kg pure Azolla culture.
+   - Harvesting: Harvest 1.0 to 1.5 kg fresh Azolla daily using plastic sieve; wash thoroughly in fresh water to eliminate cow dung odor before feeding to dairy cows and poultry.

@@ -2,10 +2,11 @@
  * HistoryScreen — Farmer Query History with Multilingual English-First Support,
  * Expandable Grounded Answers, and Audio TTS Playback.
  */
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
+  TextInput,
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
@@ -20,11 +21,12 @@ import { ShieldCheck, Volume2 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Audio } from 'expo-av';
+import { audioQueue, useAudioQueue } from '../../services/audioQueue';
 import { safeHaptics } from '../../services/haptics';
 import Constants from 'expo-constants';
 import { useRouter, useFocusEffect } from 'expo-router';
 
+import AdvisoryResponseSheet, { AdvisoryResponseData } from '../../components/AdvisoryResponseSheet';
 import LanguageSelectorSheet from '../../components/LanguageSelectorSheet';
 import { useTextSize } from '../../context/TextSizeContext';
 import { storageService, HistoryEntry, FarmerProfile } from '../../services/storage';
@@ -93,6 +95,7 @@ interface ConsultationItemProps {
   currentLang: LanguageCode;
   onToggleExpand: (id: string) => void;
   onPlayAudio: (item: HistoryEntry) => void;
+  onPressCard?: (item: HistoryEntry) => void;
   t: (key: string) => string;
 }
 
@@ -105,6 +108,7 @@ const ConsultationItem = React.memo<ConsultationItemProps>(
     currentLang,
     onToggleExpand,
     onPlayAudio,
+    onPressCard,
     t,
   }) => {
     return (
@@ -154,27 +158,45 @@ const ConsultationItem = React.memo<ConsultationItemProps>(
               📍 {translateLocation(item.region, currentLang)}
             </Text>
           )}
+
+          {onPressCard && (
+            <TouchableOpacity
+              style={styles.openSheetPill}
+              onPress={() => onPressCard(item)}
+              activeOpacity={0.8}
+              accessibilityRole="button"
+              accessibilityLabel="View full advisory response sheet"
+            >
+              <MaterialCommunityIcons name="open-in-new" size={13} color="#15803D" />
+              <Text style={styles.openSheetText} allowFontScaling={true}>Full Sheet</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         {/* Question Text */}
-        <Text
-          style={[
-            styles.questionText,
-            {
-              fontSize: Math.round(16 * multiplier),
-              lineHeight: Math.round(24 * multiplier),
-            },
-          ]}
-          allowFontScaling={true}
+        <TouchableOpacity
+          onPress={() => onPressCard ? onPressCard(item) : onToggleExpand(item.id)}
+          activeOpacity={0.75}
         >
           <Text
-            style={[styles.qLabel, { fontSize: Math.round(16 * multiplier) }]}
+            style={[
+              styles.questionText,
+              {
+                fontSize: Math.round(16 * multiplier),
+                lineHeight: Math.round(24 * multiplier),
+              },
+            ]}
             allowFontScaling={true}
           >
-            {t('transcribedTitle')}{' '}
+            <Text
+              style={[styles.qLabel, { fontSize: Math.round(16 * multiplier) }]}
+              allowFontScaling={true}
+            >
+              {t('transcribedTitle')}{' '}
+            </Text>
+            {translateHistoryQuery(item.question, currentLang)}
           </Text>
-          {translateHistoryQuery(item.question, currentLang)}
-        </Text>
+        </TouchableOpacity>
 
         <View style={styles.divider} />
 
@@ -306,8 +328,36 @@ export default function HistoryScreen() {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const { fontSizeScale, textSizeMultiplier, cycleFontSize } = useTextSize();
   const [langModalVisible, setLangModalVisible] = useState(false);
+  const { isPlaying: isAudioQueuePlaying, activeSequenceId, playAdvisorySequence, stopAndClearAll } = useAudioQueue();
 
-  const soundRef = useRef<Audio.Sound | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedAdvisory, setSelectedAdvisory] = useState<AdvisoryResponseData | null>(null);
+  const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
+
+  const filteredHistory = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return history;
+    return history.filter(
+      (item) =>
+        item.question.toLowerCase().includes(q) ||
+        item.answer.toLowerCase().includes(q) ||
+        (item.region && item.region.toLowerCase().includes(q))
+    );
+  }, [history, searchQuery]);
+
+  const handleOpenAdvisory = useCallback((item: HistoryEntry) => {
+    safeHaptics.impactLight();
+    setSelectedQuestion(item.question);
+    setSelectedAdvisory({
+      query_id: item.queryId,
+      answer: item.answer,
+      answer_english: item.answer,
+      sources: item.sources || [],
+      source_labels: item.sourceLabels || [],
+      response_time_ms: item.responseTimeMs || 1200,
+      from_cache: false,
+    });
+  }, []);
 
   const t = (key: string) => getTranslation(currentLang, key);
 
@@ -336,6 +386,7 @@ export default function HistoryScreen() {
     return () => {
       unsubLang();
       unsubProf();
+      stopAndClearAll();
     };
   }, []);
 
@@ -387,32 +438,24 @@ export default function HistoryScreen() {
     });
   }, []);
 
-  const playAudio = useCallback(async (item: HistoryEntry) => {
+  const playAudio = useCallback((item: HistoryEntry) => {
     if (!item.queryId) return;
     safeHaptics.impactLight();
-    try {
-      if (soundRef.current) {
-        await soundRef.current.unloadAsync();
-        soundRef.current = null;
-      }
-      if (playingId === item.id) {
-        setPlayingId(null);
-        return;
-      }
-      setPlayingId(item.id);
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: `${BASE_URL}/api/v1/query/${item.queryId}/audio?lang=${currentLang}` },
-        { shouldPlay: true }
-      );
-      soundRef.current = sound;
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (!status.isLoaded || status.didJustFinish) setPlayingId(null);
-      });
-    } catch {
+    const seqId = `query_${item.queryId}_${currentLang}`;
+    if (activeSequenceId === seqId && isAudioQueuePlaying) {
+      stopAndClearAll();
       setPlayingId(null);
-      Alert.alert('', 'Could not play audio.');
+      return;
     }
-  }, [playingId, currentLang]);
+    setPlayingId(item.id);
+    playAdvisorySequence(item.queryId, currentLang, item.answer || '');
+  }, [currentLang, activeSequenceId, isAudioQueuePlaying, playAdvisorySequence, stopAndClearAll]);
+
+  useEffect(() => {
+    if (!isAudioQueuePlaying && playingId) {
+      setPlayingId(null);
+    }
+  }, [isAudioQueuePlaying, playingId]);
 
   const clearHistory = useCallback(() => {
     Alert.alert(
@@ -442,10 +485,11 @@ export default function HistoryScreen() {
         currentLang={currentLang}
         onToggleExpand={toggleExpand}
         onPlayAudio={playAudio}
+        onPressCard={handleOpenAdvisory}
         t={t}
       />
     ),
-    [expandedIds, playingId, textSizeMultiplier, currentLang, toggleExpand, playAudio, t]
+    [expandedIds, playingId, textSizeMultiplier, currentLang, toggleExpand, playAudio, handleOpenAdvisory, t]
   );
 
   return (
@@ -529,6 +573,35 @@ export default function HistoryScreen() {
                 )}
               </View>
             </View>
+
+            {/* Row 3: Search Bar for Filtering History */}
+            {history.length > 0 && (
+              <View style={styles.searchBarContainer}>
+                <MaterialCommunityIcons name="magnify" size={18} color="#64748B" style={styles.searchIcon} />
+                <TextInput
+                  style={styles.searchInput}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  placeholder={t('searchHistory') || 'Search queries by crop, pest, or topic...'}
+                  placeholderTextColor="#94A3B8"
+                  autoCorrect={false}
+                  clearButtonMode="while-editing"
+                  allowFontScaling={true}
+                  accessibilityRole="search"
+                  accessibilityLabel="Search consultation history"
+                />
+                {searchQuery.length > 0 && (
+                  <TouchableOpacity
+                    onPress={() => setSearchQuery('')}
+                    style={styles.clearSearchBtn}
+                    accessibilityRole="button"
+                    accessibilityLabel="Clear search"
+                  >
+                    <MaterialCommunityIcons name="close-circle" size={18} color="#94A3B8" />
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
           </View>
 
           {loading ? (
@@ -544,12 +617,22 @@ export default function HistoryScreen() {
               <Text style={styles.emptyTitle} allowFontScaling={true}>{t('emptyHistoryTitle')}</Text>
               <Text style={styles.emptySub} allowFontScaling={true}>{t('emptyHistorySub')}</Text>
             </View>
+          ) : filteredHistory.length === 0 ? (
+            <View style={styles.center} accessibilityRole="summary">
+              <View style={styles.emptyIconCircle} accessible={false}>
+                <MaterialCommunityIcons name="text-search" size={48} color="#64748B" />
+              </View>
+              <Text style={styles.emptyTitle} allowFontScaling={true}>No Matching Records</Text>
+              <Text style={styles.emptySub} allowFontScaling={true}>
+                No past consultations match "{searchQuery}". Try searching for another crop, fertilizer, or pest name.
+              </Text>
+            </View>
           ) : (
             <FlashList
-              data={history}
+              data={filteredHistory}
               keyExtractor={(item: HistoryEntry) => item.id.toString()}
               renderItem={renderItem}
-              extraData={{ fontSizeScale, expandedIds, playingId, currentLang }}
+              extraData={{ fontSizeScale, expandedIds, playingId, currentLang, searchQuery }}
               contentContainerStyle={styles.listContent}
               refreshControl={
                 <RefreshControl
@@ -568,6 +651,21 @@ export default function HistoryScreen() {
           currentLang={currentLang}
           onClose={() => setLangModalVisible(false)}
           onSelect={(code) => selectLanguage(code)}
+        />
+
+        {/* ── 📋 AI Advisory Response Sheet (Full Inspection) ── */}
+        <AdvisoryResponseSheet
+          visible={!!selectedAdvisory}
+          onClose={() => {
+            setSelectedAdvisory(null);
+            setSelectedQuestion(null);
+          }}
+          loading={false}
+          question={selectedQuestion}
+          response={selectedAdvisory}
+          error={null}
+          currentLang={currentLang}
+          fontSizeScale={fontSizeScale}
         />
 
       </View>
@@ -665,6 +763,47 @@ const styles = StyleSheet.create({
   emptyTitle: { fontSize: 18, color: '#0F172A', fontWeight: '900', textAlign: 'center' },
   emptySub: { fontSize: 14, color: '#64748B', textAlign: 'center', lineHeight: 22, fontWeight: '500' },
   listContent: { padding: 16, gap: 12 },
+  searchBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F8FAFC',
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    marginTop: 10,
+    gap: 8,
+  },
+  searchIcon: {
+    marginRight: 2,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 14,
+    color: '#0F172A',
+    paddingVertical: 0,
+    fontWeight: '500',
+  },
+  clearSearchBtn: {
+    padding: 2,
+  },
+  openSheetPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#F0FDF4',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#BBF7D0',
+  },
+  openSheetText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#15803D',
+  },
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,

@@ -6,6 +6,7 @@
  */
 
 import { Platform } from 'react-native';
+import * as Location from 'expo-location';
 import type { LanguageCode } from './i18n';
 import { storageService } from './storage';
 
@@ -21,8 +22,9 @@ import {
   INDIA_STATES_MAP,
   StateData,
 } from '../constants/india_locations';
+import { ALL_DISTRICTS_LOCALIZED } from '../constants/district_translations';
 
-export { INDIA_STATES_DATA, INDIA_STATES_MAP, StateData };
+export { INDIA_STATES_DATA, INDIA_STATES_MAP, StateData, ALL_DISTRICTS_LOCALIZED };
 
 /**
  * Returns an alphabetically sorted array of all 28 States and 8 Union Territories.
@@ -65,10 +67,14 @@ export const DISTRICT_ALIAS_MAP: Record<string, string> = {
   noida: 'Gautam Buddha Nagar',
   gautambudhnagar: 'Gautam Buddha Nagar',
   gautambuddhanagar: 'Gautam Buddha Nagar',
+  gbnagar: 'Gautam Buddha Nagar',
+  dadri: 'Gautam Buddha Nagar',
+  jewar: 'Gautam Buddha Nagar',
   bengaluruurban: 'Bangalore Urban',
   bengaluru: 'Bangalore Urban',
   bangalore: 'Bangalore Urban',
   bengalururural: 'Bangalore Rural',
+  bangalorerural: 'Bangalore Rural',
   gurugram: 'Gurgaon',
   gurgaon: 'Gurgaon',
   prayagraj: 'Prayagraj',
@@ -81,23 +87,138 @@ export const DISTRICT_ALIAS_MAP: Record<string, string> = {
   ahmedabad: 'Ahmedabad',
   mumbaisuburban: 'Mumbai Suburban',
   mumbaicity: 'Mumbai City',
+  mumbai: 'Mumbai City',
   bombay: 'Mumbai City',
   calcutta: 'Kolkata',
+  kolkata: 'Kolkata',
   madras: 'Chennai',
+  chennai: 'Chennai',
   baroda: 'Vadodara',
+  vadodara: 'Vadodara',
   cochin: 'Ernakulam',
   kochi: 'Ernakulam',
+  ernakulam: 'Ernakulam',
   trivandrum: 'Thiruvananthapuram',
+  thiruvananthapuram: 'Thiruvananthapuram',
   pondicherry: 'Puducherry',
+  puducherry: 'Puducherry',
+  kanpurnagar: 'Kanpur Nagar',
+  kanpurdehat: 'Kanpur Dehat',
+  kanpur: 'Kanpur Nagar',
+  ghaziabad: 'Ghaziabad',
+  faridabad: 'Faridabad',
+  lucknow: 'Lucknow',
+  howrah: 'Howrah',
+  haora: 'Howrah',
+  hooghly: 'Hooghly',
+  hugli: 'Hooghly',
+  north24parganas: 'North 24 Parganas',
+  south24parganas: 'South 24 Parganas',
+  bardhaman: 'Purba Bardhaman',
+  burdwan: 'Purba Bardhaman',
 };
 
 export const STATE_ALIAS_MAP: Record<string, string> = {
   nctofdelhi: 'Delhi',
   delhincr: 'Delhi',
-  orissa: 'Odisha',
+  delhi: 'Delhi',
+  dl: 'Delhi',
+  up: 'Uttar Pradesh',
+  uttarpradesh: 'Uttar Pradesh',
+  uk: 'Uttarakhand',
+  ut: 'Uttarakhand',
+  uttarakhand: 'Uttarakhand',
   uttaranchal: 'Uttarakhand',
+  wb: 'West Bengal',
+  westbengal: 'West Bengal',
+  bengal: 'West Bengal',
+  paschimbangla: 'West Bengal',
+  mp: 'Madhya Pradesh',
+  madhyapradesh: 'Madhya Pradesh',
+  ap: 'Andhra Pradesh',
+  andhrapradesh: 'Andhra Pradesh',
+  andhra: 'Andhra Pradesh',
+  tn: 'Tamil Nadu',
+  tamilnadu: 'Tamil Nadu',
+  hp: 'Himachal Pradesh',
+  himachalpradesh: 'Himachal Pradesh',
+  himachal: 'Himachal Pradesh',
+  orissa: 'Odisha',
+  odisha: 'Odisha',
+  or: 'Odisha',
+  od: 'Odisha',
   pondicherry: 'Puducherry',
+  puducherry: 'Puducherry',
+  py: 'Puducherry',
   jammuandkashmir: 'Jammu and Kashmir',
+  jammukashmir: 'Jammu and Kashmir',
+  jk: 'Jammu and Kashmir',
+  mh: 'Maharashtra',
+  maharashtra: 'Maharashtra',
+  rj: 'Rajasthan',
+  rajasthan: 'Rajasthan',
+  gj: 'Gujarat',
+  gujarat: 'Gujarat',
+  ka: 'Karnataka',
+  karnataka: 'Karnataka',
+  kl: 'Kerala',
+  kerala: 'Kerala',
+  ts: 'Telangana',
+  telangana: 'Telangana',
+  tg: 'Telangana',
+  br: 'Bihar',
+  bihar: 'Bihar',
+  jh: 'Jharkhand',
+  jharkhand: 'Jharkhand',
+  as: 'Assam',
+  assam: 'Assam',
+  pb: 'Punjab',
+  punjab: 'Punjab',
+  hr: 'Haryana',
+  haryana: 'Haryana',
+  ch: 'Chandigarh',
+  chandigarh: 'Chandigarh',
+  cg: 'Chhattisgarh',
+  chhattisgarh: 'Chhattisgarh',
+  ga: 'Goa',
+  goa: 'Goa',
+  sk: 'Sikkim',
+  sikkim: 'Sikkim',
+  tr: 'Tripura',
+  tripura: 'Tripura',
+  ml: 'Meghalaya',
+  meghalaya: 'Meghalaya',
+  mn: 'Manipur',
+  manipur: 'Manipur',
+  mz: 'Mizoram',
+  mizoram: 'Mizoram',
+  nl: 'Nagaland',
+  nagaland: 'Nagaland',
+  ar: 'Arunachal Pradesh',
+  arunachalpradesh: 'Arunachal Pradesh',
+  arunachal: 'Arunachal Pradesh',
+  la: 'Ladakh',
+  ladakh: 'Ladakh',
+  an: 'Andaman and Nicobar Islands',
+  andamanandnicobarislands: 'Andaman and Nicobar Islands',
+  andaman: 'Andaman and Nicobar Islands',
+  ld: 'Lakshadweep',
+  lakshadweep: 'Lakshadweep',
+  dnhdd: 'Dadra and Nagar Haveli and Daman and Diu',
+  dadraandnagarhavelianddamananddiu: 'Dadra and Nagar Haveli and Daman and Diu',
+  damananddiu: 'Dadra and Nagar Haveli and Daman and Diu',
+  dadraandnagarhaveli: 'Dadra and Nagar Haveli and Daman and Diu',
+};
+
+export const cleanLocationName = (val?: string | null): string => {
+  if (!val) return '';
+  return val
+    .replace(/state of /i, '')
+    .replace(/union territory of /i, '')
+    .replace(/ut of /i, '')
+    .replace(/ district/i, '')
+    .replace(/ division/i, '')
+    .trim();
 };
 
 export function normalizeDistrictAlias(name: string): string {
@@ -388,6 +509,132 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
     return { state: 'Punjab', district: 'Ludhiana', source: 'fallback' };
   };
 
+  // ── 1. NATIVE MOBILE GPS (Android / iOS via expo-location) ──
+  if (Platform.OS !== 'web') {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.warn('Native Location permission not granted');
+        return await getFallback();
+      }
+
+      const pos = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
+
+      const { latitude, longitude, accuracy } = pos.coords;
+
+      // 1.1 Native OS Geocoder reverse lookup
+      try {
+        const rev = await Location.reverseGeocodeAsync({ latitude, longitude });
+        if (rev && rev.length > 0) {
+          const addr = rev[0];
+          const stateCandidate = cleanLocationName(addr.region || (addr as any).province);
+          const distCandidates = [
+            cleanLocationName(addr.subregion),
+            cleanLocationName(addr.district),
+            cleanLocationName(addr.city),
+            cleanLocationName(addr.name),
+          ].filter(Boolean);
+
+          if (stateCandidate) {
+            const normState = normalizeStateAlias(stateCandidate);
+            const matchedState = ALL_INDIAN_STATES.find(
+              (s) => s.toLowerCase() === normState.toLowerCase() ||
+                     normState.toLowerCase().includes(s.toLowerCase()) ||
+                     s.toLowerCase().includes(normState.toLowerCase())
+            );
+
+            if (matchedState) {
+              const stateDists = getDistrictsForState(matchedState);
+              let matchedDist = stateDists[0] || matchedState;
+
+              for (const cand of distCandidates) {
+                const aliased = normalizeDistrictAlias(cand);
+                const found = stateDists.find(
+                  (d) => d.toLowerCase() === aliased.toLowerCase() ||
+                         d.toLowerCase().replace(/[^a-z0-9]/g, '') === aliased.toLowerCase().replace(/[^a-z0-9]/g, '') ||
+                         d.toLowerCase().includes(aliased.toLowerCase()) ||
+                         aliased.toLowerCase().includes(d.toLowerCase())
+                );
+                if (found) {
+                  matchedDist = found;
+                  break;
+                }
+              }
+
+              return {
+                state: matchedState,
+                district: matchedDist,
+                source: 'gps_reverse',
+                latitude,
+                longitude,
+                accuracy: accuracy ?? undefined,
+              };
+            }
+          }
+
+          // Check if any candidate district directly matches a state
+          for (const cand of distCandidates) {
+            const aliased = normalizeDistrictAlias(cand);
+            const foundState = findStateForDistrict(aliased);
+            if (foundState) {
+              const stateDists = getDistrictsForState(foundState);
+              const foundDist = stateDists.find(
+                (d) => d.toLowerCase() === aliased.toLowerCase() ||
+                       d.toLowerCase().replace(/[^a-z0-9]/g, '') === aliased.toLowerCase().replace(/[^a-z0-9]/g, '')
+              ) || stateDists[0];
+
+              return {
+                state: foundState,
+                district: foundDist,
+                source: 'gps_reverse',
+                latitude,
+                longitude,
+                accuracy: accuracy ?? undefined,
+              };
+            }
+          }
+
+          // If postalCode present, check India Post PIN API
+          if (addr.postalCode) {
+            const cleanPin = addr.postalCode.replace(/\D/g, '');
+            if (cleanPin.length === 6) {
+              const pinRes = await lookupLocationByPincode(cleanPin);
+              if (pinRes) {
+                return {
+                  state: pinRes.state,
+                  district: pinRes.district,
+                  source: 'pincode',
+                  latitude,
+                  longitude,
+                  accuracy: accuracy ?? undefined,
+                };
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Native reverseGeocodeAsync failed:', err);
+      }
+
+      // 1.2 Mathematical Centroid Proximity match
+      const closest = findNearestDistrictByCoords(latitude, longitude);
+      return {
+        state: closest.state,
+        district: closest.district,
+        source: 'gps_centroid',
+        latitude,
+        longitude,
+        accuracy: accuracy ?? undefined,
+      };
+    } catch (err) {
+      console.warn('Native GPS error:', err);
+      return await getFallback();
+    }
+  }
+
+  // ── 2. WEB BROWSER GPS (navigator.geolocation) ──
   return new Promise((resolve) => {
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
       getFallback().then(resolve);
@@ -1611,13 +1858,27 @@ export function translateLocation(name: string | null | undefined, lang: Languag
     return STATE_TRANSLATIONS[matchedStateKey][lang]!;
   }
 
-  // 2. Direct District Match (Exact Full String)
+  // 2. Direct District Match from 782-District Database (ALL_DISTRICTS_LOCALIZED)
+  if (ALL_DISTRICTS_LOCALIZED[trimmed]?.[lang]) {
+    return ALL_DISTRICTS_LOCALIZED[trimmed]![lang]!;
+  }
+
+  // 2b. Normalized District Match from ALL_DISTRICTS_LOCALIZED (case/punctuation insensitive)
+  const cleanTrimmedDist = trimmed.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const matchedAllDistKey = Object.keys(ALL_DISTRICTS_LOCALIZED).find((k) => {
+    const cleanK = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return cleanK === cleanTrimmedDist;
+  });
+  if (matchedAllDistKey && ALL_DISTRICTS_LOCALIZED[matchedAllDistKey]?.[lang]) {
+    return ALL_DISTRICTS_LOCALIZED[matchedAllDistKey]![lang]!;
+  }
+
+  // 2c. Direct District Match (Legacy DISTRICT_TRANSLATIONS)
   if (DISTRICT_TRANSLATIONS[trimmed]?.[lang]) {
     return DISTRICT_TRANSLATIONS[trimmed][lang]!;
   }
 
-  // 2b. Normalized District Match (Exact Full String with Case Invariance)
-  const cleanTrimmedDist = trimmed.toLowerCase().replace(/[^a-z0-9]/g, '');
+  // 2d. Normalized District Match (Legacy DISTRICT_TRANSLATIONS)
   const matchedDistKey = Object.keys(DISTRICT_TRANSLATIONS).find((k) => {
     const cleanK = k.toLowerCase().replace(/[^a-z0-9]/g, '');
     return cleanK === cleanTrimmedDist;
@@ -1641,4 +1902,6 @@ export function translateLocation(name: string | null | undefined, lang: Languag
   // 5. Graceful fallback to English
   return trimmed;
 }
+
+export const localizeLocationName = translateLocation;
 

@@ -75,7 +75,7 @@ export default function LanguageSelectorSheet({
                   {t('chooseLanguageTitle') || 'Choose Language / भाषा'}
                 </Text>
                 <Text style={styles.sheetSub} allowFontScaling={true}>
-                  Voice advice and ICAR guidelines adapt instantly
+                  {t('chooseLanguageSubtitle') || 'Select your preferred language for farming advisories'}
                 </Text>
               </View>
             </View>
@@ -101,6 +101,7 @@ export default function LanguageSelectorSheet({
             style={styles.languageList}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
           >
             {SUPPORTED_LANGUAGES.map((lang) => {
               const isSelected = currentLang === lang.code;

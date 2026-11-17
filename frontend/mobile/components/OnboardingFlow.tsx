@@ -101,8 +101,8 @@ const DEMO_PROFILES: FarmerProfile[] = [
 
 export default function OnboardingFlow({
   initialLang = 'en',
-  initialState = 'Punjab',
-  initialDistrict = 'Ludhiana',
+  initialState = '',
+  initialDistrict = '',
   onComplete,
 }: OnboardingFlowProps) {
   // Strict 2-step onboarding: 1 = Language Selection, 2 = Login / Credentials
@@ -193,8 +193,8 @@ export default function OnboardingFlow({
       farmerId: `KISAN-IN-${Math.floor(1000 + Math.random() * 9000)}`,
       name: 'Guest Farmer',
       phone: '9876543210',
-      state: selectedState || 'Punjab',
-      district: selectedDistrict || 'Ludhiana',
+      state: selectedState || '',
+      district: selectedDistrict || '',
       primaryCrops: ['Wheat', 'Paddy'],
       language: selectedLang,
       loginTimestamp: new Date().toISOString(),

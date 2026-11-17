@@ -1,0 +1,80 @@
+ICAR COMPREHENSIVE SEED TREATMENT & NURSERY MANAGEMENT MANUAL
+================================================================================
+Grounded in ICAR-IARI (Division of Seed Science & Technology) & ICAR-IIHR Norms.
+
+SECTION 1: SEED RATE GUIDE PER ACRE FOR MAJOR FIELD & HORTICULTURAL CROPS
+--------------------------------------------------------------------------------
+Accurate seed rate ensures optimum plant population per square meter, avoiding both overcrowding (which breeds fungal blight) and under-population (which yields poorly and invites weeds).
+- Paddy / Rice (Transplanted): 12-15 kg/acre (coarse/medium), 10-12 kg/acre (fine/basmati), 5-6 kg/acre (hybrids), 20-25 kg/acre (Direct Seeded Rice - DSR).
+- Wheat (Gehun): 40 kg/acre (timely sown normal seed), 50 kg/acre (late sown after December or bold seed like PBW 550 / DBW 187).
+- Maize / Corn (Hybrid): 7.5 to 8 kg/acre (1 seed per hill at 60 cm x 20 cm spacing).
+- Chickpea / Bengal Gram (Chana): 30-35 kg/acre (Desi varieties), 40-45 kg/acre (Kabuli bold-seeded varieties).
+- Pigeon Pea / Red Gram (Arhar / Tur): 4-5 kg/acre (medium/long duration), 7-8 kg/acre (early maturing like Pusa 992).
+- Green Gram (Moong) & Black Gram (Urad): 8-10 kg/acre (Kharif), 10-12 kg/acre (Spring/Summer).
+- Soybean: 25-30 kg/acre (ensuring minimum 70% germination count).
+- Groundnut: 40-50 kg kernels/acre (bunch type), 35-40 kg kernels/acre (spreading type).
+- Mustard / Rapeseed: 1.5 to 2.0 kg/acre (mixed with dry fine sand for uniform broadcasting or line drilling at 30 cm x 10 cm).
+- Cotton: 1.5 to 2.0 packets/acre (Bt hybrid, 450g + 120g non-Bt refuge per packet).
+- Potato: 8 to 10 Quintals (800-1000 kg) seed tubers per acre (tubers weighing 30-50g with 2-3 healthy sprouted eyes).
+- Onion: 3 to 4 kg seed per acre (for raising nursery seedlings to cover 1 acre).
+- Tomato, Chilli, Brinjal (Hybrids): 60-80 grams seed per acre (raised in pro-tray nursery).
+- Cabbage & Cauliflower: 120-150 grams seed per acre.
+
+SECTION 2: THE SCIENTIFIC "FIR" SEED TREATMENT SEQUENCE
+--------------------------------------------------------------------------------
+When seeds require multiple chemical and biological coatings, ALWAYS follow the strict FIR Rule:
+   1. F = Fungicide (First)
+   2. I = Insecticide (Second)
+   3. R = Rhizobium / Azotobacter / PSB / Bio-agent (Third & Last)
+
+Why this order matters:
+If you apply bio-fertilizers (Rhizobium) or bio-fungicides (Trichoderma) first and then coat with chemical fungicides (Carbendazim / Thiram), the chemical fungicide will kill the live beneficial bacterial and fungal spores instantly! Following the FIR sequence with an appropriate drying window ensures chemical protection against soil pathogens and insect vectors while preserving bio-agent vitality.
+
+Step 1: Fungicide Treatment (F):
+- Dry Dressing or Slurry: Treat seed with chemical fungicide to eradicate seed-borne spores (smut, bunt, blast, anthracnose, dry root rot) and protect germinating radicles against soil-borne Pythium/Rhizoctonia.
+  * Carboxin 37.5% + Thiram 37.5% DS (Vitavax Power) @ 2.5 to 3.0g per kg of seed.
+  * OR Carbendazim 12% + Mancozeb 63% WP (SAAF) @ 2.0 to 2.5g per kg of seed.
+  * OR Tebuconazole 2% DS @ 1.25g per kg of seed (specifically effective against Loose Smut and Karnal Bunt in wheat).
+  * OR Metalaxyl-M 31.8% ES @ 1.5 to 2.0 ml/kg seed for Downy mildew control in maize, pearl millet, and sunflower.
+  * Biological Alternative: Trichoderma viride or Trichoderma harzianum (2x10^9 CFU/g) @ 8-10g per kg of seed (mix with 20 ml clean water/jaggery solution).
+
+Step 2: Insecticide Treatment (I):
+- Protects germinating tender seedlings against early subterranean pests (termites, white grubs, cutworms) and sucking pest vectors (aphids, jassids, thrips transmitting viruses):
+  * Thiamethoxam 30% FS @ 3 to 5 ml per kg seed (superb systemic protection for cotton, soybean, wheat, and pulses against termites and shoot flies).
+  * OR Imidacloprid 48% FS (Gaucho) @ 5 to 7 ml per kg of seed (in cotton, groundnut, and maize).
+  * Allow seeds to dry under shade on clean tarpaulin for 15-20 minutes before bio-inoculation.
+
+Step 3: Rhizobium & Bio-Fertilizer Inoculation (R):
+- For Pulses & Legumes (Chickpea, Arhar, Moong, Urad, Soybean, Groundnut):
+  * Treat with crop-specific Rhizobium culture (Rhizobium leguminosarum / R. japonicum) @ 20g (or 10 ml liquid formulation) + Phosphate Solubilizing Bacteria (PSB) @ 20g per kg of seed.
+- For Cereals (Paddy, Wheat, Maize, Millets):
+  * Treat with Azotobacter or Azospirillum culture @ 20g/kg seed + PSB @ 20g/kg seed.
+- Preparation Protocol: Dissolve 50g jaggery (gur) in 250 ml warm water and cool down; pour over 10 kg seed as an adhesive sticker, sprinkle bio-culture powder, mix gently with rubber gloves so every seed gets an even grey coating, and shade-dry for 30 minutes before sowing. Sow within 6 hours of treatment.
+
+SECTION 3: PHYSICAL & HYDROTHERMAL SEED TREATMENTS
+--------------------------------------------------------------------------------
+1. Brine Salt Solution (Floatation Test for Paddy & Pulses):
+   - Prepare a 10% common salt solution (dissolve 1 kg salt in 10 liters clean water; a fresh raw egg or potato should float in it).
+   - Pour paddy seed into the solution. Stir vigorously.
+   - Light, chaffy, discolored, and insect-damaged seeds float to the surface. Skim off and discard them.
+   - Heavy, healthy, plump seeds sink to the bottom. Immediately collect the sunken seeds, wash thoroughly 3 times in fresh water to remove all salt residues, and shade-dry.
+2. Hot Water Seed Treatment (For Bacterial Leaf Blight & Vegetable Seed-Borne Viruses):
+   - Soak seeds in lukewarm water (25-30°C) for 12 hours.
+   - Transfer seeds into hot water maintained precisely at 52°C to 54°C for exactly 10 to 12 minutes (use thermometer; temperature above 55°C damages seed embryo; below 50°C fails to kill pathogen).
+   - Immediately plunge treated seeds into cold water, drain, and dry in shade.
+
+SECTION 4: HIGH-TECH PRO-TRAY NURSERY MANAGEMENT FOR VEGETABLES
+--------------------------------------------------------------------------------
+Traditional soil-bed nurseries suffer 30-50% seedling mortality due to soil-borne damping-off fungi (Pythium, Rhizoctonia, Fusarium). Pro-tray nursery production inside shade nets or polyhouses ensures 98% germination, uniform root balls, zero transplanting shock, and saves 30-40% costly hybrid seed.
+- Pro-Tray Specifications: Use 98-cavity or 104-cavity UV-stabilized plastic seedling trays for tomato, brinjal, cabbage, and cauliflower; 50-cavity trays for cucurbits (cucumber, watermelon, bottle gourd).
+- Potting Media Formulation (Per 100 kg mixture):
+  * 3 parts Sterilized Decomposed Cocopeat (75 kg)
+  * 1 part Vermicompost (20 kg)
+  * 1 part Sterilized Horticultural Perlite / Vermiculite (5 kg)
+  * Add 250g Trichoderma harzianum + 250g Pseudomonas fluorescens to prevent root rots.
+- Sowing Procedure: Fill cavities loosely to 80% volume; make a 0.5 cm central depression; drop 1 seed per cavity; cover with thin layer of media; mist lightly using fine rose-can.
+- Stacking & Germination: Stack 8-10 seeded trays on top of each other, wrap in black polythene film, and place in dark warm room for 3 to 4 days until emergence begins.
+- Shifting & Care: Unstack trays and place on raised nursery benches inside 50% green agro-shade net. Water with fine micro-sprinklers twice daily in morning and evening.
+- Liquid Feeding: Drench with 19:19:19 @ 1.5g/L water on 12th and 18th day after sowing.
+- Hardening of Seedlings: 4-5 days prior to transplanting, reduce watering frequency and expose trays to full ambient sunlight to harden the seedling cuticle.
+- Root Dip Treatment at Transplanting: Dip seedling root-balls for 15 minutes in a solution of Imidacloprid 17.8% SL (0.5 ml/L) + Carbendazim 50% WP (1g/L) to prevent early cutworm attack and collar rot in the main field.

@@ -1,0 +1,81 @@
+ICAR COMPREHENSIVE WEED MANAGEMENT & HERBICIDE USAGE MANUAL
+================================================================================
+Grounded in ICAR-DWR (Directorate of Weed Research, Jabalpur) & ICAR Agronomy Norms.
+
+SECTION 1: SCIENTIFIC WEED CONTROL PRINCIPLES & APPLICATION EQUIPMENT
+--------------------------------------------------------------------------------
+Weeds compete aggressively with crops for moisture, soil nutrients, sunlight, and canopy space, causing 25% to 65% economic yield loss if not controlled during the Critical Period of Crop-Weed Competition (CPWC, typically the first 20 to 45 days after sowing or transplanting).
+- Pre-Emergence (PE) Herbicides: Apply within 48 to 72 hours after sowing, strictly before crop and weed seed germination. Requires good soil moisture at the surface. Creates a chemical barrier on the top 1-2 cm of soil.
+- Post-Emergence (POE) Herbicides: Apply when weeds are young and actively growing (2 to 4-leaf stage, usually 15-25 days after sowing). Do not spray when weeds are hardened or mature.
+- Crucial Equipment & Spray Calibration:
+  * Nozzle Requirement: NEVER use hollow cone nozzles (which are meant for insecticidal foliar cover) for herbicide sprays. ALWAYS use Flat Fan (8002/11002) or Flood-Jet (Deflector) nozzles for uniform swath width without drift.
+  * Water Volume: 150 to 200 liters of clean water per acre (equivalent to 10 to 13 knapsack backpack spray pumps of 15-liter capacity per acre).
+  * Spray Technique: Walk backwards or maintain continuous steady forward speed holding the spray lance 30-45 cm above ground to avoid missed strips or overlapping.
+
+SECTION 2: CROP-WISE HERBICIDE PRESCRIPTIONS & EXACT 15-LITER PUMP DOSAGES
+--------------------------------------------------------------------------------
+1. Paddy / Rice (Direct Seeded Rice - DSR & Transplanted Rice):
+   - Pre-Emergence (Transplanted Paddy, 0-3 DAT):
+     * Pretilachlor 50% EC @ 500 ml/acre (40-50 ml per 15-liter pump) OR Pretilachlor 37% EW @ 600 ml/acre. Apply in 2-3 cm standing water; keep water impounded for 48 hours without draining.
+     * Pyrazosulfuron-ethyl 10% WP @ 80g/acre (6-8g per 15-liter pump) within 3-5 DAT for controlling broad-leaved weeds and sedges (Cyperus iria, Cyperus difformis).
+   - Post-Emergence (15-25 DAT / 20-25 DAS in DSR, 2-4 leaf weed stage):
+     * Bispyribac-sodium 10% SC (Nominee Gold / Taarak) @ 100 ml/acre (8-10 ml per 15-liter pump). Broad spectrum control of Echinochloa colona (Sawa grass), Ischaemum, and grassy weeds. Drain field before spraying; re-flood field 48 hours after spray.
+     * Penoxsulam 1.02% + Cyhalofop-butyl 5.1% OD (Vivaya) @ 800-900 ml/acre (70 ml per 15-liter pump) in DSR for mixed grassy weeds and sedges.
+     * 2,4-D Amine Salt 58% SL @ 400 ml/acre (30-35 ml per 15-liter pump) at 25-30 DAT for stubborn broadleaf weeds (Monochoria vaginalis, Ludwigia). Avoid drift near cotton, tomato, or okra fields!
+
+2. Wheat (Gehun):
+   - Grassy Weeds (Phalaris minor / Gulli danda, Avena ludoviciana / Wild oat):
+     * Clodinafop-propargyl 15% WP @ 160g/acre (1 sachet of 160g contains surfactant; dilute @ 12-15g per 15-liter pump) at 30-35 DAS after 1st irrigation.
+     * Pinoxaden 5.1% EC (Axial) @ 350-400 ml/acre (30-35 ml per 15-liter pump) where Phalaris minor has developed resistance to clodinafop.
+   - Broadleaf Weeds (Chenopodium album / Bathua, Melilotus, Rumex / Jangli palak):
+     * Metsulfuron-methyl 20% WP (Algrip) @ 8g/acre (0.6-0.8g per 15-liter pump). Dissolve carefully using the supplied surfactant at 30-35 DAS.
+     * 2,4-D Ethyl Ester 38% EC @ 400 ml/acre (30 ml per 15L pump) at 35 DAS.
+   - Complex Mixed Weed Flora (Grassy + Broadleaf together):
+     * Sulfosulfuron 75% + Metsulfuron-methyl 5% WG (Total) @ 16g/acre (1.2-1.5g per 15-liter pump) with 500 ml surfactant in 150 liters water at 30-35 DAS after first irrigation.
+     * Mesosulfuron-methyl 3% + Iodosulfuron-methyl-sodium 0.6% WDG (Atlantis) @ 160g/acre (12-15g per 15L pump).
+
+3. Maize / Corn (Makka):
+   - Pre-Emergence (0-2 DAS):
+     * Atrazine 50% WP @ 500-800g/acre (40-60g per 15-liter pump) sprayed uniformly on moist soil. Effectively prevents germinating annual grasses and broadleaf weeds.
+   - Post-Emergence (15-20 DAS, 2-4 leaf weed stage):
+     * Tembotrione 34.4% SC (Laudis) @ 115 ml/acre (10 ml per 15-liter pump) along with 400 ml recommended adjuvant per acre. Excellent safety on maize with complete knockdown of Trianthema portulacastrum (Itsit), Digitaria, and Dactyloctenium.
+     * Topramezone 33.6% SC (Tynzer) @ 30 ml/acre (2.5 ml per 15-liter pump) + 400 ml MSO adjuvant per acre.
+
+4. Soybean & Groundnut:
+   - Pre-Emergence (within 48 hours of sowing on moist soil):
+     * Diclosulam 84% WDG (Strongarm) @ 12.4g/acre (1g per 15-liter pump) in Soybean.
+     * Pendimethalin 30% EC @ 1000-1300 ml/acre (80-100 ml per 15L pump) or Pendimethalin 38.7% CS @ 700 ml/acre (55-60 ml per 15L pump).
+   - Early Post-Emergence (15-20 DAS, weeds at 2-3 leaf stage):
+     * Imazethapyr 10% SL (Pursuit) @ 400 ml/acre (30-35 ml per 15-liter pump) for control of broadleaf weeds and Cyperus in Soybean/Groundnut.
+     * Quizalofop-ethyl 5% EC (Targa Super) @ 300-400 ml/acre (25-30 ml per 15-liter pump) for controlling annual grassy weeds (Echinochloa, Eleusine). Highly selective and safe on broadleaf legume foliage.
+     * Propaquizafop 10% EC (Shaked) @ 250-300 ml/acre (20-25 ml per 15-liter pump).
+
+5. Pulses (Chickpea / Chana, Pigeon Pea / Arhar, Moong, Urad):
+   - Pre-Emergence: Pendimethalin 30% EC @ 1.0 Liter/acre (80 ml per 15L pump) applied immediately after sowing on moist soil.
+   - In Chickpea (Chana, Post-emergence): Most post-emergence broadleaf herbicides are phytotoxic to chickpea. For grassy weeds only, spray Quizalofop-ethyl 5% EC @ 300 ml/acre (25 ml per 15L pump) at 20-25 DAS. For broadleaf weeds, manual weeding at 25-30 DAS is mandatory.
+
+6. Onion & Garlic:
+   - Nursery & Seedbed: Pendimethalin 30% EC @ 700 ml/acre immediately after sowing seed beds.
+   - Main Field (Within 48 hours of transplanting before weed emergence):
+     * Pendimethalin 38.7% CS @ 700 ml/acre (55 ml per 15L pump).
+   - Early Post-Emergence (15-20 DAT):
+     * Oxyfluorfen 23.5% EC (Goal) @ 150-200 ml/acre (12-15 ml per 15-liter pump) applied on calm morning when onion plants have at least 3-4 true leaves.
+     * Quizalofop-ethyl 5% EC @ 300 ml/acre (25 ml per 15L pump) mixed for grassy weed control.
+
+7. Potato:
+   - Pre-Emergence (0-3 days after planting):
+     * Metribuzin 70% WP (Sencor) @ 200-250g/acre (15-20g per 15-liter pump) on moist ridges. Highly effective broad-spectrum control. Do not use higher doses in sandy soils or on Metribuzin-sensitive varieties (like Kufri Jyoti).
+   - Early Post-Emergence (when crop is 5-10 cm tall, 15-20 DAP):
+     * Metribuzin 70% WP reduced rate @ 100-120g/acre (8-10g per 15-liter pump).
+
+8. Sugarcane:
+   - Pre-Emergence: Atrazine 50% WP @ 800g/acre (60g per 15L pump) or Metribuzin 70% WP @ 300g/acre at 3-7 days after planting.
+   - Post-Emergence (for Cyperus rotundus / Motha sedge control):
+     * Halosulfuron-methyl 75% WG (Sempra) @ 36g/acre (2.5-3g per 15-liter pump) applied with 500 ml non-ionic surfactant at 25-30 DAP when Motha is 3-4 leaf stage. Kills underground tubers/nuts of Motha without harming sugarcane.
+
+SECTION 3: CRITICAL PRECAUTIONS & HERBICIDE RESISTANCE PREVENTION
+--------------------------------------------------------------------------------
+1. Soil Moisture: Never apply pre-emergence herbicides on dry dust-dry soil; herbicide molecules bind irreversibly to dry clay particles and fail to activate. Ensure field has adequate moisture or irrigate lightly.
+2. Rainfastness: Most post-emergence systemic herbicides require 2 to 4 hours of rain-free weather after application for complete leaf cuticle absorption.
+3. Nozzle Cleaning: Thoroughly wash knapsack sprayer tank, hoses, and nozzles with clean water and 1% washing soda (or detergent) after herbicide spray before using the same sprayer for insecticides or fungicides.
+4. Drift Control: Avoid spraying on windy afternoons (>10 km/h) to prevent spray drift onto neighboring sensitive broadleaf crops.

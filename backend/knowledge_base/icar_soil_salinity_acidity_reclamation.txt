@@ -1,0 +1,51 @@
+ICAR COMPREHENSIVE SOIL SALINITY, SODICITY & ACIDITY RECLAMATION MANUAL
+================================================================================
+Grounded in ICAR-CSSRI (Central Soil Salinity Research Institute, Karnal) Norms.
+
+SECTION 1: SCIENTIFIC CLASSIFICATION & DIAGNOSIS OF PROBLEM SOILS
+--------------------------------------------------------------------------------
+Over 6.74 million hectares of agricultural land in India suffer from salinity and sodicity (Indo-Gangetic plains of UP, Haryana, Punjab, and coastal/black soil regions of Gujarat, Maharashtra, Rajasthan), while 12 million hectares suffer from soil acidity (Northeast hills, Kerala, Odisha, Jharkhand). Accurate diagnosis is the first prerequisite for successful chemical reclamation:
+
+1. Alkali / Sodic Soils (Local Names: Usar, Kallar, Chopan):
+   - Chemical Profile: High soil pH (> 8.5, often reaching 9.5 to 10.5); Exchangeable Sodium Percentage (ESP) > 15%; Electrical Conductivity (EC) < 4.0 dS/m; Dominant salts are soluble sodium carbonate (Na2CO3) and sodium bicarbonate (NaHCO3).
+   - Physical Visual Symptoms: Highly dispersed soil structure; soil turns into sticky impenetrable slurry when wet, and bakes into rock-hard impenetrable crust with wide cracks when dry; zero water infiltration (ponding water stands for days without percolating); dissolved organic matter creates a greasy black surface film ("Black Alkali"). Plant roots suffocate from lack of aeration and suffer severe sodium carbonate root-burn.
+
+2. Saline Soils (Local Names: Reh, Thur, Khar):
+   - Chemical Profile: Soil pH < 8.5; ESP < 15%; High Electrical Conductivity (EC > 4.0 dS/m, often 8-20 dS/m); Dominant salts are neutral chlorides and sulfates of Sodium, Calcium, and Magnesium (NaCl, Na2SO4, CaCl2, MgCl2).
+   - Physical Visual Symptoms: Good soil physical structure (permeable to water), but a conspicuous fluffy white salt efflorescence ("White Alkali") encrusts the surface upon evaporation; seeds fail to germinate or exhibit osmotic burning (physiological drought due to high osmotic pressure of soil solution).
+
+3. Acidic Soils:
+   - Chemical Profile: Soil pH < 5.5; High concentrations of toxic soluble Aluminum (Al3+) and Manganese (Mn2+); Severe deficiency of exchangeable Calcium, Magnesium, and Molybdenum; High phosphorus fixation (phosphorus precipitates as insoluble Aluminum/Iron phosphates).
+
+SECTION 2: CHEMICAL RECLAMATION OF ALKALI / SODIC SOILS (GYPSUM APPLICATION)
+--------------------------------------------------------------------------------
+Sodic soils cannot be reclaimed by simple water washing; the excess exchangeable Sodium ions adsorbed onto clay lattices must be chemically displaced by Calcium ions and then leached downward:
+Chemical Reaction:
+   2 Na-Clay (Sodic Soil) + CaSO4 (Gypsum) ---> Ca-Clay (Flocculated Normal Soil) + Na2SO4 (Leachable Soluble Sodium Sulfate)
+
+- Step-by-Step Gypsum Application Protocol:
+  1. Soil Testing for Gypsum Requirement (GR): Have soil tested at a district KVK/Soil Testing Lab to determine the exact Gypsum Requirement (expressed in tonnes/acre). For typical sodic soils of the Indo-Gangetic plains (pH 9.2 to 9.8), the standard dose is 4.0 to 6.0 tonnes agricultural gypsum per acre (50% of total GR).
+  2. Land Bunding & Precision Leveling: Construct strong 35-40 cm high perimeter bunds around the field to prevent runoff and ensure uniform water pooling. Laser-level the field perfectly.
+  3. Plowing & Powdered Gypsum Broadcast: Plow the dry field to a shallow depth of 10-12 cm (never deep plow, as that brings unamended subsoil alkali to the surface). Broadcast finely ground agricultural grade gypsum (minimum 70-80% purity passed through a 2 mm / 100-mesh sieve) uniformly across the field.
+  4. Shallow Harrowing: Incorporate gypsum into the top 8 to 10 cm of soil using a disc harrow or cultivator.
+  5. Ponding & Leaching: Flood the field immediately with 12 to 15 cm of clean irrigation water. Keep water continuously ponded for 10 to 15 days. Calcium displaces Sodium on the clay complex, converting dispersed clay into flocculated crumbly granules. The displaced soluble sodium sulfate leaches deep into the subsoil below the root zone.
+  6. Organic Amendment Integration: Incorporate 10 tonnes well-rotted Farmyard Manure (FYM) or 3 tonnes Sugar Mill Pressmud (Sulphi-pressmud contains 2.5% sulfur and organic matter) per acre. Microbial decomposition produces carbonic and organic acids that further lower soil pH.
+
+SECTION 3: GREEN MANURING & SALT-TOLERANT CROPPING SYSTEM
+--------------------------------------------------------------------------------
+1. Dhaincha (Sesbania aculeata) — The Miracle Biological Reclamation Crop:
+   - Sowing: Immediately following gypsum leaching (in May-June), sow Dhaincha seed @ 20-25 kg/acre. Dhaincha tolerates extreme soil alkalinity (pH up to 9.5) and waterlogging.
+   - Mechanism: Deep taproots pierce through dense subsurface hardpans (Kankar layers), creating natural drainage pores. Root respiration releases large volumes of CO2, dissolving native soil calcium carbonate (CaCO3).
+   - Incorporation: At 45-50 days of growth (just before flowering), plow Dhaincha into the soil using a disc harrow. Incorporates 8 to 10 tonnes of succulent green biomass and fixes 35-45 kg atmospheric Nitrogen per acre.
+2. Salt-Tolerant High-Yielding ICAR Crop Varieties:
+   - Alkali-Tolerant Paddy Varieties: CSR 30 (fine basmati aroma, tolerates pH up to 9.5), CSR 36, CSR 43, CSR 46, CSR 56 (yields 20-24 Qtl/acre in reclaimed sodic soils).
+   - Alkali-Tolerant Wheat Varieties: KRL 210, KRL 213, KRL 19 (tolerates pH up to 9.3 and EC up to 6 dS/m).
+   - Mustard: CS 54, CS 56, CS 58.
+
+SECTION 4: RECLAMATION OF ACIDIC SOILS (AGRICULTURAL LIMING)
+--------------------------------------------------------------------------------
+- Liming Material & Application:
+  * Apply finely ground Agricultural Limestone (Calcium Carbonate - CaCO3) or Dolomite (CaCO3.MgCO3, ideal where Magnesium is also deficient) @ 1.0 to 2.5 tonnes per acre depending on soil pH and soil texture (sandy soils require 1 tonne; clay soils require 2-2.5 tonnes to raise pH from 4.5 to 6.2).
+  * Paper Mill Sludge (contains 60-70% CaCO3 equivalent) can be used as an economical alternative @ 1.5x limestone rate.
+  * Time of Application: Broadcast lime uniformly 3 to 4 weeks prior to sowing/transplanting; mix thoroughly into top 15 cm soil. Lime neutralizes toxic soluble Al3+ into non-toxic Aluminum hydroxide precipitates and releases fixed soil phosphorus for plant uptake.
+  * Rock Phosphate Usage: In acidic soils (pH < 5.5), apply slow-release powdered Mussoorie Rock Phosphate (MRP 18-20% P2O5) @ 100 kg/acre instead of expensive water-soluble DAP. Soil acidity naturally dissolves rock phosphate, providing steady available phosphorus.

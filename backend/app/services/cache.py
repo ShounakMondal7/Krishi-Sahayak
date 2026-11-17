@@ -39,9 +39,15 @@ class TTLCache:
         question_english: str,
         region: Optional[str] = None,
         language: Optional[str] = None,
+        conversation_id: Optional[str] = None,
     ) -> str:
-        """Deterministic cache key from English question + region + language."""
-        raw = f"{question_english.strip().lower()}::{(region or '').lower()}::{(language or 'en').lower()}"
+        """Deterministic cache key from English question + region + language + conversation_id."""
+        raw = (
+            f"{question_english.strip().lower()}::"
+            f"{(region or '').lower()}::"
+            f"{(language or 'en').lower()}::"
+            f"{(conversation_id or '').lower()}"
+        )
         return hashlib.sha256(raw.encode()).hexdigest()
 
     def get(
@@ -49,9 +55,10 @@ class TTLCache:
         question_english: str,
         region: Optional[str] = None,
         language: Optional[str] = None,
+        conversation_id: Optional[str] = None,
     ) -> Optional[Any]:
         """Returns cached value or None if missing/expired. Fast-path in-memory lookup (<50ms)."""
-        key = self._make_key(question_english, region, language)
+        key = self._make_key(question_english, region, language, conversation_id)
         with self._lock:
             entry = self._store.get(key)
             if entry is None:
@@ -72,9 +79,10 @@ class TTLCache:
         value: Any,
         region: Optional[str] = None,
         language: Optional[str] = None,
+        conversation_id: Optional[str] = None,
     ) -> None:
         """Stores a value with TTL expiry. Evicts oldest if at max capacity."""
-        key = self._make_key(question_english, region, language)
+        key = self._make_key(question_english, region, language, conversation_id)
         expires_at = time.monotonic() + self._ttl
         with self._lock:
             # Simple eviction: remove oldest entry if full

@@ -26,6 +26,7 @@ import {
 } from '../services/locations';
 import { LanguageCode, getTranslation } from '../services/i18n';
 import { storageService } from '../services/storage';
+import LocationSelectModal from './LocationSelectModal';
 
 interface Props {
   visible: boolean;
@@ -185,7 +186,7 @@ export default function LocationPickerModal({
             </TouchableOpacity>
           </View>
 
-          <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
+          <ScrollView style={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             {/* GPS Button */}
             <TouchableOpacity
               style={styles.gpsBtn}
@@ -263,107 +264,87 @@ export default function LocationPickerModal({
               <View style={styles.dividerLine} />
             </View>
 
-            {/* State Picker */}
+            {/* State Picker Trigger & Modal */}
             <Text style={styles.label} allowFontScaling={true}>{t('selectState') || 'State'}</Text>
             <TouchableOpacity
               style={styles.picker}
-              onPress={() => { setShowStatePicker(!showStatePicker); setShowDistrictPicker(false); }}
+              onPress={() => { setShowStatePicker(true); }}
               activeOpacity={0.8}
               accessibilityRole="combobox"
               accessibilityLabel={`${t('selectState') || 'State'}, ${selectedState ? localizeState(selectedState) : 'None'}`}
               accessibilityState={{ expanded: showStatePicker }}
-              accessibilityHint="Double tap to toggle state dropdown"
+              accessibilityHint="Double tap to open state selection dialog"
             >
               <Text style={styles.pickerText} allowFontScaling={true}>
                 {selectedState ? localizeState(selectedState) : (t('tapToChooseState') || 'Select State')}
               </Text>
               <MaterialCommunityIcons
-                name={showStatePicker ? 'chevron-up' : 'chevron-down'}
+                name="chevron-right"
                 size={20}
                 color="#64748B"
               />
             </TouchableOpacity>
 
-            {showStatePicker && (
-              <ScrollView style={styles.optionsList} nestedScrollEnabled>
-                {getAllStates().map((state) => {
-                  const localizedStateName = localizeState(state);
-                  return (
-                    <TouchableOpacity
-                      key={state}
-                      style={[styles.optionItem, state === selectedState && styles.optionActive]}
-                      onPress={() => {
-                        setSelectedState(state);
-                        setSelectedDistrict('');
-                        setShowStatePicker(false);
-                        setShowDistrictPicker(true);
-                      }}
-                      accessibilityRole="button"
-                      accessibilityLabel={localizedStateName}
-                      accessibilityState={{ selected: state === selectedState }}
-                    >
-                      <Text style={[styles.optionText, state === selectedState && styles.optionTextActive]} allowFontScaling={true}>
-                        {localizedStateName}
-                      </Text>
-                      {state === selectedState && (
-                        <MaterialCommunityIcons name="check" size={18} color="#15803D" />
-                      )}
-                    </TouchableOpacity>
-                  );
-                })}
-              </ScrollView>
-            )}
+            <LocationSelectModal
+              visible={showStatePicker}
+              title={t('selectState') || 'Select State'}
+              icon="map"
+              searchPlaceholder={activeLang === 'hi' ? 'राज्य खोजें (उदा. पंजाब, उत्तर प्रदेश)...' : 'Search state (e.g. Punjab, Uttar Pradesh)...'}
+              items={getAllStates().map((state) => ({
+                id: state,
+                label: localizeState(state),
+                subLabel: state,
+              }))}
+              selectedId={selectedState}
+              onSelect={(item) => {
+                setSelectedState(item.id);
+                setSelectedDistrict('');
+                setShowStatePicker(false);
+                setShowDistrictPicker(true);
+              }}
+              onClose={() => setShowStatePicker(false)}
+            />
 
-            {/* District Picker */}
+            {/* District Picker Trigger & Modal */}
             {selectedState && (
               <>
-                <Text style={styles.label} allowFontScaling={true}>{t('selectDistrict') || 'District'}</Text>
+                <Text style={styles.label} allowFontScaling={true}>{t('selectDistrict') || 'District'} ({localizeState(selectedState)})</Text>
                 <TouchableOpacity
                   style={styles.picker}
-                  onPress={() => { setShowDistrictPicker(!showDistrictPicker); setShowStatePicker(false); }}
+                  onPress={() => { setShowDistrictPicker(true); }}
                   activeOpacity={0.8}
                   accessibilityRole="combobox"
                   accessibilityLabel={`${t('selectDistrict') || 'District'}, ${selectedDistrict ? localizeDistrict(selectedDistrict) : 'None'}`}
                   accessibilityState={{ expanded: showDistrictPicker }}
-                  accessibilityHint="Double tap to toggle district dropdown"
+                  accessibilityHint="Double tap to open district selection dialog"
                 >
                   <Text style={styles.pickerText} allowFontScaling={true}>
                     {selectedDistrict ? localizeDistrict(selectedDistrict) : (t('tapToChooseDistrict') || 'Select District')}
                   </Text>
                   <MaterialCommunityIcons
-                    name={showDistrictPicker ? 'chevron-up' : 'chevron-down'}
+                    name="chevron-right"
                     size={20}
                     color="#64748B"
                   />
                 </TouchableOpacity>
 
-                {showDistrictPicker && (
-                  <ScrollView style={styles.optionsList} nestedScrollEnabled>
-                    {districts.map((dist) => {
-                      const localizedDistName = localizeDistrict(dist);
-                      return (
-                        <TouchableOpacity
-                          key={dist}
-                          style={[styles.optionItem, dist === selectedDistrict && styles.optionActive]}
-                          onPress={() => {
-                            setSelectedDistrict(dist);
-                            setShowDistrictPicker(false);
-                          }}
-                          accessibilityRole="button"
-                          accessibilityLabel={localizedDistName}
-                          accessibilityState={{ selected: dist === selectedDistrict }}
-                        >
-                          <Text style={[styles.optionText, dist === selectedDistrict && styles.optionTextActive]} allowFontScaling={true}>
-                            {localizedDistName}
-                          </Text>
-                          {dist === selectedDistrict && (
-                            <MaterialCommunityIcons name="check" size={18} color="#15803D" />
-                          )}
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </ScrollView>
-                )}
+                <LocationSelectModal
+                  visible={showDistrictPicker}
+                  title={`${t('selectDistrict') || 'Select District'} - ${localizeState(selectedState)}`}
+                  icon="map-marker"
+                  searchPlaceholder={activeLang === 'hi' ? 'ज़िला खोजें...' : 'Search district...'}
+                  items={districts.map((dist) => ({
+                    id: dist,
+                    label: localizeDistrict(dist),
+                    subLabel: localizeState(selectedState),
+                  }))}
+                  selectedId={selectedDistrict}
+                  onSelect={(item) => {
+                    setSelectedDistrict(item.id);
+                    setShowDistrictPicker(false);
+                  }}
+                  onClose={() => setShowDistrictPicker(false)}
+                />
               </>
             )}
 
@@ -433,7 +414,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFBF7',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    maxHeight: '80%',
+    maxHeight: '85%',
     minHeight: 400,
   },
   header: {

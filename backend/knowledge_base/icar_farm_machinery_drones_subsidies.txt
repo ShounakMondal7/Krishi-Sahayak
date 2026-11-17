@@ -1,0 +1,61 @@
+ICAR COMPREHENSIVE FARM MACHINERY, AGRICULTURAL DRONES & SUBSIDY MANUAL
+================================================================================
+Grounded in ICAR-CIAE (Central Institute of Agricultural Engineering, Bhopal) & SMAM Guidelines.
+
+SECTION 1: ADVANCED CONSERVATION & RESIDUE MANAGEMENT MACHINERY
+--------------------------------------------------------------------------------
+Residue burning in North-West India causes severe smog, loss of 100% nitrogen, 25% phosphorus, and destruction of beneficial microbial populations. Modern in-situ crop residue management implements allow direct sowing of wheat into standing paddy stubble without burning:
+1. Super Seeder:
+   - Function: Single-pass tractor implement combining a high-speed rotary tiller and a multi-crop seed-cum-fertilizer drill.
+   - Operation: Incorporates standing paddy straw into the soil while simultaneously sowing wheat seeds and placing basal DAP fertilizer at 4-5 cm depth.
+   - Power Requirement: Requires minimum 55 to 65 HP tractor with double-clutch and creeper gear.
+   - Efficiency: Sows 1.0 to 1.2 acres per hour; diesel consumption approx. 5.5 to 6.5 liters per acre.
+2. Happy Seeder:
+   - Function: Sows wheat directly into standing or loose paddy stubble without tilling the soil. Leaves all straw on the soil surface as protective in-situ mulch (conserving 15-20% soil moisture and suppressing weeds like Phalaris minor).
+   - Tractor Requirement: 45 to 55 HP tractor with dual clutch.
+3. Zero-Till Seed-cum-Fertilizer Drill:
+   - Function: Uses inverted-T type furrow openers to cut narrow 2-3 cm slits in untilled soil, depositing seed and fertilizer directly.
+   - Benefit: Saves ₹2,500 to ₹3,500 per acre in plowing and diesel costs; advances wheat sowing by 7 to 10 days, avoiding terminal heat stress in March.
+4. Laser Land Leveler:
+   - Function: High-precision leveling using a rotating laser transmitter, optical receiver, and hydraulic scraper bucket.
+   - Benefit: Reduces field gradient to ±1 cm. Saves 25-30% irrigation water, improves fertilizer distribution uniformity, increases cultivable land by 3-5% (by eliminating superfluous bunds and channels), and boosts crop yield by 10-15%.
+5. Automatic Mechanical Paddy Transplanter (Walk-behind & Ride-on):
+   - Capacity: 4-row walk-behind (2-2.5 acres/day) and 8-row ride-on (6-8 acres/day).
+   - Spacing: Fixed 30 cm row-to-row spacing with adjustable 12 to 18 cm plant-to-plant spacing.
+   - Requires specialized mat-type nursery seedlings raised on plastic sheets.
+6. Square & Round Straw Baler:
+   - Collects, compresses, and ties loose crop residues (paddy/wheat straw) into compact 15-25 kg square bales or 250 kg round bales for biomass power plants, bio-ethanol refineries, and cattle fodder banks.
+
+SECTION 2: AGRICULTURAL DRONE (KISHAN DRONE) SPRAYING SOPS & REGULATORY NORMS
+--------------------------------------------------------------------------------
+Kisan Drones deliver ultra-low volume (ULV) foliar sprays with high uniform coverage, reducing chemical pesticide exposure to operators by 100% and cutting water requirement from 150 liters to just 10 liters per acre.
+- Drone Technical Specifications:
+  * Payload Tank Capacity: 10 Liters (DGCA Type-Certified agricultural drone).
+  * Spray Swath Width: 3.5 to 4.5 meters.
+  * Flight Speed: 3 to 5 meters per second (approx. 12-18 km/h).
+  * Operating Altitude: 2.0 to 2.5 meters above the crop canopy (rotor downwash turbulence pushes spray droplets deep into bottom canopy and undersides of leaves).
+  * Nozzle Type: Centrifugal rotary atomizers or micron air-induction nozzles producing 150 to 250 micron calibrated droplet size (VMD).
+  * Area Coverage: 1 acre sprayed in just 6 to 8 minutes; 25 to 30 acres coverage per day on 1 set of 4-6 smart Lithium-Polymer (LiPo) batteries.
+- SOP for Mixing & Spraying:
+  * Standard Water Volume: 10 liters of clean, filtered water per acre.
+  * Add the per-acre recommended dose of approved pesticide/nano-urea directly into the 10-liter drone tank along with 10 ml non-ionic organosilicone surfactant/spreader.
+  * Never spray during high winds (>12 km/h), heavy dew, or ambient temperatures exceeding 35°C (to prevent rapid thermal droplet evaporation).
+- DGCA & Government Regulatory Framework:
+  * Remote Pilot Certificate (RPC): Pilot must hold a DGCA-certified Remote Pilot Certificate from an authorized Drone Pilot Training Organisation (RPTO).
+  * Digital Sky Registration: Drones must possess a Unique Identification Number (UIN) and operational geo-fencing (No-Permission No-Takeoff - NPNT compliance). Do not fly within 5 km of airports or international borders.
+
+SECTION 3: SUB-MISSION ON AGRICULTURAL MECHANIZATION (SMAM) & DRONE SUBSIDIES
+--------------------------------------------------------------------------------
+The Ministry of Agriculture & Farmers Welfare provides substantial financial assistance under SMAM (Sub-Mission on Agricultural Mechanization):
+1. Individual Farmer Implements Subsidy:
+   - 40% to 50% subsidy (up to ₹1.25 Lakh to ₹2.50 Lakh depending on category) on tractors, super seeders, laser levelers, rotavators, and multi-crop threshers.
+   - Women farmers, SC/ST, small & marginal farmers receive 50% maximum subsidy rate.
+2. Custom Hiring Centre (CHC) Establishment:
+   - 40% financial assistance up to a maximum project cost of ₹10 Lakh to ₹25 Lakh (subsidy up to ₹4 Lakh to ₹10 Lakh) for rural entrepreneurs, cooperative societies, and progressive farmers establishing farm machinery banks.
+   - Allows small & marginal farmers to hire expensive machinery on nominal hourly/per-acre rates without incurring capital debt.
+3. Agricultural Drone Subsidies & Namo Drone Didi Scheme:
+   - ICAR Institutes / KVKs / State Agricultural Universities: 100% grant up to ₹10 Lakh per drone for farmer demonstrations and skill training.
+   - Farmer Producer Organisations (FPOs): 75% financial grant up to ₹7.5 Lakh per drone.
+   - Rural Entrepreneurs / Agriculture Graduates (CHC): 40% to 50% subsidy up to ₹4 Lakh to ₹5 Lakh.
+   - Namo Drone Didi Scheme: Central Government provides 80% subsidy (up to ₹8 Lakh) to rural Women Self-Help Groups (SHGs) under Deendayal Antyodaya Yojana - DAY-NRLM, including 15-day certified drone pilot training, empowering rural women to earn ₹15,000 to ₹30,000 monthly offering custom drone spraying services.
+4. Application Portal: Apply online through the centralized government portal: agrimachinery.nic.in using Aadhaar, bank passbook, and land ownership records (7/12 or Khasra-Khatauni).

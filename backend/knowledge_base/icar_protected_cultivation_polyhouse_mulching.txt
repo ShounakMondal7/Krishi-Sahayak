@@ -1,0 +1,62 @@
+ICAR COMPREHENSIVE PROTECTED CULTIVATION, POLYHOUSE & MULCHING MANUAL
+================================================================================
+Grounded in ICAR-CPCT (Centre for Protected Cultivation Technology, New Delhi) & NHB Guidelines.
+
+SECTION 1: PROTECTED STRUCTURES & DESIGN ENGINEERING
+--------------------------------------------------------------------------------
+Protected cultivation modifies microclimate parameters (ambient temperature, solar radiation, humidity, wind velocity, and pest vectors), enabling 3x to 5x higher marketable yields of high-value crops, off-season premium production, and 90% water saving under precision drip fertigation.
+1. Naturally Ventilated Polyhouse (NVPH - Sawtooth / Multispan Gable Type):
+   - Cladding Material: 200-micron UV-stabilized polyethylene film with anti-drip, anti-fog, and thermal diffuse properties (diffuses 50-60% light to prevent scorch).
+   - Side & Top Vents: 40-mesh nylon insect-proof net installed along continuous 3-meter side curtains and 1-meter roof ridge vents to keep out aphids, thrips, and whiteflies while allowing natural thermal convective airflow.
+   - Foundation: GI galvanized tubular pipes (Class B, minimum 2 mm thickness) anchored in concrete footings to resist wind gusts up to 120 km/h.
+2. Shade-Net House (Flat Roof / Dome Type):
+   - Netting: 50% Green/Black UV-stabilized agro-shade net for semi-tropical zones; 35% for temperate zones; 75% for foliage ornamentals and nursery propagation.
+   - Cost: Lower initial capital outlay (₹350 to ₹450 per sq. meter vs ₹850 to ₹1,000 per sq. meter for NVPH).
+3. Walk-in Tunnels & Low Tunnels:
+   - Polyethylene film (25-50 micron) supported on GI wire arches (height 45-60 cm) over vegetable nursery beds and off-season winter cucurbits (watermelon, muskmelon) to protect against frost and advance harvest by 30-40 days.
+
+SECTION 2: AGRICULTURAL PLASTIC MULCHING TECHNOLOGY
+--------------------------------------------------------------------------------
+Plastic mulching conserves 35-45% soil moisture, prevents soil crusting, suppresses 95% weed growth, prevents splash dispersal of soil-borne blight pathogens onto leaves, and maintains optimal root-zone soil temperature.
+- Film Thickness Specifications:
+  * Short-duration Vegetables (Tomato, Chilli, Capsicum, Cucumber, Melons): 25 to 30 micron.
+  * Medium-duration Crops (Strawberry, Papaya, Banana): 50 micron.
+  * Orchard Tree Basins (Pomegranate, Citrus, Guava): 100 micron.
+- Color Dynamics:
+  * Silver-on-Black (Industry Gold Standard): Top silver layer reflects 30% solar radiation (cooling soil in summer) and reflects UV light into lower canopy, confusing aphids and whiteflies. Bottom black layer completely blocks sunlight, killing germinating weed seeds.
+  * Black-on-Black: Used in cold winter climates to trap thermal energy and elevate root-zone temperature.
+  * Transparent / Clear: Used exclusively for summer soil solarization (4-6 weeks under May-June sun) to heat top 5 cm soil to 50-55°C, sterilizing nematodes, damping-off fungi, and weed seeds.
+- Bed Preparation & Laying:
+  * Form raised beds of 90-100 cm top width, 15-20 cm height, and 40-50 cm walking pathways.
+  * Lay inline drip irrigation lateral (16 mm diameter with 2 to 4 LPH drippers spaced at 30-40 cm) along the center of the bed before laying mulch.
+  * Stretch mulch film tightly across the bed, burying both edges 10-15 cm deep in soil along the furrows to anchor against wind lift.
+  * Punch circular 5-7 cm transplanting holes at desired plant spacing using heated pipe cutters.
+
+SECTION 3: HIGH-VALUE GREENHOUSE CROPS & DRIP FERTIGATION SCHEDULES
+--------------------------------------------------------------------------------
+1. Color Capsicum (Yellow & Red Sweet Bell Pepper - Bachata, Inspiration):
+   - Spacing: Paired row system on 90 cm bed (45 cm between rows, 30 cm between plants; approx. 14,000 plants per acre / 3,500 plants per 1000 sq. meter).
+   - Training & Pruning: 2-leader or 4-leader vertical trellis training using nylon twine suspended from overhead GI support cables; prune all suckers and tertiary branches.
+2. Parthenocarpic English Slicing Cucumber (Gypsy, Multistar):
+   - Flowers require zero bee pollination (100% female flowers). Yields 25 to 35 tonnes per 1000 sq. meter over a 120-day cropping cycle.
+3. Dutch Cut Roses (Top Secret, Passion, Avalanche):
+   - Planting density: 7 to 8 plants per sq. meter on raised gravel/soil beds; requires bent-shoot (bending) canopy architecture to build strong root starch reserves for high-stem commercial flushes.
+
+Precision Fertigation Regimen (per 1000 sq. meter greenhouse per day):
+- Vegetative Phase (Day 15 to 45): Inject 19:19:19 (Polyfeed) @ 1.5 kg + Magnesium Sulfate @ 500g in Drip Tank A; Micronutrient mixture (Chelated Zn, Fe, B, Mn, Cu) @ 50g in Tank B. Alternate days.
+- Flowering & Fruit Setting (Day 46 to 90): Inject 12:61:00 (MAP) @ 1.0 kg + 00:52:34 (MKP) @ 1.5 kg + Potassium Nitrate (13:0:45) @ 1.5 kg.
+- Heavy Harvesting Phase (Day 91 onwards): Inject Calcium Nitrate @ 1.5 kg (Tank A) and Potassium Nitrate (13:0:45) @ 2.0 kg + 00:00:50 @ 1.0 kg (Tank B). Keep electrical conductivity (EC) of drip emitter discharge between 1.5 and 2.0 mS/cm and pH between 5.8 and 6.5.
+
+SECTION 4: GREENHOUSE INTEGRATED PEST & DISEASE MANAGEMENT (IPM)
+--------------------------------------------------------------------------------
+High relative humidity (80-90%) inside polyhouses creates favorable microclimates for powdery mildew, downy mildew, and sap-sucking pests:
+- Yellow Sticky Traps: Install 20 bright yellow sticky sheets per 1000 sq. meter at canopy height to capture adult whiteflies (Bemisia tabaci) and leafminers.
+- Blue Sticky Traps: Install 15 blue sticky sheets per 1000 sq. meter for early detection and trapping of Western Flower Thrips (Frankliniella occidentalis).
+- Red Spider Mite (Tetranychus urticae - web-spinning on leaf undersides):
+  * Spray Spiromesifen 22.9% SC (Oberon) @ 15 ml per 15-liter pump OR Fenazaquin 10% EC @ 30 ml per 15L pump.
+- Whitefly & Thrips Control:
+  * Spray Cyantraniliprole 10.26% OD (Benevia) @ 25-30 ml per 15-liter pump OR Diafenthiuron 50% WP (Pegasus) @ 18-20g per 15L pump.
+- Powdery Mildew Control:
+  * Spray Hexaconazole 5% SC @ 30 ml per 15-liter pump OR Difenoconazole 25% EC (Score) @ 10 ml per 15L pump.
+- National Horticulture Board (NHB) & MIDH Subsidies:
+  * 50% capital subsidy (up to ₹44.75 Lakh per acre / ₹1120 per sq. meter) provided under MIDH / NHB Scheme for establishing polyhouses, shade nets, and packhouses with cold chain support. Apply on nhb.gov.in.

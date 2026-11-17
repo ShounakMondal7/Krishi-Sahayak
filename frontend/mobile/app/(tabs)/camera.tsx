@@ -32,7 +32,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import * as Haptics from 'expo-haptics';
 import { safeHaptics } from '../../services/haptics';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Audio } from 'expo-av';
+import { audioQueue, useAudioQueue } from '../../services/audioQueue';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
@@ -54,7 +54,7 @@ import {
   translateLocation,
 } from '../../services/locations';
 import { detectDeviceLanguage } from '../../services/languageDetector';
-import { BASE_URL } from '../../services/api';
+import { BASE_URL, api } from '../../services/api';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const RETICLE_SIZE = Math.min(SCREEN_WIDTH * 0.68, SCREEN_HEIGHT * 0.30, 250);
@@ -99,7 +99,14 @@ export default function CameraScreen() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<ImageQueryResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [audioPlaying, setAudioPlaying] = useState(false);
+  const {
+    isPlaying: audioPlaying,
+    isLoading: audioLoading,
+    currentPart,
+    totalParts,
+    playAdvisorySequence,
+    stopAndClearAll,
+  } = useAudioQueue();
   const [showTreatmentSteps, setShowTreatmentSteps] = useState(false);
 
   // Modals
@@ -110,7 +117,6 @@ export default function CameraScreen() {
   const laserAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(600)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const soundRef = useRef<Audio.Sound | null>(null);
 
   const t = (key: string) => getTranslation(currentLang, key);
 
@@ -149,16 +155,16 @@ export default function CameraScreen() {
         const detected = detectDeviceLanguage();
         setCurrentLang(detected.code);
         await storageService.setLanguage(detected.code);
-        setSelectedState(detected.defaultState);
-        setRegion(detected.defaultDistrict);
+        if (detected.defaultState) setSelectedState(detected.defaultState);
+        if (detected.defaultDistrict) setRegion(detected.defaultDistrict);
       }
 
       const profile = await storageService.getFarmerProfile();
       if (profile) {
         setFarmerProfile(profile);
-        const actualState = profile.state || findStateForDistrict(profile.district) || 'Punjab';
-        setSelectedState(actualState);
-        setRegion(profile.district || profile.state || 'Ludhiana');
+        const actualState = profile.state || findStateForDistrict(profile.district) || '';
+        if (actualState) setSelectedState(actualState);
+        if (profile.district) setRegion(profile.district);
       }
     })();
 
@@ -174,6 +180,7 @@ export default function CameraScreen() {
     return () => {
       unsubLang();
       unsubProf();
+      stopAndClearAll();
     };
   }, []);
 
@@ -246,11 +253,16 @@ export default function CameraScreen() {
       formData.append('language', currentLang);
       formData.append('region', region);
 
-      const res = await axios.post<ImageQueryResponse>(
-        `${BASE_URL}/api/v1/image-query`,
+      const reqHeaders: Record<string, string> = {};
+      if (Platform.OS !== 'web') {
+        reqHeaders['Content-Type'] = 'multipart/form-data';
+      }
+
+      const res = await api.post<ImageQueryResponse>(
+        '/api/v1/image-query',
         formData,
         {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: reqHeaders,
           timeout: 60000,
         }
       );
@@ -328,45 +340,14 @@ export default function CameraScreen() {
     }
   };
 
-  // ── TTS Audio Playback ─────────────────────────────────────────────────────
-  const playAudio = async () => {
+  // ── TTS Audio Playback (audioQueue) ───────────────────────────────────────
+  const playAudio = () => {
     if (!response?.query_id) return;
-    try {
-      if (soundRef.current) {
-        await soundRef.current.unloadAsync();
-        soundRef.current = null;
-      }
-      if (audioPlaying) {
-        setAudioPlaying(false);
-        return;
-      }
-      safeHaptics.impactMedium();
-      setAudioPlaying(true);
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: `${BASE_URL}/api/v1/query/${response.query_id}/audio?lang=${currentLang}` },
-        { shouldPlay: true }
-      );
-      soundRef.current = sound;
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (!status.isLoaded || status.didJustFinish) setAudioPlaying(false);
-      });
-    } catch {
-      setAudioPlaying(false);
-      Alert.alert('', 'Could not play audio. Please try again.');
-    }
+    playAdvisorySequence(response.query_id, currentLang, response.answer || '');
   };
 
-  const stopAudio = async () => {
-    if (soundRef.current) {
-      try {
-        await soundRef.current.stopAsync();
-        await soundRef.current.unloadAsync();
-      } catch {
-        // ignore
-      }
-      soundRef.current = null;
-    }
-    setAudioPlaying(false);
+  const stopAudio = () => {
+    stopAndClearAll();
   };
 
   // Extract primary disease title or fallback
@@ -825,7 +806,7 @@ export default function CameraScreen() {
                   <View style={styles.stepBadge}>
                     <Text style={[styles.stepBadgeText, { fontSize: scaleFont(12) }]}>1</Text>
                   </View>
-                  <Text style={[styles.modalSectionLabel, { fontSize: scaleFont(13) }]}>🌾 {t('selectStateStep')}</Text>
+                  <Text style={[styles.modalSectionLabel, { fontSize: scaleFont(13) }]}>{t('selectStatePrompt') || 'Select State'}:</Text>
                 </View>
 
                 <View style={styles.modalGrid}>
@@ -874,7 +855,7 @@ export default function CameraScreen() {
                       </Text>
                     </View>
                     <Text style={[styles.stateAgroCropsText, { fontSize: scaleFont(11) }]}>
-                      🌱 {t('keyCropsLabel')} {getStateDetails(selectedState)?.primaryCrops.join(', ')}
+                      🌱 {t('majorCropsLabel') || t('keyCropsLabel') || 'Major Crops:'} {getStateDetails(selectedState)?.primaryCrops.join(', ')}
                     </Text>
                   </View>
                 )}
@@ -885,7 +866,7 @@ export default function CameraScreen() {
                     <Text style={[styles.stepBadgeText, { fontSize: scaleFont(12) }]}>2</Text>
                   </View>
                   <Text style={[styles.modalSectionLabel, { fontSize: scaleFont(13) }]}>
-                    📍 {t('selectDistrictStep')} ({translateLocation(selectedState, currentLang)}):
+                    {t('selectDistrictPrompt') || 'Select District'} ({translateLocation(selectedState, currentLang)}):
                   </Text>
                 </View>
 

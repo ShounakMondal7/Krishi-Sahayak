@@ -61,9 +61,9 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
 app = FastAPI(
     title="AI Farmer Advisory System",
     description=(
-        "A Retrieval-Augmented Generation (RAG) system for Malayalam-speaking farmers. "
-        "Provides grounded agricultural advice using verified ICAR/Kerala Agri documents. "
-        "Built with FastAPI, ChromaDB, IndicTrans2, and GPT-4o-mini."
+        "A Pan-India Multilingual Retrieval-Augmented Generation (RAG) system for Indian farmers across all 28 States and 8 UTs. "
+        "Provides grounded agricultural advice using verified ICAR research documents, real-time weather, and APMC mandi rates. "
+        "Built with FastAPI, ChromaDB, Edge-TTS, and GPT-4o-mini."
     ),
     version=settings.app_version,
     docs_url="/docs",
@@ -81,35 +81,28 @@ app = FastAPI(
 )
 
 
-# ── CORS Middleware (CERT-In / OWASP Hardened) ─────────────────────────────────
-# Enforce strict origin whitelisting: no wildcard '*' in production or with credentials
-configured_origins = [o.strip() for o in settings.cors_origins_list if o.strip()]
+# ── CORS Middleware (Open for Mobile App & Expo Go in Development) ─────────────
 if settings.is_production:
-    # Strictly remove any wildcard origin in production environments
+    configured_origins = [o.strip() for o in settings.cors_origins_list if o.strip()]
     strict_origins = [o for o in configured_origins if o != "*"]
     if not strict_origins:
         strict_origins = ["https://krishisahayak.gov.in"]
-        logger.warning("No explicit CORS origins set in production; defaulted to strict domain.")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=strict_origins,
+        allow_credentials=True,
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["Content-Type", "Authorization", "Accept", "X-Requested-With"],
+    )
 else:
-    dev_defaults = [
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "http://localhost:8081",
-        "http://localhost:19006",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:8081",
-        "http://127.0.0.1:19006",
-    ]
-    strict_origins = list(set(configured_origins + dev_defaults))
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=strict_origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization", "Accept", "X-Requested-With"],
-)
+    # Development: Open CORS allows physical phones, Expo Go, LAN IPs, and tunnels
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 # ── Request Timing Middleware ──────────────────────────────────────────────────

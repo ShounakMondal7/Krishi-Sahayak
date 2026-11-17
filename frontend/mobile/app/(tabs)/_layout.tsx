@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs } from 'expo-router';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { storageService, OnboardingView } from '../../services/storage';
 import { LanguageCode, getTranslation } from '../../services/i18n';
@@ -100,10 +100,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: '#15803D',
-        tabBarInactiveTintColor: '#64748B',
-        tabBarLabelStyle: styles.tabLabel,
+        tabBarItemStyle: styles.tabBarItem,
       }}
     >
       <Tabs.Screen
@@ -111,15 +110,24 @@ export default function TabLayout() {
         options={{
           title: getTranslation(currentLang, 'tabAsk') || 'Ask Query',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabAsk') || 'Ask Query'}, Tab 1 of 3`,
-          tabBarIcon: ({ color, focused }) => (
-            <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
-              <MaterialCommunityIcons
-                name={(focused ? 'comment-text' : 'comment-text-outline') as any}
-                color={focused ? '#15803D' : color}
-                size={24}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => {
+            const title = getTranslation(currentLang, 'tabAsk') || 'Ask Query';
+            return (
+              <View style={focused ? styles.pillActive : styles.pillInactive}>
+                <MaterialCommunityIcons
+                  name={(focused ? 'comment-text' : 'comment-text-outline') as any}
+                  color={focused ? '#15803D' : '#64748B'}
+                  size={focused ? 18 : 22}
+                />
+                <Text
+                  style={focused ? styles.pillTextActive : styles.pillTextInactive}
+                  numberOfLines={1}
+                >
+                  {title}
+                </Text>
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -127,15 +135,24 @@ export default function TabLayout() {
         options={{
           title: getTranslation(currentLang, 'tabPhoto') || 'Crop Photo',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabPhoto') || 'Crop Photo'}, Tab 2 of 3`,
-          tabBarIcon: ({ color, focused }) => (
-            <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
-              <MaterialCommunityIcons
-                name={focused ? 'camera-iris' : 'camera-outline'}
-                color={focused ? '#15803D' : color}
-                size={24}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => {
+            const title = getTranslation(currentLang, 'tabPhoto') || 'Crop Photo';
+            return (
+              <View style={focused ? styles.pillActive : styles.pillInactive}>
+                <MaterialCommunityIcons
+                  name={(focused ? 'camera-iris' : 'camera-outline') as any}
+                  color={focused ? '#15803D' : '#64748B'}
+                  size={focused ? 18 : 22}
+                />
+                <Text
+                  style={focused ? styles.pillTextActive : styles.pillTextInactive}
+                  numberOfLines={1}
+                >
+                  {title}
+                </Text>
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -143,15 +160,24 @@ export default function TabLayout() {
         options={{
           title: getTranslation(currentLang, 'tabHistory') || 'History',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabHistory') || 'History'}, Tab 3 of 3`,
-          tabBarIcon: ({ color, focused }) => (
-            <View style={[styles.iconWrapper, focused && styles.iconWrapperActive]}>
-              <MaterialCommunityIcons
-                name={focused ? 'history' : 'clock-outline'}
-                color={focused ? '#15803D' : color}
-                size={24}
-              />
-            </View>
-          ),
+          tabBarIcon: ({ focused }) => {
+            const title = getTranslation(currentLang, 'tabHistory') || 'History';
+            return (
+              <View style={focused ? styles.pillActive : styles.pillInactive}>
+                <MaterialCommunityIcons
+                  name={(focused ? 'history' : 'clock-outline') as any}
+                  color={focused ? '#15803D' : '#64748B'}
+                  size={focused ? 18 : 22}
+                />
+                <Text
+                  style={focused ? styles.pillTextActive : styles.pillTextInactive}
+                  numberOfLines={1}
+                >
+                  {title}
+                </Text>
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -175,30 +201,49 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopColor: '#E2E8F0',
     borderTopWidth: 1.5,
-    paddingBottom: 8,
-    paddingTop: 8,
-    height: 72,
+    height: 68,
+    paddingTop: 6,
+    paddingBottom: 6,
     elevation: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.06,
     shadowRadius: 4,
   },
-  tabLabel: {
-    fontSize: 13,
-    fontWeight: '700',
-    marginTop: 2,
-  },
-  iconWrapper: {
-    alignItems: 'center',
+  tabBarItem: {
     justifyContent: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 4,
-    borderRadius: 14,
+    alignItems: 'center',
   },
-  iconWrapperActive: {
+  pillActive: {
     backgroundColor: '#E8F5E9',
     borderWidth: 1.5,
     borderColor: '#81C784',
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    alignSelf: 'center',
+  },
+  pillInactive: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    gap: 2,
+    alignSelf: 'center',
+  },
+  pillTextActive: {
+    color: '#15803D',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  pillTextInactive: {
+    color: '#64748B',
+    fontSize: 11,
+    fontWeight: '600',
   },
 });

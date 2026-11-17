@@ -25,6 +25,9 @@ async function isSecureStoreAvailable(): Promise<boolean> {
   }
 }
 
+// In-memory fallback cache for restricted hardware / Expo Go storage sandbox exceptions
+const _inMemoryStore: Record<string, string> = {};
+
 /**
  * Reads encrypted item from SecureStore.
  * Auto-migrates legacy unencrypted AsyncStorage data if found.
@@ -42,12 +45,15 @@ async function getSecureItem(key: string): Promise<string | null> {
         await SecureStore.setItemAsync(key, legacyValue).catch(() => {});
         return legacyValue;
       }
-      return null;
     }
   } catch {
     // Fallback to AsyncStorage
   }
-  return await AsyncStorage.getItem(key);
+  try {
+    const val = await AsyncStorage.getItem(key);
+    if (val !== null) return val;
+  } catch {}
+  return _inMemoryStore[key] || null;
 }
 
 /**
@@ -55,6 +61,7 @@ async function getSecureItem(key: string): Promise<string | null> {
  * with robust secondary AsyncStorage persistence for resilient offline/emulator access.
  */
 async function setSecureItem(key: string, value: string): Promise<void> {
+  _inMemoryStore[key] = value;
   try {
     const isAvailable = await isSecureStoreAvailable();
     if (isAvailable) {
@@ -63,20 +70,25 @@ async function setSecureItem(key: string, value: string): Promise<void> {
   } catch {
     // Fallback
   }
-  await AsyncStorage.setItem(key, value);
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch {}
 }
 
 /**
  * Securely deletes item from both SecureStore and AsyncStorage.
  */
 async function removeSecureItem(key: string): Promise<void> {
+  delete _inMemoryStore[key];
   try {
     const isAvailable = await isSecureStoreAvailable();
     if (isAvailable) {
       await SecureStore.deleteItemAsync(key).catch(() => {});
     }
   } catch {}
-  await AsyncStorage.removeItem(key).catch(() => {});
+  try {
+    await AsyncStorage.removeItem(key).catch(() => {});
+  } catch {}
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────

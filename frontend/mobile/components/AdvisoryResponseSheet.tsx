@@ -20,9 +20,11 @@ import {
   Modal,
   Animated,
   Platform,
+  Linking,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import { audioQueue, useAudioQueue } from '../services/audioQueue';
 import { safeHaptics } from '../services/haptics';
 import { LanguageCode, getTranslation } from '../services/i18n';
 import { BASE_URL } from '../services/api';
@@ -64,13 +66,37 @@ interface AdvisoryResponseSheetProps {
 }
 
 
-interface ParsedAdvisoryItem {
+export interface MarkdownTableBlock {
+  type: 'table';
+  headers: string[];
+  rows: string[][];
+}
+
+export interface MarkdownItemBlock {
+  type: 'item';
   label?: string;
   value: string;
   isDosage?: boolean;
 }
 
-interface ParsedAdvisorySection {
+export interface MarkdownNumberedBlock {
+  type: 'numbered';
+  number: string;
+  value: string;
+}
+
+export interface MarkdownParagraphBlock {
+  type: 'paragraph';
+  value: string;
+}
+
+export type MarkdownBlock =
+  | MarkdownTableBlock
+  | MarkdownItemBlock
+  | MarkdownNumberedBlock
+  | MarkdownParagraphBlock;
+
+export interface ParsedAdvisorySection {
   id: 'diagnosis' | 'organic' | 'chemical' | 'safety' | 'market_status' | 'mandi_rates' | 'selling_advice' | 'market_support' | 'other';
   cleanTitle: string;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
@@ -78,129 +104,234 @@ interface ParsedAdvisorySection {
   bgColor: string;
   borderColor: string;
   badgeBg: string;
-  items: ParsedAdvisoryItem[];
+  blocks: MarkdownBlock[];
 }
 
-function parseAdvisorySections(raw: string): ParsedAdvisorySection[] {
-  if (!raw || !raw.trim()) return [];
-  const headerPat = /(###\s*[^#\n]*\d+\.[^\n]+)/g;
-  const parts = raw.split(headerPat).map((s) => s.trim()).filter(Boolean);
-  if (parts.length <= 1) return [];
+export interface ParsedAdvisoryDocument {
+  executiveSummary: string | null;
+  sections: ParsedAdvisorySection[];
+}
 
-  const sections: ParsedAdvisorySection[] = [];
+function parseMarkdownBlocks(text: string): MarkdownBlock[] {
+  const blocks: MarkdownBlock[] = [];
+  const lines = text.split('\n');
+  let i = 0;
 
-  for (let i = 0; i < parts.length; i++) {
-    if (parts[i].startsWith('###')) {
-      const rawHeader = parts[i];
-      const body = (i + 1 < parts.length && !parts[i + 1].startsWith('###')) ? parts[i + 1] : '';
-      if (!parts[i + 1]?.startsWith('###')) i++;
+  while (i < lines.length) {
+    const rawLine = lines[i].trim();
+    if (!rawLine) {
+      i++;
+      continue;
+    }
 
-      let id: ParsedAdvisorySection['id'] = 'other';
-      let icon: keyof typeof MaterialCommunityIcons.glyphMap = 'leaf';
-      let accentColor = '#475569';
-      let bgColor = '#F8FAFC';
-      let borderColor = '#E2E8F0';
-      let badgeBg = '#F1F5F9';
-
-      if (/Market|Commodity|📊/i.test(rawHeader)) {
-        id = 'market_status';
-        icon = 'chart-line';
-        accentColor = '#0284C7';
-        bgColor = '#F0F9FF';
-        borderColor = '#BAE6FD';
-        badgeBg = '#E0F2FE';
-      } else if (/Mandi|Rate|Rates|Estimated|💰/i.test(rawHeader)) {
-        id = 'mandi_rates';
-        icon = 'currency-inr';
-        accentColor = '#D97706';
-        bgColor = '#FFFBEB';
-        borderColor = '#FDE68A';
-        badgeBg = '#FEF3C7';
-      } else if (/Selling|Storage|Guidelines|🚛/i.test(rawHeader)) {
-        id = 'selling_advice';
-        icon = 'truck-delivery-outline';
-        accentColor = '#16A34A';
-        bgColor = '#F0FDF4';
-        borderColor = '#BBF7D0';
-        badgeBg = '#DCFCE7';
-      } else if (/Gateway|Support|Portal|🏛️/i.test(rawHeader)) {
-        id = 'market_support';
-        icon = 'bank-outline';
-        accentColor = '#7C3AED';
-        bgColor = '#F5F3FF';
-        borderColor = '#DDD6FE';
-        badgeBg = '#EDE9FE';
-      } else if (/1\.|Diagnosis|🛑|നിർണ്ണയം|निदान/i.test(rawHeader)) {
-        id = 'diagnosis';
-        icon = 'alert-decagram';
-        accentColor = '#DC2626';
-        bgColor = '#FEF2F2';
-        borderColor = '#FCA5A5';
-        badgeBg = '#FEE2E2';
-      } else if (/2\.|Organic|🌿|ജൈവ|जैविक/i.test(rawHeader)) {
-        id = 'organic';
-        icon = 'sprout';
-        accentColor = '#16A34A';
-        bgColor = '#F0FDF4';
-        borderColor = '#86EFAC';
-        badgeBg = '#DCFCE7';
-      } else if (/3\.|Chemical|🧪|രാസ|रासायनिक/i.test(rawHeader)) {
-        id = 'chemical';
-        icon = 'flask-round-bottom';
-        accentColor = '#0284C7';
-        bgColor = '#F0F9FF';
-        borderColor = '#7DD3FC';
-        badgeBg = '#E0F2FE';
-      } else if (/4\.|Safety|⚠️|സുരക്ഷ|सुरक्षा/i.test(rawHeader)) {
-        id = 'safety';
-        icon = 'shield-alert';
-        accentColor = '#D97706';
-        bgColor = '#FFFBEB';
-        borderColor = '#FCD34D';
-        badgeBg = '#FEF3C7';
+    // Markdown Table Check: line begins and ends with |
+    if (rawLine.startsWith('|') && rawLine.endsWith('|') && rawLine.includes('|')) {
+      const tableLines: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+        tableLines.push(lines[i].trim());
+        i++;
       }
 
-      const cleanTitle = rawHeader
-        .replace(/^###\s*/, '')
-        .replace(/^[🛑🌿🧪⚠️📊💰🚛🏛️\u26a0\ufe0f\s]+/, '')
-        .trim();
+      if (tableLines.length >= 2) {
+        const headerRow = tableLines[0]
+          .split('|')
+          .slice(1, -1)
+          .map((c) => c.trim().replace(/\*\*/g, ''));
 
-      const items: ParsedAdvisoryItem[] = [];
-      const lines = body.split('\n').map((l) => l.trim()).filter(Boolean);
-      for (const line of lines) {
-        const bulletMatch = line.match(/^[-*•]?\s*\*\*([^*]+)\*\*(?:\s*:\s*|\s*—\s*|\s*-\s*)(.*)$/);
-        if (bulletMatch) {
-          const label = bulletMatch[1].replace(/\*\*/g, '').trim();
-          const value = bulletMatch[2].trim();
-          const isDosage = /dosage|15-liter|15l|pump/i.test(label) || /15-liter|15l|knapsack/i.test(value);
-          items.push({ label, value, isDosage });
-        } else {
-          const cleanLine = line.replace(/^[-*•]\s*/, '').trim();
-          const isDosage = /15-liter|15l|knapsack/i.test(cleanLine);
-          items.push({ value: cleanLine, isDosage });
+        let startRowIdx = 1;
+        if (startRowIdx < tableLines.length && /^\|[\s\-:]+(\|[\s\-:]+)+\|$/.test(tableLines[1])) {
+          startRowIdx = 2;
+        }
+
+        const dataRows: string[][] = [];
+        for (let r = startRowIdx; r < tableLines.length; r++) {
+          const cells = tableLines[r]
+            .split('|')
+            .slice(1, -1)
+            .map((c) => c.trim());
+          if (cells.some((c) => c.length > 0)) {
+            dataRows.push(cells);
+          }
+        }
+
+        if (headerRow.length > 0) {
+          blocks.push({
+            type: 'table',
+            headers: headerRow,
+            rows: dataRows,
+          });
+          continue;
         }
       }
-
-      sections.push({
-        id,
-        cleanTitle: cleanTitle || rawHeader.replace(/^###\s*/, '').trim(),
-        icon,
-        accentColor,
-        bgColor,
-        borderColor,
-        badgeBg,
-        items,
-      });
     }
+
+    // Bullet item with bold key-value: - **Label:** Value
+    const bulletMatch = rawLine.match(/^[-*•]?\s*\*\*([^*]+)\*\*(?:\s*:\s*|\s*—\s*|\s*-\s*)(.*)$/);
+    if (bulletMatch) {
+      const label = bulletMatch[1].replace(/\*\*/g, '').trim();
+      const value = bulletMatch[2].trim();
+      const isDosage = /dosage|15-liter|15l|pump|knapsack/i.test(label) || /15-liter|15l|knapsack/i.test(value);
+      blocks.push({
+        type: 'item',
+        label,
+        value,
+        isDosage,
+      });
+      i++;
+      continue;
+    }
+
+    // Numbered step: 1. Step text or 1) Step text
+    const numMatch = rawLine.match(/^(\d+)[.)]\s+(.*)$/);
+    if (numMatch) {
+      blocks.push({
+        type: 'numbered',
+        number: numMatch[1],
+        value: numMatch[2].trim(),
+      });
+      i++;
+      continue;
+    }
+
+    // Standard bullet without bold label: - Some text
+    if (/^[-*•]\s+/.test(rawLine)) {
+      const cleanLine = rawLine.replace(/^[-*•]\s+/, '').trim();
+      const isDosage = /15-liter|15l|knapsack|pump/i.test(cleanLine);
+      blocks.push({
+        type: 'item',
+        value: cleanLine,
+        isDosage,
+      });
+      i++;
+      continue;
+    }
+
+    // Regular paragraph or note
+    blocks.push({
+      type: 'paragraph',
+      value: rawLine.replace(/^\*|\*$/g, '').trim(),
+    });
+    i++;
   }
 
-  return sections;
+  return blocks;
 }
 
-/**
- * Helper to parse inline markdown **bold** segments into styled Text nodes.
- * Avoids rendering literal asterisks on screen.
- */
+function parseAdvisoryDocument(raw: string): ParsedAdvisoryDocument {
+  if (!raw || !raw.trim()) {
+    return { executiveSummary: null, sections: [] };
+  }
+
+  // Split on ### headings
+  const headingSplitRegex = /(?=^###\s+)/m;
+  const rawParts = raw.split(headingSplitRegex).map((p) => p.trim()).filter(Boolean);
+
+  let executiveSummary: string | null = null;
+  const sections: ParsedAdvisorySection[] = [];
+
+  for (const part of rawParts) {
+    if (!part.startsWith('###')) {
+      // Content before any heading is the Executive Summary!
+      if (!executiveSummary) {
+        executiveSummary = part;
+      } else {
+        executiveSummary += '\n\n' + part;
+      }
+      continue;
+    }
+
+    // First line is heading: ### [Emoji] Title
+    const firstNewline = part.indexOf('\n');
+    const rawHeader = firstNewline !== -1 ? part.slice(0, firstNewline).trim() : part.trim();
+    const body = firstNewline !== -1 ? part.slice(firstNewline + 1).trim() : '';
+
+    let id: ParsedAdvisorySection['id'] = 'other';
+    let icon: keyof typeof MaterialCommunityIcons.glyphMap = 'leaf';
+    let accentColor = '#475569';
+    let bgColor = '#F8FAFC';
+    let borderColor = '#E2E8F0';
+    let badgeBg = '#F1F5F9';
+
+    if (/Market|Commodity|📊/i.test(rawHeader)) {
+      id = 'market_status';
+      icon = 'chart-line';
+      accentColor = '#0284C7';
+      bgColor = '#F0F9FF';
+      borderColor = '#BAE6FD';
+      badgeBg = '#E0F2FE';
+    } else if (/Mandi|Rate|Rates|Estimated|💰/i.test(rawHeader)) {
+      id = 'mandi_rates';
+      icon = 'currency-inr';
+      accentColor = '#D97706';
+      bgColor = '#FFFBEB';
+      borderColor = '#FDE68A';
+      badgeBg = '#FEF3C7';
+    } else if (/Selling|Storage|Guidelines|🚛/i.test(rawHeader)) {
+      id = 'selling_advice';
+      icon = 'truck-delivery-outline';
+      accentColor = '#16A34A';
+      bgColor = '#F0FDF4';
+      borderColor = '#BBF7D0';
+      badgeBg = '#DCFCE7';
+    } else if (/Gateway|Support|Portal|🏛️/i.test(rawHeader)) {
+      id = 'market_support';
+      icon = 'bank-outline';
+      accentColor = '#7C3AED';
+      bgColor = '#F5F3FF';
+      borderColor = '#DDD6FE';
+      badgeBg = '#EDE9FE';
+    } else if (/1\.|Diagnosis|🛑|നിർണ്ണയം|निदान|Symptoms|🔍/i.test(rawHeader)) {
+      id = 'diagnosis';
+      icon = 'alert-decagram';
+      accentColor = '#DC2626';
+      bgColor = '#FEF2F2';
+      borderColor = '#FCA5A5';
+      badgeBg = '#FEE2E2';
+    } else if (/2\.|Organic|🌿|ജൈവ|जैविक|Cultural/i.test(rawHeader)) {
+      id = 'organic';
+      icon = 'sprout';
+      accentColor = '#16A34A';
+      bgColor = '#F0FDF4';
+      borderColor = '#86EFAC';
+      badgeBg = '#DCFCE7';
+    } else if (/3\.|Chemical|🧪|രാസ|रासायनिक|Spray/i.test(rawHeader)) {
+      id = 'chemical';
+      icon = 'flask-round-bottom';
+      accentColor = '#0284C7';
+      bgColor = '#F0F9FF';
+      borderColor = '#7DD3FC';
+      badgeBg = '#E0F2FE';
+    } else if (/4\.|Safety|⚠️|സുരക്ഷ|सुरक्षा|Precaution|PHI/i.test(rawHeader)) {
+      id = 'safety';
+      icon = 'shield-alert';
+      accentColor = '#D97706';
+      bgColor = '#FFFBEB';
+      borderColor = '#FCD34D';
+      badgeBg = '#FEF3C7';
+    }
+
+    const cleanTitle = rawHeader
+      .replace(/^###\s*/, '')
+      .replace(/^[🛑🌿🧪⚠️📊💰🚛🏛️🔍\u26a0\ufe0f\s]+/, '')
+      .trim();
+
+    const blocks = parseMarkdownBlocks(body);
+
+    sections.push({
+      id,
+      cleanTitle: cleanTitle || rawHeader.replace(/^###\s*/, '').trim(),
+      icon,
+      accentColor,
+      bgColor,
+      borderColor,
+      badgeBg,
+      blocks,
+    });
+  }
+
+  return { executiveSummary, sections };
+}
+
 function renderFormattedText(text: string, baseStyle: any, boldStyle: any) {
   if (!text) return null;
   if (!text.includes('**')) {
@@ -240,16 +371,20 @@ export default function AdvisoryResponseSheet({
   onFollowUpSubmit,
   onSelectFollowUp,
 }: AdvisoryResponseSheetProps) {
-  const [audioPlaying, setAudioPlaying] = useState(false);
+  const {
+    isPlaying: audioPlaying,
+    isLoading: audioLoading,
+    statusText: audioStatusText,
+    currentPart,
+    totalParts,
+    playAdvisorySequence,
+    stopAndClearAll,
+  } = useAudioQueue();
   const [followUpText, setFollowUpText] = useState('');
   const [loadingCycleIndex, setLoadingCycleIndex] = useState(0);
 
   // Persistent ScrollView reference for auto-scrolling to top on new query
   const sheetScrollRef = useRef<ScrollView>(null);
-
-  // Task 1: Persistent HTMLAudioElement instance for Web & Sound for Native
-  const htmlAudioRef = useRef<any>(null);
-  const soundRef = useRef<Audio.Sound | null>(null);
 
   // Toast Notification state
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -285,6 +420,11 @@ export default function AdvisoryResponseSheet({
     t('translatingAdvice'),
     t('synthesizingAdvice'),
   ];
+
+  // Auto-scroll to top on question or loading change
+  useEffect(() => {
+    sheetScrollRef.current?.scrollTo({ y: 0, animated: true });
+  }, [question, loading]);
 
   // Cycling animation when loading
   useEffect(() => {
@@ -350,218 +490,26 @@ export default function AdvisoryResponseSheet({
 
   useEffect(() => {
     return () => {
-      if (htmlAudioRef.current) {
-        try {
-          htmlAudioRef.current.pause();
-          htmlAudioRef.current = null;
-        } catch {}
-      }
-      if (soundRef.current) {
-        soundRef.current.unloadAsync().catch(() => {});
-        soundRef.current = null;
-      }
+      stopAudio();
     };
   }, []);
 
-  const playAudio = async () => {
+  const playAudio = () => {
     if (!response?.query_id) {
       showToast('⚠️ Spoken advisory not ready yet for this query.');
       return;
     }
-
-    const audioUrl = `${BASE_URL}/api/v1/query/${response.query_id}/audio?lang=${currentLang}`;
-
-    // ── WEB EXECUTION: Persistent HTMLAudioElement with strict event listeners & Web Speech Fallback ──
-    if (Platform.OS === 'web' && typeof window !== 'undefined' && typeof (window as any).Audio !== 'undefined') {
-      try {
-        if (!htmlAudioRef.current) {
-          htmlAudioRef.current = new (window as any).Audio();
-        }
-        const audio = htmlAudioRef.current;
-
-        // Reset previous state and remove any dangling callbacks
-        audio.pause();
-        audio.currentTime = 0;
-        audio.onplaying = null;
-        audio.onended = null;
-        audio.onerror = null;
-        audio.onpause = null;
-
-        // Ensure isPlaying state ONLY toggles to true after 'playing' event fires
-        audio.onplaying = () => {
-          setAudioPlaying(true);
-        };
-        // Reset to false on 'ended', 'pause', or 'error' events
-        audio.onended = () => {
-          setAudioPlaying(false);
-        };
-        audio.onpause = () => {
-          setAudioPlaying(false);
-        };
-        audio.onerror = () => {
-          console.warn('Audio tag failed to load stream, switching to Web Speech Synthesis fallback.');
-          speakWithWebSpeech();
-        };
-
-        audio.src = audioUrl;
-        audio.load();
-
-        safeHaptics.impactMedium();
-
-        // Wrap audio.play() in a standard promise .catch() to handle DOMException errors
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((domErr: any) => {
-            console.warn('HTMLAudioElement play() DOMException, switching to Web Speech Synthesis:', domErr);
-            speakWithWebSpeech();
-          });
-        }
-      } catch (err) {
-        console.error('HTMLAudioElement error, switching to Web Speech Synthesis:', err);
-        speakWithWebSpeech();
-      }
-      return;
-    }
-
-    // ── NATIVE EXECUTION (iOS / Android using expo-av) ──
-    try {
-      if (soundRef.current) {
-        await soundRef.current.unloadAsync().catch(() => {});
-        soundRef.current = null;
-      }
-      safeHaptics.impactMedium();
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: audioUrl },
-        { shouldPlay: false }
-      );
-      soundRef.current = sound;
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (!status.isLoaded) {
-          if ((status as any).error) {
-            setAudioPlaying(false);
-            showToast('⚠️ Failed to load audio on device.');
-          }
-          return;
-        }
-        if (status.isPlaying) {
-          setAudioPlaying(true);
-        } else if (status.didJustFinish) {
-          setAudioPlaying(false);
-        }
-      });
-      await sound.playAsync().catch(() => {
-        setAudioPlaying(false);
-        showToast('⚠️ Audio playback failed.');
-      });
-    } catch {
-      setAudioPlaying(false);
-      showToast('⚠️ Audio service temporarily unavailable.');
-    }
+    playAdvisorySequence(response.query_id, currentLang, displayAnswer);
   };
 
-  const speakWithWebSpeech = () => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      setAudioPlaying(false);
-      showToast('⚠️ Audio playback not supported in this browser.');
-      return;
-    }
-
-    try {
-      window.speechSynthesis.cancel();
-
-      // Clean text for speech (strip markdown characters and linebreaks)
-      const textToSpeak = displayAnswer
-        .replace(/[#*`_■]/g, '')
-        .replace(/\n+/g, '. ')
-        .trim();
-
-      if (!textToSpeak) {
-        setAudioPlaying(false);
-        return;
-      }
-
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
-      const langMap: Record<string, string> = {
-        hi: 'hi-IN',
-        ml: 'ml-IN',
-        ta: 'ta-IN',
-        te: 'te-IN',
-        kn: 'kn-IN',
-        bn: 'bn-IN',
-        mr: 'mr-IN',
-        gu: 'gu-IN',
-        pa: 'pa-IN',
-        or: 'or-IN',
-        as: 'as-IN',
-        en: 'en-IN',
-      };
-      utterance.lang = langMap[currentLang] || 'en-IN';
-
-      // Pick matching accent voice if available in browser
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        const voices = window.speechSynthesis.getVoices();
-        if (voices && voices.length > 0) {
-          const targetPrefix = currentLang.toLowerCase();
-          const matchedVoice = voices.find(
-            (v) =>
-              v.lang.toLowerCase().startsWith(targetPrefix) ||
-              v.lang.toLowerCase().replace('_', '-').startsWith(targetPrefix)
-          );
-          if (matchedVoice) {
-            utterance.voice = matchedVoice;
-          }
-        }
-      }
-
-      utterance.rate = 0.95;
-      utterance.pitch = 1.0;
-
-      utterance.onstart = () => {
-        setAudioPlaying(true);
-      };
-      utterance.onend = () => {
-        setAudioPlaying(false);
-      };
-      utterance.onerror = (e) => {
-        console.warn('SpeechSynthesis error:', e);
-        setAudioPlaying(false);
-      };
-
-      safeHaptics.impactMedium();
-      window.speechSynthesis.speak(utterance);
-    } catch (err) {
-      console.error('SpeechSynthesis error:', err);
-      setAudioPlaying(false);
-    }
-  };
-
-  const stopAudio = async () => {
-    if (Platform.OS === 'web' && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.cancel();
-      } catch {}
-    }
-    if (htmlAudioRef.current) {
-      try {
-        htmlAudioRef.current.pause();
-        htmlAudioRef.current.currentTime = 0;
-      } catch {
-        // ignore pause error
-      }
-    }
-    if (soundRef.current) {
-      try {
-        await soundRef.current.stopAsync();
-        await soundRef.current.unloadAsync();
-      } catch {
-        // ignore unload error
-      }
-      soundRef.current = null;
-    }
-    setAudioPlaying(false);
+  const stopAudio = () => {
+    stopAndClearAll();
   };
 
   const handleToggleAudio = () => {
+    if (audioLoading) {
+      return; // Debounce duplicate clicks while preparing voice
+    }
     if (audioPlaying) {
       stopAudio();
     } else {
@@ -572,7 +520,9 @@ export default function AdvisoryResponseSheet({
   const handleSendFollowUp = () => {
     const text = followUpText.trim();
     if (!text) return;
+    stopAudio();
     safeHaptics.impactMedium();
+    sheetScrollRef.current?.scrollTo({ y: 0, animated: true });
     if (onSelectFollowUp) {
       onSelectFollowUp(text);
     } else if (onFollowUpSubmit) {
@@ -674,8 +624,8 @@ export default function AdvisoryResponseSheet({
     : '';
 
 
-  const parsedSections = useMemo(() => {
-    return parseAdvisorySections(displayAnswer);
+  const parsedDoc = useMemo(() => {
+    return parseAdvisoryDocument(displayAnswer);
   }, [displayAnswer]);
 
   const followUpQuestions = useMemo(() => {
@@ -725,7 +675,9 @@ export default function AdvisoryResponseSheet({
   }, [response?.follow_up_questions, response?.intent, currentLang]);
 
   const handleFollowUpChipPress = (item: string) => {
+    stopAudio();
     safeHaptics.impactMedium();
+    sheetScrollRef.current?.scrollTo({ y: 0, animated: true });
     if (onSelectFollowUp) {
       onSelectFollowUp(item);
     } else if (onFollowUpSubmit) {
@@ -765,7 +717,10 @@ export default function AdvisoryResponseSheet({
       onRequestClose={onClose}
     >
       <View style={styles.modalBackdrop}>
-        <View style={styles.bottomSheetContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.bottomSheetContainer}
+        >
           {/* Sheet Header Handle & Close Bar */}
           <View style={styles.sheetTopBar}>
             <View style={styles.sheetHandlePill} />
@@ -792,7 +747,7 @@ export default function AdvisoryResponseSheet({
                 accessibilityHint="Closes the advisory response sheet"
               >
                 <MaterialCommunityIcons name="arrow-left" size={18} color="#15803D" />
-                <Text allowFontScaling={true} style={styles.sheetBackText}>Back</Text>
+                <Text allowFontScaling={true} style={styles.sheetBackText}>{t('backBtn') || 'Back'}</Text>
               </TouchableOpacity>
 
               <View style={styles.sheetHeaderTitleGroup}>
@@ -801,7 +756,7 @@ export default function AdvisoryResponseSheet({
                 </View>
                 <View>
                   <Text allowFontScaling={true} style={styles.sheetHeaderTitle}>Krishi Sahayak Advisory</Text>
-                  <Text allowFontScaling={true} style={styles.sheetHeaderSub}>ICAR Grounded • Live Response</Text>
+                  <Text allowFontScaling={true} style={styles.sheetHeaderSub}>{t('icarGroundedLiveResponse') || 'ICAR Grounded • Live Response'}</Text>
                 </View>
               </View>
             </View>
@@ -881,9 +836,13 @@ export default function AdvisoryResponseSheet({
                       />
                       <Text allowFontScaling={true} style={styles.audioPlayerTitle}>{t('audioVisualizerLabel')}</Text>
                     </View>
-                    <View style={[styles.audioStatusBadge, audioPlaying && styles.audioStatusBadgeActive]}>
-                      <Text allowFontScaling={true} style={[styles.audioStatusText, audioPlaying && styles.audioStatusTextActive]}>
-                        {audioPlaying ? '▶ Playing Audio' : 'Ready'}
+                    <View style={[styles.audioStatusBadge, (audioPlaying || audioLoading) && styles.audioStatusBadgeActive]}>
+                      <Text allowFontScaling={true} style={[styles.audioStatusText, (audioPlaying || audioLoading) && styles.audioStatusTextActive]}>
+                        {audioLoading
+                          ? (t('preparingVoice') || '⏳ Preparing Voice...')
+                          : audioPlaying
+                          ? (t('playingAudio') || '▶ Playing Audio')
+                          : (t('audioReady') || 'Ready')}
                       </Text>
                     </View>
                   </View>
@@ -906,21 +865,40 @@ export default function AdvisoryResponseSheet({
 
                   {/* Play / Stop Action Button */}
                   <TouchableOpacity
-                    style={[styles.playToggleBtn, audioPlaying && styles.playToggleBtnStop]}
+                    style={[
+                      styles.playToggleBtn,
+                      audioPlaying && styles.playToggleBtnStop,
+                      audioLoading && styles.playToggleBtnLoading,
+                    ]}
                     onPress={handleToggleAudio}
                     activeOpacity={0.85}
+                    disabled={audioLoading}
                     accessibilityRole="button"
-                    accessibilityLabel={audioPlaying ? (t('stopAnswerBtn') || "Stop Audio") : (t('playAnswerBtn') || "Play Audio")}
+                    accessibilityLabel={
+                      audioLoading
+                        ? 'Preparing Voice...'
+                        : audioPlaying
+                        ? t('stopAnswerBtn') || 'Stop Audio'
+                        : t('playAnswerBtn') || 'Play Audio'
+                    }
                     accessibilityHint="Toggles spoken audio narration of the advisory"
-                    accessibilityState={{ selected: audioPlaying }}
+                    accessibilityState={{ selected: audioPlaying, busy: audioLoading }}
                   >
-                    <MaterialCommunityIcons
-                      name={audioPlaying ? 'stop-circle' : 'play-circle'}
-                      size={26}
-                      color="#FFFFFF"
-                    />
+                    {audioLoading ? (
+                      <ActivityIndicator size="small" color="#FFFFFF" style={{ marginRight: 6 }} />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name={audioPlaying ? 'stop-circle' : 'play-circle'}
+                        size={26}
+                        color="#FFFFFF"
+                      />
+                    )}
                     <Text allowFontScaling={true} style={styles.playToggleBtnText}>
-                      {audioPlaying ? t('stopAnswerBtn') : t('playAnswerBtn')}
+                      {audioLoading
+                        ? '⏳ Preparing Voice...'
+                        : audioPlaying
+                        ? t('stopAnswerBtn') || 'Stop Audio'
+                        : t('playAnswerBtn')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -974,10 +952,26 @@ export default function AdvisoryResponseSheet({
                   </View>
                 </View>
 
-                {/* ── WRITTEN ADVISORY TEXT / STRUCTURED FIELD CARDS ── */}
-                {parsedSections.length > 0 ? (
+                {/* ── WRITTEN ADVISORY TEXT / CHATGPT-GRADE MARKDOWN BLOCKS ── */}
+                {parsedDoc.executiveSummary && (
+                  <View style={styles.executiveSummaryCard}>
+                    <View style={styles.execSummaryHeaderRow}>
+                      <View style={styles.execSummaryIconCircle}>
+                        <MaterialCommunityIcons name="lightning-bolt" size={16} color="#15803D" />
+                      </View>
+                      <Text style={styles.execSummaryLabel} allowFontScaling={true}>
+                        EXECUTIVE ADVISORY SUMMARY
+                      </Text>
+                    </View>
+                    <Text style={[styles.execSummaryText, { fontSize: getCardBodyFontSize() + 1 }]} allowFontScaling={true}>
+                      {renderFormattedText(parsedDoc.executiveSummary, styles.execSummaryText, styles.execSummaryBold)}
+                    </Text>
+                  </View>
+                )}
+
+                {parsedDoc.sections.length > 0 ? (
                   <View style={styles.structuredCardsContainer}>
-                    {parsedSections.map((sec, idx) => (
+                    {parsedDoc.sections.map((sec, idx) => (
                       <View
                         key={idx}
                         style={[
@@ -1005,31 +999,109 @@ export default function AdvisoryResponseSheet({
                         </View>
 
                         <View style={styles.fieldCardItemsList}>
-                          {sec.items.map((item, itemIdx) => {
-                            if (item.isDosage) {
+                          {sec.blocks.map((block, blockIdx) => {
+                            // 1. Markdown Comparison Table
+                            if (block.type === 'table') {
                               return (
-                                <View key={itemIdx} style={styles.knapsackDosageBox}>
+                                <View key={`tbl-${blockIdx}`} style={styles.tableWrapper}>
+                                  <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.tableScroll}>
+                                    <View style={styles.tableContainer}>
+                                      {/* Header Row */}
+                                      <View style={styles.tableHeaderRow}>
+                                        {block.headers.map((hdr, hIdx) => (
+                                          <View
+                                            key={`th-${hIdx}`}
+                                            style={[styles.tableCell, styles.tableHeaderCell, hIdx === 0 && styles.tableFirstCell]}
+                                          >
+                                            <Text style={styles.tableHeaderText} allowFontScaling={true}>
+                                              {hdr}
+                                            </Text>
+                                          </View>
+                                        ))}
+                                      </View>
+                                      {/* Data Rows */}
+                                      {block.rows.map((row, rIdx) => (
+                                        <View
+                                          key={`tr-${rIdx}`}
+                                          style={[styles.tableDataRow, rIdx % 2 === 1 && styles.tableDataRowAlt]}
+                                        >
+                                          {row.map((cell, cIdx) => (
+                                            <View
+                                              key={`td-${cIdx}`}
+                                              style={[styles.tableCell, cIdx === 0 && styles.tableFirstCell]}
+                                            >
+                                              <Text style={styles.tableCellText} allowFontScaling={true}>
+                                                {renderFormattedText(cell, styles.tableCellText, styles.tableCellTextBold)}
+                                              </Text>
+                                            </View>
+                                          ))}
+                                        </View>
+                                      ))}
+                                    </View>
+                                  </ScrollView>
+                                </View>
+                              );
+                            }
+
+                            // 2. Numbered Step Row
+                            if (block.type === 'numbered') {
+                              return (
+                                <View key={`num-${blockIdx}`} style={styles.numberedRow}>
+                                  <View style={[styles.numberedBadge, { backgroundColor: sec.accentColor }]}>
+                                    <Text style={styles.numberedBadgeText} allowFontScaling={true}>
+                                      {block.number}
+                                    </Text>
+                                  </View>
+                                  <Text
+                                    allowFontScaling={true}
+                                    style={[styles.fieldCardItemValue, { fontSize: getCardBodyFontSize(), flex: 1 }]}
+                                  >
+                                    {renderFormattedText(block.value, styles.fieldCardItemValue, styles.fieldCardItemValueBold)}
+                                  </Text>
+                                </View>
+                              );
+                            }
+
+                            // 3. Regular Paragraph Block
+                            if (block.type === 'paragraph') {
+                              return (
+                                <View key={`para-${blockIdx}`} style={styles.paragraphBlock}>
+                                  <Text
+                                    allowFontScaling={true}
+                                    style={[styles.paragraphText, { fontSize: getCardBodyFontSize() }]}
+                                  >
+                                    {renderFormattedText(block.value, styles.paragraphText, styles.paragraphTextBold)}
+                                  </Text>
+                                </View>
+                              );
+                            }
+
+                            // 4. Knapsack Dosage Callout
+                            if (block.isDosage) {
+                              return (
+                                <View key={`item-${blockIdx}`} style={styles.knapsackDosageBox}>
                                   <View style={styles.knapsackIconRow}>
                                     <MaterialCommunityIcons name="gas-cylinder" size={20} color="#0284C7" />
                                     <Text
                                       allowFontScaling={true}
                                       style={[styles.knapsackLabel, { fontSize: getDosageFontSize() - 2 }]}
                                     >
-                                      {item.label ? item.label.replace(/\*\*/g, '') : '15-Liter Backpack Pump Dosage'}
+                                      {block.label ? block.label.replace(/\*\*/g, '') : '15-Liter Backpack Pump Dosage'}
                                     </Text>
                                   </View>
                                   <Text
                                     allowFontScaling={true}
                                     style={[styles.knapsackValue, { fontSize: getDosageFontSize() }]}
                                   >
-                                    {renderFormattedText(item.value, styles.knapsackValue, [styles.knapsackValue, { fontWeight: '900' }])}
+                                    {renderFormattedText(block.value, styles.knapsackValue, [styles.knapsackValue, { fontWeight: '900' }])}
                                   </Text>
                                 </View>
                               );
                             }
 
+                            // 5. Standard Bullet Item Row
                             return (
-                              <View key={itemIdx} style={styles.fieldCardItemRow}>
+                              <View key={`item-${blockIdx}`} style={styles.fieldCardItemRow}>
                                 <View
                                   style={[styles.fieldCardBulletDot, { backgroundColor: sec.accentColor }]}
                                 />
@@ -1037,10 +1109,10 @@ export default function AdvisoryResponseSheet({
                                   allowFontScaling={true}
                                   style={[styles.fieldCardItemText, { fontSize: getCardBodyFontSize() }]}
                                 >
-                                  {item.label ? (
-                                    <Text style={styles.fieldCardItemLabel}>{item.label.replace(/\*\*/g, '')}: </Text>
+                                  {block.label ? (
+                                    <Text style={styles.fieldCardItemLabel}>{block.label.replace(/\*\*/g, '')}: </Text>
                                   ) : null}
-                                  {renderFormattedText(item.value, styles.fieldCardItemValue, [styles.fieldCardItemValue, styles.fieldCardItemValueBold])}
+                                  {renderFormattedText(block.value, styles.fieldCardItemValue, styles.fieldCardItemValueBold)}
                                 </Text>
                               </View>
                             );
@@ -1076,7 +1148,7 @@ export default function AdvisoryResponseSheet({
                     <View style={styles.tactileSourcesBox}>
                       <View style={styles.sourcesHeaderRow}>
                         <MaterialCommunityIcons name="book-open-page-variant" size={18} color="#15803D" />
-                        <Text allowFontScaling={true} style={styles.sourcesHeading}>Verified ICAR Research Sources</Text>
+                        <Text allowFontScaling={true} style={styles.sourcesHeading}>{t('verifiedIcarResearchSources') || 'Verified ICAR Research Sources'}</Text>
                       </View>
                       <Text allowFontScaling={true} style={styles.sourcesSubHeading}>
                         Tap any document to inspect official research citation & grounding
@@ -1131,14 +1203,16 @@ export default function AdvisoryResponseSheet({
 
                   {/* 2. ACTIONABLE NEXT STEPS (Side-by-side Action Chips) */}
                   <View style={styles.actionStepsContainer}>
-                    <Text allowFontScaling={true} style={styles.actionStepsHeading}>⚡ Actionable Next Steps:</Text>
+                    <Text allowFontScaling={true} style={styles.actionStepsHeading}>⚡ {t('actionableNextSteps') || 'Actionable Next Steps:'}</Text>
                     {response.intent === 'MARKET_PRICE' || (response.market_context_used && !response.sources?.some(s => /crop_disease|fungi|pest/i.test(s))) ? (
                       <View style={styles.actionChipsRow}>
                         <TouchableOpacity
                           style={styles.actionChipSpray}
                           onPress={() => {
                             safeHaptics.impactLight();
-                            showToast('🌐 e-NAM Portal: enam.gov.in for live mandi auction bids');
+                            Linking.openURL('https://enam.gov.in').catch(() => {
+                              showToast('🌐 e-NAM Portal: enam.gov.in for live mandi auction bids');
+                            });
                           }}
                           activeOpacity={0.85}
                           accessibilityRole="button"
@@ -1156,7 +1230,9 @@ export default function AdvisoryResponseSheet({
                           style={styles.actionChipShop}
                           onPress={() => {
                             safeHaptics.impactLight();
-                            showToast('📞 Kisan Call Centre: 1800-180-1551 (Toll Free)');
+                            Linking.openURL('tel:18001801551').catch(() => {
+                              showToast('📞 Kisan Call Centre: 1800-180-1551 (Toll Free)');
+                            });
                           }}
                           activeOpacity={0.85}
                           accessibilityRole="button"
@@ -1211,7 +1287,7 @@ export default function AdvisoryResponseSheet({
                       <View style={styles.followUpHeaderRow}>
                         <MaterialCommunityIcons name="lightbulb-on-outline" size={18} color="#D97706" />
                         <Text allowFontScaling={true} style={styles.followUpChipsHeading}>
-                          Suggested Follow-Up Questions:
+                          {t('suggestedFollowUpQuestions') || 'Suggested Follow-Up Questions:'}
                         </Text>
                       </View>
                       <View style={styles.followUpChipsWrap}>
@@ -1235,7 +1311,7 @@ export default function AdvisoryResponseSheet({
                   {/* 3. VOICE-FIRST FLOATING FOLLOW-UP ACTION BAR */}
                   {(onFollowUpSubmit || onSelectFollowUp) && (
                     <View style={styles.voiceFollowUpSection}>
-                      <Text allowFontScaling={true} style={styles.voiceFollowUpHeading}>💬 Have a follow-up question?</Text>
+                      <Text allowFontScaling={true} style={styles.voiceFollowUpHeading}>💬 {t('haveAFollowUpQuestion') || 'Have a follow-up question?'}</Text>
 
                       <View style={styles.floatingActionBar}>
                         {/* Secondary inline text input (Left) */}
@@ -1251,17 +1327,23 @@ export default function AdvisoryResponseSheet({
                           accessibilityHint="Type your follow-up question"
                         />
 
-                        {followUpText.trim().length > 0 && (
-                          <TouchableOpacity
-                            style={styles.inlineSendBtn}
-                            onPress={handleSendFollowUp}
-                            activeOpacity={0.8}
-                            accessibilityRole="button"
-                            accessibilityLabel="Send question"
-                          >
-                            <MaterialCommunityIcons name="send" size={18} color="#15803D" />
-                          </TouchableOpacity>
-                        )}
+                        <TouchableOpacity
+                          style={[
+                            styles.inlineSendBtn,
+                            followUpText.trim().length === 0 && styles.inlineSendBtnDisabled,
+                          ]}
+                          onPress={handleSendFollowUp}
+                          disabled={followUpText.trim().length === 0}
+                          activeOpacity={0.8}
+                          accessibilityRole="button"
+                          accessibilityLabel="Send question"
+                        >
+                          <MaterialCommunityIcons
+                            name="send"
+                            size={18}
+                            color={followUpText.trim().length > 0 ? '#15803D' : '#94A3B8'}
+                          />
+                        </TouchableOpacity>
 
                         {/* Dominant Green "Hold to Speak" Microphone Button (Right) */}
                         <TouchableOpacity
@@ -1541,7 +1623,7 @@ export default function AdvisoryResponseSheet({
               </View>
             </View>
           </Modal>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );
@@ -1815,6 +1897,10 @@ const styles = StyleSheet.create({
   },
   playToggleBtnStop: {
     backgroundColor: '#DC2626',
+  },
+  playToggleBtnLoading: {
+    backgroundColor: '#059669',
+    opacity: 0.9,
   },
   playToggleBtnText: {
     color: '#FFFFFF',
@@ -2184,6 +2270,9 @@ const styles = StyleSheet.create({
   inlineSendBtn: {
     padding: 6,
   },
+  inlineSendBtnDisabled: {
+    opacity: 0.35,
+  },
   dominantVoiceBtn: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -2510,5 +2599,143 @@ const styles = StyleSheet.create({
     color: '#0C4A6E',
     fontWeight: '800',
     lineHeight: 24,
+  },
+  // ── Executive Summary Banner ──
+  executiveSummaryCard: {
+    backgroundColor: '#F0FDF4',
+    borderRadius: 14,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 1.5,
+    borderColor: '#BBF7D0',
+    borderLeftWidth: 5,
+    borderLeftColor: '#16A34A',
+  },
+  execSummaryHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+  },
+  execSummaryIconCircle: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: '#DCFCE7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  execSummaryLabel: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#15803D',
+    letterSpacing: 0.8,
+  },
+  execSummaryText: {
+    fontSize: 16,
+    color: '#14532D',
+    lineHeight: 24,
+    fontWeight: '500',
+  },
+  execSummaryBold: {
+    fontWeight: '800',
+    color: '#052E16',
+  },
+
+  // ── Markdown Comparison Table ──
+  tableWrapper: {
+    marginVertical: 10,
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    backgroundColor: '#FFFFFF',
+  },
+  tableScroll: {
+    flexGrow: 0,
+  },
+  tableContainer: {
+    minWidth: '100%',
+  },
+  tableHeaderRow: {
+    flexDirection: 'row',
+    backgroundColor: '#F1F5F9',
+    borderBottomWidth: 1.5,
+    borderBottomColor: '#CBD5E1',
+  },
+  tableHeaderCell: {
+    backgroundColor: '#F1F5F9',
+  },
+  tableHeaderText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#334155',
+    textTransform: 'uppercase',
+    letterSpacing: 0.3,
+  },
+  tableDataRow: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F5F9',
+  },
+  tableDataRowAlt: {
+    backgroundColor: '#F8FAFC',
+  },
+  tableCell: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    minWidth: 130,
+    justifyContent: 'center',
+    borderRightWidth: 1,
+    borderRightColor: '#E2E8F0',
+  },
+  tableFirstCell: {
+    minWidth: 140,
+    fontWeight: '700',
+  },
+  tableCellText: {
+    fontSize: 13.5,
+    color: '#334155',
+    lineHeight: 18,
+  },
+  tableCellTextBold: {
+    fontWeight: '700',
+    color: '#0F172A',
+  },
+
+  // ── Numbered Steps ──
+  numberedRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    marginVertical: 5,
+  },
+  numberedBadge: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2,
+  },
+  numberedBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+
+  // ── Paragraph Blocks ──
+  paragraphBlock: {
+    marginVertical: 4,
+  },
+  paragraphText: {
+    fontSize: 14.5,
+    color: '#475569',
+    lineHeight: 22,
+  },
+  paragraphTextBold: {
+    fontWeight: '700',
+    color: '#1E293B',
   },
 });

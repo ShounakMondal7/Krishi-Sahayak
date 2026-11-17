@@ -32,18 +32,25 @@ import Animated, {
   withRepeat,
   withTiming,
   withSequence,
+  cancelAnimation,
   Easing as ReanimatedEasing,
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import {
+  AudioModule,
+  RecordingPresets,
+  requestRecordingPermissionsAsync,
+  setAudioModeAsync,
+} from 'expo-audio';
+import { audioQueue, useAudioQueue } from '../../services/audioQueue';
 import { safeHaptics } from '../../services/haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../services/api';
+import { BASE_URL, api, checkBackendConnection } from '../../services/api';
 
 import AdvisoryResponseSheet from '../../components/AdvisoryResponseSheet';
 import LanguageSelectorSheet from '../../components/LanguageSelectorSheet';
@@ -521,6 +528,20 @@ const WeatherWidget = React.memo<WeatherWidgetProps>(({
   );
 });
 
+const localizeWeatherCondition = (desc: string | null, t: (k: string) => string): string => {
+  if (!desc) return '';
+  const lower = desc.toLowerCase();
+  if (lower.includes('clear') || lower.includes('sunny')) return t('weather_clear') || desc;
+  if (lower.includes('partly')) return t('weather_partly_cloudy') || desc;
+  if (lower.includes('overcast')) return t('weather_overcast') || desc;
+  if (lower.includes('cloud')) return t('weather_cloudy') || desc;
+  if (lower.includes('rain') || lower.includes('drizzle') || lower.includes('shower')) return t('weather_rain') || desc;
+  if (lower.includes('thunder') || lower.includes('storm')) return t('weather_thunderstorm') || desc;
+  if (lower.includes('fog') || lower.includes('mist') || lower.includes('haze')) return t('weather_fog') || desc;
+  if (lower.includes('snow')) return t('weather_snow') || desc;
+  return desc;
+};
+
 interface WeatherHeroTagProps {
   weatherLoading: boolean;
   temperature: string | null;
@@ -541,14 +562,15 @@ const WeatherHeroTag = React.memo<WeatherHeroTagProps>(({
   if (weatherLoading) {
     return (
       <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
-        • ⛅ Fetching...
+        • ⛅ {t('loading') || 'Fetching...'}
       </Text>
     );
   }
   if (temperature !== null && weatherDesc) {
+    const localizedDesc = localizeWeatherCondition(weatherDesc, t);
     return (
       <Text style={styles.sunriseWeatherTag} allowFontScaling={true}>
-        • {weatherIcon} {temperature} ({weatherDesc})
+        • {weatherIcon} {temperature} ({localizedDesc})
       </Text>
     );
   }
@@ -611,6 +633,114 @@ const RecordingTimer = React.memo<RecordingTimerProps>(({
   );
 });
 
+interface QueryInputBarProps {
+  showTextInput: boolean;
+  setShowTextInput: (show: boolean) => void;
+  onSubmit: (text: string) => void;
+  loading: boolean;
+  fontSize: number;
+  t: (key: string) => string;
+  styles: any;
+}
+
+const QueryInputBar = React.memo<QueryInputBarProps>(({
+  showTextInput,
+  setShowTextInput,
+  onSubmit,
+  loading,
+  fontSize,
+  t,
+  styles,
+}) => {
+  const [localText, setLocalText] = useState('');
+
+  const handleSubmit = useCallback(() => {
+    const trimmed = localText.trim();
+    if (!trimmed || loading) return;
+    onSubmit(trimmed);
+  }, [localText, loading, onSubmit]);
+
+  if (!showTextInput) {
+    return (
+      <TouchableOpacity
+        style={styles.demotedTextLink}
+        onPress={() => { setShowTextInput(true); safeHaptics.impactLight(); }}
+        activeOpacity={0.75}
+        accessibilityRole="button"
+        accessibilityLabel={t('orTypeQuestionHint') || 'Prefer to type? Tap here to write'}
+        accessibilityHint="Double tap to open text typing box"
+      >
+        <MaterialCommunityIcons name="keyboard-outline" size={20} color="#166534" />
+        <Text style={styles.demotedTextLinkText} allowFontScaling={true}>
+          {t('orTypeQuestionHint') || 'Prefer to type? Tap here to write ✏️'}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View style={styles.expandedTextCard}>
+      <View style={styles.expandedTextHeader}>
+        <Text style={styles.textCardHeader} allowFontScaling={true}>{t('typeQuestionLabel')}</Text>
+        <TouchableOpacity
+          onPress={() => setShowTextInput(false)}
+          style={styles.hideTextLinkBtn}
+          accessibilityRole="button"
+          accessibilityLabel="Hide text box"
+        >
+          <Text style={styles.hideTextLinkText} allowFontScaling={true}>
+            {t('hideTypeQuestionHint') || 'Hide text box'} ▲
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <TextInput
+        style={[styles.sunlightTextInput, { fontSize }]}
+        value={localText}
+        onChangeText={setLocalText}
+        placeholder={t('typePlaceholder')}
+        placeholderTextColor="#94A3B8"
+        multiline
+        numberOfLines={3}
+        textAlignVertical="top"
+        editable={!loading}
+        allowFontScaling={true}
+        accessibilityLabel="Type your farming question"
+        accessibilityHint="Enter your agricultural question here"
+        onSubmitEditing={handleSubmit}
+      />
+
+      <TouchableOpacity
+        style={[styles.askSubmitBtn, (!localText.trim() || loading) && styles.askSubmitBtnDisabled]}
+        onPress={handleSubmit}
+        disabled={!localText.trim() || loading}
+        activeOpacity={0.8}
+        accessibilityRole="button"
+        accessibilityLabel={t('askBtn') || 'Ask Question'}
+        accessibilityState={{ disabled: !localText.trim() || loading }}
+        accessibilityHint="Double tap to submit your typed question"
+      >
+        <LinearGradient
+          colors={loading ? ['#94A3B8', '#94A3B8'] : ['#1B5E20', '#2E7D32']}
+          style={styles.askSubmitGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+        >
+          {loading ? (
+            <ActivityIndicator color="#FFF" size="small" />
+          ) : (
+            <>
+              <MaterialCommunityIcons name="send" size={20} color="#FFF" />
+              <Text style={styles.askSubmitBtnText} allowFontScaling={true}>{t('askBtn')}</Text>
+            </>
+          )}
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
+  );
+});
+QueryInputBar.displayName = 'QueryInputBar';
+
 interface RegionalCropsListProps {
   crops: Array<any>;
   selectedCropId: string;
@@ -664,19 +794,19 @@ const RegionalCropsList = React.memo<RegionalCropsListProps>(({
                 {isSelected ? (
                   <View style={styles.activeCropBadge} accessible={false}>
                     <Text style={styles.activeCropBadgeText} allowFontScaling={false}>
-                      ACTIVE
+                      {t('badgeActive') || 'ACTIVE'}
                     </Text>
                   </View>
                 ) : crop.isRegional ? (
                   <View style={styles.regionalCropBadge} accessible={false}>
                     <Text style={styles.regionalCropBadgeText} allowFontScaling={false}>
-                      POPULAR
+                      {t('badgePopular') || 'POPULAR'}
                     </Text>
                   </View>
                 ) : null}
                 <View style={[styles.cropTagPill, { backgroundColor: `${crop.color}E6` }]}>
                   <Text style={styles.cropTagText} allowFontScaling={false}>
-                    {crop.tag}
+                    {t('badge_' + crop.tag.toLowerCase().replace(/\s+/g, '_')) || crop.tag}
                   </Text>
                 </View>
               </View>
@@ -784,15 +914,22 @@ export default function HomeScreen() {
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
   const [isOffline, setIsOffline] = useState(false);
   const [isOfflineCached, setIsOfflineCached] = useState(false);
-  const [audioPlaying, setAudioPlaying] = useState(false);
+  const {
+    isPlaying: audioPlaying,
+    isLoading: audioLoading,
+    currentPart,
+    totalParts,
+    playAdvisorySequence,
+    stopAndClearAll,
+  } = useAudioQueue();
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isFollowUp, setIsFollowUp] = useState(false);
+  const [serverConnected, setServerConnected] = useState<boolean>(true);
 
-  const recordingRef = useRef<Audio.Recording | null>(null);
+  const recordingRef = useRef<any>(null);
   const mediaRecorderRef = useRef<any>(null);
   const mediaStreamRef = useRef<any>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const soundRef = useRef<Audio.Sound | null>(null);
   const scrollRef = useRef<ScrollView>(null);
 
   // Reanimated native thread animation shared values
@@ -834,15 +971,15 @@ export default function HomeScreen() {
         setRegion(profile.district);
         await storageService.saveLocation(profile.state, profile.district, true);
       } else if (profile?.district) {
-        const actualState = profile.state || findStateForDistrict(profile.district) || 'Punjab';
-        setSelectedState(actualState);
+        const actualState = profile.state || findStateForDistrict(profile.district) || '';
+        if (actualState) setSelectedState(actualState);
         setRegion(profile.district);
-        await storageService.saveLocation(actualState, profile.district, true);
+        if (actualState) await storageService.saveLocation(actualState, profile.district, true);
       } else {
         // Only if absolutely no prior location was chosen
         const detected = detectDeviceLanguage();
-        setSelectedState(detected.defaultState);
-        setRegion(detected.defaultDistrict);
+        if (detected.defaultState) setSelectedState(detected.defaultState);
+        if (detected.defaultDistrict) setRegion(detected.defaultDistrict);
       }
     })();
 
@@ -866,7 +1003,24 @@ export default function HomeScreen() {
       setRegion(loc.district);
     });
 
+    let isMounted = true;
+    checkBackendConnection().then((res) => {
+      if (isMounted) setServerConnected(res.connected);
+    }).catch(() => {
+      if (isMounted) setServerConnected(false);
+    });
+
+    const connInterval = setInterval(() => {
+      checkBackendConnection().then((res) => {
+        if (isMounted) setServerConnected(res.connected);
+      }).catch(() => {
+        if (isMounted) setServerConnected(false);
+      });
+    }, 20000);
+
     return () => {
+      isMounted = false;
+      clearInterval(connInterval);
       unsubLang();
       unsubProfile();
       unsubLoc();
@@ -890,10 +1044,19 @@ export default function HomeScreen() {
     // e.g. "Good Morning, Shon!" or "Good Evening, Ramesh!"
     const greetingTitle = `${prefix}, ${nameToUse}!`;
 
+    const advisoryKey =
+      timeOfDayInfo.period === 'morning'
+        ? 'advisoryTitleMorning'
+        : timeOfDayInfo.period === 'afternoon'
+        ? 'advisoryTitleAfternoon'
+        : timeOfDayInfo.period === 'evening'
+        ? 'advisoryTitleEvening'
+        : 'advisoryTitleNight';
+
     return {
       greetingTitle,
       blessing,
-      advisoryTitle: timeOfDayInfo.advisoryTitle,
+      advisoryTitle: t(advisoryKey) || timeOfDayInfo.advisoryTitle,
       gradientColors: timeOfDayInfo.gradientColors,
       icon: timeOfDayInfo.icon,
     };
@@ -983,6 +1146,11 @@ export default function HomeScreen() {
 
   // 🌿 Living Soil Continuous Microphone Animation (Breathing pulse + soft emerald ripple)
   useEffect(() => {
+    if (Platform.OS === 'web') {
+      breatheScale.value = 1;
+      soilRipple.value = 0;
+      return;
+    }
     breatheScale.value = withRepeat(
       withSequence(
         withTiming(1.06, { duration: 1600, easing: ReanimatedEasing.inOut(ReanimatedEasing.ease) }),
@@ -997,6 +1165,11 @@ export default function HomeScreen() {
       -1,
       false
     );
+
+    return () => {
+      cancelAnimation(breatheScale);
+      cancelAnimation(soilRipple);
+    };
   }, [breatheScale, soilRipple]);
 
   // Intense pulse & ripple animation when actively recording voice
@@ -1005,7 +1178,7 @@ export default function HomeScreen() {
       recordingPulse.value = withRepeat(
         withSequence(
           withTiming(1.18, { duration: 500 }),
-          withTiming(1, { duration: 500 })
+          withTiming(1.0, { duration: 500 })
         ),
         -1,
         true
@@ -1016,11 +1189,17 @@ export default function HomeScreen() {
         false
       );
     } else {
+      cancelAnimation(recordingPulse);
+      cancelAnimation(recordingRipple);
       recordingPulse.value = 1;
       recordingRipple.value = 0;
     }
-  }, [isRecording, recordingPulse, recordingRipple]);
 
+    return () => {
+      cancelAnimation(recordingPulse);
+      cancelAnimation(recordingRipple);
+    };
+  }, [isRecording, recordingPulse, recordingRipple]);
   const soilRippleStyle = useAnimatedStyle(() => ({
     transform: [{ scale: 1 + soilRipple.value * 0.48 }],
     opacity: (1 - soilRipple.value) * 0.65,
@@ -1106,7 +1285,8 @@ export default function HomeScreen() {
         formData.append('audio_file', fileObj);
       }
 
-      formData.append('region', region);
+      const fullRegion = selectedState ? `${region}, ${selectedState}` : region;
+      formData.append('region', fullRegion);
       formData.append('language', currentLang);
       if (conversationId) formData.append('conversation_id', conversationId);
       formData.append('encoding', Platform.OS === 'web' ? 'WEBM_OPUS' : 'LINEAR16');
@@ -1116,11 +1296,12 @@ export default function HomeScreen() {
         headers['Content-Type'] = 'multipart/form-data';
       }
 
-      const res = await axios.post<VoiceQueryResponse>(
-        `${BASE_URL}/api/v1/voice-query`,
+      const res = await api.post<VoiceQueryResponse>(
+        '/api/v1/voice-query',
         formData,
         { headers, timeout: 45000 }
       );
+      setServerConnected(true);
 
       const data = res.data;
       setTranscribedText(data.transcribed_text);
@@ -1204,8 +1385,8 @@ export default function HomeScreen() {
       const recording = recordingRef.current;
       recordingRef.current = null;
       try {
-        await recording.stopAndUnloadAsync();
-        const uri = recording.getURI();
+        await recording.stop();
+        const uri = recording.uri;
         if (!uri) {
           setError('Audio recording file not found.');
           return;
@@ -1219,6 +1400,7 @@ export default function HomeScreen() {
   }, [submitVoiceAudio]);
 
   const startRecording = useCallback(async () => {
+    stopAudio();
     setError(null);
 
     // ── 1. WEB BROWSER RECORDING (Standard MediaRecorder API) ──
@@ -1277,19 +1459,19 @@ export default function HomeScreen() {
       }
     }
 
-    // ── 2. NATIVE DEVICE RECORDING (expo-av) ──
+    // ── 2. NATIVE DEVICE RECORDING (expo-audio) ──
     try {
-      const { granted } = await Audio.requestPermissionsAsync();
+      const { granted } = await requestRecordingPermissionsAsync();
       if (!granted) {
         Alert.alert('Permission Required', 'Microphone permission is needed for voice questions.');
         setError('Microphone permission denied.');
         return;
       }
-      await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
-      recordingRef.current = recording;
+      await setAudioModeAsync({ allowsRecording: true, playsInSilentMode: true });
+      const recorder = new AudioModule.AudioRecorder(RecordingPresets.HIGH_QUALITY);
+      recordingRef.current = recorder;
+      await recorder.prepareToRecordAsync();
+      recorder.record();
       setIsRecording(true);
       safeHaptics.impactHeavy();
     } catch (err: any) {
@@ -1301,13 +1483,31 @@ export default function HomeScreen() {
 
   const toggleRecording = useCallback(() => (isRecording ? stopRecording() : startRecording()), [isRecording, stopRecording, startRecording]);
 
+  // ── Audio TTS Playback (audioQueue) ───────────────────────────────────────
+  const stopAudio = useCallback(() => {
+    stopAndClearAll();
+  }, [stopAndClearAll]);
+
+  const playAudio = useCallback((queryId?: number) => {
+    if (!queryId) return;
+    const ans = response?.answer || '';
+    playAdvisorySequence(queryId, currentLang, ans);
+  }, [playAdvisorySequence, response, currentLang]);
+
   // ── Text Query Execution (Supports direct query or state fallback) ────────
-  const executeQuery = useCallback(async (overrideQuery?: string) => {
+  const executeQuery = useCallback(async (overrideQuery?: string, isNewThread: boolean = false) => {
+    stopAudio();
     const textToSubmit = (typeof overrideQuery === 'string' ? overrideQuery : question || '').trim();
     if (!textToSubmit) {
       Alert.alert('', 'Please enter a farming question.');
       return;
     }
+
+    if (isNewThread) {
+      setConversationId(null);
+      setIsFollowUp(false);
+    }
+    const activeConvId = isNewThread ? null : conversationId;
 
     // 1. Immediately update input field if called from a follow-up chip / topic
     if (overrideQuery) {
@@ -1323,7 +1523,8 @@ export default function HomeScreen() {
     setSheetVisible(true);
     safeHaptics.impactLight();
 
-    if (isOffline) {
+    const isActuallyOffline = isOffline && (Platform.OS !== 'web' || (typeof navigator !== 'undefined' && !navigator.onLine));
+    if (isActuallyOffline) {
       const cached = await offlineCacheService.findBestMatch(textToSubmit);
       if (cached) {
         setResponse({
@@ -1349,16 +1550,18 @@ export default function HomeScreen() {
     }
 
     try {
-      const res = await axios.post<QueryResponse>(
-        `${BASE_URL}/api/v1/query`,
+      const fullRegion = selectedState ? `${region}, ${selectedState}` : region;
+      const res = await api.post<QueryResponse>(
+        '/api/v1/query',
         {
           question: textToSubmit,
           language: currentLang,
-          region,
-          conversation_id: conversationId,
+          region: fullRegion,
+          conversation_id: activeConvId,
         },
         { timeout: 30000 }
       );
+      setServerConnected(true);
 
       const data = res.data;
       setResponse(data);
@@ -1386,57 +1589,30 @@ export default function HomeScreen() {
     } finally {
       setLoading(false);
     }
-  }, [question, isOffline, currentLang, region, conversationId, fadeIn]);
+  }, [question, isOffline, currentLang, region, conversationId, fadeIn, selectedState]);
 
   const handleFollowUpSelect = useCallback((followUpQuestion: string) => {
-    // Pass question directly to bypass async setState delay
-    executeQuery(followUpQuestion);
-  }, [executeQuery]);
+    stopAudio();
+    setTranscribedText(followUpQuestion);
+    setQuestion(followUpQuestion);
+    setResponse(null);
+    setLoading(true);
+    setError(null);
+    setSheetVisible(true);
+    safeHaptics.impactMedium();
+    executeQuery(followUpQuestion, false);
+  }, [stopAudio, executeQuery]);
 
   const handleSelectCrop = useCallback((crop: any) => {
+    stopAudio();
     setSelectedCropId(crop.id);
-    executeQuery(crop.query);
-  }, [executeQuery]);
+    executeQuery(crop.query, true);
+  }, [stopAudio, executeQuery]);
 
   const handleSelectTopic = useCallback((topicQuery: string) => {
-    executeQuery(topicQuery);
-  }, [executeQuery]);
-
-  // ── Audio TTS Playback ─────────────────────────────────────────────────────
-  const playAudio = async (queryId?: number) => {
-    if (!queryId) return;
-    try {
-      if (soundRef.current) {
-        await soundRef.current.unloadAsync();
-        soundRef.current = null;
-      }
-      if (audioPlaying) {
-        setAudioPlaying(false);
-        return;
-      }
-      setAudioPlaying(true);
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: `${BASE_URL}/api/v1/query/${queryId}/audio?lang=${currentLang}` },
-        { shouldPlay: true }
-      );
-      soundRef.current = sound;
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (!status.isLoaded || status.didJustFinish) setAudioPlaying(false);
-      });
-    } catch {
-      setAudioPlaying(false);
-      Alert.alert('', 'Audio advisory could not be played.');
-    }
-  };
-
-  const stopAudio = async () => {
-    if (soundRef.current) {
-      await soundRef.current.stopAsync();
-      await soundRef.current.unloadAsync();
-      soundRef.current = null;
-    }
-    setAudioPlaying(false);
-  };
+    stopAudio();
+    executeQuery(topicQuery, true);
+  }, [stopAudio, executeQuery]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -1460,8 +1636,28 @@ export default function HomeScreen() {
             styles={styles}
           />
 
-          {/* Right Actions: Persistent Language Changer + Minimal Profile Icon */}
+          {/* Right Actions: Live Server Status + Persistent Language Changer + Minimal Profile Icon */}
           <View style={styles.topBarRight}>
+            {/* 🟢 Live AI Server Connection Indicator Dot */}
+            <View
+              style={[
+                styles.serverStatusBadge,
+                serverConnected ? styles.serverStatusOnline : styles.serverStatusReconnecting,
+              ]}
+              accessibilityRole="text"
+              accessibilityLabel={serverConnected ? "AI Server Connected" : "Connecting to AI Server"}
+            >
+              <View
+                style={[
+                  styles.serverStatusDot,
+                  serverConnected ? styles.serverStatusDotOnline : styles.serverStatusDotReconnecting,
+                ]}
+              />
+              <Text style={[styles.serverStatusText, !serverConnected && styles.serverStatusTextReconnecting]} allowFontScaling={true}>
+                {serverConnected ? 'AI Live' : 'Sync'}
+              </Text>
+            </View>
+
             {/* 🌐 Persistent Global Language Changer Button */}
             <TouchableOpacity
               style={styles.langSelectorBtn}
@@ -1750,81 +1946,16 @@ export default function HomeScreen() {
                 styles={styles}
               />
 
-              {/* ✏️ VISUALLY DEMOTED SECONDARY TEXT QUERY LINK */}
-              {!showTextInput ? (
-                <TouchableOpacity
-                  style={styles.demotedTextLink}
-                  onPress={() => { setShowTextInput(true); safeHaptics.impactLight(); }}
-                  activeOpacity={0.75}
-                  accessibilityRole="button"
-                  accessibilityLabel={t('orTypeQuestionHint') || 'Prefer to type? Tap here to write'}
-                  accessibilityHint="Double tap to open text typing box"
-                >
-                  <MaterialCommunityIcons name="keyboard-outline" size={20} color="#166534" />
-                  <Text style={styles.demotedTextLinkText} allowFontScaling={true}>
-                    {t('orTypeQuestionHint') || 'Prefer to type? Tap here to write ✏️'}
-                  </Text>
-                </TouchableOpacity>
-              ) : (
-                /* Expandable Text Input Box */
-                <View style={styles.expandedTextCard}>
-                  <View style={styles.expandedTextHeader}>
-                    <Text style={styles.textCardHeader} allowFontScaling={true}>{t('typeQuestionLabel')}</Text>
-                    <TouchableOpacity
-                      onPress={() => setShowTextInput(false)}
-                      style={styles.hideTextLinkBtn}
-                      accessibilityRole="button"
-                      accessibilityLabel="Hide text box"
-                    >
-                      <Text style={styles.hideTextLinkText} allowFontScaling={true}>
-                        {t('hideTypeQuestionHint') || 'Hide text box'} ▲
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <TextInput
-                    style={[styles.sunlightTextInput, { fontSize: getAnswerFontSize() }]}
-                    value={question}
-                    onChangeText={setQuestion}
-                    placeholder={t('typePlaceholder')}
-                    placeholderTextColor="#94A3B8"
-                    multiline
-                    numberOfLines={3}
-                    textAlignVertical="top"
-                    editable={!loading}
-                    allowFontScaling={true}
-                    accessibilityLabel="Type your farming question"
-                    accessibilityHint="Enter your agricultural question here"
-                  />
-
-                  <TouchableOpacity
-                    style={[styles.askSubmitBtn, (!question.trim() || loading) && styles.askSubmitBtnDisabled]}
-                    onPress={() => executeQuery(question)}
-                    disabled={!question.trim() || loading}
-                    activeOpacity={0.8}
-                    accessibilityRole="button"
-                    accessibilityLabel={t('askBtn') || 'Ask Question'}
-                    accessibilityState={{ disabled: !question.trim() || loading }}
-                    accessibilityHint="Double tap to submit your typed question"
-                  >
-                    <LinearGradient
-                      colors={loading ? ['#94A3B8', '#94A3B8'] : ['#1B5E20', '#2E7D32']}
-                      style={styles.askSubmitGradient}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}
-                    >
-                      {loading ? (
-                        <ActivityIndicator color="#FFF" size="small" />
-                      ) : (
-                        <>
-                          <MaterialCommunityIcons name="send" size={20} color="#FFF" />
-                          <Text style={styles.askSubmitBtnText} allowFontScaling={true}>{t('askBtn')}</Text>
-                        </>
-                      )}
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              )}
+              {/* ✏️ MEMOIZED TEXT QUERY INPUT BAR (Prevents full-dashboard re-renders) */}
+              <QueryInputBar
+                showTextInput={showTextInput}
+                setShowTextInput={setShowTextInput}
+                onSubmit={(text) => executeQuery(text, true)}
+                loading={loading}
+                fontSize={getAnswerFontSize()}
+                t={t}
+                styles={styles}
+              />
             </View>
 
             {/* 🌿 2. VIBRANT, TACTILE CROP CARDS */}
@@ -1974,7 +2105,11 @@ export default function HomeScreen() {
         {/* ── AI ADVISORY RESPONSE VIEW (Bottom Sheet / Overlay) ── */}
         <AdvisoryResponseSheet
           visible={sheetVisible}
-          onClose={() => setSheetVisible(false)}
+          onClose={() => {
+            setSheetVisible(false);
+            setConversationId(null);
+            setIsFollowUp(false);
+          }}
           loading={loading}
           question={transcribedText || question}
           response={response}
@@ -2059,8 +2194,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1.5,
     borderBottomColor: '#E2E8F0',
@@ -2069,6 +2204,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
+    gap: 8,
   },
   locationWeatherBadge: {
     flexDirection: 'row',
@@ -2080,7 +2216,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#BBF7D0',
-    maxWidth: '56%',
+    flexShrink: 1,
+    maxWidth: '52%',
   },
   locationWeatherText: {
     fontSize: 12,
@@ -2090,7 +2227,44 @@ const styles = StyleSheet.create({
   topBarRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
+    flexShrink: 0,
+  },
+  serverStatusBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 7,
+    paddingVertical: 4,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  serverStatusOnline: {
+    backgroundColor: '#F0FDF4',
+    borderColor: '#86EFAC',
+  },
+  serverStatusReconnecting: {
+    backgroundColor: '#FEF3C7',
+    borderColor: '#FCD34D',
+  },
+  serverStatusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+  },
+  serverStatusDotOnline: {
+    backgroundColor: '#16A34A',
+  },
+  serverStatusDotReconnecting: {
+    backgroundColor: '#D97706',
+  },
+  serverStatusText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#15803D',
+  },
+  serverStatusTextReconnecting: {
+    color: '#B45309',
   },
   langSelectorBtn: {
     flexDirection: 'row',
@@ -2332,8 +2506,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 8,
     marginRight: 10,
-    width: 116,
-    minHeight: 136,
+    width: 118,
+    minHeight: 144,
     alignItems: 'center',
     borderWidth: 1.5,
     borderColor: '#EAE3D2',

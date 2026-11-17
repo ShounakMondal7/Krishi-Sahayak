@@ -1,0 +1,109 @@
+ICAR COMPREHENSIVE FERTILIZER, NPK & MICRONUTRIENT MANAGEMENT GUIDE
+================================================================================
+Grounded in ICAR-IISS (Indian Institute of Soil Science, Bhopal) & ICAR Agronomy Norms.
+
+SECTION 1: MACRONUTRIENT PRINCIPLES (NPK & SECONDARY NUTRIENTS)
+--------------------------------------------------------------------------------
+Balanced plant nutrition follows the 4R Nutrient Stewardship: Right Source, Right Rate, Right Time, and Right Place.
+- Nitrogen (N): Drives vegetative growth, tillering, and protein formation. Apply in split doses to minimize leaching and volatilization.
+- Phosphorus (P2O5): Stimulates vigorous root development, early tillering, and flowering. Must be applied 100% as basal at sowing/transplanting near root zones because phosphorus is immobile in soil.
+- Potassium (K2O): Regulates stomatal opening, imparts drought and disease resistance, enhances grain filling, and improves fruit luster. Applied basal or split in sandy/coarse soils.
+- Sulfur (S): Critical for chlorophyll synthesis, nodulation in pulses, and oil content in oilseeds (Mustard, Groundnut, Soybean). Apply 15-20 kg elemental Sulfur or 100 kg Gypsum/SSP per acre at basal.
+
+SECTION 2: CROP-WISE NPK RECOMMENDATION & APPLICATION CALENDAR (PER ACRE)
+--------------------------------------------------------------------------------
+1. Paddy / Rice (Dhan):
+   - Recommended Dose: 48-60 kg N, 24 kg P2O5, 16 kg K2O per acre (equivalent to 1 bag DAP + 1 bag MOP at basal, plus 2 bags Urea in splits).
+   - Basal Dose (at transplanting): Apply 50 kg DAP + 30 kg MOP + 10 kg Zinc Sulfate 21% (or 5 kg Zinc Sulfate 33%).
+   - 1st Top Dressing (Active Tillering, 21-25 DAT): Apply 35 kg Neem-Coated Urea per acre.
+   - 2nd Top Dressing (Panicle Initiation, 42-45 DAT): Apply 30 kg Neem-Coated Urea per acre.
+   - Note: Never broadcast Zinc Sulfate mixed directly with DAP/SSP in the same fertilizer bag, as insoluble Zinc Phosphate precipitates. Keep a 3-day gap or apply at land preparation.
+
+2. Wheat (Gehun):
+   - Recommended Dose: 50-60 kg N, 24 kg P2O5, 16-20 kg K2O per acre (approx. 50 kg DAP + 25 kg MOP basal, plus 80-90 kg Urea in 2 splits).
+   - Basal Dose: 50 kg DAP + 25 kg MOP drilled at seed sowing.
+   - 1st Top Dressing (Crown Root Initiation - CRI stage, 21 days after sowing with 1st irrigation): 45 kg Urea.
+   - 2nd Top Dressing (Late Tillering / Jointing stage, 45-50 DAS with 2nd irrigation): 45 kg Urea.
+
+3. Maize / Corn (Makka):
+   - Recommended Dose: 48-55 kg N, 24 kg P2O5, 20 kg K2O per acre.
+   - Basal: 50 kg DAP + 30 kg MOP + 10 kg Zinc Sulfate (21%).
+   - 1st Split (Knee-high stage, 25-30 DAS): 35 kg Urea.
+   - 2nd Split (Tasseling stage, 45-50 DAS): 30 kg Urea.
+
+4. Cotton (Kapas):
+   - Recommended Dose: 45-60 kg N, 24 kg P2O5, 24 kg K2O per acre.
+   - Basal: 50 kg DAP + 40 kg MOP + 10 kg Magnesium Sulfate.
+   - Splits: Apply Nitrogen in 3 equal splits at squaring (30 DAS), flowering (60 DAS), and boll formation (90 DAS) @ 25 kg Urea per split.
+   - Foliar Boost: Spray 1% Potassium Nitrate (13:0:45) @ 150g per 15L pump at peak boll setting to prevent leaf reddening (Neela Rog).
+
+5. Sugarcane (Ganna):
+   - Recommended Dose: 100-120 kg N, 30 kg P2O5, 30 kg K2O per acre.
+   - Basal: 65 kg DAP + 50 kg MOP + 25 kg Ferrous Sulfate (if calcareous soil).
+   - Splits: Apply Urea @ 45 kg/acre at 45, 90, and 120 days after planting, followed by earthing-up and immediate irrigation.
+
+6. Pulses (Chickpea, Pigeon Pea, Green Gram, Black Gram, Lentil):
+   - Recommended Dose: 8-12 kg N, 20-24 kg P2O5, 10-12 kg K2O per acre (Starving dose only, as root nodules fix atmospheric nitrogen).
+   - Basal: 40 kg DAP or 100 kg Single Super Phosphate (SSP provides 16% P2O5 + 11% Sulfur) + 15 kg MOP.
+   - Seed Treatment: Inoculate seed with Rhizobium culture + Phosphate Solubilizing Bacteria (PSB) @ 20g/kg seed.
+   - Foliar Spray: Spray 2% DAP solution (300g per 15L pump) or 1% 19:19:19 at flower bud initiation and 15 days later to prevent flower drop.
+
+7. Oilseeds (Mustard, Groundnut, Soybean):
+   - Mustard: 32 kg N, 16 kg P2O5, 16 kg K2O + 20 kg Sulfur per acre. 100 kg SSP basal fulfills both P and S needs. 1 split of Urea (30 kg) at first irrigation (30 DAS).
+   - Groundnut: 10 kg N, 20 kg P2O5, 15 kg K2O + 150 kg Gypsum per acre applied at pegging stage (40-45 DAS) for pod filling and shell hardening.
+   - Soybean: 12 kg N, 24 kg P2O5, 16 kg K2O + 10 kg Zinc Sulfate per acre.
+
+8. Vegetables (Tomato, Chilli, Brinjal, Onion, Potato):
+   - Potato: 60-70 kg N, 32 kg P2O5, 40 kg K2O per acre. Apply 50% N + 100% P + 100% K at planting; remaining 50% N top-dressed at earthing-up (30-35 DAP).
+   - Tomato/Chilli: Basal: 50 kg DAP + 40 kg MOP + 10 kg Borax (10% Boron). Top dress Urea in 3 equal splits of 20 kg every 25 days.
+   - Onion: Basal: 40 kg DAP + 40 kg MOP + 20 kg Sulfur (Bentonite Sulfur 90%). Top dress 30 kg Urea at 30 DAT and 25 kg Urea at 45 DAT. Stop nitrogen 40 days before harvest to prevent thick-neck bulbs.
+
+SECTION 3: NANO-FERTILIZER APPLICATION PROTOCOLS (IFFCO NANO-UREA & NANO-DAP)
+--------------------------------------------------------------------------------
+Nano-fertilizers provide high nutrient-use efficiency (85-90% vs 30-40% for conventional broadcast fertilizers), reduce groundwater contamination, and cut transport costs.
+- IFFCO Nano Urea (Liquid 4% N):
+  * Spray Volume & Dilution: 2-4 ml per liter of water (equivalent to 30-60 ml per 15-liter knapsack backpack sprayer).
+  * 1st Spray: At active vegetative/tillering stage (30-35 DAS/DAT).
+  * 2nd Spray: 15-20 days after 1st spray or prior to panicle/flowering initiation.
+  * Shake bottle well before use. Use flat fan or hollow cone nozzle with spray water pH between 6.0 and 7.0.
+  * 1 bottle (500 ml) of Nano Urea replaces at least 1 bag (45 kg) of conventional granular urea top-dressing.
+- IFFCO Nano DAP (Liquid 8% N, 16% P2O5):
+  * Seed Treatment: 5 ml Nano DAP per kg of seed; mix with small quantity of water, coat uniformly, and shade-dry for 30 minutes before sowing.
+  * Root/Tuber Dipping: 5 ml per liter of water; dip seedling roots or seed potato tubers for 20 minutes before planting.
+  * Foliar Spray: 2-4 ml per liter of water (30-60 ml per 15-liter pump) at young crop stage (20-25 DAS/DAT) for enhanced root spread and tillering.
+
+SECTION 4: MICRONUTRIENT DEFICIENCY SYMPTOMS & FOLIAR CORRECTION DOSAGES
+--------------------------------------------------------------------------------
+Micronutrient deficiencies reduce crop yield by 15-40% even when NPK is fully supplied. Always correct using calibrated foliar sprays or soil application:
+
+1. Zinc (Zn) Deficiency (Khaira Disease in Paddy / White Bud in Maize):
+   - Symptoms: Rust-brown necrotic spots and chlorosis on younger leaves; stunted plant height; bushy appearance.
+   - Soil Application: 10 kg Zinc Sulfate Heptahydrate (21% Zn) or 6 kg Zinc Sulfate Monohydrate (33% Zn) per acre at land preparation once every 2 years.
+   - Foliar Rescue Spray: Dissolve 75g Zinc Sulfate (21%) + 35g Agricultural Slaked Lime (to neutralize acidity) in a 15-liter backpack pump (5g ZnSO4 + 2.5g Lime per liter of water). Spray twice at 10-day intervals.
+   - Cheleted Zinc (Zn-EDTA 12%): 15-20g per 15-liter pump (1-1.5g per liter). Highly safe and compatible with most crop sprays.
+
+2. Boron (B) Deficiency (Hollow Heart in Potato / Fruit Cracking in Tomato / Hen-and-Chicken in Grapes):
+   - Symptoms: Death of growing shoot tips; brittle distorted leaves; internal brown corking in cauliflower; flower drop and fruit cracking.
+   - Soil Application: 4-5 kg Agricultural Borax (10.5% B) per acre at basal.
+   - Foliar Correction: Spray Solubor / Disodium Octaborate Tetrahydrate (20% Boron) @ 20-25g per 15-liter pump (1.5g per liter) at pre-flowering and fruit set.
+
+3. Iron (Fe) Deficiency (Iron Chlorosis):
+   - Symptoms: Interveinal chlorosis appearing first on the youngest leaves; leaves turn ivory white or pale yellow while veins remain faint green. Prevalent in high pH calcareous soils.
+   - Foliar Rescue: Dissolve 75-100g Ferrous Sulfate (FeSO4 19%) + 20g Citric acid (or 1 fresh lemon juice) in 15 liters of water (5-6g/L). Citric acid prevents Fe oxidation. Spray 2-3 times at weekly intervals.
+   - Fe-EDDHA (6%): 15-20g per 15L tank for rapid uptake in alkaline soil conditions.
+
+4. Magnesium (Mg) Deficiency:
+   - Symptoms: Inverted 'V' chlorosis and purplish-red discoloration between veins on older mature leaves. Prevalent in Cotton and Citrus.
+   - Foliar Correction: Magnesium Sulfate (Epsom Salt 9.6% Mg) @ 75-100g per 15-liter pump (5-7g per liter of water).
+
+5. Sulfur (S) Deficiency:
+   - Symptoms: Pale yellowing of the youngest leaves first (unlike Nitrogen where older bottom leaves yellow first); thin spindly stems; reduced oil content in mustard.
+   - Correction: Apply 100 kg Gypsum/SSP per acre to soil or spray Micronized Wettable Sulfur 80% WDG @ 30-45g per 15-liter pump.
+
+SECTION 5: WATER-SOLUBLE SPECIALTY FERTIGATION SCHEDULES (DRIP & FOLIAR)
+--------------------------------------------------------------------------------
+- Vegetative Stage: Spray 19:19:19 (Polyfeed) @ 75g per 15-liter pump (5g/L) for balanced vegetative shoot growth.
+- Flowering Stage: Spray 12:61:00 (Mono Ammonium Phosphate) @ 60-75g per 15-liter pump (4-5g/L) for heavy root expansion and profuse flowering.
+- Fruit Set / Grain Development: Spray 00:52:34 (Mono Potassium Phosphate) @ 75g per 15-liter pump (5g/L) to prevent fruit dropping and boost grain density.
+- Pre-Harvest / Maturation: Spray 00:00:50 (Potassium Sulfate) @ 75-90g per 15-liter pump (5-6g/L) for bright fruit coloration, sucrose synthesis, and drought resistance.
+- Calcium Nitrate (18.8% Ca, 15.5% N) + Boron: 75g per 15L pump prevents Blossom End Rot in tomato and hollow heart in potato. Do not mix with phosphate or sulfate fertilizers in the same tank.

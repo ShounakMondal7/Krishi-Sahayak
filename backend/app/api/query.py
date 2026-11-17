@@ -7,18 +7,19 @@ POST /api/v1/image-query  — Image + optional text query (GPT-4o vision → RAG
 GET  /api/v1/query/{id}/audio — Text-to-speech for a previous answer
 
 The full RAG pipeline:
-  1. Translate Malayalam → English       (IndicTrans2)
-  2. [NEW] Detect weather/market intent, inject live data into context
-  3. [NEW] Load conversation history for multi-turn grounding
+  1. Translate Regional Language → English
+  2. Detect weather/market intent, inject live data into context
+  3. Load conversation history for multi-turn grounding
   4. Retrieve context chunks              (ChromaDB)
   5. Generate grounded answer             (GPT-4o-mini)
-  6. Translate English → Malayalam        (IndicTrans2)
-  7. Log everything to PostgreSQL         (async)
+  6. Translate English → Target Language
+  7. Log everything to SQLite / PostgreSQL (async)
   8. Return response with source labels
 """
 import logging
 import os
 import time
+import uuid
 import traceback
 import asyncio
 from typing import Optional, List
@@ -54,17 +55,20 @@ _CONV_TTL = 15 * 60
 _conv_store: dict[str, tuple[list, float]] = {}
 
 # ── Pre-generated TTS audio cache ─────────────────────────────────────────────
-# key = f"{query_id}:{lang}" → audio bytes
-# TTL: 1 hour, evicts oldest when > 200 entries
+# key = f"{query_id}:{lang}:{chunk}" → audio bytes
+# TTL: 1 hour, evicts oldest when > 300 entries
 _TTS_CACHE_TTL = 3600
-_TTS_CACHE_MAX = 200
+_TTS_CACHE_MAX = 300
 _tts_cache: dict[str, tuple[bytes, float]] = {}
 
 
-def _tts_cache_get(query_id: int, lang: str) -> Optional[bytes]:
+def _tts_cache_get(query_id: int, lang: str, chunk: Optional[int] = None) -> Optional[bytes]:
     """Retrieve pre-generated TTS audio from cache, or None if expired/missing."""
-    key = f"{query_id}:{lang}"
+    chunk_tag = f"chunk_{chunk}" if chunk is not None else "full"
+    key = f"{query_id}:{lang}:{chunk_tag}"
     entry = _tts_cache.get(key)
+    if not entry and chunk is None:
+        entry = _tts_cache.get(f"{query_id}:{lang}")
     if entry:
         audio_bytes, ts = entry
         if time.monotonic() - ts < _TTS_CACHE_TTL:
@@ -73,29 +77,41 @@ def _tts_cache_get(query_id: int, lang: str) -> Optional[bytes]:
     return None
 
 
-def _tts_cache_set(query_id: int, lang: str, audio_bytes: bytes) -> None:
+def _tts_cache_set(query_id: int, lang: str, audio_bytes: bytes, chunk: Optional[int] = None) -> None:
     """Store pre-generated TTS audio in cache with eviction."""
-    # Evict oldest entries if cache is full
     if len(_tts_cache) >= _TTS_CACHE_MAX:
         oldest_key = min(_tts_cache, key=lambda k: _tts_cache[k][1])
         del _tts_cache[oldest_key]
-    _tts_cache[f"{query_id}:{lang}"] = (audio_bytes, time.monotonic())
+    chunk_tag = f"chunk_{chunk}" if chunk is not None else "full"
+    _tts_cache[f"{query_id}:{lang}:{chunk_tag}"] = (audio_bytes, time.monotonic())
+    if chunk is None:
+        _tts_cache[f"{query_id}:{lang}"] = (audio_bytes, time.monotonic())
+
+
+async def _pregenerate_tts_pipeline(query_id: int, text: str, lang: str) -> None:
+    """
+    Background task:
+    Pre-synthesizes complete clean spoken advisory audio into RAM cache (zero SSML tags).
+    """
+    try:
+        from app.services.tts import synthesize_advisory_audio
+        full_audio = await synthesize_advisory_audio(text, lang=lang)
+        _tts_cache_set(query_id, lang, full_audio, chunk=None)
+        logger.info(f"⚡ Clean TTS advisory audio pre-generated for query {query_id} (lang: {lang}, {len(full_audio)} bytes)")
+    except Exception as exc:
+        logger.warning(f"Background TTS pre-generation failed for query {query_id}: {exc}")
 
 
 def _pregenerate_tts(query_id: int, text: str, lang: str) -> None:
-    """
-    Background task: generate TTS audio and store in cache.
-    Runs AFTER the JSON response has already been sent to the client.
-    Any failure is silently logged — the client can still call the
-    /query/{id}/audio endpoint which will generate on-demand as fallback.
-    """
+    """Synchronous bridge for background tasks or thread execution."""
     try:
-        from app.services.tts import synthesize_advisory_audio_sync
-        audio_bytes = synthesize_advisory_audio_sync(text, lang=lang)
-        _tts_cache_set(query_id, lang, audio_bytes)
-        logger.info(f"TTS pre-generated for query {query_id} (lang: {lang}, {len(audio_bytes)} bytes)")
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            asyncio.create_task(_pregenerate_tts_pipeline(query_id, text, lang))
+        else:
+            asyncio.run(_pregenerate_tts_pipeline(query_id, text, lang))
     except Exception as exc:
-        logger.warning(f"Background TTS pre-generation failed for query {query_id}: {exc}")
+        logger.warning(f"Failed to schedule TTS pre-generation for query {query_id}: {exc}")
 
 
 def _get_conversation_history(conversation_id: Optional[str]) -> List[dict]:
@@ -130,10 +146,87 @@ def _format_conversation_context(history: List[dict]) -> str:
     if not history:
         return ""
     lines = ["[CONVERSATION HISTORY — for context only, do not answer from memory alone]"]
-    for i, turn in enumerate(history, 1):
-        lines.append(f"Turn {i} — Farmer asked: {turn['q']}")
-        lines.append(f"Turn {i} — Previous answer: {turn['a'][:200]}…" if len(turn['a']) > 200 else f"Turn {i} — Previous answer: {turn['a']}")
+    turn_num = 1
+    for item in history:
+        if item.get("role") == "user":
+            lines.append(f"Turn {turn_num} — Farmer asked: {item.get('content') or item.get('q', '')}")
+        elif item.get("role") == "assistant":
+            ans = item.get("content") or item.get("a", "")
+            short_ans = f"{ans[:200]}…" if len(ans) > 200 else ans
+            lines.append(f"Turn {turn_num} — Previous answer: {short_ans}")
+            turn_num += 1
     return "\n".join(lines)
+
+
+async def _load_conversation_history_from_db(
+    db: AsyncSession,
+    conversation_id: Optional[str],
+    limit: int = 6,
+) -> List[dict]:
+    """
+    Fetch prior turns from SQLite / PostgreSQL (QueryLog) for matching conversation_id.
+    Returns structured list of dicts with role, content, q, and a for multi-turn grounding.
+    """
+    if not conversation_id:
+        return []
+
+    history: List[dict] = []
+    try:
+        stmt = (
+            select(QueryLog)
+            .where(QueryLog.conversation_id == conversation_id)
+            .order_by(QueryLog.created_at.asc())
+        )
+        result = await db.execute(stmt)
+        rows = result.scalars().all()
+        for row in rows[-limit:]:
+            if row.question_english:
+                history.append({
+                    "role": "user",
+                    "content": row.question_english,
+                    "q": row.question_english,
+                    "question_english": row.question_english,
+                    "a": row.answer_english or "",
+                    "answer_english": row.answer_english or "",
+                })
+            if row.answer_english:
+                history.append({
+                    "role": "assistant",
+                    "content": row.answer_english,
+                    "q": row.question_english or "",
+                    "question_english": row.question_english or "",
+                    "a": row.answer_english,
+                    "answer_english": row.answer_english,
+                })
+    except Exception as exc:
+        logger.warning(f"Could not load conversation history from DB for {conversation_id}: {exc}")
+
+    # Fallback to RAM store if DB has no rows yet
+    if not history:
+        ram_history = _get_conversation_history(conversation_id)
+        for item in ram_history:
+            q_txt = item.get("q", "")
+            a_txt = item.get("a", "")
+            if q_txt:
+                history.append({
+                    "role": "user",
+                    "content": q_txt,
+                    "q": q_txt,
+                    "question_english": q_txt,
+                    "a": a_txt,
+                    "answer_english": a_txt,
+                })
+            if a_txt:
+                history.append({
+                    "role": "assistant",
+                    "content": a_txt,
+                    "q": q_txt,
+                    "question_english": q_txt,
+                    "a": a_txt,
+                    "answer_english": a_txt,
+                })
+
+    return history
 
 
 async def _log_error(
@@ -186,6 +279,10 @@ async def _run_rag_pipeline(
     t_total_start = time.time()
     timings: dict[str, int] = {}
 
+    # Guarantee stable conversation identifier for multi-turn tracking
+    if not conversation_id:
+        conversation_id = f"conv_{uuid.uuid4().hex[:16]}"
+
     # ── Step 1: Translate Input → English (Bypassed if already English) ─────
     t0 = time.time()
     if already_english or language == "en" or translation.is_predominantly_english(question_original):
@@ -212,7 +309,12 @@ async def _run_rag_pipeline(
     logger.info(f"Classified query intent: {intent}")
 
     if input_mode != "image":
-        cached = cache_svc.query_cache.get(question_english, region=region, language=language)
+        cached = cache_svc.query_cache.get(
+            question_english,
+            region=region,
+            language=language,
+            conversation_id=conversation_id,
+        )
         if cached:
             logger.info("Serving from cache.")
             return QueryResponse(
@@ -232,13 +334,23 @@ async def _run_rag_pipeline(
                 timing=cached.get("timing"),
             )
 
-    # ── Step 3: Detect intent → fetch live data in parallel ───────────────
+    # ── Step 3: Load conversation history from DB ─────────────────────────
+    conv_history = await _load_conversation_history_from_db(db, conversation_id, limit=6)
+    conv_context = _format_conversation_context(conv_history)
+
+    # ── Step 4: Detect intent → fetch live data in parallel ───────────────
     live_context_chunks: List[str] = list(extra_context_chunks or [])
     weather_task = None
     market_task = None
 
     if intent == "MARKET_PRICE":
         crop = market_svc.extract_crop_from_query(question_english)
+        if not crop and conv_history:
+            for turn in reversed(conv_history):
+                c = market_svc.extract_crop_from_query(turn.get("content") or turn.get("q") or "")
+                if c:
+                    crop = c
+                    break
         if crop:
             market_task = asyncio.create_task(
                 market_svc.fetch_current_price(crop, region or "Gautam Buddha Nagar")
@@ -260,6 +372,12 @@ async def _run_rag_pipeline(
             )
         if market_svc.is_market_related(question_english):
             crop = market_svc.detect_crop_in_query(question_english)
+            if not crop and conv_history:
+                for turn in reversed(conv_history):
+                    c = market_svc.extract_crop_from_query(turn.get("content") or turn.get("q") or "")
+                    if c:
+                        crop = c
+                        break
             if crop and region:
                 market_task = asyncio.create_task(
                     market_svc.fetch_current_price(crop, region)
@@ -285,14 +403,11 @@ async def _run_rag_pipeline(
         except Exception as exc:
             logger.warning(f"Market fetch failed (non-fatal): {exc}")
 
-    # ── Step 4: Load conversation history ─────────────────────────────────
-    conv_history = _get_conversation_history(conversation_id)
-    conv_context = _format_conversation_context(conv_history)
-
-    # ── Step 5: Retrieve context from ChromaDB (Non-blocking async worker) ──
+    # ── Step 5: Retrieve context from ChromaDB (with query contextualization) ──
     t0 = time.time()
+    retrieval_query = rag.contextualize_query(question_english, conv_history)
     chunks, sources, scores = await rag.retrieve_context_async(
-        english_query=question_english,
+        english_query=retrieval_query,
         top_k=settings.rag_top_k,
     )
     timings["retrieval_ms"] = int((time.time() - t0) * 1000)
@@ -331,7 +446,13 @@ async def _run_rag_pipeline(
     # ── Step 6: Generate English answer from LLM ───────────────────────────
     t0 = time.time()
     try:
-        answer_english = llm.generate_answer(question_english, all_chunks, intent=intent)
+        answer_english = llm.generate_answer(
+            question_english,
+            all_chunks,
+            intent=intent,
+            region=region,
+            conversation_history=conv_history,
+        )
     except RuntimeError as exc:
         await _log_error(
             db, "LLMError", str(exc),
@@ -409,9 +530,11 @@ async def _run_rag_pipeline(
 
     source_labels = make_source_labels(unique_sources, scores)
 
-    # Contextual follow-up suggestions for high farmer engagement
-    follow_up_questions: List[str] = []
-    if intent == "MARKET_PRICE":
+    # Dynamic or contextual follow-up suggestions for high farmer engagement
+    dynamic_followups = getattr(answer_english, "follow_up_questions", [])
+    if dynamic_followups:
+        follow_up_questions = list(dynamic_followups)
+    elif intent == "MARKET_PRICE":
         follow_up_crop = (
             price_data.get("crop")
             if "price_data" in locals() and price_data and price_data.get("crop") and price_data.get("crop") != "Agricultural Produce"
@@ -479,17 +602,23 @@ async def _run_rag_pipeline(
             },
             region=region,
             language=language,
+            conversation_id=conversation_id,
         )
 
     # ── Step 11: Schedule background TTS pre-generation ─────────────────────
     # The JSON response is returned IMMEDIATELY to the client.
     # TTS audio generates in the background so it's ready when the farmer
     # taps the speaker button a few seconds later.
-    if background_tasks and query_id:
+    if query_id:
         tts_text = answer_localized if language != "en" else answer_english
         if tts_text:
-            background_tasks.add_task(_pregenerate_tts, query_id, tts_text, language)
-            logger.info(f"Scheduled background TTS for query {query_id} (lang: {language})")
+            try:
+                # Pre-warm Chunk 0 immediately on active event loop (< 350ms lead time)
+                asyncio.create_task(_pregenerate_tts_pipeline(query_id, tts_text, language))
+                logger.info(f"Dispatched fast-start TTS pre-warm for query {query_id} (lang: {language})")
+            except Exception as exc:
+                if background_tasks:
+                    background_tasks.add_task(_pregenerate_tts, query_id, tts_text, language)
 
     return response
 
@@ -501,8 +630,8 @@ async def _run_rag_pipeline(
     response_model=QueryResponse,
     summary="Ask a farming question (text)",
     description=(
-        "Submit a Malayalam farming question. Returns a grounded answer with "
-        "source citations. Supports follow-up questions via conversation_id. "
+        "Submit a farming question in any supported Indian language or English. "
+        "Returns a grounded answer with source citations. Supports follow-up questions via conversation_id. "
         "Automatically injects live weather and market data when relevant."
     ),
     responses={
@@ -536,7 +665,7 @@ async def text_query(
     response_model=VoiceQueryResponse,
     summary="Ask a farming question (voice)",
     description=(
-        "Upload Malayalam audio. Transcribes via Google STT, shows the farmer "
+        "Upload audio in any supported Indian language. Transcribes via Google STT, shows the farmer "
         "the transcribed text, then runs the full RAG pipeline."
     ),
     responses={
@@ -675,10 +804,13 @@ async def image_query(
         )
 
     if question and question.strip():
-        try:
-            farmer_question_english = translation.translate_ml_to_en(question.strip())
-        except Exception:
-            farmer_question_english = question.strip()  # Use as-is if translation fails
+        if translation.is_predominantly_english(question.strip()) or language == "en":
+            farmer_question_english = question.strip()
+        else:
+            try:
+                farmer_question_english = translation.translate_to_en(question.strip(), src_lang=language)
+            except Exception:
+                farmer_question_english = question.strip()  # Use as-is if translation fails
 
     # Step 3: Combine symptom description + optional question
     from app.services.vision import combine_image_and_text_query
@@ -714,9 +846,9 @@ async def image_query(
     "/query/{query_id}/audio",
     summary="Get spoken audio for a previous query answer",
     description=(
-        "Generates Malayalam speech for a previous query's answer using "
-        "Google Cloud TTS. Called on-demand only (not auto-generated) to save "
-        "bandwidth on 2G connections. Returns MP3 audio bytes."
+        "Generates natural speech for a previous query's answer in the requested language using "
+        "Edge-TTS or Google Cloud TTS. Returns single clean complete MP3 audio bytes starting with "
+        "'Here is your advisory.' with zero SSML markup."
     ),
     responses={
         200: {"content": {"audio/mpeg": {}}, "description": "MP3 audio bytes"},
@@ -727,11 +859,12 @@ async def image_query(
 async def get_query_audio(
     query_id: int,
     lang: Optional[str] = Query(default=None, description="Target language code for audio (e.g. 'en', 'hi', 'ml', 'ta')"),
+    chunk: Optional[int] = Query(default=None, description="Optional chunk parameter (single complete audio returned)"),
     db: AsyncSession = Depends(get_db),
 ) -> Response:
 
     # ── Fast path: serve from pre-generated TTS cache ─────────────────────
-    target_lang_hint = (lang or "ml").strip().lower()
+    target_lang_hint = (lang or "en").strip().lower()
     cached_audio = _tts_cache_get(query_id, target_lang_hint)
     if cached_audio:
         logger.info(f"TTS cache HIT for query {query_id} (lang: {target_lang_hint})")
@@ -739,7 +872,7 @@ async def get_query_audio(
             content=cached_audio,
             media_type="audio/mpeg",
             headers={
-                "Content-Disposition": f'inline; filename="answer_{query_id}_{target_lang_hint}.mp3"',
+                "Content-Disposition": f'inline; filename="advisory_{query_id}_{target_lang_hint}.mp3"',
                 "Cache-Control": "public, max-age=3600",
                 "X-TTS-Source": "pre-generated",
             },
@@ -755,31 +888,33 @@ async def get_query_audio(
     if not log_entry:
         raise HTTPException(status_code=404, detail=f"Query ID {query_id} not found.")
 
-    target_lang = (lang or log_entry.language or "ml").strip().lower()
+    target_lang = (lang or log_entry.language or "en").strip().lower()
+
+    localized_text = getattr(log_entry, "answer_localized", None) or log_entry.answer_malayalam
 
     if target_lang == "en" and log_entry.answer_english:
         text_to_speak = log_entry.answer_english
-    elif target_lang == (log_entry.language or "ml").strip().lower() and log_entry.answer_malayalam:
-        text_to_speak = log_entry.answer_malayalam
+    elif target_lang == (log_entry.language or "en").strip().lower() and localized_text:
+        text_to_speak = localized_text
     else:
         # If target language differs from original query log, localize English base if possible
-        english_base = log_entry.answer_english or log_entry.answer_malayalam
+        english_base = log_entry.answer_english or localized_text
         if english_base and target_lang != "en":
             try:
                 from app.services import translation
                 text_to_speak = translation.translate_en_to_lang(english_base, tgt_lang=target_lang)
             except Exception as exc:
                 logger.warning(f"On-demand TTS translation to {target_lang} failed: {exc}")
-                text_to_speak = log_entry.answer_malayalam or log_entry.answer_english
+                text_to_speak = localized_text or log_entry.answer_english
         else:
-            text_to_speak = log_entry.answer_malayalam or log_entry.answer_english
+            text_to_speak = localized_text or log_entry.answer_english
 
     if not text_to_speak:
         raise HTTPException(status_code=404, detail="No answer text stored for this query.")
 
-    # Generate TTS (on-demand fallback)
+    from app.services.tts import synthesize_advisory_audio
+
     try:
-        from app.services.tts import synthesize_advisory_audio
         audio_bytes = await synthesize_advisory_audio(text_to_speak, lang=target_lang)
     except RuntimeError as exc:
         raise HTTPException(
@@ -794,7 +929,7 @@ async def get_query_audio(
         content=audio_bytes,
         media_type="audio/mpeg",
         headers={
-            "Content-Disposition": f'inline; filename="answer_{query_id}_{target_lang}.mp3"',
+            "Content-Disposition": f'inline; filename="advisory_{query_id}_{target_lang}.mp3"',
             "Cache-Control": "public, max-age=3600",
             "X-TTS-Source": "on-demand",
         },

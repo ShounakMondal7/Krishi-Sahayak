@@ -6,6 +6,7 @@ Tables:
   - error_logs   : Server-side error tracking (never exposed to users)
 """
 from datetime import datetime, timezone
+from typing import Optional
 from sqlalchemy import (
     Integer, Text, String, DateTime, Float, Boolean, JSON, Index
 )
@@ -38,6 +39,15 @@ class QueryLog(Base):
     answer_malayalam: Mapped[str] = mapped_column(Text, nullable=True)
     sources: Mapped[str] = mapped_column(Text, nullable=True)  # comma-separated filenames
 
+    @property
+    def answer_localized(self) -> Optional[str]:
+        """Pan-India localized answer alias mapping to answer_malayalam database column."""
+        return self.answer_malayalam
+
+    @answer_localized.setter
+    def answer_localized(self, value: Optional[str]) -> None:
+        self.answer_malayalam = value
+
     # ── RAG Metadata ─────────────────────────────────────────────────
     retrieval_score: Mapped[float] = mapped_column(Float, nullable=True)  # avg similarity
     chunks_retrieved: Mapped[int] = mapped_column(Integer, default=0)
@@ -46,7 +56,7 @@ class QueryLog(Base):
     market_injected: Mapped[bool] = mapped_column(Boolean, default=False)
 
     # ── Context ────────────────────────────────────────────────────────
-    language: Mapped[str] = mapped_column(String(5), default="ml")
+    language: Mapped[str] = mapped_column(String(5), default="en")
     region: Mapped[str] = mapped_column(String(100), nullable=True, index=True)
     session_id: Mapped[str] = mapped_column(String(64), nullable=True)   # anonymous session
     conversation_id: Mapped[str] = mapped_column(String(64), nullable=True)  # multi-turn thread

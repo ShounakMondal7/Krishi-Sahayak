@@ -34,6 +34,74 @@ _JUNK_PATTERNS = re.compile(
     r"index\s*$|references?\s*$|appendix\s+[a-z]?\s*$)",
 )
 
+# ── Implicit query reference pattern for multi-turn contextualization ───────────
+_IMPLICIT_QUERY_PATTERN = re.compile(
+    r"\b(it|this|that|these|those|its|them|the crop|that crop|nearest mandi|mandi|auction|"
+    r"how to register|register|enam|e-nam|grading|criteria|dosage|spray|fertilizer|"
+    r"price|rate|mandi rate|pest|disease|treatment|medicine|shop|kendra)\b",
+    re.IGNORECASE,
+)
+
+
+def contextualize_query(
+    english_query: str,
+    conversation_history: Optional[list[dict]] = None,
+) -> str:
+    """
+    If conversation_history is non-empty and the current follow-up question
+    contains pronouns or implicit references, prepends the active topic/crop/disease
+    from preceding turns so ChromaDB RAG retrieves the exact matching chunks.
+    """
+    if not conversation_history:
+        return english_query
+
+    q_clean = english_query.strip()
+    words = q_clean.split()
+    has_implicit = bool(_IMPLICIT_QUERY_PATTERN.search(q_clean)) or len(words) <= 7
+
+    if not has_implicit:
+        return english_query
+
+    active_topic: Optional[str] = None
+    for turn in reversed(conversation_history):
+        prev_q = turn.get("question_english") or turn.get("q") or ""
+        prev_a = turn.get("answer_english") or turn.get("a") or ""
+
+        try:
+            from app.services.market import extract_crop_from_query
+            crop = extract_crop_from_query(prev_q)
+            if crop:
+                active_topic = crop
+                break
+        except Exception:
+            pass
+
+        crop_match = re.search(
+            r"\b(beetroot|potato|tomato|wheat|rice|paddy|cotton|soybean|onion|garlic|chilli|ginger|turmeric|mustard|gram|chana|apple|mango|banana|tea|coffee|rubber|sugarcane)\b",
+            prev_q,
+            re.IGNORECASE,
+        )
+        if crop_match:
+            active_topic = crop_match.group(1).lower()
+            break
+
+        if prev_a:
+            ans_match = re.search(
+                r"\b(beetroot|potato|tomato|wheat|rice|paddy|cotton|soybean|onion|garlic|chilli|ginger|turmeric|mustard|gram|chana|apple|mango|banana)\b",
+                prev_a[:300],
+                re.IGNORECASE,
+            )
+            if ans_match:
+                active_topic = ans_match.group(1).lower()
+                break
+
+    if active_topic and active_topic.lower() not in q_clean.lower():
+        contextualized = f"{active_topic.title()} {q_clean}"
+        logger.info(f"Contextualized RAG query: '{q_clean}' → '{contextualized}' (topic: {active_topic})")
+        return contextualized
+
+    return english_query
+
 
 def _is_junk_chunk(text: str) -> bool:
     """

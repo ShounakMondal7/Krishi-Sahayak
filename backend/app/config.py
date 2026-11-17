@@ -63,6 +63,7 @@ class Settings(BaseSettings):
 
     # ── Security & Authentication ─────────────────────────────────────
     admin_api_key: Optional[str] = None
+    data_gov_api_key: Optional[str] = None
 
     # ── Feature Flags ─────────────────────────────────────────────────
     use_indictrans2: bool = False

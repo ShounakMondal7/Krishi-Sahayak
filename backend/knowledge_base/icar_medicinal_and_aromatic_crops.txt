@@ -1,0 +1,65 @@
+ICAR COMPREHENSIVE MEDICINAL & AROMATIC CROPS (MAPS) PRODUCTION MANUAL
+================================================================================
+Grounded in ICAR-DMAPR (Directorate of Medicinal & Aromatic Plants Research, Anand) & CSIR-CIMAP Norms.
+
+SECTION 1: HIGH-VALUE MEDICINAL CROPS PRODUCTION & POST-HARVEST
+--------------------------------------------------------------------------------
+India has exceptional agro-climatic diversity for cultivating high-demand medicinal and aromatic crops (MAPs), offering 2x to 4x higher net profits compared to traditional cereals, with high drought tolerance, freedom from cattle browsing (cattle-proof), and established domestic AYUSH and export markets.
+
+1. Ashwagandha / Indian Ginseng (Withania somnifera):
+   - Suitable Soils & Climate: Well-drained sandy loam or light red soils (pH 7.5 to 8.5). Highly drought tolerant; grown predominantly as a rainfed late-Kharif/Rabi crop in MP (Neemuch, Mandsaur), Rajasthan, and Gujarat.
+   - High Yielding Varieties: Poshita, Jawahar Asgandh 20, Chetak, CIM-Pushti.
+   - Seed Rate & Sowing: 4-5 kg/acre (drilled in rows 30 cm apart) or 10-12 kg/acre (broadcast). Sown from late August to late September.
+   - Nutrient Management: Apply 5 tonnes FYM + 15 kg N, 15 kg P2O5 per acre. Avoid excessive chemical nitrogen which produces lush leafy foliage at the expense of root alkaloid development.
+   - Harvesting & Processing: Harvest at 150-180 days after sowing when leaves dry up and berries turn bright orange-red. Uproot roots using subsoiler; separate lateral roots from stems; cut roots into 7-10 cm cylindrical pieces; wash rapidly and dry under shade to preserve withanolide alkaloid content (0.4-0.5%).
+   - Commercial Grading: Grade A (thick, brittle, pure white interior, uniform 7-10 cm pencil-thickness sticks) commands premium rates (₹35,000-₹45,000/Qtl) at Neemuch Mandi. Grade B/C (thinner or fibrous roots) trade at ₹18,000-₹26,000/Qtl. Average dry root yield: 350-500 kg/acre + 50 kg berries/seed.
+
+2. Aloe Vera (Aloe barbadensis / Gheekumari):
+   - Suitable Soils: Arid, semi-arid, poor sandy soils, saline/alkaline soils (pH up to 8.5). Zero cattle grazing damage.
+   - Varieties: CIM-Sheetal, Anand Local.
+   - Propagation: Vegetative suckers (4-5 months old, weighing 200-250g). Plant 10,000 to 12,000 suckers per acre at 60 cm x 60 cm spacing.
+   - Harvesting: First harvest of thick, fleshy outer basal leaves begins 8-10 months after planting. Cut close to stem base using a clean curved knife; 3 to 4 harvests per year. Yield: 15 to 20 tonnes fresh leaf per acre annually.
+   - Gel Extraction: Extract clear inner mucilaginous gel within 4-6 hours of harvest to prevent enzymatic degradation and aloin oxidation.
+
+3. Isabgol / Psyllium (Plantago ovata):
+   - Sowing Window: November 1 to 20 (Rabi season).
+   - High Yielding Varieties: Gujarat Isabgol 1, Gujarat Isabgol 2, Haryana Isabgol 5.
+   - Seed Rate & Sowing: 1.5 to 2.0 kg/acre mixed with dry sand; drilled at 30 cm row spacing at 1-1.5 cm shallow depth.
+   - Critical Harvest Window: 110-120 DAS when flower spikes turn dull yellow-brown and seeds shed easily when pressed between fingers. Harvest early in morning (before 9 AM) to prevent seed shattering; threshing on concrete floor yields 400-500 kg seed/acre.
+
+4. Stevia / Meethi Patti (Stevia rebaudiana - Natural Zero-Calorie Sweetener):
+   - Clonal Propagation: Micro-propagated tissue culture plantlets or stem cuttings planted at 45 cm x 30 cm (approx. 28,000 plants/acre).
+   - Harvest: Cut leafy biomass 3-4 times annually just before flower bud opening (when stevioside content peaks at 10-12%). Yield: 1.5 to 2.0 tonnes dry leaf/acre annually.
+
+SECTION 2: AROMATIC CROPS & STEAM DISTILLATION TECHNOLOGY
+--------------------------------------------------------------------------------
+1. Mentha / Japanese Mint (Mentha arvensis):
+   - Sowing Season: Planted January to February using underground root suckers/stolons (150-200 kg stolons per acre).
+   - High-Yielding Varieties: Kosi, Kushal, CIM-Kranti, Saksham.
+   - Crop Cycle: 1st cutting at 90-100 days after planting; 2nd cutting 60-70 days after first cut (in May-June before monsoon rains).
+   - Field Yield: 10 to 12 tonnes fresh herbage per acre; produces 50 to 65 kg pure Mentha oil per acre (containing 75-80% natural L-menthol).
+   - Distillation: Field-distilled in direct-fired stainless steel / mild steel steam distillation units for 2.5 to 3.0 hours.
+
+2. Lemongrass (Cymbopogon flexuosus):
+   - Soil Adaptability: Marginal wastelands, sloped hills, alkaline lands. Completely unpalatable to wild boars, blue bulls (nilgai), and stray cattle.
+   - Varieties: Krishna, Cauvery, Praman.
+   - Planting & Longevity: Plant rooted slips at 60 cm x 45 cm (approx. 14,000 slips/acre). Perennial plantation lasts 4 to 5 years.
+   - Harvesting: 1st cut at 90 days, subsequent cuts every 60-75 days (4 to 5 cuttings per year). Produces 60-80 kg high-grade essential oil (containing 75-85% Citral) per acre annually, trading at ₹1,100 to ₹1,400 per kg.
+
+3. Palmarosa (Cymbopogon martinii var. motia):
+   - Varieties: Motia, Trishna, PRC-1.
+   - Distillation Yield: Produces 25-35 kg Geraniol-rich essential oil per acre annually, widely used in luxury perfumery, soaps, and cosmetics.
+
+4. Tulsi / Holy Basil (Ocimum sanctum / O. basilicum):
+   - Nursery: 200-300g seed per acre raised in nursery and transplanted at 45 cm x 45 cm.
+   - Harvest: Harvest flowering tops and leaves at 75-85 days. Yields 35-40 kg Eugenol-rich aromatic oil per acre.
+
+SECTION 3: STEAM DISTILLATION SOP & GOVERNMENT SUBSIDIES (NMPB & CSIR)
+--------------------------------------------------------------------------------
+- Steam Distillation Operation:
+  * Wilting: Allow harvested leafy herbage to wilt in shade for 8 to 12 hours before distillation (removes 20-30% surface moisture, allowing 30% more biomass packing per boiler batch).
+  * Distillation Boiler Packing: Pack herbage tightly and uniformly into the distillation chamber using foot compaction to prevent steam channeling.
+  * Condensation & Florentine Receiver: Maintain cold water circulation through shell-and-tube condenser; collect distillate in Florentine flask where essential oil (lighter than water) separates on top and is drained off cleanly. Filter through anhydrous sodium sulfate to remove residual moisture.
+- National Medicinal Plants Board (NMPB) & MIDH Subsidies:
+  * 30% to 50% direct capital subsidy for cultivation costs of prioritized medicinal plant species.
+  * 50% to 75% subsidy for establishing modern community steam distillation units (₹15 Lakh to ₹25 Lakh project cost), seed drying sheds, and AYUSH testing laboratories. Apply on nmpb.nic.in.

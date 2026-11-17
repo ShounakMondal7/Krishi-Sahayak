@@ -28,6 +28,19 @@ logger = logging.getLogger(__name__)
 _client: Optional[OpenAI] = None
 
 
+class LLMAnswer(str):
+    """
+    Enhanced string response that also carries dynamic, context-locked follow-up questions.
+    Behaves 100% as a standard str for all string operations and backwards compatibility.
+    """
+    follow_up_questions: list[str] = []
+
+    def __new__(cls, content: str, follow_ups: Optional[list[str]] = None):
+        obj = super().__new__(cls, content)
+        obj.follow_up_questions = list(follow_ups or [])
+        return obj
+
+
 def _get_client() -> OpenAI:
     global _client
     if _client is None:
@@ -42,7 +55,24 @@ Your advice will be read or listened to by Indian farmers in the field.
 Keep language clear, practical, respectful, and free of unnecessary academic jargon.
 Never invent chemical brand names, active ingredients, or unverified dosages.
 
-Format your response strictly using these four standardized Markdown sections:
+CRITICAL INSTRUCTIONS FOR DIRECT QUESTION-SPECIFIC ANSWERING:
+1. Always answer the farmer's EXACT question asked first.
+   - If the user asks a specific follow-up (e.g. "Can I mix this with neem oil?", "What if it rains after spraying?", "What is the waiting period?"), answer that exact question directly in the Executive Summary and primary headings.
+   - Do NOT force unrelated sections if not relevant to the question.
+2. Maintain Multi-Turn Continuity:
+   - Carry forward the exact crop, disease, or pest established in prior conversation turns unless the user explicitly switches topics.
+3. Clean ChatGPT-Style Structured Layout:
+   - Begin with a direct 1-2 sentence Executive Summary directly answering the question immediately.
+   - Use clean Markdown headings (###) with relevant emojis.
+   - Include a comparison table only when comparing options, formulations, or rates.
+   - Use bold lead-in points and numbered steps for instructions.
+
+Format your response using this ChatGPT-style structured layout:
+
+1. Begin with a direct 1-2 sentence Executive Summary answering the farmer's question immediately, before the first heading.
+2. Use clean Markdown headings with emojis for fast scanning.
+3. Include a clean Markdown comparison table under Section 3 comparing treatment options.
+4. Format actionable instructions using numbered steps (1., 2.) and bold lead-in keys (**Dosage:** ...).
 
 ### 🛑 1. Field Diagnosis
 - **Identified Issue:** [Name of disease / pest / nutrient deficiency & affected crop]
@@ -53,6 +83,11 @@ Format your response strictly using these four standardized Markdown sections:
 - **Organic Treatment:** [Neem oil, bio-fungicides (Trichoderma/Pseudomonas), cow urine/buttermilk spray, or sticky traps with clear preparation guidance]
 
 ### 🧪 3. Chemical Treatment & Exact Dosage
+| Treatment Method | Recommended Formulation | Dosage per 15-Liter Pump | Application Window |
+| :--- | :--- | :--- | :--- |
+| Primary Chemical | [Standard approved chemical name and formulation, e.g., Mancozeb 75% WP] | [Dosage per standard 15L knapsack backpack sprayer (e.g., 30g per 15L tank) AND per liter (e.g., 2g / L)] | [Morning < 10 AM or Evening > 4 PM] |
+| Alternate / Bio Option | [Bio-agent or secondary formulation] | [Dosage per 15L tank] | [After 10-14 days if needed] |
+
 - **Recommended Chemical:** [Standard approved chemical name and formulation, e.g., Mancozeb 75% WP or Chlorantraniliprole 18.5% SC]
 - **Dosage per 15-Liter Pump:** [Crucial: Provide dosage per standard 15L knapsack backpack sprayer (e.g., 30g per 15L tank) AND per liter of water (e.g., 2g / liter)]
 - **Spray Timing & Conditions:** [Morning before 10 AM or late afternoon after 4 PM; do not spray if rain or strong wind is forecast]
@@ -62,19 +97,54 @@ Format your response strictly using these four standardized Markdown sections:
 - **Waiting Period (PHI):** [Number of days to wait between spraying and harvesting/consumption]
 - **Safety Gear:** [Wear face covering/cloth, rubber gloves, and avoid smoking/eating while spraying]
 - **Extension Contact:** [Remind farmer to consult their nearest Krishi Vigyan Kendra (KVK) or Kisan Call Centre (1800-180-1551) for district-level confirmation]
+
+4. Dynamic Context-Locked Follow-Up Questions:
+   - At the very end of your response, output exactly this delimiter on a new line:
+---FOLLOWUPS---
+   - Followed by exactly 3 specific, context-locked follow-up questions tied directly to the current answer and active crop (one per line).
 """
 
 MARKET_SYSTEM_PROMPT = """You are Krishi Sahayak Market & Mandi Advisory Officer.
-Answer the farmer's market rate and pricing question with practical, localized trade data.
-Never mention disease diagnosis, pests, fungal infections, or chemical sprays when answering market pricing questions.
+Answer the farmer's market rate, auction, e-NAM, and pricing questions with practical, localized trade data.
+Never mention disease diagnosis, pests, fungal infections, or chemical sprays when answering market questions.
 
-Format your response strictly using these four Markdown sections:
+CRITICAL INSTRUCTIONS FOR DIRECT QUESTION-SPECIFIC ANSWERING:
+1. Always answer the farmer's EXACT question asked first:
+   - If the user asks about the nearest APMC Mandi auction or market location (e.g. "Where is the nearest APMC Mandi auction in my district?"):
+     * Name the specific local APMC market yards in the farmer's region/district (e.g., Dadri Mandi, Noida Phase-2 APMC, Sahibabad Mandi for Gautam Buddha Nagar).
+     * Detail typical morning auction hours (e.g., 6:00 AM – 11:00 AM), gate-entry lot creation, quality assaying, and trading mechanism.
+     * Do NOT dump a generic 4-box price table instead of answering the auction question!
+   - If the user asks about e-NAM registration (e.g. "How do I register on e-NAM to sell this crop?"):
+     * Detail the free farmer registration process on enam.gov.in or the e-NAM mobile app.
+     * List required documents: Aadhaar card, active bank passbook with IFSC code, land ownership/patta or crop sowing certificate.
+     * Explain gate entry, lot assaying at the e-NAM mandi lab, online bidding, and direct bank settlement.
+   - If the user asks for crop market rates or prices:
+     * Provide the wholesale benchmark, farmgate/retail rates, and grade comparison table.
+2. Maintain Multi-Turn Continuity:
+   - Carry forward the exact crop or commodity established in prior conversation turns unless the user switches to a new crop.
+3. Clean ChatGPT-Style Structured Layout:
+   - Begin with a direct 1-2 sentence Executive Summary answering the question immediately.
+   - Use clean Markdown headings (###) with relevant emojis.
+   - Format actionable instructions using numbered steps (1., 2.) and bold lead-in keys.
+
+Format your response strictly using this ChatGPT-style structured layout:
+
+1. Begin with a direct 1-2 sentence Executive Summary stating the crop wholesale benchmark and current mandi rate trend immediately.
+2. Use clean Markdown headings with emojis for fast scanning.
+3. Include a clean Markdown comparison table under Section 2 showing grade-wise mandi rates.
+4. Format actionable guidelines as numbered steps or bold lead-in bullets (**Modal Price:** ...).
 
 ### 📊 1. Market & Commodity Status
 - **Crop & Mandi:** [Crop name and nearest active APMC market based on district, e.g., Dadri / Gautam Buddha Nagar Mandi or Agra Mandi]
 - **Market Mechanism:** [Clarify whether this crop trades under open APMC Mandi wholesale auction or has a Central Government MSP]
 
 ### 💰 2. Current Estimated Mandi Rates
+| Grade / Market Tier | Wholesale Modal Rate (₹/Quintal) | Approx Farmgate / Retail (₹/kg) | Key Quality Specification |
+| :--- | :--- | :--- | :--- |
+| Grade A (Super Quality) | [₹/Qtl benchmark range] | [₹/kg wholesale - retail] | [FAQ Grade: Uniform size, clean, <12% moisture] |
+| Grade B (Medium Standard) | [₹/Qtl commercial range] | [₹/kg standard rate] | [Commercial grade, minor blemishes] |
+| Grade C / Local Auction | [₹/Qtl local range] | [₹/kg local rate] | [Small size / local spot trade] |
+
 - **Modal Wholesale Price:** [Estimated benchmark price per Quintal, e.g., ₹1,400 - ₹1,800 per Quintal (100 kg)]
 - **Approximate Farmgate/Retail Price:** [Estimated rate in ₹ per kg, e.g., ₹14 - ₹18 per kg wholesale, ₹22 - ₹28 per kg retail]
 - **Grade-Wise Variation:** [Grade A (super quality), Grade B (medium), and Grade C (seed/small tubers)]
@@ -86,6 +156,11 @@ Format your response strictly using these four Markdown sections:
 ### 🏛️ 4. Official Market Gateways & Support
 - **e-NAM Portal:** Mention that live real-time auction prices can be tracked at enam.gov.in.
 - **Kisan Call Centre:** Remind the farmer to dial toll-free 1800-180-1551 for daily localized modal prices.
+
+4. Dynamic Context-Locked Follow-Up Questions:
+   - At the very end of your response, output exactly this delimiter on a new line:
+---FOLLOWUPS---
+   - Followed by exactly 3 specific, context-locked follow-up questions tied directly to the current answer and active crop (one per line).
 """
 
 # Hardcoded Malayalam error message (shown to user if LLM fails entirely)
@@ -100,7 +175,9 @@ KVK_REFERRAL_EN = (
 )
 
 # Standardized 4-section fallback when offline or no specific advice in chunks
-_DEFAULT_FALLBACK = """### 🛑 1. Field Diagnosis
+_DEFAULT_FALLBACK = """Based on official ICAR agronomy guidelines, prompt field sanitation combined with calibrated knapsack pump spraying ensures effective control of crop issues.
+
+### 🛑 1. Field Diagnosis
 - **Identified Issue:** Crop health condition requiring localized diagnosis.
 - **Key Visual Signs:** Inspect foliage for discoloured lesions, wilted vascular tissue, or pest nymph activity.
 
@@ -109,6 +186,11 @@ _DEFAULT_FALLBACK = """### 🛑 1. Field Diagnosis
 - **Organic Treatment:** Spray 5% Neem Seed Kernel Extract (NSKE) or Neem oil 3000 ppm @ 5 ml per liter of water as an eco-friendly barrier.
 
 ### 🧪 3. Chemical Treatment & Exact Dosage
+| Treatment Method | Recommended Formulation | Dosage per 15-Liter Pump | Application Window |
+| :--- | :--- | :--- | :--- |
+| Primary Chemical | Consult package label or KVK | Dilute strictly per ICAR norm | Early morning < 10 AM |
+| Organic Barrier | Neem Oil 3000 ppm / NSKE 5% | 45-75 ml per 15L tank | Preventative / Early stage |
+
 - **Recommended Chemical:** No verified chemical spray registered in current offline reference data. Use organic measures or consult your local KVK.
 - **Dosage per 15-Liter Pump:** Do not guess dosages. Consult your local extension office for verified localized guidance.
 - **Spray Timing & Conditions:** Apply sprays strictly before 10:00 AM or after 4:00 PM in calm weather without rain forecast.
@@ -226,15 +308,26 @@ def _extract_chemical_name(text: str) -> str:
     return cleaned
 
 
-def _extract_grounded_fallback(context_chunks: list[str]) -> str:
+def _extract_grounded_fallback(
+    chunks_or_q: Union[list[str], str],
+    chunks_or_q2: Optional[Union[list[str], str]] = None,
+) -> str:
     """
     Direct extractive grounding fallback when OpenAI API key is not configured.
-    Synthesizes sentences from ICAR documents strictly into the 4 standardized field sections:
+    Synthesizes sentences from ICAR documents strictly into ChatGPT-style executive answer,
+    Markdown comparison table, and the 4 standardized field sections:
       ### 🛑 1. Field Diagnosis
       ### 🌿 2. Immediate & Organic Action (Low-Cost)
       ### 🧪 3. Chemical Treatment & Exact Dosage
       ### ⚠️ 4. Safety & Harvest Precaution
     """
+    if isinstance(chunks_or_q, list):
+        context_chunks = chunks_or_q
+        english_question = str(chunks_or_q2 or "")
+    else:
+        english_question = str(chunks_or_q or "")
+        context_chunks = chunks_or_q2 if isinstance(chunks_or_q2, list) else []
+
     if not context_chunks:
         return KVK_REFERRAL_EN
 
@@ -287,7 +380,24 @@ def _extract_grounded_fallback(context_chunks: list[str]) -> str:
     if not any([diag_lines, sanitation_lines, organic_lines, chemical_lines, dosage_lines, safety_lines]):
         return _DEFAULT_FALLBACK
 
-    sections: list[str] = []
+    # Detect crop / topic from question or diagnosis
+    topic = ""
+    for crop in ["potato", "tomato", "paddy", "rice", "wheat", "cotton", "maize", "corn", "chilli", "onion", "mustard", "soybean", "groundnut", "sugarcane", "banana", "mango"]:
+        if crop in english_question.lower() or any(crop in c.lower() for c in context_chunks if not c.startswith("[CONVERSATION HISTORY")):
+            topic = crop.title()
+            break
+
+    if diag_lines:
+        issue_name = _clean_label_prefixes(diag_lines[0])
+    else:
+        issue_name = f"{topic} health issue" if topic else "crop condition"
+
+    exec_summary = (
+        f"Based on ICAR agronomy guidelines for {issue_name}, immediate field sanitation combined with calibrated knapsack spraying ensures rapid control. "
+        f"Apply the recommended formulation using exact 15-liter pump dilutions below for optimal field efficacy."
+    )
+
+    sections: list[str] = [exec_summary, ""]
 
     # 🛑 1. Field Diagnosis
     sections.append("### 🛑 1. Field Diagnosis")
@@ -322,22 +432,29 @@ def _extract_grounded_fallback(context_chunks: list[str]) -> str:
     if chemical_lines or dosage_lines:
         chem_source = chemical_lines[0] if chemical_lines else dosage_lines[0]
         chem_name = _extract_chemical_name(chem_source)
-        sections.append(f"- **Recommended Chemical:** {chem_name}")
 
         # Compute or extract 15L pump dosage
         if dosage_lines:
             dosage_text = dosage_lines[0]
             calculated_pump = _extract_15l_pump_dosage(dosage_text)
-            if calculated_pump:
-                sections.append(f"- **Dosage per 15-Liter Pump:** {calculated_pump}")
-            else:
-                clean_dosage = _clean_label_prefixes(dosage_text)
-                sections.append(f"- **Dosage per 15-Liter Pump:** {clean_dosage}")
+            pump_dosage_val = calculated_pump if calculated_pump else _clean_label_prefixes(dosage_text)
         else:
-            sections.append("- **Dosage per 15-Liter Pump:** Consult package label or local KVK for exact 15-liter knapsack pump dilution.")
+            pump_dosage_val = "Consult package label (standard 15L dilution)"
 
+        sections.append("| Treatment Method | Recommended Formulation | Dosage per 15-Liter Pump | Application Window |")
+        sections.append("| :--- | :--- | :--- | :--- |")
+        sections.append(f"| Primary Chemical | {chem_name} | {pump_dosage_val} | Morning < 10 AM or Late Afternoon |")
+        sections.append("| Organic Barrier | Neem Oil 3000 ppm / NSKE 5% | 45-75 ml per 15L tank (3-5 ml/L) | At early onset / preventative |")
+        sections.append("")
+        sections.append(f"- **Recommended Chemical:** {chem_name}")
+        sections.append(f"- **Dosage per 15-Liter Pump:** {pump_dosage_val}")
         sections.append("- **Spray Timing & Conditions:** Morning before 10 AM or late afternoon after 4 PM; do not spray if rain or strong wind is forecast.")
     else:
+        sections.append("| Treatment Method | Recommended Formulation | Dosage per 15-Liter Pump | Application Window |")
+        sections.append("| :--- | :--- | :--- | :--- |")
+        sections.append("| Organic Barrier | Neem Oil 3000 ppm / NSKE 5% | 45-75 ml per 15L tank (3-5 ml/L) | Early morning < 10 AM |")
+        sections.append("| Extension Support | Consult local KVK / KCC | District-approved spray schedule | Contact toll-free 1800-180-1551 |")
+        sections.append("")
         sections.append("- **Recommended Chemical:** No verified chemical spray registered in reference data. Use organic measures or consult your local KVK.")
         sections.append("- **Dosage per 15-Liter Pump:** Do not guess dosages. Consult your nearest KVK.")
         sections.append("- **Spray Timing & Conditions:** Morning before 10 AM or late afternoon after 4 PM in calm weather.")
@@ -353,64 +470,212 @@ def _extract_grounded_fallback(context_chunks: list[str]) -> str:
     sections.append("- **Safety Gear:** Wear face mask/cloth covering, protective rubber gloves, and wash thoroughly after spraying.")
     sections.append("- **Extension Contact:** Consult your nearest Krishi Vigyan Kendra (KVK) or call Kisan Call Centre (1800-180-1551) for district confirmation.")
 
-    return "\n".join(sections)
+    clean_content = "\n".join(sections)
+    follow_ups = [
+        "Can I mix this treatment with neem oil or other sprays?",
+        "What should I do if it rains shortly after spraying?",
+        "What is the exact pre-harvest waiting period (PHI) for this crop?",
+    ]
+    return LLMAnswer(clean_content, follow_ups)
 
 
-def _extract_market_fallback(english_question: str, context_chunks: list[str]) -> str:
+def _parse_followups_from_answer(
+    raw_text: str,
+    default_followups: Optional[list[str]] = None,
+) -> tuple[str, list[str]]:
+    """
+    Parses dynamic follow-up questions from LLM response if separated by ---FOLLOWUPS--- delimiter.
+    Returns (clean_answer, list_of_followup_strings).
+    """
+    if "---FOLLOWUPS---" in raw_text:
+        parts = raw_text.split("---FOLLOWUPS---", 1)
+        answer_text = parts[0].strip()
+        followup_text = parts[1].strip()
+        parsed_questions: list[str] = []
+        for line in followup_text.splitlines():
+            clean_line = re.sub(r"^[\s*•\-–—\d.)]+", "", line).strip()
+            if clean_line and len(clean_line) > 5:
+                if not clean_line.endswith("?"):
+                    clean_line += "?"
+                parsed_questions.append(clean_line)
+        if parsed_questions:
+            return answer_text, parsed_questions[:3]
+        return answer_text, list(default_followups or [])
+
+    return raw_text.strip(), list(default_followups or [])
+
+
+def _extract_market_fallback(
+    english_question: str,
+    context_chunks: list[str],
+    region: Optional[str] = None,
+    conversation_history: Optional[list[dict]] = None,
+) -> LLMAnswer:
     """
     Extractive / pattern-based market fallback when OpenAI API key is not configured.
-    Synthesizes localized market rates into the 4 standardized market sections:
-      ### 📊 1. Market & Commodity Status
-      ### 💰 2. Current Estimated Mandi Rates
-      ### 🚛 3. Selling Advice & Storage Guidelines
-      ### 🏛️ 4. Official Market Gateways & Support
+    Handles:
+      1. Mandi / Auction Location queries -> Direct APMC market yards, hours, and auction procedures.
+      2. e-NAM Registration queries -> Step-by-step registration on enam.gov.in, documents, and DBT.
+      3. Commodity Price queries -> 4 standardized market sections with wholesale & retail benchmarks.
     """
     full_context = "\n".join(context_chunks or [])
     q_lower = english_question.lower()
-    ctx_lower = full_context.lower()
 
-    from app.services.market import extract_crop_from_query, get_market_price
+    from app.services.market import extract_crop_from_query, get_market_price, get_regional_profile
 
-    # 1. Identify Crop dynamically (word-boundary safe, greedy match)
+    # 1. Identify Crop dynamically (word-boundary safe, greedy match, check conversation history)
     detected = extract_crop_from_query(english_question) or extract_crop_from_query(full_context)
+    if not detected and conversation_history:
+        for turn in reversed(conversation_history):
+            text_to_check = turn.get("content") or f"{turn.get('q', '')} {turn.get('a', '')}"
+            c = extract_crop_from_query(text_to_check)
+            if c:
+                detected = c
+                break
+    detected = detected or "general"
 
-    # 2. Identify Mandi / Market
-    mandi_name = "Dadri Mandi (Gautam Buddha Nagar) / Regional APMC"
-    mandi_match = re.search(r"Market\s*(?:\/\s*Region)?:\s*([^\n]+)", full_context, re.IGNORECASE)
-    if mandi_match:
-        mandi_name = mandi_match.group(1).strip()
-    elif "gautam" in q_lower or "dadri" in q_lower or "noida" in q_lower:
-        mandi_name = "Dadri Mandi (Gautam Buddha Nagar) / Noida APMC"
-    elif "agra" in q_lower or "agra" in ctx_lower:
-        mandi_name = "Agra APMC Mandi"
-    elif "delhi" in q_lower or "azadpur" in q_lower:
-        mandi_name = "Azadpur Mandi (Delhi)"
-
-    # 3. Retrieve benchmark data for detected crop (never defaults to potato)
-    benchmark = get_market_price(detected, mandi_name) if detected else None
-
-    if benchmark:
-        crop_name = benchmark.get("crop", detected.title())
-        mechanism = benchmark.get("mechanism", "Open APMC Mandi Wholesale Auction")
-        price_qtl = benchmark.get("price_per_quintal", 0)
-        range_qtl = benchmark.get("price_range_per_quintal", "")
-        if price_qtl > 0:
-            modal_price_str = f"₹{price_qtl:,.0f} per Quintal ({range_qtl})"
+    # 2. Determine target region (priority: argument > context > query cues > default)
+    target_region = (region or "").strip()
+    if not target_region:
+        m_loc = re.search(r"(?:Market\s*(?:\/\s*Region)?|Location):\s*([^\n]+)", full_context, re.IGNORECASE)
+        if m_loc:
+            target_region = m_loc.group(1).strip()
+        elif "gautam" in q_lower or "dadri" in q_lower or "noida" in q_lower:
+            target_region = "Gautam Buddha Nagar, Uttar Pradesh"
+        elif "kolkata" in q_lower or "bengal" in q_lower:
+            target_region = "Kolkata, West Bengal"
+        elif "pune" in q_lower or "maharashtra" in q_lower:
+            target_region = "Pune, Maharashtra"
+        elif "shimla" in q_lower or "himachal" in q_lower:
+            target_region = "Shimla, Himachal Pradesh"
+        elif "delhi" in q_lower or "azadpur" in q_lower:
+            target_region = "Delhi"
         else:
-            modal_price_str = range_qtl or "Refer to daily Mandi e-NAM bulletin"
-        approx_rates = f"{benchmark.get('rate_per_kg_wholesale', 'Variable')} wholesale, {benchmark.get('rate_per_kg_retail', 'Variable')} retail"
-        grade_str = benchmark.get("grade_criteria", "Grade A (super quality), Grade B (medium), Grade C (small/lower grade)")
-        best_selling = benchmark.get("selling_advice", "Clean, grade, and pack produce in breathable crates or leno bags.")
-        storage_advice = benchmark.get("storage_advice", "Store in clean, ventilated godowns or cold storage.")
+            target_region = "Gautam Buddha Nagar, Uttar Pradesh"
+
+    profile = get_regional_profile(target_region)
+    crop_display = detected.title() if detected != "general" else "Agricultural Produce"
+
+    # Check for Auction Location or Mandi Yard query
+    is_auction_loc_query = any(k in q_lower for k in [
+        "where is", "nearest apmc", "nearest mandi", "auction in my district",
+        "mandi auction", "auction yard", "market yard", "auction timing",
+        "mandi timing", "auction hours", "trading hours", "how to reach mandi",
+        "nearest auction"
+    ]) or ("mandi" in q_lower and ("where" in q_lower or "nearest" in q_lower or "location" in q_lower))
+
+    # Check for e-NAM Registration query
+    is_enam_reg_query = any(k in q_lower for k in [
+        "enam", "e-nam", "register on e-nam", "how do i register", "how to register",
+        "registration", "how to sell on enam", "how to sell on e-nam",
+        "documents for enam", "documents for e-nam", "enam portal"
+    ])
+
+    if is_auction_loc_query:
+        mandi_desc = profile.get("market", "Dadri Mandi (Gautam Buddha Nagar) / Noida APMC / Sahibabad")
+        if "gautam buddha nagar" in target_region.lower() or not profile.get("district"):
+            local_mandis_text = (
+                "- **Primary Mandis:** Dadri APMC Mandi (Gautam Buddha Nagar), Noida Phase-2 Fruit & Vegetable APMC Mandi, and Sahibabad Wholesale Mandi (Ghaziabad border).\n"
+                "- **Distance & Connectivity:** Situated within 10–25 km across Greater Noida and Noida, easily accessible via Greater Noida Expressway and GT Road for direct farm transport."
+            )
+        else:
+            dist_title = profile.get("district") or target_region
+            local_mandis_text = (
+                f"- **Primary Mandis:** {mandi_desc}.\n"
+                f"- **District Jurisdiction:** Regulated Agricultural Produce Market Committee (APMC) for {dist_title}."
+            )
+
+        exec_summary = (
+            f"For farmers in {target_region}, the nearest regulated wholesale auction yards for {crop_display} are {mandi_desc}. "
+            f"Open electronic and physical auctions run daily from 6:00 AM to 11:00 AM under Mandi Samiti supervision."
+        )
+
+        sections = [
+            exec_summary,
+            "",
+            "### 🏛️ 1. Nearest APMC Mandis & Market Yards",
+            local_mandis_text,
+            "",
+            "### ⏰ 2. Mandi Auction Timings & Trading Hours",
+            "- **Gate Entry & Lot Numbering:** 04:00 AM – 06:00 AM (Early arrival ensures priority lot placement on the auction platform).",
+            "- **Open Wholesale Auction:** 06:00 AM – 11:00 AM (Commission agents and registered traders place open bids).",
+            "- **Weighment & Settlement:** 11:00 AM – 02:00 PM (Electronic weighbridge verification and same-day payment processing).",
+            "",
+            "### ⚖️ 3. Produce Entry, Assaying & Weighment Procedure",
+            "1. **Gate Entry:** Present your farmer Aadhaar and vehicle pass at the Mandi Samiti gate to receive a serialized entry lot slip.",
+            "2. **Quality Assaying:** Mandi staff inspect moisture content, size grading, and foreign matter to determine the lot grade.",
+            "3. **Electronic Weighment:** Weigh your vehicle on the computerized Mandi weighbridge before and after unloading to obtain a stamped weight slip.",
+            "4. **Auction Bidding:** Licensed commission agents (Arhtiyas) conduct open outcry or e-NAM digital bidding.",
+            "",
+            "### 📞 4. Mandi Contact & Farmer Extension Support",
+            "- **Mandi Samiti Office:** Visit the Mandi Secretary or Inspector at the administrative office yard.",
+            "- **e-NAM Portal:** Live auction rates and lot status can be tracked at enam.gov.in.",
+            "- **Kisan Call Centre:** Dial toll-free 1800-180-1551 (6:00 AM – 10:00 PM) for daily district mandi bulletins.",
+        ]
+        follow_ups = [
+            f"How do I register on e-NAM to sell this {crop_display}?",
+            f"What are the grading and quality criteria for Grade A {crop_display} rates?",
+            f"What are the peak arrival months and price trends for {crop_display}?",
+        ]
+        return LLMAnswer("\n".join(sections), follow_ups)
+
+    if is_enam_reg_query:
+        exec_summary = (
+            f"Indian farmers can register for free on the National Agriculture Market (e-NAM) portal (enam.gov.in) or mobile app "
+            f"to sell {crop_display} directly to licensed traders across India with 100% direct bank transfer (DBT) payment."
+        )
+        sections = [
+            exec_summary,
+            "",
+            "### 📱 1. e-NAM Online Registration Steps",
+            "1. **Access Portal or App:** Download the official 'e-NAM' mobile app or visit enam.gov.in and click 'Farmer Registration'.",
+            "2. **Provide Farmer Details:** Select 'Farmer', choose your state and APMC Mandi, and enter your name, mobile number, and address matching your Aadhaar card.",
+            "3. **Upload KYC Documents:** Upload clear photos or PDF copies of your Aadhaar card, bank passbook, and land/crop record.",
+            "4. **Mandi Approval:** The local APMC Mandi Secretary verifies and approves your account within 24–48 hours, issuing your unique e-NAM Farmer ID.",
+            "",
+            "### 📄 2. Mandatory Documents Required",
+            "- **Identity Proof:** Aadhaar Card (mandatory for identity verification and DBT linking).",
+            "- **Bank Account Details:** Bank Passbook copy or cancelled cheque clearly showing Account Number and IFSC code.",
+            "- **Land & Crop Records:** Khasra/Khatauni (Land Patta) or Village Patwari / Gram Panchayat Crop Sowing Certificate for tenant farmers.",
+            "- **Photograph:** 1 recent passport-sized photograph.",
+            "",
+            "### 🌾 3. Mandi Trade Workflow on e-NAM",
+            "1. **Gate Entry:** Bring your produce to the nearest e-NAM integrated APMC Mandi and present your e-NAM ID to obtain an e-lot slip.",
+            "2. **Quality Assaying:** The mandi assaying laboratory tests moisture, physical purity, and grade parameters.",
+            "3. **Online Bidding:** Traders bid competitively on your lot via the digital platform.",
+            "4. **Direct Bank Settlement (DBT):** After you accept the highest bid, the sale proceeds are deposited directly into your bank account within 24 hours.",
+            "",
+            "### 🏛️ 4. Official Support & Farmer Helpline",
+            "- **e-NAM Helpdesk:** Dial toll-free 1800-270-0224 (9:00 AM – 6:00 PM) for registration and portal support.",
+            "- **Local APMC Mandi Counter:** Visit the e-NAM facilitation counter at your nearest APMC Mandi administrative block.",
+            "- **Kisan Call Centre:** Call 1800-180-1551 for general agricultural guidance.",
+        ]
+        follow_ups = [
+            f"Where is the nearest APMC Mandi auction in my district?",
+            f"What documents do I need to carry to the mandi gate?",
+            f"How is the direct bank transfer (DBT) payment processed after auction?",
+        ]
+        return LLMAnswer("\n".join(sections), follow_ups)
+
+    # 3. Retrieve calibrated benchmark data for detected crop & location
+    benchmark = get_market_price(detected, target_region)
+
+    crop_name = benchmark.get("crop", detected.title())
+    mandi_name = benchmark.get("market", f"{target_region} Mandi")
+    mechanism = benchmark.get("mechanism", "Open APMC Mandi Wholesale Auction (Perishable crop; No Central Government MSP applies)")
+    availability = benchmark.get("availability_status", "In Peak Local Harvest")
+    price_qtl = benchmark.get("price_per_quintal", 0)
+    range_qtl = benchmark.get("price_range_per_quintal", "")
+
+    if price_qtl > 0:
+        modal_price_str = f"₹{price_qtl:,.0f} per Quintal ({range_qtl})"
     else:
-        crop_match = re.search(r"Crop:\s*([^\n]+)", full_context, re.IGNORECASE)
-        crop_name = crop_match.group(1).strip() if crop_match else "Agricultural Commodity"
-        mechanism = "Open APMC Mandi wholesale auction (Daily Mandi Spot Trading)"
-        modal_price_str = "Refer to daily APMC Mandi e-NAM auction bulletin"
-        approx_rates = "Variable based on daily arrivals and grade"
-        grade_str = "Grade A (uniform size, undamaged, high dry matter), Grade B (standard commercial grade), Grade C (undersized/blemished)"
-        best_selling = "Clean soil clods, remove damaged produce, and sort into uniform size grades before transport to fetch top modal prices."
-        storage_advice = "Hold in designated APMC warehouse or cold storage based on crop perishability to avoid distress selling."
+        modal_price_str = range_qtl or "Refer to daily APMC Mandi e-NAM bulletin"
+
+    approx_rates = f"{benchmark.get('rate_per_kg_wholesale', 'Variable')} wholesale, {benchmark.get('rate_per_kg_retail', 'Variable')} retail"
+    grade_str = benchmark.get("grade_criteria", "Grade A (super quality), Grade B (medium), Grade C (small/lower grade)")
+    best_selling = benchmark.get("selling_advice", "Clean, grade, and pack produce in breathable crates or leno bags.")
+    storage_advice = benchmark.get("storage_advice", "Store in clean, ventilated godowns or cold storage.")
 
     # 4. Context overrides if specific fields were provided in RAG chunks
     range_match = re.search(
@@ -439,22 +704,53 @@ def _extract_market_fallback(english_question: str, context_chunks: list[str]) -
     if stor_match:
         storage_advice = stor_match.group(1).strip()
 
+    wh_rate_clean = approx_rates.split(",")[0].strip() if "," in approx_rates else approx_rates
+
+    if price_qtl > 0:
+        b_qtl = f"₹{price_qtl * 0.85:,.0f} per Quintal"
+        c_qtl = f"₹{price_qtl * 0.70:,.0f} per Quintal"
+    else:
+        b_qtl = "Commercial benchmark rate"
+        c_qtl = "Local spot clearing rate"
+
+    exec_summary = (
+        f"In {mandi_name}, current wholesale trading for {crop_name} is benchmarked at {modal_price_str} ({approx_rates}). "
+        f"Clean, sorted, and properly graded produce fetches top modal returns under APMC auction."
+    )
+
     sections = [
+        exec_summary,
+        "",
         "### 📊 1. Market & Commodity Status",
         f"- **Crop & Mandi:** {crop_name} — {mandi_name}",
         f"- **Market Mechanism:** {mechanism}",
-        "\n### 💰 2. Current Estimated Mandi Rates",
+        f"- **Availability & Supply Status:** {availability}",
+        "",
+        "### 💰 2. Current Estimated Mandi Rates",
+        "| Grade / Market Tier | Wholesale Modal Rate (₹/Quintal) | Approx Farmgate / Retail (₹/kg) | Key Quality Specification |",
+        "| :--- | :--- | :--- | :--- |",
+        f"| Grade A (Super Quality) | {modal_price_str} | {wh_rate_clean} | Uniform size, high dry matter, no blemishes |",
+        f"| Grade B (Medium Standard) | {b_qtl} | Standard market rate | Standard commercial grade, minor size variation |",
+        f"| Grade C / Local Auction | {c_qtl} | Local discounted rate | Small size or spot clearing produce |",
+        "",
         f"- **Modal Wholesale Price:** {modal_price_str}",
         f"- **Approximate Farmgate/Retail Price:** {approx_rates}",
         f"- **Grade-Wise Variation:** {grade_str}",
-        "\n### 🚛 3. Selling Advice & Storage Guidelines",
+        "",
+        "### 🚛 3. Selling Advice & Storage Guidelines",
         f"- **Best Selling Practices:** {best_selling}",
         f"- **Cold Storage / Holding Advice:** {storage_advice}",
-        "\n### 🏛️ 4. Official Market Gateways & Support",
-        "- **e-NAM Portal:** Live real-time auction prices can be tracked at enam.gov.in.",
-        "- **Kisan Call Centre:** Remind the farmer to dial toll-free 1800-180-1551 for daily localized modal prices.",
+        "",
+        "### 🏛️ 4. Official Market Gateways & Support",
+        "- **e-NAM Portal:** Live real-time auction prices and lot bids can be tracked at enam.gov.in.",
+        "- **Kisan Call Centre:** Dial toll-free 1800-180-1551 (6:00 AM – 10:00 PM) for daily localized modal prices from your nearest APMC market yard.",
     ]
-    return "\n".join(sections)
+    follow_ups = [
+        f"Where is the nearest APMC Mandi auction for {crop_name}?",
+        f"How do I register on e-NAM to sell this {crop_name}?",
+        f"What are the grading and quality criteria for Grade A {crop_name} rates?",
+    ]
+    return LLMAnswer("\n".join(sections), follow_ups)
 
 
 def _build_user_prompt(
@@ -500,10 +796,13 @@ def generate_answer(
     english_question: str,
     context_chunks: list[str],
     intent: Optional[str] = None,
-) -> str:
+    region: Optional[str] = None,
+    conversation_history: Optional[list[dict]] = None,
+) -> LLMAnswer:
     """
     Generate a grounded answer from GPT-4o-mini, with extractive ICAR fallback
     when OpenAI API key is not configured.
+    Supports multi-turn conversation memory and dynamic context-locked follow-up generation.
     """
     if not intent:
         from app.services.market import classify_query_intent
@@ -512,12 +811,28 @@ def generate_answer(
     if not settings.openai_api_key or settings.openai_api_key in ("your_openai_api_key_here", "") or settings.openai_api_key.startswith("your_"):
         logger.info(f"OpenAI API key not configured — using extractive grounding (intent: {intent}).")
         if intent == "MARKET_PRICE":
-            return _extract_market_fallback(english_question, context_chunks)
-        return _extract_grounded_fallback(context_chunks)
+            return _extract_market_fallback(english_question, context_chunks, region=region, conversation_history=conversation_history)
+        return _extract_grounded_fallback(context_chunks, english_question)
 
     client = _get_client()
     system_prompt = MARKET_SYSTEM_PROMPT if intent == "MARKET_PRICE" else SYSTEM_PROMPT
     user_prompt = _build_user_prompt(english_question, context_chunks, intent=intent)
+    if region:
+        user_prompt = f"FARMER LOCATION: {region}\n\n" + user_prompt
+
+    messages = [{"role": "system", "content": system_prompt}]
+    if conversation_history:
+        for turn in conversation_history[-6:]:
+            role = turn.get("role")
+            content = turn.get("content")
+            if not role and "q" in turn:
+                messages.append({"role": "user", "content": turn["q"]})
+                if "a" in turn:
+                    messages.append({"role": "assistant", "content": turn["a"]})
+            elif role and content:
+                messages.append({"role": role, "content": content})
+
+    messages.append({"role": "user", "content": user_prompt})
 
     t0 = time.time()
     try:
@@ -525,35 +840,49 @@ def generate_answer(
             model=settings.llm_model,
             temperature=settings.llm_temperature,
             max_tokens=settings.llm_max_tokens,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
+            messages=messages,
             stream=False,
         )
-        answer = response.choices[0].message.content.strip()
+        raw_answer = response.choices[0].message.content.strip()
         elapsed_ms = int((time.time() - t0) * 1000)
         logger.info(
             f"LLM generated answer in {elapsed_ms}ms "
             f"(tokens used: {response.usage.total_tokens})"
         )
-        return answer
+
+        if intent == "MARKET_PRICE":
+            default_followups = [
+                "Where is the nearest APMC Mandi auction in my district?",
+                "How do I register on e-NAM to sell this crop?",
+                "What are the grading and quality criteria for Grade A rates?",
+            ]
+        else:
+            default_followups = [
+                "Can I mix this treatment with neem oil or other sprays?",
+                "What should I do if it rains shortly after spraying?",
+                "What is the exact pre-harvest waiting period (PHI) for this crop?",
+            ]
+
+        clean_answer, dynamic_followups = _parse_followups_from_answer(raw_answer, default_followups)
+        return LLMAnswer(clean_answer, dynamic_followups)
 
     except Exception as exc:
         logger.error("OpenAI call failed, falling back to extractive: %s", exc)
         if intent == "MARKET_PRICE":
-            return _extract_market_fallback(english_question, context_chunks)
-        return _extract_grounded_fallback(context_chunks)
+            return _extract_market_fallback(english_question, context_chunks, region=region, conversation_history=conversation_history)
+        return _extract_grounded_fallback(context_chunks, english_question)
 
 
 async def generate_advisory(
     english_question: str,
     context: Union[str, list[str]],
     intent: Optional[str] = None,
-) -> str:
+    region: Optional[str] = None,
+    conversation_history: Optional[list[dict]] = None,
+) -> LLMAnswer:
     """
     Async interface for generating a field-ready agricultural advisory.
-    Accepts context as a string or list of chunk strings, and optional intent.
+    Accepts context as a string or list of chunk strings, optional intent, region, and conversation history.
     """
     if isinstance(context, str):
         chunks = [c.strip() for c in context.strip().split("\n\n") if c.strip()]
@@ -561,4 +890,10 @@ async def generate_advisory(
             chunks = [context.strip()]
     else:
         chunks = list(context)
-    return generate_answer(english_question, chunks, intent=intent)
+    return generate_answer(
+        english_question,
+        chunks,
+        intent=intent,
+        region=region,
+        conversation_history=conversation_history,
+    )

@@ -25,7 +25,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { safeHaptics } from '../services/haptics';
-import { LanguageCode } from '../services/i18n';
+import { LanguageCode, getTranslation } from '../services/i18n';
 import { storageService, FarmerProfile } from '../services/storage';
 
 export interface FarmerLoginViewProps {
@@ -74,6 +74,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
   onBack,
   onSuccess,
 }: FarmerLoginViewProps): React.ReactElement => {
+  const t = (key: string) => getTranslation(currentLang, key);
   const [authMethod, setAuthMethod] = useState<AuthMethod>('mobile');
 
   // Mobile + OTP State
@@ -114,8 +115,8 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
     }
     setLoading(true);
     const savedLoc = await storageService.getSavedLocation();
-    const finalState: string = savedLoc?.state || 'Punjab';
-    const finalDistrict: string = savedLoc?.district || 'Ludhiana';
+    const finalState: string = savedLoc?.state || '';
+    const finalDistrict: string = savedLoc?.district || '';
 
     const cleanNumber: string = mobileNumber.replace(/\D/g, '').slice(-10) || '9876543210';
     const profile: FarmerProfile = {
@@ -152,8 +153,8 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
     setLoading(true);
 
     const savedLoc = await storageService.getSavedLocation();
-    const finalState: string = savedLoc?.state || 'Punjab';
-    const finalDistrict: string = savedLoc?.district || 'Ludhiana';
+    const finalState: string = savedLoc?.state || '';
+    const finalDistrict: string = savedLoc?.district || '';
 
     const isAadhaar: boolean = /^\d{12}$/.test(cleaned);
     const suffix: string = cleaned.length >= 4 ? cleaned.slice(-4) : cleaned;
@@ -182,8 +183,8 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
     safeHaptics.impactLight();
     setLoading(true);
     const savedLoc = await storageService.getSavedLocation();
-    const finalState: string = savedLoc?.state || 'Punjab';
-    const finalDistrict: string = savedLoc?.district || 'Ludhiana';
+    const finalState: string = savedLoc?.state || '';
+    const finalDistrict: string = savedLoc?.district || '';
 
     const guestProfile: FarmerProfile = {
       farmerId: `KISAN-GUEST-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -234,7 +235,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
           accessibilityHint="Double tap to go back to location selection"
         >
           <MaterialCommunityIcons name="arrow-left" size={20} color="#15803D" />
-          <Text style={styles.fixedBackText} allowFontScaling={true}>← Back</Text>
+          <Text style={styles.fixedBackText} allowFontScaling={true}>{t('backBtn') || '← Back'}</Text>
         </TouchableOpacity>
 
         <ScrollView
@@ -250,10 +251,10 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
             </View>
 
             <Text style={styles.title} allowFontScaling={true} accessibilityRole="header">
-              Farmer Login
+              {t('loginTitle') || 'Farmer Login'}
             </Text>
             <Text style={styles.subtitle} allowFontScaling={true}>
-              Verify your identity to access localized ICAR advisories
+              {t('loginSub') || 'Verify your identity to access localized ICAR advisories'}
             </Text>
 
             {/* ── Method Segmented Control ── */}
@@ -267,7 +268,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                 activeOpacity={0.8}
                 accessibilityRole="tab"
                 accessibilityState={{ selected: authMethod === 'mobile' }}
-                accessibilityLabel="Mobile OTP Login"
+                accessibilityLabel={t('mobileOtpTab') || 'Mobile OTP Login'}
               >
                 <MaterialCommunityIcons
                   name="cellphone"
@@ -278,7 +279,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                   style={[styles.tabButtonText, authMethod === 'mobile' && styles.tabButtonTextActive]}
                   allowFontScaling={true}
                 >
-                  Mobile OTP
+                  {t('mobileOtpTab') || 'Mobile OTP'}
                 </Text>
               </TouchableOpacity>
 
@@ -291,7 +292,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                 activeOpacity={0.8}
                 accessibilityRole="tab"
                 accessibilityState={{ selected: authMethod === 'kisan_id' }}
-                accessibilityLabel="Kisan ID or Aadhaar Login"
+                accessibilityLabel={t('kisanIdAadhaarTab') || 'Kisan ID or Aadhaar Login'}
               >
                 <MaterialCommunityIcons
                   name="card-account-details-outline"
@@ -302,7 +303,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                   style={[styles.tabButtonText, authMethod === 'kisan_id' && styles.tabButtonTextActive]}
                   allowFontScaling={true}
                 >
-                  Kisan ID / Aadhaar
+                  {t('kisanIdAadhaarTab') || 'Kisan ID / Aadhaar'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -311,7 +312,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
             {authMethod === 'mobile' && (
               <View style={styles.methodBox}>
                 <View style={styles.fieldBox}>
-                  <Text style={styles.inputLabel} allowFontScaling={true}>10-Digit Mobile Number</Text>
+                  <Text style={styles.inputLabel} allowFontScaling={true}>{t('mobileNumberField') || '10-Digit Mobile Number'}</Text>
                   <View style={styles.phoneInputRow}>
                     <View style={styles.countryCodeBadge} accessible={false}>
                       <Text style={styles.countryCodeText} allowFontScaling={true}>🇮🇳 +91</Text>
@@ -340,7 +341,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                 {/* OTP Input Card (If Triggered) */}
                 {otpSent && (
                   <View style={styles.otpCard}>
-                    <Text style={styles.inputLabel} allowFontScaling={true}>Enter 4-Digit OTP</Text>
+                    <Text style={styles.inputLabel} allowFontScaling={true}>{t('enterFourDigitOtp') || 'Enter 4-Digit OTP'}</Text>
                     <View style={styles.otpRow}>
                       <TextInput
                         style={styles.otpInput}
@@ -366,7 +367,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                         {loading ? (
                           <ActivityIndicator size="small" color="#FFFFFF" />
                         ) : (
-                          <Text style={styles.verifyBtnText} allowFontScaling={true}>Verify</Text>
+                          <Text style={styles.verifyBtnText} allowFontScaling={true}>{t('verifyBtn') || 'Verify'}</Text>
                         )}
                       </TouchableOpacity>
                     </View>
@@ -379,7 +380,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                       accessibilityLabel="Auto-fill test OTP 1234"
                     >
                       <Text style={styles.testOtpHpText} allowFontScaling={true}>
-                        👉 Quick test: Auto-fill 1234
+                        {t('quickTestAutofill') || '👉 Quick test: Auto-fill 1234'}
                       </Text>
                     </TouchableOpacity>
 
@@ -409,7 +410,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                       {loading ? (
                         <ActivityIndicator size="small" color="#FFFFFF" />
                       ) : (
-                        <Text style={styles.primaryBtnText} allowFontScaling={true}>Send OTP ➔</Text>
+                        <Text style={styles.primaryBtnText} allowFontScaling={true}>{t('sendOtpArrow') || 'Send OTP ➔'}</Text>
                       )}
                     </LinearGradient>
                   </TouchableOpacity>
@@ -433,7 +434,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                         <ActivityIndicator size="small" color="#FFFFFF" />
                       ) : (
                         <Text style={styles.primaryBtnText} allowFontScaling={true}>
-                          Verify & Enter Dashboard ➔
+                          {t('verifyAndEnterDashboard') || 'Verify & Enter Dashboard ➔'}
                         </Text>
                       )}
                     </LinearGradient>
@@ -447,7 +448,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
               <View style={styles.methodBox}>
                 <View style={styles.fieldBox}>
                   <Text style={styles.inputLabel} allowFontScaling={true}>
-                    11-Digit Kisan ID or 12-Digit Aadhaar
+                    {t('kisanAadhaarField') || '11-Digit Kisan ID or 12-Digit Aadhaar'}
                   </Text>
                   <View style={styles.phoneInputRow}>
                     <View style={styles.countryCodeBadge} accessible={false}>
@@ -507,7 +508,7 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
                       <ActivityIndicator size="small" color="#FFFFFF" />
                     ) : (
                       <Text style={styles.primaryBtnText} allowFontScaling={true}>
-                        Verify & Enter Dashboard ➔
+                        {t('verifyIdArrow') || t('verifyAndEnterDashboard') || 'Verify & Enter Dashboard ➔'}
                       </Text>
                     )}
                   </LinearGradient>
@@ -527,14 +528,14 @@ export const FarmerLoginView: React.FC<FarmerLoginViewProps> = ({
             >
               <MaterialCommunityIcons name="account-arrow-right-outline" size={18} color="#15803D" />
               <Text style={styles.skipGuestText} allowFontScaling={true}>
-                Continue as Guest Farmer →
+                {t('guestFarmerBtn') || 'Continue as Guest Farmer →'}
               </Text>
             </TouchableOpacity>
 
             {/* ── 1-Tap Quick Demo Profile Chips ── */}
             <View style={styles.demoChipsSection}>
               <Text style={styles.demoChipsLabel} allowFontScaling={true}>
-                Instant 1-Tap Profiles:
+                {t('demoProfilesTitle') || 'Instant 1-Tap Profiles:'}
               </Text>
               <View style={styles.chipsRow}>
                 {DEMO_PROFILES.map((p: FarmerProfile) => (

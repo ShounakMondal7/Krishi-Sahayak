@@ -129,8 +129,8 @@ export function detectDeviceLanguage(): DetectedLanguageInfo {
     return buildResult('sat', true, detectedLocale, 'Jharkhand', 'Ranchi');
   }
 
-  // Default: English (Pan-India / ICAR National Standard)
-  return buildResult('en', clean.startsWith('en'), detectedLocale, 'Punjab', 'Ludhiana');
+  // Default: English (Pan-India neutral default — prompts farmer to select State & District during onboarding)
+  return buildResult('en', clean.startsWith('en'), detectedLocale, '', '');
 }
 
 function buildResult(

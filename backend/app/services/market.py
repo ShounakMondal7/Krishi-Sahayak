@@ -15,6 +15,10 @@ import time
 from datetime import datetime, timezone
 from typing import Optional
 
+import httpx
+
+from app.config import settings
+
 logger = logging.getLogger(__name__)
 
 # ── In-memory price cache (6-hour TTL) ───────────────────────────────────────
@@ -783,6 +787,7 @@ CROP_ALIASES: dict[str, str] = {
     "bitter gourd": "bitter_gourd",
     "ridge gourd": "ridge_gourd",
     "sponge gourd": "bottle_gourd",
+    "pointed gourd parwal": "pointed_gourd",
     "pointed gourd": "pointed_gourd",
     "pigeon pea": "pigeon_pea",
     "black gram": "urad",
@@ -864,7 +869,9 @@ CROP_ALIASES: dict[str, str] = {
     "sitaphal": "pumpkin",
     "kashiphal": "pumpkin",
     "parwal": "pointed_gourd",
+    "patal": "pointed_gourd",
     "patol": "pointed_gourd",
+    "potol": "pointed_gourd",
     "torai": "ridge_gourd",
     "tori": "ridge_gourd",
     "turai": "ridge_gourd",
@@ -893,10 +900,16 @@ CROP_ALIASES: dict[str, str] = {
     "seb": "apple",
     "guava": "guava",
     "amrood": "guava",
+    "amrud": "guava",
+    "peyara": "guava",
+    "peru": "guava",
     "papaya": "papaya",
     "papita": "papaya",
     "pomegranate": "pomegranate",
     "anar": "pomegranate",
+    "dalim": "pomegranate",
+    "dalimb": "pomegranate",
+    "bedana": "pomegranate",
     "lemon": "lemon",
     "nimbu": "lemon",
     "watermelon": "watermelon",
@@ -1037,26 +1050,295 @@ def classify_query_intent(query: str, input_mode: str = "text") -> str:
     return "DISEASE_DIAGNOSIS"
 
 
+# ── State & District APMC Mandi Profiles ──────────────────────────────────
+STATE_MANDI_PROFILES: dict[str, dict] = {
+    "uttar pradesh": {
+        "default_market": "Dadri Mandi (Gautam Buddha Nagar) / Sahibabad / Azadpur Terminal",
+        "factor": 1.0,
+        "availability_tag": "In Peak Local Harvest",
+        "districts": {
+            "gautam buddha nagar": "Dadri Mandi (Gautam Buddha Nagar) / Noida APMC / Sahibabad",
+            "ghaziabad": "Sahibabad Mandi / Ghaziabad APMC",
+            "agra": "Agra APMC Mandi / Fatehpur Sikri Mandi",
+            "varanasi": "Panchkroshi Mandi / Varanasi APMC",
+            "lucknow": "Dubagga Mandi / Sitapur Road APMC (Lucknow)",
+            "meerut": "Meerut APMC (Delhi Road Mandi)",
+            "hapur": "Hapur APMC Grain & Vegetable Mandi",
+            "prayagraj": "Munderwa / Naini APMC Mandi (Prayagraj)",
+        },
+    },
+    "west bengal": {
+        "default_market": "Koley Market (Kolkata) / Barasat APMC Mandi / Mechhua Fruit Terminal",
+        "factor": 1.05,
+        "availability_tag": "High Local Market Inflow",
+        "districts": {
+            "kolkata": "Koley Market (Kolkata) / Mechhua Wholesale Fruit Terminal / Sealdah Baithakkhana",
+            "north 24 parganas": "Barasat APMC Mandi / Habra Mandi",
+            "south 24 parganas": "Baruipur APMC / Diamond Harbour Mandi",
+            "purba medinipur": "Tamluk APMC / Kolaghat Wholesale Market",
+            "paschim medinipur": "Midnapore APMC Mandi",
+            "paschim bardhaman": "Asansol APMC / Raniganj Mandi",
+            "purba bardhaman": "Bardhaman APMC Mandi",
+            "hooghly": "Sheoraphuli Mandi / Chinsurah APMC",
+            "nadia": "Ranaghat APMC / Krishnanagar Mandi",
+            "malda": "Samsi Mandi / English Bazar APMC",
+            "darjeeling": "Siliguri Regulated Market / Matigara APMC",
+        },
+    },
+    "maharashtra": {
+        "default_market": "Pune APMC (Gultekdi Marketyard) / Vashi APMC (Navi Mumbai) / Nashik APMC",
+        "factor": 1.08,
+        "availability_tag": "Peak Commercial Trading",
+        "districts": {
+            "pune": "Pune APMC (Gultekdi Marketyard) / Manchar APMC Mandi",
+            "mumbai": "Vashi APMC Agricultural Terminal (Navi Mumbai)",
+            "nashik": "Nashik APMC / Pimpalgaon Baswant Market",
+            "nagpur": "Nagpur APMC (Kalamna Mandi)",
+            "kolhapur": "Kolhapur APMC (Shahu Market Yard)",
+            "solapur": "Solapur APMC (Siddheshwar Market Yard)",
+            "ahmednagar": "Ahmednagar APMC Mandi",
+            "chhatrapati sambhajinagar": "Jadhavwadi APMC Mandi",
+        },
+    },
+    "himachal pradesh": {
+        "default_market": "Dhalli Mandi (Shimla) / Solan APMC / Parwanoo Terminal",
+        "factor": 1.12,
+        "availability_tag": "Hill Produce / Inter-State Transit Hub",
+        "districts": {
+            "shimla": "Dhalli Mandi (Shimla) / Bhattakufar Fruit Terminal",
+            "solan": "Solan APMC Sabzi Mandi / Parwanoo Mandi",
+            "kullu": "Kullu APMC / Bhuntar Fruit Market",
+            "kangra": "Kangra APMC / Dharamshala Mandi",
+            "mandi": "Mandi APMC / Nerchowk Sub-Mandi",
+        },
+    },
+    "punjab": {
+        "default_market": "Ludhiana APMC / Khanna Grain & Vegetable Mandi / Jalandhar APMC",
+        "factor": 0.98,
+        "availability_tag": "Abundant Wholesale Arrivals",
+        "districts": {
+            "ludhiana": "Ludhiana APMC Mandi / Gill Road Vegetable Market",
+            "amritsar": "Bhagtanwala APMC / Vallah Mandi (Amritsar)",
+            "jalandhar": "Maqsudan APMC Mandi (Jalandhar)",
+            "patiala": "Patiala APMC Mandi",
+            "bathinda": "Bathinda APMC Mandi",
+        },
+    },
+    "haryana": {
+        "default_market": "Karnal Mandi / Panipat APMC / Gurugram Vegetable Terminal",
+        "factor": 1.0,
+        "availability_tag": "Steady Daily Arrivals",
+        "districts": {
+            "karnal": "Karnal APMC Mandi / New Anaj Mandi",
+            "gurugram": "Khandsa Mandi (Gurugram)",
+            "faridabad": "Faridabad APMC Mandi",
+            "hisar": "Hisar APMC Mandi",
+            "ambala": "Ambala Cantt APMC Mandi",
+        },
+    },
+    "gujarat": {
+        "default_market": "Rajkot APMC / Ahmedabad (Jamalpur & Naroda APMC) / Surat APMC",
+        "factor": 1.02,
+        "availability_tag": "Heavy Commercial Inflow",
+        "districts": {
+            "rajkot": "Rajkot APMC Mandi / Bedi Market Yard",
+            "ahmedabad": "Jamalpur APMC / Naroda Fruit & Vegetable Terminal",
+            "surat": "Surat APMC (Sardar Market)",
+            "vadodara": "Khanderao Market / Vadodara APMC",
+            "junagadh": "Junagadh APMC Mandi",
+        },
+    },
+    "karnataka": {
+        "default_market": "Yeshwanthpur APMC / K.R. Market (Bengaluru) / Belagavi APMC",
+        "factor": 1.06,
+        "availability_tag": "Regular Auction Activity",
+        "districts": {
+            "bengaluru": "Yeshwanthpur APMC / Singena Agrahara Fruit Market",
+            "mysuru": "Bandipalya APMC Mandi (Mysuru)",
+            "belagavi": "Belagavi APMC Mandi",
+            "dharwad": "Hubballi-Dharwad APMC (Amargol Mandi)",
+        },
+    },
+    "tamil nadu": {
+        "default_market": "Koyambedu Wholesale Market Complex (Chennai) / Coimbatore APMC / Madurai Mandi",
+        "factor": 1.05,
+        "availability_tag": "Steady South Zone Distribution",
+        "districts": {
+            "chennai": "Koyambedu Wholesale Vegetable Market (Chennai)",
+            "coimbatore": "M.G.R. Wholesale Market / Coimbatore APMC",
+            "madurai": "Mattuthavani APMC Wholesale Market (Madurai)",
+            "tiruchirappalli": "Gandhi Market (Tiruchirappalli)",
+        },
+    },
+    "kerala": {
+        "default_market": "Ernakulam Broadway Market / Maradu APMC (Kochi) / Chalai Market (Trivandrum)",
+        "factor": 1.12,
+        "availability_tag": "High Consumer Demand / Interstate Inflow",
+        "districts": {
+            "ernakulam": "Ernakulam Market (Broadway) / Maradu APMC Mandi",
+            "thiruvananthapuram": "Chalai Wholesale Market (Thiruvananthapuram)",
+            "kozhikode": "Palayam Wholesale Market (Kozhikode)",
+            "thrissur": "Sakthan Thampuran Market (Thrissur)",
+            "palakkad": "Big Bazaar / Palakkad APMC Mandi",
+        },
+    },
+    "bihar": {
+        "default_market": "Bazaar Samiti (Patna) / Muzaffarpur APMC / Bhagalpur Mandi",
+        "factor": 0.95,
+        "availability_tag": "Local Produce / High Volume",
+        "districts": {
+            "patna": "Bazaar Samiti Wholesale Mandi (Patna)",
+            "muzaffarpur": "Bazaar Samiti (Muzaffarpur)",
+            "gaya": "Bazaar Samiti (Gaya)",
+            "bhagalpur": "Barari Wholesale Mandi (Bhagalpur)",
+        },
+    },
+    "telangana": {
+        "default_market": "Bowenpally APMC / Gaddi Annaram Fruit Market / Gudimalkapur (Hyderabad)",
+        "factor": 1.04,
+        "availability_tag": "Metro Terminal Arrivals",
+        "districts": {
+            "hyderabad": "Bowenpally Agricultural Market / Gaddi Annaram Fruit Market",
+            "rangareddy": "Bowenpally / L.B. Nagar APMC Market",
+            "warangal": "Enumamula APMC Market Yard (Warangal)",
+        },
+    },
+    "andhra pradesh": {
+        "default_market": "Guntur Mirchi Yard / Vijayawada APMC (Kedareswarapet) / Kurnool Mandi",
+        "factor": 1.02,
+        "availability_tag": "Active Coastal Trading",
+        "districts": {
+            "vijayawada": "Kedareswarapet Wholesale Market (Vijayawada)",
+            "guntur": "Guntur Agricultural Market Yard",
+            "kurnool": "Kurnool APMC Mandi",
+            "visakhapatnam": "Gnanapuram Wholesale Market (Visakhapatnam)",
+        },
+    },
+    "madhya pradesh": {
+        "default_market": "Karond Mandi (Bhopal) / Choithram Mandi (Indore) / Jabalpur APMC",
+        "factor": 0.96,
+        "availability_tag": "Central India Production Hub",
+        "districts": {
+            "indore": "Choithram Fruit & Vegetable APMC Mandi (Indore)",
+            "bhopal": "Karond APMC Mandi (Bhopal)",
+            "jabalpur": "Krishi Upaj Mandi (Jabalpur)",
+            "gwalior": "Laxmiganj APMC Mandi (Gwalior)",
+        },
+    },
+    "rajasthan": {
+        "default_market": "Muhana Mandi (Jaipur) / Surajpole Mandi (Jaipur) / Kota APMC",
+        "factor": 1.0,
+        "availability_tag": "North-West Regional Trading",
+        "districts": {
+            "jaipur": "Muhana Terminal Market (Jaipur) / Surajpole Mandi",
+            "jodhpur": "Bhagat Ki Kothi APMC (Jodhpur)",
+            "kota": "Bhamashah Mandi (Kota)",
+            "bikaner": "Anaj Mandi (Bikaner)",
+        },
+    },
+    "delhi": {
+        "default_market": "Azadpur Wholesale Mandi / Ghazipur Terminal / Okhla Mandi",
+        "factor": 1.0,
+        "availability_tag": "National Benchmark Terminal",
+        "districts": {
+            "delhi": "Azadpur Vegetable & Fruit Terminal / Ghazipur Mandi",
+            "central delhi": "Azadpur Mandi (Delhi)",
+            "east delhi": "Ghazipur Fruit & Vegetable Market",
+            "south delhi": "Okhla Mandi (Delhi)",
+        },
+    },
+}
+
+
+def get_regional_profile(region: str) -> dict:
+    """Resolve state/district profile for mandi naming, price calibration factor, and availability."""
+    if not region:
+        return {
+            "market": "Local APMC Mandi",
+            "factor": 1.0,
+            "availability_tag": "Regular Mandi Arrivals",
+            "state": "",
+            "district": "",
+        }
+
+    reg_lower = region.lower().strip()
+    district_part = ""
+    state_part = ""
+    if "," in reg_lower:
+        parts = [p.strip() for p in reg_lower.split(",", 1)]
+        district_part = parts[0]
+        state_part = parts[1]
+    else:
+        district_part = reg_lower
+
+    # Try matching state
+    matched_profile = None
+    for st_name, profile in STATE_MANDI_PROFILES.items():
+        if state_part and (st_name in state_part or state_part in st_name):
+            matched_profile = (st_name, profile)
+            break
+        elif not state_part and (st_name in reg_lower):
+            matched_profile = (st_name, profile)
+            break
+
+    # If no state match, check if district belongs to any state profile
+    if not matched_profile:
+        for st_name, profile in STATE_MANDI_PROFILES.items():
+            for dist_name in profile.get("districts", {}):
+                if dist_name in reg_lower or reg_lower in dist_name:
+                    matched_profile = (st_name, profile)
+                    break
+            if matched_profile:
+                break
+
+    if matched_profile:
+        st_name, prof = matched_profile
+        dist_markets = prof.get("districts", {})
+        specific_market = None
+        for dist_key, mkt_val in dist_markets.items():
+            if dist_key in reg_lower or (district_part and dist_key in district_part):
+                specific_market = mkt_val
+                break
+
+        market_name = specific_market or prof.get("default_market", f"{region} Mandi")
+        return {
+            "market": market_name,
+            "factor": prof.get("factor", 1.0),
+            "availability_tag": prof.get("availability_tag", "Regular Mandi Arrivals"),
+            "state": st_name.title(),
+            "district": district_part.title(),
+        }
+
+    # General fallback
+    return {
+        "market": f"{region} APMC Mandi",
+        "factor": 1.0,
+        "availability_tag": "Daily Mandi Arrivals",
+        "state": state_part.title(),
+        "district": district_part.title(),
+    }
+
+
 def get_market_price(crop_name: str, region: str) -> dict:
     """
     Lookup market price for MSP crops or perishable horticultural APMC crops.
     Returns realistic modal benchmark rates and explicitly sets is_msp: bool.
+    Calibrates rates and local APMC mandis using STATE_MANDI_PROFILES.
     NEVER defaults to potato.
     """
     crop_lower = (crop_name or "").lower().strip()
     canonical_crop = CROP_ALIASES.get(crop_lower, crop_lower)
-    reg_lower = (region or "").lower().strip()
+    prof = get_regional_profile(region)
 
     # 1. Non-MSP Horticultural crops check
     if canonical_crop in HORTICULTURAL_BENCHMARKS:
         info = HORTICULTURAL_BENCHMARKS[canonical_crop]
-        market_name = info.get("default_market", f"{region} Mandi")
-        modal_qtl = info.get("default_modal_qtl", 1500)
-        range_qtl = info.get("default_range_qtl", f"₹{modal_qtl-250:,} - ₹{modal_qtl+250:,} per quintal")
-        wholesale_kg = info.get("rate_per_kg_wholesale", f"₹{modal_qtl/100:.0f} / kg")
-        retail_kg = info.get("rate_per_kg_retail", f"₹{(modal_qtl/100)*1.6:.0f} / kg")
+        market_name = prof["market"]
+        base_modal = info.get("default_modal_qtl", 1500)
+        modal_qtl = round((base_modal * prof["factor"]) / 50) * 50
 
-        # Check regional override for UP / Gautam Buddha Nagar
+        # Check if crop has explicit regional overrides
+        reg_lower = (region or "").lower().strip()
         regional_dict = info.get("regional_markets", {})
         for reg_key, reg_val in regional_dict.items():
             if (
@@ -1068,10 +1350,13 @@ def get_market_price(crop_name: str, region: str) -> dict:
             ):
                 market_name = reg_val.get("market", market_name)
                 modal_qtl = reg_val.get("modal_qtl", modal_qtl)
-                range_qtl = reg_val.get("range_qtl", range_qtl)
-                wholesale_kg = reg_val.get("wholesale_kg", wholesale_kg)
-                retail_kg = reg_val.get("retail_kg", retail_kg)
                 break
+
+        range_min = round((modal_qtl * 0.82) / 50) * 50
+        range_max = round((modal_qtl * 1.22) / 50) * 50
+        range_qtl = f"₹{range_min:,} - ₹{range_max:,} per quintal"
+        wholesale_kg = f"₹{round(range_min/100)} - ₹{round(range_max/100)} / kg"
+        retail_kg = f"₹{round((range_min/100)*1.5)} - ₹{round((range_max/100)*1.6)} / kg"
 
         return {
             "crop": info.get("crop", canonical_crop.title()),
@@ -1080,12 +1365,13 @@ def get_market_price(crop_name: str, region: str) -> dict:
             "rate_per_kg_wholesale": wholesale_kg,
             "rate_per_kg_retail": retail_kg,
             "market": market_name,
+            "availability_status": prof["availability_tag"],
             "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             "price_type": "APMC Wholesale Mandi Rate",
             "source": "APMC Mandi / e-NAM Benchmark",
             "is_msp": False,
             "unit": "per quintal",
-            "mechanism": info.get("mechanism", "Open APMC Mandi Wholesale Auction (No Central Government MSP applies)"),
+            "mechanism": info.get("mechanism", "Open APMC Mandi Wholesale Auction (Perishable crop; No Central Government MSP applies)"),
             "grade_criteria": info.get("grade_criteria", "Grade A (super quality produce), Grade B (medium grade), Grade C (local/lower grade)"),
             "selling_advice": info.get("selling_advice", "Clean, grade, and pack produce in breathable crates or leno bags to fetch top prices."),
             "storage_advice": info.get("storage_advice", "Store in well-ventilated dry conditions or cold storage to avoid distress sales."),
@@ -1096,13 +1382,15 @@ def get_market_price(crop_name: str, region: str) -> dict:
         msp_data = MSP_BENCHMARKS[canonical_crop]
         price = msp_data.get("common", 0)
         unit = msp_data.get("unit", "per quintal")
+        market_name = f"{prof['market']} (MSP Procurement Centre / APMC)"
         return {
             "crop": msp_data.get("crop", canonical_crop.title()),
             "price_per_quintal": float(price),
             "price_range_per_quintal": f"₹{price:,.0f} {unit} (MSP Base)",
             "rate_per_kg_wholesale": msp_data.get("rate_per_kg_wholesale", f"₹{price/100:.2f} / kg"),
             "rate_per_kg_retail": msp_data.get("rate_per_kg_retail", f"₹{(price/100)*1.35:.1f} / kg"),
-            "market": msp_data.get("market", f"{region} (MSP Procurement Centre / APMC)"),
+            "market": market_name,
+            "availability_status": prof["availability_tag"],
             "date": "2024-25 / 2025-26",
             "price_type": "Government MSP (Minimum Support Price)",
             "source": "Government of India — CACP Declared MSP",
@@ -1121,7 +1409,8 @@ def get_market_price(crop_name: str, region: str) -> dict:
         "price_range_per_quintal": "Refer to daily APMC Mandi e-NAM auction bulletin",
         "rate_per_kg_wholesale": "Variable based on daily arrivals",
         "rate_per_kg_retail": "Variable based on retail market",
-        "market": region or "Local District APMC Mandi",
+        "market": prof["market"],
+        "availability_status": prof["availability_tag"],
         "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "price_type": "APMC Mandi Quotation",
         "source": "Local APMC Market Quotation / e-NAM",
@@ -1134,16 +1423,61 @@ def get_market_price(crop_name: str, region: str) -> dict:
     }
 
 
+async def _fetch_agmarknet_live(crop: str, state: str) -> Optional[dict]:
+    """Optionally query Agmarknet live API if DATA_GOV_API_KEY is configured."""
+    if not settings.data_gov_api_key:
+        return None
+    try:
+        async with httpx.AsyncClient(timeout=3.0) as client:
+            resp = await client.get(
+                "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070",
+                params={
+                    "api-key": settings.data_gov_api_key,
+                    "format": "json",
+                    "limit": 5,
+                    "filters[commodity]": crop,
+                },
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                records = data.get("records") or []
+                if records:
+                    rec = records[0]
+                    modal = float(rec.get("modal_price", 0))
+                    if modal > 0:
+                        return {
+                            "modal_price": modal,
+                            "market": rec.get("market", ""),
+                            "min_price": float(rec.get("min_price", modal * 0.85)),
+                            "max_price": float(rec.get("max_price", modal * 1.15)),
+                        }
+    except Exception as exc:
+        logger.debug(f"Agmarknet live fetch error: {exc}")
+    return None
+
+
 async def fetch_current_price(crop_name: str, region: str) -> dict:
     """
     Fetch current MSP / mandi rate for a crop with 6h TTL caching.
+    Supports optional live Agmarknet fallback.
     """
     canonical_crop = CROP_ALIASES.get(crop_name.lower(), crop_name.lower())
     cached = _get_cached(canonical_crop, region)
     if cached:
         return cached
 
+    # Optional live data hook
+    live_info = await _fetch_agmarknet_live(canonical_crop, region)
     result = get_market_price(canonical_crop, region)
+
+    if live_info and result:
+        result["price_per_quintal"] = live_info["modal_price"]
+        result["price_range_per_quintal"] = f"₹{live_info['min_price']:,.0f} - ₹{live_info['max_price']:,.0f} per quintal"
+        result["rate_per_kg_wholesale"] = f"₹{round(live_info['min_price']/100)} - ₹{round(live_info['max_price']/100)} / kg"
+        result["source"] = "Agmarknet Live APMC Feed / e-NAM"
+        if live_info.get("market"):
+            result["market"] = f"{live_info['market']} APMC Mandi"
+
     _set_cached(canonical_crop, region, result)
     return result
 
@@ -1156,7 +1490,8 @@ def format_price_context(price_data: dict) -> str:
         f"[{header} — Source: {price_data.get('source', 'e-NAM / Mandi Benchmark')}]",
         f"Crop: {price_data.get('crop', '')}",
         f"Market / Region: {price_data.get('market', '')}",
-        f"Market Mechanism: {price_data.get('mechanism', 'Open APMC Mandi Wholesale Auction')}",
+        f"Market Mechanism: {price_data.get('mechanism', 'Open APMC Mandi Wholesale Auction (Perishable crop; No Central Government MSP applies)')}",
+        f"Availability Status: {price_data.get('availability_status', 'Regular Mandi Arrivals')}",
     ]
     if price_data.get("price_per_quintal") and price_data["price_per_quintal"] > 0:
         lines.append(f"Modal Wholesale Price: ₹{price_data.get('price_per_quintal', 0):.0f} per quintal")

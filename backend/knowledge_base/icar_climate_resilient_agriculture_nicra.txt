@@ -1,0 +1,49 @@
+ICAR COMPREHENSIVE CLIMATE RESILIENT AGRICULTURE MANUAL (NICRA PROTOCOLS)
+================================================================================
+Grounded in ICAR-CRIDA (Central Research Institute for Dryland Agriculture, Hyderabad) & NICRA Guidelines.
+
+SECTION 1: TERMINAL HEAT STRESS MITIGATION IN WHEAT & RABI CROPS
+--------------------------------------------------------------------------------
+Global climate warming frequently causes sudden unseasonal March temperature spikes (temperatures exceeding 33°C to 35°C during wheat flowering and grain-filling stages). This triggers forced maturity, shrivels the grain endosperm, reduces test weight (1000-grain weight drops from 42g to <32g), and slashes wheat yields by 15% to 30%.
+- Chemical & Physiological Heat Rescue Sprays:
+  * Potassium Nitrate (13:0:45) Spray: Dissolve 150g Potassium Nitrate in a standard 15-liter backpack sprayer (10g per liter / 1% solution). Apply 1st spray at booting/heading stage and 2nd spray at anthesis/milking stage. Potassium regulates guard cells, prevents stomatal desiccation, and maintains vascular phloem transport of photosynthates to grains during high thermal stress.
+  * Salicylic Acid Foliar Spray: Spray 100 ppm Salicylic Acid (dissolve 1.5g pure Salicylic Acid powder in small amount of ethyl alcohol/warm water, then dilute into 15 liters of water). Salicylic acid acts as a plant hormone triggering antioxidant enzymes (superoxide dismutase, catalase) that detoxify toxic reactive oxygen species (ROS) induced by heat shock.
+  * Alpha-Tocopherol (Vitamin E) / Glycine Betaine (0.2%): Strengthens cell membrane stability and protects chloroplast membranes against thermal lipid peroxidation.
+- Agronomic Contingency Adjustments:
+  * High-Temperature Tolerant Varieties: Shift to climate-resilient ICAR varieties containing heat-tolerance genes: DBW 187 (Karan Vandana), DBW 222 (Karan Narendra), DBW 303 (Karan Vaishnavi), HD 3226, PBW 826.
+  * Advance Sowing: Complete sowing between October 25 and November 10 using Zero-Till Seed Drill into standing paddy residue (Happy Seeder), ensuring grain filling is completed in cooler late February before March heatwaves strike.
+
+SECTION 2: FROST / COLD WAVE (PALA) PROTECTION PROTOCOLS
+--------------------------------------------------------------------------------
+Radiative radiation frost occurs on clear, windless, calm winter nights in North and Central India (December to January) when soil surface temperatures drop below 0°C, causing intracellular ice crystallization, cell bursting, and blackened scorched foliage in Mustard, Potato, Tomato, Gram, and Mango orchards.
+- Actionable Immediate Protective Measures:
+  1. Evening Light Flood / Drip Irrigation: Irrigate fields on the evening when weather forecasts predict minimum temperatures falling below 4°C. Water has an exceptionally high specific heat capacity; as it cools and solidifies, it releases latent heat (80 calories per gram), keeping the immediate crop canopy microclimate 2°C to 3°C warmer than dry adjacent fields, preventing frost injury.
+  2. Smoke Smudging / Thermal Blanketing: Burn moist straw, leaf litter, cow dung cakes, and sawdust along the windward field boundaries around 2:00 AM to 5:00 AM. The resulting dense smoke screen acts as an infrared thermal blanket, blocking radiation heat loss from the soil into space.
+  3. Chemical Foliar Protection (Thiourea Spray):
+     * Dissolve 7.5g to 10g Thiourea per 15-liter pump (0.05% to 0.07% concentration / 500g per acre in 150 liters water). Spray 48 hours prior to predicted frost. Thiourea boosts internal sulfhydryl (-SH) enzyme reserves, enhancing plant cell sap osmoprotection against sub-zero freezing.
+     * OR Spray Soluble Sulfur (Sulfur 80% WDG) @ 45g per 15-liter pump (3g/L) to create a protective surface film and stimulate metabolic respiration.
+
+SECTION 3: CYCLONE, WATERLOGGING & FLOOD RECOVERY PROTOCOLS
+--------------------------------------------------------------------------------
+Prolonged field submergence and waterlogging after severe monsoon depressions or coastal cyclones causes soil anoxia (root oxygen starvation), root decay, and massive nitrogen-potash leaching:
+1. Immediate Drainage & De-Silting:
+   - Excavate peripheral drainage trenches (depth 45-60 cm) immediately to evacuate ponded water within 24 to 36 hours. If stagnant water remains for >48 hours, root root-hairs die from lack of oxygen and plants wilt irreversibly despite being surrounded by water (physiological drought).
+   - Wash fine silt and clay coatings off smothered foliage using clean water jet sprays.
+2. Foliar Rescue Nutrition (When Soil Cannot Be Fertilized):
+   - Roots are temporarily dysfunctional after waterlogging and cannot absorb broadcast granular fertilizer. Provide immediate foliar nutrition:
+   - Foliar Spray Recipe (per 15-Liter Backpack Sprayer):
+     * Dissolve 150g Urea (1% N) + 75g Muriate of Potash (MOP 0.5% K2O) + 15g Chelated Micronutrient mixture.
+     * Spray twice at 5-day intervals as soon as water recedes. This directly revives chlorophyll synthesis and restores active transpiration.
+   - Soil Aeration: Run a shallow cultivator or hoe between rows as soon as soil reaches workable moisture (Vapsa / Wattar condition) to break the surface crust and force atmospheric oxygen into suffocated root zones.
+
+SECTION 4: DROUGHT & CONTINGENCY RESILIENT MANAGEMENT
+--------------------------------------------------------------------------------
+1. Agricultural Super-Absorbent Hydrogels (Pusa Hydrogel):
+   - Cross-linked potassium polyacrylate polymer that absorbs up to 350-400 times its dry weight in pure water.
+   - Application: Drill 1.0 to 1.5 kg Pusa Hydrogel per acre mixed with dry fertilizer/seeds at sowing depth. Forms underground micro-reservoirs that release stored water slowly to root hairs during 20-30 day dry spells, postponing permanent wilting.
+2. In-Situ Moisture Conservation:
+   - Broad-Bed and Furrow (BBF) and Ridge-and-Furrow sowing; Broad-bed sowing of soybean and groundnut retains 30% more rainwater in soil profile while furrows safely drain excess runoff during sudden cloudbursts.
+   - Spraying Anti-Transpirants: During severe prolonged dry spells, spray Kaolin clay (5% suspension / 750g per 15L pump) to create a reflective white coating that cuts transpiration leaf water loss by 30-40% without hindering photosynthesis.
+3. Drought-Tolerant Short-Duration Varieties:
+   - Direct-Seeded Rice: Sahbhagi Dhan (matures in 105 days; survives 2-3 weeks dry spell at reproductive stage), CR Dhan 201, DRR Dhan 42.
+   - Pulses: Moong (IPM 205-7 / Virat - 52-55 days), Chickpea (JG 14 - heat/drought escape variety).

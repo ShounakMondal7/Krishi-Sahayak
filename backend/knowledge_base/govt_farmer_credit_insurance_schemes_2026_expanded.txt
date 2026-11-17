@@ -1,0 +1,79 @@
+GOVERNMENT OF INDIA EXPANDED FARMER CREDIT, INSURANCE & WELFARE SCHEMES (2026 EDITION)
+================================================================================
+Comprehensive Practical Guide to Central & State Agricultural Subsidies, Portals & Helplines.
+
+SECTION 1: DIRECT INCOME SUPPORT & CREDIT FACILITATION SCHEMES
+--------------------------------------------------------------------------------
+1. PM-KISAN (Pradhan Mantri Kisan Samman Nidhi):
+   - Benefit: Direct unconditional cash income transfer of ₹6,000 per year transferred directly to the farmer's bank account via Direct Benefit Transfer (DBT) in 3 equal four-monthly installments of ₹2,000 each (April-July, August-November, December-March).
+   - Eligibility: All landholding farmer families who own cultivable agricultural land registered in state revenue records.
+   - Ineligibility: Institutional landholders; former and present holders of constitutional posts; former and present MPs, MLAs, Mayors; serving or retired government employees; pensioners receiving >₹10,000/month; income-tax payers.
+   - Mandatory Prerequisites for Receiving Installments:
+     1. Aadhaar Seeding: Bank account must be actively seeded and mapped with NPCI (National Payments Corporation of India) for Aadhaar Payment Bridge (APB).
+     2. Land Seeding (Bhoomi Satyapan): Land revenue records (Khasra-Khatauni / Jamabandi / 7/12) must be verified and marked "Yes" on the state land seeding portal.
+     3. Biometric / Face e-KYC: Mandatory OTP-based e-KYC on portal, Face Authentication via PM-KISAN mobile app, or biometric fingerprint verification at any CSC (Common Service Centre).
+   - Official Portal: pmkisan.gov.in
+   - National Helpline: Dial toll-free 155261 or 1800-11-5526 / 011-24300606.
+
+2. Kisan Credit Card (KCC) Scheme & Interest Subvention (Modified ISS):
+   - Objective: Provides timely, hassle-free institutional short-term production credit to farmers for crop cultivation, post-harvest expenses, farm maintenance, and allied livestock/fisheries activities.
+   - Effective Ultra-Low Interest Rate (4% Net):
+     * Benchmark lending rate for short-term agricultural credit is 9% per annum.
+     * Government of India provides a standard 2% Interest Subvention to banks, bringing the rate down to 7%.
+     * Prompt Repayment Incentive (PRI): Farmers who repay their short-term dues on or before the due date receive an additional 3% prompt repayment incentive! Thus, the effective interest rate paid by the disciplined farmer is only 4% per annum!
+   - Credit Limit Determination (Scale of Finance):
+     * Card limit = (Scale of finance of crops cultivated x Area in acres) + 10% towards post-harvest/household consumption + 20% towards maintenance of farm assets and crop insurance premium.
+     * The card is valid for 5 years with an automatic 10% annual escalation in credit limit.
+   - Collateral-Free Limit: Up to ₹1.60 Lakh without any mortgage of land or third-party guarantee (extended up to ₹3.00 Lakh for dairy/poultry with tie-up arrangements).
+   - Allied KCC: Dairy, goat, sheep, and fisheries farmers can obtain working capital KCC limits up to ₹2.0 Lakh at the same 4% subsidized interest rate.
+   - Application Process: Submit simplified 1-page KCC application form at any Commercial Bank, Regional Rural Bank (RRB), or Primary Agricultural Credit Society (PACS) along with land ownership proof, crop sowing certificate, and Aadhaar card. Bank must sanction KCC within 14 days of receipt of completed application.
+
+SECTION 2: RISK MANAGEMENT & CROP INSURANCE (PMFBY)
+--------------------------------------------------------------------------------
+1. PMFBY (Pradhan Mantri Fasal Bima Yojana) & Restructured Weather-Based Crop Insurance:
+   - Coverage: Comprehensive yield protection against non-preventable natural risks: prevented sowing/planting risk, standing crop losses (drought, flood, dry spells, unseasonal cyclonic hail, pest/disease epidemics), post-harvest losses (up to 14 days for crops drying in cut/spread condition in the field against cyclone/unseasonal rain), and localized calamities (hailstorm, landslide, cloudburst, inundation).
+   - Nominal Farmer Premium Contribution (Rest subsidized 50:50 by Central and State Governments):
+     * Kharif Crops (Food grains, Oilseeds, Pulses): Farmer pays only 2.0% of Sum Insured.
+     * Rabi Crops (Wheat, Barley, Mustard, Gram): Farmer pays only 1.5% of Sum Insured.
+     * Annual Commercial & Horticultural Crops (Cotton, Sugarcane, Potato, Onion, Chilli): Farmer pays only 5.0% of Sum Insured.
+   - THE CRITICAL 72-HOUR LOSS INTIMATION RULE (Very Important):
+     * In the event of localized damage (hailstorm, flash inundation, cloudburst, post-harvest rain), the farmer MUST report the crop loss within 72 HOURS of the calamity!
+     * Intimation Channels:
+       1. Through the "Crop Insurance" Mobile App (take geo-tagged photos of damaged field).
+       2. By calling the National Toll-Free PMFBY Helpline: Dial 14447.
+       3. By submitting written intimation to the local Branch Manager, District Agriculture Officer (DAO), or KVK.
+     * A joint survey by insurance company loss assessors and state agriculture officials is completed within 10 days, and claim payment is transferred directly to the farmer's DBT bank account.
+   - Official Portal: pmfby.gov.in | Helpline: 14447
+
+SECTION 3: CLEAN ENERGY & SOLAR PUMP SUBSIDIES (PM-KUSUM)
+--------------------------------------------------------------------------------
+1. PM-KUSUM (Pradhan Mantri Kisan Urja Suraksha evam Utthaan Mahabhiyan):
+   - Frees farmers from diesel costs and unreliable night-time agricultural power supply:
+   - Component-B: Installation of Standalone Off-Grid Solar Agriculture Water Pumps:
+     * Pump Capacity: 3 HP, 5 HP, 7.5 HP, and 10 HP AC/DC Surface or Submersible Solar Pumps.
+     * Subsidy Structure (Up to 7.5 HP):
+       - Central Government Financial Assistance: 30% of benchmark cost.
+       - State Government Subsidy: 30% of benchmark cost.
+       - Farmer's Own Contribution: Only 10% to 40% (remaining 30% can be financed via bank loan).
+       - (In North-East, Hilly states, and Island territories: Central subsidy is 50%, state 30%, farmer pays only 20%).
+   - Component-C: Solarization of Existing Grid-Connected Agriculture Pumps:
+     * Farmers solarize their existing electric tubewells and sell excess solar electricity back to the DISCOM grid (DISCOM buys power @ ₹3.00 to ₹3.50 per kWh, turning farmers from "Urjadata" into regular income earners).
+   - Component-A: Decentralized Ground-Mounted Solar Power Plants (0.5 MW to 2.0 MW) installed by farmers or cooperatives on barren or uncultivated farmland, selling power to state DISCOMs under 25-year Power Purchase Agreements (PPA).
+   - Application Portal: pmkusum.mnre.gov.in (Caution: Beware of fake cloned websites; apply ONLY through official state renewable energy development agency portals like UPNEDA, HAREDA, MEDA).
+
+SECTION 4: INFRASTRUCTURE & SPECIALIZED MISSION SCHEMES
+--------------------------------------------------------------------------------
+1. Agriculture Infrastructure Fund (AIF):
+   - ₹1 Lakh Crore medium-to-long term debt financing facility for establishing post-harvest management infrastructure and community farming assets (dry godowns, cold storages, packhouses, sorting/grading lines, ripening chambers, primary processing mills).
+   - Interest Subvention: 3.0% interest subvention per annum for a maximum period of 7 years on loans up to ₹2.0 Crore.
+   - Credit Guarantee: Credit Guarantee coverage under CGTMSE for loans up to ₹2.0 Crore without requiring collateral property mortgage.
+   - Eligible Beneficiaries: Farmers, FPOs, PACS, Agri-Entrepreneurs, SHGs. Portal: agriinfra.dac.gov.in
+
+2. e-NAM (National Agriculture Market):
+   - Pan-India electronic trading portal networking 1,361+ wholesale APMC mandis across 23 States and 4 UTs.
+   - Free farmer registration on enam.gov.in or e-NAM app.
+   - Trade Workflow: Electronic gate pass generation -> Quality assaying at mandi laboratory -> Online pan-India competitive bidding by licensed interstate traders -> 100% direct bank transfer (DBT) payment within 24 hours without middleman deductions.
+   - Helpdesk: Dial toll-free 1800-270-0224 (9:00 AM – 6:00 PM).
+
+3. National Mission on Edible Oils - Oilseeds & Oil Palm (NMEO):
+   - Financial assistance for seed hubs, distribution of high-yielding certified oilseed mini-kits (Mustard, Groundnut, Soybean, Sesame), and Price Viability Payment (PVP) guarantee for Fresh Fruit Bunches (FFB) of Oil Palm protecting farmers against international crude palm oil price slumps.

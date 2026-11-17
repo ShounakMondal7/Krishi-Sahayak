@@ -101,8 +101,8 @@ class QueryRequest(BaseModel):
         ...,
         min_length=2,
         max_length=1000,
-        description="Farmer's question — expected in Malayalam (ml)",
-        examples=["എന്റെ നെൽ ചെടികൾ മഞ്ഞ നിറമാകുന്നു"],
+        description="Farmer's question in any supported Indian language or English",
+        examples=["How to control yellowing in tomato leaves?"],
     )
     language: str = Field(
         default="en",
@@ -112,8 +112,8 @@ class QueryRequest(BaseModel):
     region: Optional[str] = Field(
         default=None,
         max_length=100,
-        description="Farmer's district/region (e.g., 'Thrissur', 'Wayanad')",
-        examples=["Thrissur"],
+        description="Farmer's district and state (e.g., 'Gautam Buddha Nagar, Uttar Pradesh', 'Pune, Maharashtra')",
+        examples=["Gautam Buddha Nagar, Uttar Pradesh"],
     )
     session_id: Optional[str] = Field(
         default=None,
@@ -174,7 +174,7 @@ class QueryResponse(BaseModel):
     """Response returned to the farmer."""
     query_id: Optional[int] = Field(default=None, description="DB row ID for audio generation")
     conversation_id: Optional[str] = Field(default=None, description="Thread ID for follow-up queries")
-    answer: str = Field(description="Final answer in Malayalam")
+    answer: str = Field(description="Final answer in the farmer's selected language")
     answer_english: str = Field(description="English answer (for logging/debug)")
     sources: List[str] = Field(description="Source document filenames used")
     source_labels: List[SourceDocument] = Field(
@@ -214,7 +214,7 @@ class QueryResponse(BaseModel):
 class VoiceQueryResponse(QueryResponse):
     """Response for voice queries — adds the transcribed text."""
     transcribed_text: str = Field(
-        description="Malayalam text as transcribed from the audio"
+        description="Transcribed query text in the farmer's selected language"
     )
 
 
@@ -345,6 +345,31 @@ _SOURCE_LABELS: dict[str, str] = {
     "icar_livestock_dairy_poultry.txt": "ICAR-NDRI / CARI — Dairy, Goat & Poultry Husbandry Advisory",
     # Fisheries & Aquaculture
     "icar_fisheries_aquaculture.txt": "ICAR-CIFA / CMFRI — Fisheries & Aquaculture Advisory",
+    # Horticulture, Irrigation & Post-Harvest
+    "horticulture_mandi_pricing_guide.txt": "APMC & e-NAM — Horticulture Mandi Pricing Guide",
+    "icar_floriculture_commercial.txt": "ICAR-DFR — Commercial Floriculture Guide",
+    "icar_integrated_pest_management.txt": "ICAR-NCIPM — Integrated Pest Management (IPM)",
+    "icar_micro_irrigation_tech.txt": "ICAR-CIAE — Micro-Irrigation & Drip Technology",
+    "icar_onion_garlic_advisory.txt": "ICAR-DOGR — Onion & Garlic Advisory",
+    "icar_post_harvest_storage.txt": "ICAR-CIPHET — Post-Harvest Management & Storage",
+    "icar_potato_cultivation.txt": "ICAR-CPRI — Potato Cultivation Guide",
+    "icar_root_and_winter_vegetables.txt": "ICAR-IIVR — Root & Winter Vegetables Guide",
+    "indian_mandi_all_crops_pricing_2026.txt": "Agmarknet / e-NAM — All India Mandi Pricing Benchmarks 2026",
+    # 14 Comprehensive Agronomic & Allied Manuals (2026 Expanded Library)
+    "icar_fertilizer_npk_micronutrient_guide.txt": "ICAR-IISS — Fertilizer, NPK & Micronutrient Guide",
+    "icar_weed_management_herbicides.txt": "ICAR-DWR — Weed Management & Herbicides Manual",
+    "icar_seed_treatment_and_nursery_management.txt": "ICAR-IARI — Seed Treatment (FIR) & Nursery Management",
+    "indian_crop_calendar_sowing_harvest_guide.txt": "ICAR — National Crop Calendar & Sowing-Harvest Guide",
+    "icar_farm_machinery_drones_subsidies.txt": "ICAR-CIAE — Farm Machinery, Kisan Drones & SMAM Subsidies",
+    "icar_protected_cultivation_polyhouse_mulching.txt": "ICAR-CPCT — Protected Cultivation, Polyhouse & Mulching",
+    "icar_medicinal_and_aromatic_crops.txt": "ICAR-DMAPR — Medicinal & Aromatic Crops (MAPs)",
+    "icar_agroforestry_bamboo_timber.txt": "ICAR-CAFRI — Agroforestry, Bamboo Mission & Timber",
+    "icar_allied_enterprises_mushroom_beekeeping_sericulture.txt": "ICAR-DMR — Mushroom, Beekeeping & Sericulture",
+    "icar_climate_resilient_agriculture_nicra.txt": "ICAR-CRIDA — Climate Resilient Agriculture (NICRA Protocols)",
+    "icar_soil_salinity_acidity_reclamation.txt": "ICAR-CSSRI — Soil Salinity, Sodic & Acid Soil Reclamation",
+    "icar_pesticide_compatibility_and_safety_antidotes.txt": "CIB&RC — Pesticide Compatibility, Safety & Medical Antidotes",
+    "icar_veterinary_cattle_goat_poultry_complete.txt": "ICAR-NDRI/IVRI — Veterinary, Cattle, Goat & Poultry Manual",
+    "govt_farmer_credit_insurance_schemes_2026_expanded.txt": "Govt of India — Farmer Credit, PMFBY & Welfare Schemes 2026",
 }
 
 
