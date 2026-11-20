@@ -1,0 +1,89 @@
+ICAR TECHNICAL MANUAL — COMPOSITE FRESHWATER AQUACULTURE & PMMSY
+Source: ICAR-Central Institute of Freshwater Aquaculture (CIFA), Bhubaneswar / NFDB, Hyderabad
+Document Reference: ICAR-CIFA/AQUA-PMMSY/2026/04
+
+=======================================================================
+SECTION 1: COMPOSITE FISH CULTURE PRINCIPLES (POLYCULTURE)
+=======================================================================
+1. Species Combination & Ecological Niches:
+   - Surface Feeders: Catla (Catla catla - zooplankton feeder) and Silver Carp (Hypophthalmichthys molitrix - phytoplankton feeder).
+   - Column Feeders: Rohu (Labeo rohita - omnivore feeding on decaying plant matter and filamentous algae).
+   - Bottom Feeders: Mrigal (Cirrhinus mrigala - detritivore feeding on benthic debris) and Common Carp (Cyprinus carpio - omnivore feeding on molluscs and insects).
+   - Macro-vegetation Feeder: Grass Carp (Ctenopharyngodon idella - feeds on aquatic weeds like Hydrilla, Najas, Duckweed).
+
+2. Stocking Ratios and Densities for 1 Hectare Pond:
+   - Recommended Total Stocking Density: 5,000 to 7,500 healthy fingerlings per hectare (size: 8 to 10 cm, weight 15–20 g).
+   - Six-Species Combination Ratio:
+     * Catla: 15% (750 to 1,000 fingerlings)
+     * Silver Carp: 15% (750 to 1,000 fingerlings)
+     * Rohu: 25% (1,250 to 1,875 fingerlings)
+     * Grass Carp: 10% (500 to 750 fingerlings)
+     * Mrigal: 20% (1,000 to 1,500 fingerlings)
+     * Common Carp: 15% (750 to 1,000 fingerlings)
+
+=======================================================================
+SECTION 2: POND PREPARATION & WATER QUALITY MANAGEMENT
+=======================================================================
+1. Eradication of Weed and Predatory Fishes:
+   - Drain and dry pond bottom until soil cracks (7 to 10 days).
+   - If pond cannot be drained, apply Mahua Oil Cake (MOC) at 2,000 to 2,500 kg per hectare-meter water depth (contains saponin 4-6%, kills predatory fish like Channa/Wallago and acts as organic fertilizer after 15 days).
+   - Alternative piscicide: Bleaching powder (Chlorinated lime 30% available chlorine) at 350 to 500 kg/ha-meter.
+
+2. Liming Protocols (Based on Soil & Water pH):
+   - Water pH 6.5–7.0 (Mildly Acidic): Apply Quicklime (CaO) or Slaked lime (Ca(OH)2) at 200–300 kg/ha.
+   - Water pH 5.5–6.5 (Acidic): Apply 400–600 kg/ha.
+   - Water pH 4.5–5.5 (Strongly Acidic): Apply 800–1,000 kg/ha in 2 splits.
+   - Spread lime evenly across pond bottom 7 days before manuring to sanitize soil and neutralize acidity.
+
+3. Fertilization & Plankton Generation:
+   - Initial Manuring: Raw cow dung at 2,000 kg/ha applied 7–10 days after liming.
+   - Inorganic Fertilizers: Urea at 25 kg/ha and Single Super Phosphate (SSP) at 40 kg/ha after water filling.
+   - Water Bloom Check (Secchi Disc Test):
+     * Ideal visibility depth: 25 cm to 35 cm (healthy greenish-brown plankton bloom).
+     * Visibility < 20 cm: Over-blooming risk; stop feeding and manuring, add fresh water.
+     * Visibility > 40 cm: Nutrient-poor water; apply light dose of fermented cow dung slurry.
+
+4. Dissolved Oxygen (DO) & Aeration:
+   - Critical Threshold: Dissolved Oxygen must remain > 4.5 mg/L (ppm) at all times.
+   - Early Morning Oxygen Dip: Between 3:00 AM and 6:00 AM, plankton respiration causes dangerous oxygen depletion.
+   - Equipment: Install 1.0 to 2.0 HP paddle-wheel aerators per acre, operating from 2:00 AM to 6:00 AM during cloudy or sultry summer months.
+
+=======================================================================
+SECTION 3: FEEDING, FCR & BIOMASS MANAGEMENT
+=======================================================================
+1. Feed Conversion Ratio (FCR) Optimization:
+   - Traditional Mash: Groundnut oil cake + Rice bran (1:1 ratio) mixed with water to form dough balls, placed in feeding trays (FCR 2.5:1 to 3.0:1).
+   - Commercial Extruded Floating Pellets:
+     * Starter (Fingerling to 100g): 30–32% crude protein, 1.5–2.0 mm pellet, fed at 5–6% of total body weight daily.
+     * Grower (100g to 500g): 28% crude protein, 3.0 mm pellet, fed at 3–4% body weight daily.
+     * Finisher (500g to harvest): 24–26% crude protein, 4.0 mm pellet, fed at 1.5–2% body weight daily.
+     * FCR of quality floating pellets: 1.2:1 to 1.4:1 (1.3 kg feed produces 1 kg fish flesh).
+
+=======================================================================
+SECTION 4: COMMON FISH DISEASES & PROVEN TREATMENTS
+=======================================================================
+1. Epizootic Ulcerative Syndrome (EUS / Lal Ghav):
+   - Cause: Aphanomyces invadans fungal infection causing deep necrotic red ulcers on fish skin.
+   - Treatment: Apply CIFAX (patented ICAR-CIFA formulation) at 1.0 liter per hectare-meter water depth. Repeat after 15 days if necessary. Alternatively, apply Potassium Permanganate (KMnO4) at 2 to 3 ppm (2 to 3 kg/ha-meter).
+
+2. Argulus (Fish Lice Parasite):
+   - Symptoms: Disc-like flat parasites attached to fish skin/fins, causing fish to rub violently against pond dykes and become lethargic.
+   - Treatment: Apply Deltamethrin (Butox / Clinar) at 1.0 ml per 1,000 liters (1 liter per hectare-meter water depth) in morning hours. Repeat after 10 days to kill newly hatched eggs.
+
+3. Gill Rot (Branchiomycosis):
+   - Symptoms: Gills become grayish-white, choked with mucus and fungal hyphae; fish gasping at surface.
+   - Treatment: Add clean tube-well water immediately. Dip affected fish in 3% common salt (NaCl) solution for 5 minutes before restocking.
+
+=======================================================================
+SECTION 5: PMMSY SUBSIDIES & SCHEME BENEFITS
+=======================================================================
+1. Pradhan Mantri Matsya Sampada Yojana (PMMSY) Financial Pattern:
+   - General Category Beneficiaries: 40% government subsidy of the unit capital cost.
+   - SC / ST / Women Beneficiaries: 60% government subsidy of the unit capital cost.
+   - Key Subsidized Components:
+     * Construction of new freshwater ponds: Unit cost ₹7.00 Lakh/hectare (Subsidy ₹2.80L General / ₹4.20L Women/SC/ST).
+     * Input cost for freshwater aquaculture: Unit cost ₹4.00 Lakh/hectare.
+     * Medium Biofloc units (7 tanks of 4m diameter): Unit cost ₹7.50 Lakh.
+     * Recirculating Aquaculture Systems (RAS - Small): Unit cost ₹15.00 Lakh.
+     * Insulated three-wheeler / two-wheeler with icebox for fish retail: 40–60% subsidy.
+   - Application Gateway: Online application through state fisheries department portal or pmmsy.dof.gov.in with land records and bank credit sanction letter.

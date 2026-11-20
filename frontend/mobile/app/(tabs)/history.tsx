@@ -333,11 +333,20 @@ export default function HistoryScreen() {
   const { isPlaying: isAudioQueuePlaying, activeSequenceId, playAdvisorySequence, stopAndClearAll } = useAudioQueue();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [selectedAdvisory, setSelectedAdvisory] = useState<AdvisoryResponseData | null>(null);
   const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
 
+  // ⚡ 120ms Lightweight Debounce for 60 FPS Search Filtering
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 120);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
   const filteredHistory = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
+    const q = debouncedSearchQuery.trim().toLowerCase();
     if (!q) return history;
     return history.filter(
       (item) =>
@@ -345,7 +354,7 @@ export default function HistoryScreen() {
         item.answer.toLowerCase().includes(q) ||
         (item.region && item.region.toLowerCase().includes(q))
     );
-  }, [history, searchQuery]);
+  }, [history, debouncedSearchQuery]);
 
   const handleOpenAdvisory = useCallback((item: HistoryEntry) => {
     safeHaptics.impactLight();
@@ -406,7 +415,26 @@ export default function HistoryScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      loadHistory();
+      let active = true;
+      try {
+        const RN = require('react-native');
+        if (RN.InteractionManager?.runAfterInteractions) {
+          const task = RN.InteractionManager.runAfterInteractions(() => {
+            if (active) loadHistory();
+          });
+          return () => {
+            active = false;
+            task?.cancel?.();
+          };
+        }
+      } catch {}
+      const timer = setTimeout(() => {
+        if (active) loadHistory();
+      }, 16);
+      return () => {
+        active = false;
+        clearTimeout(timer);
+      };
     }, [])
   );
 
@@ -634,8 +662,9 @@ export default function HistoryScreen() {
               data={filteredHistory}
               keyExtractor={(item: HistoryEntry) => item.id.toString()}
               renderItem={renderItem}
-              extraData={{ fontSizeScale, expandedIds, playingId, currentLang, searchQuery }}
+              extraData={{ fontSizeScale, expandedIds, playingId, currentLang, debouncedSearchQuery }}
               contentContainerStyle={styles.listContent}
+              keyboardShouldPersistTaps="handled"
               refreshControl={
                 <RefreshControl
                   refreshing={refreshing}

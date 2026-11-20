@@ -2,12 +2,15 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   PUBLIC_TUNNEL_URL,
   LAN_BACKEND_URL,
   LOCALHOST_BACKEND_URL,
   EMULATOR_BACKEND_URL,
 } from '../constants/backend_endpoints';
+
+export const ACTIVE_API_URL_STORAGE_KEY = '@krishi_active_api_url';
 
 // ==============================================================================
 // ⚠️ DYNAMIC BACKEND API URL RESOLUTION & SMART MULTI-ENDPOINT AUTO-FAILOVER
@@ -81,6 +84,35 @@ export const buildCandidateUrls = (): string[] => {
 export const candidateUrls: string[] = buildCandidateUrls();
 let activeCandidateIndex = 0;
 
+// Persist the last verified working baseURL
+export const persistWorkingUrl = (url: string) => {
+  try {
+    if (url && url.startsWith('http')) {
+      AsyncStorage.setItem(ACTIVE_API_URL_STORAGE_KEY, url).catch(() => {});
+    }
+  } catch {}
+};
+
+// Initialize with persisted working URL if available
+const initPersistedBaseUrl = async () => {
+  try {
+    const savedUrl = await AsyncStorage.getItem(ACTIVE_API_URL_STORAGE_KEY);
+    if (savedUrl && savedUrl.startsWith('http')) {
+      const cleanSaved = savedUrl.trim().replace(/\/+$/, '');
+      const existingIdx = candidateUrls.indexOf(cleanSaved);
+      if (existingIdx !== -1) {
+        activeCandidateIndex = existingIdx;
+      } else {
+        candidateUrls.unshift(cleanSaved);
+        activeCandidateIndex = 0;
+      }
+      BASE_URL = cleanSaved;
+      api.defaults.baseURL = cleanSaved;
+    }
+  } catch {}
+};
+initPersistedBaseUrl();
+
 export const getActiveBaseUrl = (): string => {
   return candidateUrls[activeCandidateIndex] || candidateUrls[0] || 'http://localhost:8000';
 };
@@ -97,7 +129,7 @@ axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
 // ── Axios Instance with Smart Auto-Failover ──────────────────────────────────
 export const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 35000,
+  timeout: 8000, // 8s fast failover so dead endpoints never freeze the mobile UI
   headers: {
     'Content-Type': 'application/json',
     'bypass-tunnel-reminder': 'true',
@@ -116,7 +148,14 @@ api.interceptors.request.use((config) => {
 
 // Response interceptor: Transparent failover to next candidate on Network Error or 502/503/504
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // On success, stick to this working endpoint
+    const workingUrl = response.config.baseURL || getActiveBaseUrl();
+    if (workingUrl) {
+      persistWorkingUrl(workingUrl);
+    }
+    return response;
+  },
   async (error: AxiosError) => {
     const config = error.config as (InternalAxiosRequestConfig & { _retryCount?: number }) | undefined;
     if (!config) {
@@ -164,7 +203,7 @@ export async function checkBackendConnection(): Promise<{ connected: boolean; ur
     const url = candidateUrls[i];
     try {
       const res = await axios.get(`${url}/health`, {
-        timeout: 4000,
+        timeout: 2500, // 2.5s fast probe
         headers: {
           'bypass-tunnel-reminder': 'true',
           'ngrok-skip-browser-warning': 'true',
@@ -174,6 +213,7 @@ export async function checkBackendConnection(): Promise<{ connected: boolean; ur
         activeCandidateIndex = i;
         BASE_URL = url;
         api.defaults.baseURL = url;
+        persistWorkingUrl(url);
         return { connected: true, url };
       }
     } catch {
@@ -210,6 +250,7 @@ export interface TimingBreakdown {
 export interface QueryResponse {
   query_id?: number;
   conversation_id?: string;
+  question_original?: string;
   answer: string;
   answer_english: string;
   sources: string[];
@@ -223,6 +264,18 @@ export interface QueryResponse {
   intent?: string;
   follow_up_questions?: string[];
   timing?: TimingBreakdown;
+
+  // Structured Vision Agronomic Diagnosis fields
+  crop_common_name?: string;
+  crop_scientific_name?: string;
+  growth_stage?: string;
+  condition_category?: string;
+  primary_diagnosis?: string;
+  confidence_percent?: number;
+  severity?: 'Early' | 'Moderate' | 'Severe' | string;
+  visual_evidence?: string[];
+  differential_diagnosis_ruled_out?: string;
+  is_plant_or_farm_image?: boolean;
 }
 
 export interface VoiceQueryResponse extends QueryResponse {

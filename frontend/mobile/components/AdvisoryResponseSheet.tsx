@@ -8,7 +8,7 @@
  * - 📖 Text & Trust: High-contrast typography + official "🛡️ Verified by ICAR Guidelines" badge
  * - 💬 Multi-turn follow-up question input bar
  */
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -27,7 +27,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { audioQueue, useAudioQueue } from '../services/audioQueue';
 import { safeHaptics } from '../services/haptics';
 import { LanguageCode, getTranslation } from '../services/i18n';
-import { BASE_URL } from '../services/api';
+import { BASE_URL, api } from '../services/api';
+import { useVoiceRecorder } from '../hooks/useVoiceRecorder';
+import IsolatedFollowUpInput from './IsolatedFollowUpInput';
 
 export interface SourceLabel {
   filename: string;
@@ -50,6 +52,18 @@ export interface AdvisoryResponseData {
   market_badge_label?: string;
   intent?: string;
   follow_up_questions?: string[];
+
+  // Structured Vision Agronomic Diagnosis fields
+  crop_common_name?: string;
+  crop_scientific_name?: string;
+  growth_stage?: string;
+  condition_category?: string;
+  primary_diagnosis?: string;
+  confidence_percent?: number;
+  severity?: 'Early' | 'Moderate' | 'Severe' | string;
+  visual_evidence?: string[];
+  differential_diagnosis_ruled_out?: string;
+  is_plant_or_farm_image?: boolean;
 }
 
 interface AdvisoryResponseSheetProps {
@@ -359,7 +373,201 @@ function renderFormattedText(text: string, baseStyle: any, boldStyle: any) {
   );
 }
 
-export default function AdvisoryResponseSheet({
+interface MarkdownBlockRendererProps {
+  block: MarkdownBlock;
+  sec: ParsedAdvisorySection;
+  blockIdx: number;
+  fontSize: number;
+  dosageFontSize: number;
+  styles: any;
+}
+
+const MarkdownBlockRenderer = React.memo<MarkdownBlockRendererProps>(({
+  block,
+  sec,
+  blockIdx,
+  fontSize,
+  dosageFontSize,
+  styles,
+}) => {
+  // 1. Markdown Comparison Table
+  if (block.type === 'table') {
+    return (
+      <View key={`tbl-${blockIdx}`} style={styles.tableWrapper}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.tableScroll}>
+          <View style={styles.tableContainer}>
+            <View style={styles.tableHeaderRow}>
+              {block.headers.map((hdr, hIdx) => (
+                <View
+                  key={`th-${hIdx}`}
+                  style={[styles.tableCell, styles.tableHeaderCell, hIdx === 0 && styles.tableFirstCell]}
+                >
+                  <Text style={styles.tableHeaderText} allowFontScaling={true}>
+                    {hdr}
+                  </Text>
+                </View>
+              ))}
+            </View>
+            {block.rows.map((row, rIdx) => (
+              <View
+                key={`tr-${rIdx}`}
+                style={[styles.tableDataRow, rIdx % 2 === 1 && styles.tableDataRowAlt]}
+              >
+                {row.map((cell, cIdx) => (
+                  <View
+                    key={`td-${cIdx}`}
+                    style={[styles.tableCell, cIdx === 0 && styles.tableFirstCell]}
+                  >
+                    <Text style={styles.tableCellText} allowFontScaling={true}>
+                      {renderFormattedText(cell, styles.tableCellText, styles.tableCellTextBold)}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // 2. Numbered Step Row
+  if (block.type === 'numbered') {
+    return (
+      <View key={`num-${blockIdx}`} style={styles.numberedRow}>
+        <View style={[styles.numberedBadge, { backgroundColor: sec.accentColor }]}>
+          <Text style={styles.numberedBadgeText} allowFontScaling={true}>
+            {block.number}
+          </Text>
+        </View>
+        <Text
+          allowFontScaling={true}
+          style={[styles.fieldCardItemValue, { fontSize, flex: 1 }]}
+        >
+          {renderFormattedText(block.value, styles.fieldCardItemValue, styles.fieldCardItemValueBold)}
+        </Text>
+      </View>
+    );
+  }
+
+  // 3. Regular Paragraph Block
+  if (block.type === 'paragraph') {
+    return (
+      <View key={`para-${blockIdx}`} style={styles.paragraphBlock}>
+        <Text
+          allowFontScaling={true}
+          style={[styles.paragraphText, { fontSize }]}
+        >
+          {renderFormattedText(block.value, styles.paragraphText, styles.paragraphTextBold)}
+        </Text>
+      </View>
+    );
+  }
+
+  // 4. Knapsack Dosage Callout
+  if (block.isDosage) {
+    return (
+      <View key={`item-${blockIdx}`} style={styles.knapsackDosageBox}>
+        <View style={styles.knapsackIconRow}>
+          <MaterialCommunityIcons name="gas-cylinder" size={20} color="#0284C7" />
+          <Text
+            allowFontScaling={true}
+            style={[styles.knapsackLabel, { fontSize: dosageFontSize - 2 }]}
+          >
+            {block.label ? block.label.replace(/\*\*/g, '') : '15-Liter Backpack Pump Dosage'}
+          </Text>
+        </View>
+        <Text
+          allowFontScaling={true}
+          style={[styles.knapsackValue, { fontSize: dosageFontSize }]}
+        >
+          {renderFormattedText(block.value, styles.knapsackValue, [styles.knapsackValue, { fontWeight: '900' }])}
+        </Text>
+      </View>
+    );
+  }
+
+  // 5. Standard Bullet Item Row
+  return (
+    <View key={`item-${blockIdx}`} style={styles.fieldCardItemRow}>
+      <View
+        style={[styles.fieldCardBulletDot, { backgroundColor: sec.accentColor }]}
+      />
+      <Text
+        allowFontScaling={true}
+        style={[styles.fieldCardItemText, { fontSize }]}
+      >
+        {block.label ? (
+          <Text style={styles.fieldCardItemLabel}>{block.label.replace(/\*\*/g, '')}: </Text>
+        ) : null}
+        {renderFormattedText(block.value, styles.fieldCardItemValue, styles.fieldCardItemValueBold)}
+      </Text>
+    </View>
+  );
+});
+
+interface AdvisorySectionCardProps {
+  sec: ParsedAdvisorySection;
+  idx: number;
+  headerFontSize: number;
+  bodyFontSize: number;
+  dosageFontSize: number;
+  styles: any;
+}
+
+const AdvisorySectionCard = React.memo<AdvisorySectionCardProps>(({
+  sec,
+  idx,
+  headerFontSize,
+  bodyFontSize,
+  dosageFontSize,
+  styles,
+}) => {
+  return (
+    <View
+      key={idx}
+      style={[
+        styles.fieldAdvisoryCard,
+        {
+          backgroundColor: sec.bgColor,
+          borderColor: sec.borderColor,
+          borderLeftColor: sec.accentColor,
+        },
+      ]}
+    >
+      <View style={styles.fieldCardHeaderRow}>
+        <View style={[styles.fieldCardIconBadge, { backgroundColor: sec.badgeBg }]}>
+          <MaterialCommunityIcons name={sec.icon as any} size={20} color={sec.accentColor} />
+        </View>
+        <Text
+          allowFontScaling={true}
+          style={[
+            styles.fieldCardTitle,
+            { color: sec.accentColor, fontSize: headerFontSize },
+          ]}
+        >
+          {sec.cleanTitle}
+        </Text>
+      </View>
+
+      <View style={styles.fieldCardItemsList}>
+        {sec.blocks.map((block, blockIdx) => (
+          <MarkdownBlockRenderer
+            key={`block-${blockIdx}`}
+            block={block}
+            sec={sec}
+            blockIdx={blockIdx}
+            fontSize={bodyFontSize}
+            dosageFontSize={dosageFontSize}
+            styles={styles}
+          />
+        ))}
+      </View>
+    </View>
+  );
+});
+
+function AdvisoryResponseSheetComponent({
   visible,
   onClose,
   loading,
@@ -380,7 +588,6 @@ export default function AdvisoryResponseSheet({
     playAdvisorySequence,
     stopAndClearAll,
   } = useAudioQueue();
-  const [followUpText, setFollowUpText] = useState('');
   const [loadingCycleIndex, setLoadingCycleIndex] = useState(0);
 
   // Persistent ScrollView reference for auto-scrolling to top on new query
@@ -394,11 +601,18 @@ export default function AdvisoryResponseSheet({
   const [showSprayModal, setShowSprayModal] = useState(false);
   const [showShopModal, setShowShopModal] = useState(false);
   const [selectedCitation, setSelectedCitation] = useState<SourceLabel | null>(null);
-  const [isRecordingFollowUp, setIsRecordingFollowUp] = useState(false);
+
+  const {
+    isRecording: isRecordingFollowUp,
+    formattedTimer: followUpTimer,
+    startRecording: startFollowUpRecording,
+    stopRecording: stopFollowUpRecording,
+    cancelRecording: cancelFollowUpRecording,
+  } = useVoiceRecorder();
 
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const waveformAnim = useRef(
-    Array.from({ length: 20 }, () => new Animated.Value(6))
+    Array.from({ length: 20 }, () => new Animated.Value(0.3))
   ).current;
   const waveformIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -452,27 +666,27 @@ export default function AdvisoryResponseSheet({
     };
   }, [loading]);
 
-  // Waveform animation during audio playback
+  // Waveform animation during audio playback on native UI thread
   useEffect(() => {
     if (audioPlaying) {
       waveformIntervalRef.current = setInterval(() => {
         waveformAnim.forEach((anim) => {
-          const targetHeight = Math.floor(Math.random() * 26) + 8;
+          const targetScale = Math.random() * 0.8 + 0.2;
           Animated.timing(anim, {
-            toValue: targetHeight,
+            toValue: targetScale,
             duration: 180,
-            useNativeDriver: false,
+            useNativeDriver: true,
           }).start();
         });
       }, 200);
     } else {
       if (waveformIntervalRef.current) clearInterval(waveformIntervalRef.current);
       waveformAnim.forEach((anim, i) => {
-        const restHeight = 8 + (i % 4) * 3;
+        const restScale = 0.25 + (i % 4) * 0.1;
         Animated.timing(anim, {
-          toValue: restHeight,
+          toValue: restScale,
           duration: 250,
-          useNativeDriver: false,
+          useNativeDriver: true,
         }).start();
       });
     }
@@ -517,95 +731,85 @@ export default function AdvisoryResponseSheet({
     }
   };
 
-  const handleSendFollowUp = () => {
-    const text = followUpText.trim();
-    if (!text) return;
+  const handleSendFollowUp = useCallback((text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
     stopAudio();
     safeHaptics.impactMedium();
     sheetScrollRef.current?.scrollTo({ y: 0, animated: true });
     if (onSelectFollowUp) {
-      onSelectFollowUp(text);
+      onSelectFollowUp(trimmed);
     } else if (onFollowUpSubmit) {
-      onFollowUpSubmit(text);
+      onFollowUpSubmit(trimmed);
     }
-    setFollowUpText('');
-  };
+  }, [stopAudio, onSelectFollowUp, onFollowUpSubmit]);
 
-  const handleVoiceFollowUp = () => {
-    safeHaptics.impactHeavy();
-    setIsRecordingFollowUp(true);
+  const handleToggleVoiceFollowUp = useCallback(async () => {
+    if (isRecordingFollowUp) {
+      safeHaptics.impactMedium();
+      const recResult = await stopFollowUpRecording();
+      if (!recResult) return;
 
-    if (
-      Platform.OS === 'web' &&
-      typeof window !== 'undefined' &&
-      (('SpeechRecognition' in window) || ('webkitSpeechRecognition' in window))
-    ) {
       try {
-        const SpeechRecognition =
-          (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = true;
-        const langMap: Record<string, string> = {
-          hi: 'hi-IN',
-          ml: 'ml-IN',
-          ta: 'ta-IN',
-          te: 'te-IN',
-          kn: 'kn-IN',
-          bn: 'bn-IN',
-          mr: 'mr-IN',
-          gu: 'gu-IN',
-          pa: 'pa-IN',
-          en: 'en-IN',
-        };
-        recognition.lang = langMap[currentLang] || 'en-IN';
-        showToast('🎙️ Listening... Speak your follow-up now');
+        showToast('🎙️ Transcribing voice follow-up...');
+        const formData = new FormData();
+        if (Platform.OS === 'web') {
+          const blob = recResult.blob!;
+          formData.append('audio', blob, 'follow_up.webm');
+          formData.append('audio_file', blob, 'follow_up.webm');
+        } else {
+          const uri = recResult.uri!;
+          const fileObj = {
+            uri,
+            type: 'audio/mp4',
+            name: 'follow_up.m4a',
+          } as any;
+          formData.append('audio', fileObj);
+          formData.append('audio_file', fileObj);
+        }
 
-        let recognized = '';
-        recognition.onresult = (event: any) => {
-          let text = '';
-          for (let i = event.resultIndex; i < event.results.length; ++i) {
-            text += event.results[i][0].transcript;
-          }
-          if (text) {
-            recognized = text;
-            setFollowUpText(text);
-          }
-        };
-        recognition.onerror = (e: any) => {
-          console.warn('SpeechRecognition follow-up error:', e);
-          setIsRecordingFollowUp(false);
-          if (e.error === 'not-allowed') {
-            showToast('⚠️ Microphone blocked. Allow in browser address bar.');
-          }
-        };
-        recognition.onend = () => {
-          setIsRecordingFollowUp(false);
-          if (recognized) {
-            showToast('✅ Voice captured! Tap send to submit.');
-          }
-        };
-        recognition.start();
-        return;
-      } catch (err) {
-        console.warn('SpeechRecognition failed, falling back:', err);
+        formData.append('language', currentLang);
+        if (response?.conversation_id) {
+          formData.append('conversation_id', response.conversation_id);
+        }
+        formData.append('encoding', Platform.OS === 'web' ? 'WEBM_OPUS' : 'M4A_AAC');
+
+        const headers: Record<string, string> = {};
+        if (Platform.OS !== 'web') {
+          headers['Content-Type'] = 'multipart/form-data';
+        }
+
+        const res = await api.post('/api/v1/voice-query', formData, {
+          headers,
+          timeout: 45000,
+        });
+
+        const captured = res.data?.question_original || res.data?.transcribed_text;
+        if (captured) {
+          showToast(`✅ "${captured.slice(0, 32)}..."`);
+          handleSendFollowUp(captured);
+        }
+      } catch (err: any) {
+        console.warn('Voice follow-up error:', err);
+        showToast('⚠️ Voice transcription failed. Try again.');
+      }
+    } else {
+      stopAudio();
+      const ok = await startFollowUpRecording();
+      if (ok) {
+        safeHaptics.impactHeavy();
+        showToast('🎙️ Recording... Tap button again to stop & send');
       }
     }
-
-    // Fallback simulation
-    showToast('🎙️ Listening... Speak your follow-up question');
-    setTimeout(() => {
-      setIsRecordingFollowUp(false);
-      const voiceSample =
-        currentLang === 'ml'
-          ? 'ഈ കീടനാശിനി തളിക്കേണ്ട സമയക്രമം എപ്പോഴാണ്?'
-          : currentLang === 'hi'
-          ? 'इस कीटनाशक के छिड़काव का सही समय क्या है?'
-          : 'What is the optimal spray timing and dosage for this crop?';
-      setFollowUpText(voiceSample);
-      showToast('✅ Voice captured! Tap send or edit your question.');
-    }, 2200);
-  };
+  }, [
+    isRecordingFollowUp,
+    stopFollowUpRecording,
+    startFollowUpRecording,
+    stopAudio,
+    currentLang,
+    response?.conversation_id,
+    handleSendFollowUp,
+  ]);
 
   const handleSetSprayReminder = () => {
     safeHaptics.impactMedium();
@@ -708,6 +912,8 @@ export default function AdvisoryResponseSheet({
     if (fontSizeScale === 'large') return 20;
     return 17;
   };
+
+  if (!visible) return null;
 
   return (
     <Modal
@@ -825,6 +1031,136 @@ export default function AdvisoryResponseSheet({
             {response && !loading && (
               <View style={styles.responseContainer}>
 
+                {/* 🌿 AGRONOMIC VISUAL DIAGNOSIS CARD (Rendered for image / plant diagnostic queries) */}
+                {(response.crop_common_name || response.primary_diagnosis || response.confidence_percent !== undefined) && (
+                  <View style={styles.visualDiagnosisCard}>
+                    <View style={styles.visualDiagnosisHeader}>
+                      <View style={styles.visualDiagnosisHeaderLeft}>
+                        <View style={styles.visualDiagnosisIconBadge}>
+                          <MaterialCommunityIcons name="microscope" size={20} color="#15803D" />
+                        </View>
+                        <View>
+                          <Text style={styles.visualDiagnosisTitle}>
+                            {t('visualDiagnosis') || 'Agronomic Visual Diagnosis'}
+                          </Text>
+                          <Text style={styles.visualDiagnosisSubtitle}>
+                            ICAR Plant Pathology Model • GPT-4o Vision
+                          </Text>
+                        </View>
+                      </View>
+                      {response.confidence_percent !== undefined && (
+                        <View style={styles.confidenceScoreBadge}>
+                          <Text style={styles.confidenceScoreText}>
+                            {response.confidence_percent}% Match
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+
+                    {/* Primary Diagnosis & Botanical Crop Info */}
+                    <View style={styles.diagnosisDetailsBox}>
+                      {response.primary_diagnosis && (
+                        <View style={styles.diagnosisRow}>
+                          <Text style={styles.diagnosisLabel}>Condition / Diagnosis:</Text>
+                          <Text style={styles.diagnosisValueHighlight}>
+                            {response.primary_diagnosis}
+                          </Text>
+                        </View>
+                      )}
+
+                      {(response.crop_common_name || response.crop_scientific_name) && (
+                        <View style={styles.diagnosisRow}>
+                          <Text style={styles.diagnosisLabel}>Target Crop:</Text>
+                          <Text style={styles.diagnosisValue}>
+                            {response.crop_common_name || ''}
+                            {response.crop_scientific_name ? ` (${response.crop_scientific_name})` : ''}
+                          </Text>
+                        </View>
+                      )}
+
+                      {/* Pill Row: Growth Stage, Category, Severity */}
+                      <View style={styles.diagnosisPillsRow}>
+                        {response.condition_category && (
+                          <View style={styles.conditionCategoryPill}>
+                            <MaterialCommunityIcons name="tag-outline" size={12} color="#15803D" />
+                            <Text style={styles.conditionCategoryPillText}>{response.condition_category}</Text>
+                          </View>
+                        )}
+                        {response.growth_stage && (
+                          <View style={styles.growthStagePill}>
+                            <MaterialCommunityIcons name="sprout-outline" size={12} color="#0369A1" />
+                            <Text style={styles.growthStagePillText}>{response.growth_stage}</Text>
+                          </View>
+                        )}
+                        {response.severity && (
+                          <View
+                            style={[
+                              styles.severityPill,
+                              response.severity.toLowerCase().includes('severe')
+                                ? styles.severityPillSevere
+                                : response.severity.toLowerCase().includes('mod')
+                                ? styles.severityPillModerate
+                                : styles.severityPillEarly,
+                            ]}
+                          >
+                            <MaterialCommunityIcons
+                              name={
+                                response.severity.toLowerCase().includes('severe')
+                                  ? 'alert-octagon'
+                                  : 'alert-circle-outline'
+                              }
+                              size={12}
+                              color={
+                                response.severity.toLowerCase().includes('severe')
+                                  ? '#DC2626'
+                                  : response.severity.toLowerCase().includes('mod')
+                                  ? '#D97706'
+                                  : '#15803D'
+                              }
+                            />
+                            <Text
+                              style={[
+                                styles.severityPillText,
+                                response.severity.toLowerCase().includes('severe')
+                                  ? styles.severityTextSevere
+                                  : response.severity.toLowerCase().includes('mod')
+                                  ? styles.severityTextModerate
+                                  : styles.severityTextEarly,
+                              ]}
+                            >
+                              Severity: {response.severity}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+
+                      {/* Visual Evidence bullet points */}
+                      {response.visual_evidence && response.visual_evidence.length > 0 && (
+                        <View style={styles.evidenceSection}>
+                          <Text style={styles.evidenceTitle}>Observed Visual Evidence:</Text>
+                          {response.visual_evidence.map((item, idx) => (
+                            <View key={idx} style={styles.evidenceBulletRow}>
+                              <MaterialCommunityIcons name="check-circle-outline" size={14} color="#15803D" style={{ marginTop: 2 }} />
+                              <Text style={styles.evidenceBulletText}>{item}</Text>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+
+                      {/* Differential Diagnosis Note */}
+                      {response.differential_diagnosis_ruled_out && (
+                        <View style={styles.differentialBox}>
+                          <MaterialCommunityIcons name="shield-search" size={14} color="#6B7280" />
+                          <Text style={styles.differentialText}>
+                            <Text style={{ fontWeight: '700' }}>Ruled Out: </Text>
+                            {response.differential_diagnosis_ruled_out}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                )}
+
                 {/* ── BOLD AUDIO PLAYER WIDGET ── */}
                 <View style={styles.audioPlayerWidget}>
                   <View style={styles.audioPlayerHeader}>
@@ -855,7 +1191,8 @@ export default function AdvisoryResponseSheet({
                         style={[
                           styles.waveformBar,
                           {
-                            height: anim,
+                            height: 24,
+                            transform: [{ scaleY: anim }],
                             backgroundColor: audioPlaying ? '#16A34A' : '#CBD5E1',
                           },
                         ]}
@@ -972,153 +1309,15 @@ export default function AdvisoryResponseSheet({
                 {parsedDoc.sections.length > 0 ? (
                   <View style={styles.structuredCardsContainer}>
                     {parsedDoc.sections.map((sec, idx) => (
-                      <View
-                        key={idx}
-                        style={[
-                          styles.fieldAdvisoryCard,
-                          {
-                            backgroundColor: sec.bgColor,
-                            borderColor: sec.borderColor,
-                            borderLeftColor: sec.accentColor,
-                          },
-                        ]}
-                      >
-                        <View style={styles.fieldCardHeaderRow}>
-                          <View style={[styles.fieldCardIconBadge, { backgroundColor: sec.badgeBg }]}>
-                            <MaterialCommunityIcons name={sec.icon} size={20} color={sec.accentColor} />
-                          </View>
-                          <Text
-                            allowFontScaling={true}
-                            style={[
-                              styles.fieldCardTitle,
-                              { color: sec.accentColor, fontSize: getCardHeaderFontSize() },
-                            ]}
-                          >
-                            {sec.cleanTitle}
-                          </Text>
-                        </View>
-
-                        <View style={styles.fieldCardItemsList}>
-                          {sec.blocks.map((block, blockIdx) => {
-                            // 1. Markdown Comparison Table
-                            if (block.type === 'table') {
-                              return (
-                                <View key={`tbl-${blockIdx}`} style={styles.tableWrapper}>
-                                  <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.tableScroll}>
-                                    <View style={styles.tableContainer}>
-                                      {/* Header Row */}
-                                      <View style={styles.tableHeaderRow}>
-                                        {block.headers.map((hdr, hIdx) => (
-                                          <View
-                                            key={`th-${hIdx}`}
-                                            style={[styles.tableCell, styles.tableHeaderCell, hIdx === 0 && styles.tableFirstCell]}
-                                          >
-                                            <Text style={styles.tableHeaderText} allowFontScaling={true}>
-                                              {hdr}
-                                            </Text>
-                                          </View>
-                                        ))}
-                                      </View>
-                                      {/* Data Rows */}
-                                      {block.rows.map((row, rIdx) => (
-                                        <View
-                                          key={`tr-${rIdx}`}
-                                          style={[styles.tableDataRow, rIdx % 2 === 1 && styles.tableDataRowAlt]}
-                                        >
-                                          {row.map((cell, cIdx) => (
-                                            <View
-                                              key={`td-${cIdx}`}
-                                              style={[styles.tableCell, cIdx === 0 && styles.tableFirstCell]}
-                                            >
-                                              <Text style={styles.tableCellText} allowFontScaling={true}>
-                                                {renderFormattedText(cell, styles.tableCellText, styles.tableCellTextBold)}
-                                              </Text>
-                                            </View>
-                                          ))}
-                                        </View>
-                                      ))}
-                                    </View>
-                                  </ScrollView>
-                                </View>
-                              );
-                            }
-
-                            // 2. Numbered Step Row
-                            if (block.type === 'numbered') {
-                              return (
-                                <View key={`num-${blockIdx}`} style={styles.numberedRow}>
-                                  <View style={[styles.numberedBadge, { backgroundColor: sec.accentColor }]}>
-                                    <Text style={styles.numberedBadgeText} allowFontScaling={true}>
-                                      {block.number}
-                                    </Text>
-                                  </View>
-                                  <Text
-                                    allowFontScaling={true}
-                                    style={[styles.fieldCardItemValue, { fontSize: getCardBodyFontSize(), flex: 1 }]}
-                                  >
-                                    {renderFormattedText(block.value, styles.fieldCardItemValue, styles.fieldCardItemValueBold)}
-                                  </Text>
-                                </View>
-                              );
-                            }
-
-                            // 3. Regular Paragraph Block
-                            if (block.type === 'paragraph') {
-                              return (
-                                <View key={`para-${blockIdx}`} style={styles.paragraphBlock}>
-                                  <Text
-                                    allowFontScaling={true}
-                                    style={[styles.paragraphText, { fontSize: getCardBodyFontSize() }]}
-                                  >
-                                    {renderFormattedText(block.value, styles.paragraphText, styles.paragraphTextBold)}
-                                  </Text>
-                                </View>
-                              );
-                            }
-
-                            // 4. Knapsack Dosage Callout
-                            if (block.isDosage) {
-                              return (
-                                <View key={`item-${blockIdx}`} style={styles.knapsackDosageBox}>
-                                  <View style={styles.knapsackIconRow}>
-                                    <MaterialCommunityIcons name="gas-cylinder" size={20} color="#0284C7" />
-                                    <Text
-                                      allowFontScaling={true}
-                                      style={[styles.knapsackLabel, { fontSize: getDosageFontSize() - 2 }]}
-                                    >
-                                      {block.label ? block.label.replace(/\*\*/g, '') : '15-Liter Backpack Pump Dosage'}
-                                    </Text>
-                                  </View>
-                                  <Text
-                                    allowFontScaling={true}
-                                    style={[styles.knapsackValue, { fontSize: getDosageFontSize() }]}
-                                  >
-                                    {renderFormattedText(block.value, styles.knapsackValue, [styles.knapsackValue, { fontWeight: '900' }])}
-                                  </Text>
-                                </View>
-                              );
-                            }
-
-                            // 5. Standard Bullet Item Row
-                            return (
-                              <View key={`item-${blockIdx}`} style={styles.fieldCardItemRow}>
-                                <View
-                                  style={[styles.fieldCardBulletDot, { backgroundColor: sec.accentColor }]}
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  style={[styles.fieldCardItemText, { fontSize: getCardBodyFontSize() }]}
-                                >
-                                  {block.label ? (
-                                    <Text style={styles.fieldCardItemLabel}>{block.label.replace(/\*\*/g, '')}: </Text>
-                                  ) : null}
-                                  {renderFormattedText(block.value, styles.fieldCardItemValue, styles.fieldCardItemValueBold)}
-                                </Text>
-                              </View>
-                            );
-                          })}
-                        </View>
-                      </View>
+                      <AdvisorySectionCard
+                        key={sec.id || `sec-${idx}`}
+                        sec={sec}
+                        idx={idx}
+                        headerFontSize={getCardHeaderFontSize()}
+                        bodyFontSize={getCardBodyFontSize()}
+                        dosageFontSize={getDosageFontSize()}
+                        styles={styles}
+                      />
                     ))}
                   </View>
                 ) : (
@@ -1308,66 +1507,17 @@ export default function AdvisoryResponseSheet({
                     </View>
                   )}
 
-                  {/* 3. VOICE-FIRST FLOATING FOLLOW-UP ACTION BAR */}
+                  {/* 3. VOICE-FIRST FLOATING FOLLOW-UP ACTION BAR (ISOLATED COMPONENT) */}
                   {(onFollowUpSubmit || onSelectFollowUp) && (
                     <View style={styles.voiceFollowUpSection}>
                       <Text allowFontScaling={true} style={styles.voiceFollowUpHeading}>💬 {t('haveAFollowUpQuestion') || 'Have a follow-up question?'}</Text>
-
-                      <View style={styles.floatingActionBar}>
-                        {/* Secondary inline text input (Left) */}
-                        <TextInput
-                          style={styles.secondaryFollowUpInput}
-                          value={followUpText}
-                          onChangeText={setFollowUpText}
-                          placeholder={t('followUpPlaceholder') || 'Ask follow-up or type here...'}
-                          placeholderTextColor="#94A3B8"
-                          onSubmitEditing={handleSendFollowUp}
-                          allowFontScaling={true}
-                          accessibilityLabel="Follow-up question input"
-                          accessibilityHint="Type your follow-up question"
-                        />
-
-                        <TouchableOpacity
-                          style={[
-                            styles.inlineSendBtn,
-                            followUpText.trim().length === 0 && styles.inlineSendBtnDisabled,
-                          ]}
-                          onPress={handleSendFollowUp}
-                          disabled={followUpText.trim().length === 0}
-                          activeOpacity={0.8}
-                          accessibilityRole="button"
-                          accessibilityLabel="Send question"
-                        >
-                          <MaterialCommunityIcons
-                            name="send"
-                            size={18}
-                            color={followUpText.trim().length > 0 ? '#15803D' : '#94A3B8'}
-                          />
-                        </TouchableOpacity>
-
-                        {/* Dominant Green "Hold to Speak" Microphone Button (Right) */}
-                        <TouchableOpacity
-                          style={[
-                            styles.dominantVoiceBtn,
-                            isRecordingFollowUp && styles.dominantVoiceBtnActive,
-                          ]}
-                          onPress={handleVoiceFollowUp}
-                          activeOpacity={0.85}
-                          accessibilityRole="button"
-                          accessibilityLabel={isRecordingFollowUp ? "Listening to voice input" : "Hold to speak follow-up question"}
-                          accessibilityHint="Tap to speak your follow-up question"
-                          accessibilityState={{ busy: isRecordingFollowUp }}
-                        >
-                          <MaterialCommunityIcons
-                            name={isRecordingFollowUp ? 'waveform' : 'microphone'}
-                            size={20}
-                            color="#FFFFFF"
-                          />
-                          <Text allowFontScaling={true} style={styles.dominantVoiceBtnText}>
-                            {isRecordingFollowUp ? (t('listening') || 'Listening...') : (t('holdToSpeak') || 'Hold to Speak')}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
+                      <IsolatedFollowUpInput
+                        onSend={handleSendFollowUp}
+                        onVoiceToggle={handleToggleVoiceFollowUp}
+                        isRecording={isRecordingFollowUp}
+                        recordingTimer={followUpTimer}
+                        t={t}
+                      />
                     </View>
                   )}
 
@@ -2741,4 +2891,203 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1E293B',
   },
+
+  // 🌿 Visual Agronomic Diagnosis Card Styles
+  visualDiagnosisCard: {
+    backgroundColor: '#F0FDF4',
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1.5,
+    borderColor: '#BBF7D0',
+    marginBottom: 16,
+    gap: 12,
+  },
+  visualDiagnosisHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  visualDiagnosisHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    flex: 1,
+  },
+  visualDiagnosisIconBadge: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#DCFCE7',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#86EFAC',
+  },
+  visualDiagnosisTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#166534',
+  },
+  visualDiagnosisSubtitle: {
+    fontSize: 11,
+    color: '#15803D',
+    fontWeight: '500',
+  },
+  confidenceScoreBadge: {
+    backgroundColor: '#166534',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  confidenceScoreText: {
+    color: '#FFFFFF',
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  diagnosisDetailsBox: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 12,
+    gap: 8,
+    borderWidth: 1,
+    borderColor: '#DCFCE7',
+  },
+  diagnosisRow: {
+    gap: 2,
+  },
+  diagnosisLabel: {
+    fontSize: 11,
+    color: '#64748B',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  diagnosisValueHighlight: {
+    fontSize: 16,
+    fontWeight: '900',
+    color: '#0F172A',
+  },
+  diagnosisValue: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#334155',
+  },
+  diagnosisPillsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 4,
+  },
+  conditionCategoryPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#F0FDF4',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#BBF7D0',
+  },
+  conditionCategoryPillText: {
+    fontSize: 11,
+    color: '#166534',
+    fontWeight: '700',
+  },
+  growthStagePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#F0F9FF',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#BAE6FD',
+  },
+  growthStagePillText: {
+    fontSize: 11,
+    color: '#0369A1',
+    fontWeight: '700',
+  },
+  severityPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  severityPillSevere: {
+    backgroundColor: '#FEF2F2',
+    borderColor: '#FECACA',
+  },
+  severityPillModerate: {
+    backgroundColor: '#FFFBEB',
+    borderColor: '#FDE68A',
+  },
+  severityPillEarly: {
+    backgroundColor: '#F0FDF4',
+    borderColor: '#BBF7D0',
+  },
+  severityPillText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  severityTextSevere: {
+    color: '#DC2626',
+  },
+  severityTextModerate: {
+    color: '#D97706',
+  },
+  severityTextEarly: {
+    color: '#166534',
+  },
+  evidenceSection: {
+    marginTop: 6,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#F1F5F9',
+    gap: 4,
+  },
+  evidenceTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#475569',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  evidenceBulletRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+    marginTop: 2,
+  },
+  evidenceBulletText: {
+    fontSize: 12,
+    color: '#334155',
+    flex: 1,
+    lineHeight: 18,
+  },
+  differentialBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+    backgroundColor: '#F8FAFC',
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 4,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  differentialText: {
+    fontSize: 11,
+    color: '#475569',
+    flex: 1,
+    lineHeight: 16,
+  },
 });
+
+const AdvisoryResponseSheet = React.memo(AdvisoryResponseSheetComponent);
+export default AdvisoryResponseSheet;

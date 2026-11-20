@@ -55,6 +55,7 @@ import { BASE_URL, api, checkBackendConnection } from '../../services/api';
 import AdvisoryResponseSheet from '../../components/AdvisoryResponseSheet';
 import LanguageSelectorSheet from '../../components/LanguageSelectorSheet';
 import LocationPickerModal from '../../components/LocationPickerModal';
+import IsolatedQueryInput from '../../components/IsolatedQueryInput';
 import { storageService, offlineCacheService, FarmerProfile } from '../../services/storage';
 import {
   LanguageCode,
@@ -200,6 +201,7 @@ interface SourceLabel {
 interface QueryResponse {
   query_id?: number;
   conversation_id?: string;
+  question_original?: string;
   answer: string;
   answer_english: string;
   sources: string[];
@@ -633,113 +635,69 @@ const RecordingTimer = React.memo<RecordingTimerProps>(({
   );
 });
 
-interface QueryInputBarProps {
-  showTextInput: boolean;
-  setShowTextInput: (show: boolean) => void;
-  onSubmit: (text: string) => void;
-  loading: boolean;
-  fontSize: number;
+interface CropCardItemProps {
+  crop: any;
+  isSelected: boolean;
+  onSelectCrop: (crop: any) => void;
   t: (key: string) => string;
   styles: any;
 }
 
-const QueryInputBar = React.memo<QueryInputBarProps>(({
-  showTextInput,
-  setShowTextInput,
-  onSubmit,
-  loading,
-  fontSize,
+const CropCardItem = React.memo<CropCardItemProps>(({
+  crop,
+  isSelected,
+  onSelectCrop,
   t,
   styles,
 }) => {
-  const [localText, setLocalText] = useState('');
-
-  const handleSubmit = useCallback(() => {
-    const trimmed = localText.trim();
-    if (!trimmed || loading) return;
-    onSubmit(trimmed);
-  }, [localText, loading, onSubmit]);
-
-  if (!showTextInput) {
-    return (
-      <TouchableOpacity
-        style={styles.demotedTextLink}
-        onPress={() => { setShowTextInput(true); safeHaptics.impactLight(); }}
-        activeOpacity={0.75}
-        accessibilityRole="button"
-        accessibilityLabel={t('orTypeQuestionHint') || 'Prefer to type? Tap here to write'}
-        accessibilityHint="Double tap to open text typing box"
-      >
-        <MaterialCommunityIcons name="keyboard-outline" size={20} color="#166534" />
-        <Text style={styles.demotedTextLinkText} allowFontScaling={true}>
-          {t('orTypeQuestionHint') || 'Prefer to type? Tap here to write ✏️'}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
   return (
-    <View style={styles.expandedTextCard}>
-      <View style={styles.expandedTextHeader}>
-        <Text style={styles.textCardHeader} allowFontScaling={true}>{t('typeQuestionLabel')}</Text>
-        <TouchableOpacity
-          onPress={() => setShowTextInput(false)}
-          style={styles.hideTextLinkBtn}
-          accessibilityRole="button"
-          accessibilityLabel="Hide text box"
-        >
-          <Text style={styles.hideTextLinkText} allowFontScaling={true}>
-            {t('hideTypeQuestionHint') || 'Hide text box'} ▲
+    <TouchableOpacity
+      style={[
+        styles.cropCard,
+        isSelected && styles.cropCardSelected,
+        crop.isRegional && styles.cropCardRegional,
+      ]}
+      onPress={() => onSelectCrop(crop)}
+      activeOpacity={0.75}
+      accessibilityRole="button"
+      accessibilityLabel={`${t('crop_' + crop.id) || crop.name}, ${crop.tag}`}
+      accessibilityState={{ selected: isSelected }}
+      accessibilityHint="Double tap to ask advice for this crop"
+    >
+      <View style={styles.cropImageWrapper} accessible={false}>
+        <Image
+          source={{ uri: crop.imageUrl }}
+          style={styles.cropCardImage}
+          resizeMode="cover"
+          fadeDuration={0}
+        />
+        {isSelected ? (
+          <View style={styles.activeCropBadge} accessible={false}>
+            <Text style={styles.activeCropBadgeText} allowFontScaling={false}>
+              {t('badgeActive') || 'ACTIVE'}
+            </Text>
+          </View>
+        ) : crop.isRegional ? (
+          <View style={styles.regionalCropBadge} accessible={false}>
+            <Text style={styles.regionalCropBadgeText} allowFontScaling={false}>
+              {t('badgePopular') || 'POPULAR'}
+            </Text>
+          </View>
+        ) : null}
+        <View style={[styles.cropTagPill, { backgroundColor: `${crop.color}E6` }]}>
+          <Text style={styles.cropTagText} allowFontScaling={false}>
+            {t('badge_' + crop.tag.toLowerCase().replace(/\s+/g, '_')) || crop.tag}
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
-
-      <TextInput
-        style={[styles.sunlightTextInput, { fontSize }]}
-        value={localText}
-        onChangeText={setLocalText}
-        placeholder={t('typePlaceholder')}
-        placeholderTextColor="#94A3B8"
-        multiline
-        numberOfLines={3}
-        textAlignVertical="top"
-        editable={!loading}
-        allowFontScaling={true}
-        accessibilityLabel="Type your farming question"
-        accessibilityHint="Enter your agricultural question here"
-        onSubmitEditing={handleSubmit}
-      />
-
-      <TouchableOpacity
-        style={[styles.askSubmitBtn, (!localText.trim() || loading) && styles.askSubmitBtnDisabled]}
-        onPress={handleSubmit}
-        disabled={!localText.trim() || loading}
-        activeOpacity={0.8}
-        accessibilityRole="button"
-        accessibilityLabel={t('askBtn') || 'Ask Question'}
-        accessibilityState={{ disabled: !localText.trim() || loading }}
-        accessibilityHint="Double tap to submit your typed question"
-      >
-        <LinearGradient
-          colors={loading ? ['#94A3B8', '#94A3B8'] : ['#1B5E20', '#2E7D32']}
-          style={styles.askSubmitGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        >
-          {loading ? (
-            <ActivityIndicator color="#FFF" size="small" />
-          ) : (
-            <>
-              <MaterialCommunityIcons name="send" size={20} color="#FFF" />
-              <Text style={styles.askSubmitBtnText} allowFontScaling={true}>{t('askBtn')}</Text>
-            </>
-          )}
-        </LinearGradient>
-      </TouchableOpacity>
-    </View>
+      <View style={{ minHeight: 34, justifyContent: 'center', width: '100%' }}>
+        <Text style={styles.cropCardTitle} numberOfLines={2} ellipsizeMode="tail" allowFontScaling={true}>
+          {t('crop_' + crop.id) || crop.name}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 });
-QueryInputBar.displayName = 'QueryInputBar';
 
 interface RegionalCropsListProps {
   crops: Array<any>;
@@ -768,56 +726,16 @@ const RegionalCropsList = React.memo<RegionalCropsListProps>(({
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cropScroll}>
-        {crops.map((crop) => {
-          const isSelected = selectedCropId === crop.id;
-          return (
-            <TouchableOpacity
-              key={crop.id}
-              style={[
-                styles.cropCard,
-                isSelected && styles.cropCardSelected,
-                crop.isRegional && styles.cropCardRegional,
-              ]}
-              onPress={() => onSelectCrop(crop)}
-              activeOpacity={0.82}
-              accessibilityRole="button"
-              accessibilityLabel={`${t('crop_' + crop.id) || crop.name}, ${crop.tag}`}
-              accessibilityState={{ selected: isSelected }}
-              accessibilityHint="Double tap to ask advice for this crop"
-            >
-              <View style={styles.cropImageWrapper} accessible={false}>
-                <Image
-                  source={{ uri: crop.imageUrl }}
-                  style={styles.cropCardImage}
-                  resizeMode="cover"
-                />
-                {isSelected ? (
-                  <View style={styles.activeCropBadge} accessible={false}>
-                    <Text style={styles.activeCropBadgeText} allowFontScaling={false}>
-                      {t('badgeActive') || 'ACTIVE'}
-                    </Text>
-                  </View>
-                ) : crop.isRegional ? (
-                  <View style={styles.regionalCropBadge} accessible={false}>
-                    <Text style={styles.regionalCropBadgeText} allowFontScaling={false}>
-                      {t('badgePopular') || 'POPULAR'}
-                    </Text>
-                  </View>
-                ) : null}
-                <View style={[styles.cropTagPill, { backgroundColor: `${crop.color}E6` }]}>
-                  <Text style={styles.cropTagText} allowFontScaling={false}>
-                    {t('badge_' + crop.tag.toLowerCase().replace(/\s+/g, '_')) || crop.tag}
-                  </Text>
-                </View>
-              </View>
-              <View style={{ minHeight: 34, justifyContent: 'center', width: '100%' }}>
-                <Text style={styles.cropCardTitle} numberOfLines={2} ellipsizeMode="tail" allowFontScaling={true}>
-                  {t('crop_' + crop.id) || crop.name}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+        {crops.map((crop) => (
+          <CropCardItem
+            key={crop.id}
+            crop={crop}
+            isSelected={selectedCropId === crop.id}
+            onSelectCrop={onSelectCrop}
+            t={t}
+            styles={styles}
+          />
+        ))}
       </ScrollView>
     </View>
   );
@@ -933,6 +851,7 @@ export default function HomeScreen() {
   const mediaStreamRef = useRef<any>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const scrollRef = useRef<any>(null);
+  const recordingStartTimeRef = useRef<number>(0);
 
   // Reanimated native thread animation shared values
   const breatheScale = useSharedValue(1);
@@ -1258,6 +1177,9 @@ export default function HomeScreen() {
     mediaRecorderRef.current = null;
     recordingRef.current = null;
     setIsRecording(false);
+    if (Platform.OS !== 'web') {
+      setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true }).catch(() => {});
+    }
   }, []);
 
   const submitVoiceAudio = useCallback(async (audioSource: Blob | string) => {
@@ -1274,14 +1196,14 @@ export default function HomeScreen() {
         const blob = typeof audioSource === 'string'
           ? await fetch(audioSource).then((r) => r.blob())
           : audioSource;
-        formData.append('audio', blob, 'recording.webm');
-        formData.append('audio_file', blob, 'recording.webm');
+        formData.append('audio', blob, 'voice_query.webm');
+        formData.append('audio_file', blob, 'voice_query.webm');
       } else {
         const uri = typeof audioSource === 'string' ? audioSource : (audioSource as any).uri;
         const fileObj = {
           uri,
-          type: 'audio/m4a',
-          name: 'recording.m4a',
+          type: 'audio/mp4',
+          name: 'voice_query.m4a',
         } as any;
         formData.append('audio', fileObj);
         formData.append('audio_file', fileObj);
@@ -1291,7 +1213,7 @@ export default function HomeScreen() {
       formData.append('region', fullRegion);
       formData.append('language', currentLang);
       if (conversationId) formData.append('conversation_id', conversationId);
-      formData.append('encoding', Platform.OS === 'web' ? 'WEBM_OPUS' : 'LINEAR16');
+      formData.append('encoding', Platform.OS === 'web' ? 'WEBM_OPUS' : 'M4A_AAC');
 
       const headers: Record<string, string> = {};
       if (Platform.OS !== 'web') {
@@ -1306,8 +1228,9 @@ export default function HomeScreen() {
       setServerConnected(true);
 
       const data = res.data;
-      setTranscribedText(data.transcribed_text);
-      setQuestion(data.transcribed_text);
+      const questionCaptured = data.question_original || data.transcribed_text || '';
+      setTranscribedText(questionCaptured);
+      setQuestion(questionCaptured);
       setResponse(data);
       if (data.conversation_id) {
         setConversationId(data.conversation_id);
@@ -1318,7 +1241,7 @@ export default function HomeScreen() {
       const displayAnswer = currentLang === 'en' ? data.answer_english || data.answer : data.answer;
 
       await storageService.addToHistory({
-        question: data.transcribed_text,
+        question: questionCaptured,
         answer: displayAnswer,
         sources: data.sources,
         sourceLabels: data.source_labels,
@@ -1337,11 +1260,22 @@ export default function HomeScreen() {
     } finally {
       setLoading(false);
     }
-  }, [currentLang, region, conversationId, fadeIn]);
+  }, [currentLang, region, conversationId, fadeIn, selectedState]);
 
   const stopRecording = useCallback(async () => {
     safeHaptics.impactMedium();
     setIsRecording(false);
+
+    const durationMs = Date.now() - (recordingStartTimeRef.current || 0);
+    if (durationMs < 600) {
+      cleanupRecording();
+      setError(
+        currentLang === 'hi'
+          ? 'कम से कम 1 सेकंड तक बोलें।'
+          : 'Hold or tap and speak for at least 1 second.'
+      );
+      return;
+    }
 
     // ── WEB STOP & UPLOAD ──
     if (Platform.OS === 'web' && mediaRecorderRef.current) {
@@ -1388,15 +1322,22 @@ export default function HomeScreen() {
       recordingRef.current = null;
       try {
         await recording.stop();
-        const uri = recording.uri;
+        let uri = recording.uri;
         if (!uri) {
           setError('Audio recording file not found.');
           return;
+        }
+        if (!uri.startsWith('file://') && !uri.startsWith('content://') && !uri.startsWith('http')) {
+          uri = `file://${uri}`;
         }
         await submitVoiceAudio(uri);
       } catch (err: any) {
         console.warn('Native audio stop error:', err);
         setError('Failed to process voice question.');
+      } finally {
+        if (Platform.OS !== 'web') {
+          await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true }).catch(() => {});
+        }
       }
     }
   }, [submitVoiceAudio]);
@@ -1404,6 +1345,7 @@ export default function HomeScreen() {
   const startRecording = useCallback(async () => {
     stopAudio();
     setError(null);
+    recordingStartTimeRef.current = Date.now();
 
     // ── 1. WEB BROWSER RECORDING (Standard MediaRecorder API) ──
     if (Platform.OS === 'web') {
@@ -1699,12 +1641,13 @@ export default function HomeScreen() {
         </View>
 
         {/* ── MINIMAL PROFILE MODAL (Farmer Details & Switch Farmer / Logout) ── */}
-        <Modal
-          visible={showProfileModal}
-          transparent
-          animationType="fade"
-          onRequestClose={() => setShowProfileModal(false)}
-        >
+        {showProfileModal && (
+          <Modal
+            visible={showProfileModal}
+            transparent
+            animationType="fade"
+            onRequestClose={() => setShowProfileModal(false)}
+          >
           <View style={styles.modalBackdrop}>
             <TouchableOpacity
               style={styles.modalBackdropTouch}
@@ -1800,6 +1743,7 @@ export default function HomeScreen() {
             </View>
           </View>
         </Modal>
+        )}
 
         {/* Offline Notification */}
         {isOffline && (
@@ -1948,15 +1892,14 @@ export default function HomeScreen() {
                 styles={styles}
               />
 
-              {/* ✏️ MEMOIZED TEXT QUERY INPUT BAR (Prevents full-dashboard re-renders) */}
-              <QueryInputBar
+              {/* ✏️ ISOLATED MEMOIZED TEXT QUERY INPUT BAR (Prevents full-dashboard re-renders) */}
+              <IsolatedQueryInput
                 showTextInput={showTextInput}
                 setShowTextInput={setShowTextInput}
                 onSubmit={(text) => executeQuery(text, true)}
                 loading={loading}
                 fontSize={getAnswerFontSize()}
                 t={t}
-                styles={styles}
               />
             </View>
 

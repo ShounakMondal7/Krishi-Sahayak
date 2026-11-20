@@ -143,14 +143,26 @@ export interface OfflineCacheEntry {
   cachedAt: string;             // ISO string
 }
 
+// ── In-Memory Singleton Cache (Eliminates repeated bridge round-trips) ───────
+let _cachedLanguage: string | null = null;
+let _cachedLocation: SavedLocation | null = null;
+let _cachedHistory: HistoryEntry[] | null = null;
+let _cachedFarmerProfile: FarmerProfile | null = null;
+let _cachedOnboardingDone: boolean | null = null;
+
 // ── Storage Service ────────────────────────────────────────────────────────
 
 export const storageService = {
   async getHistory(): Promise<HistoryEntry[]> {
+    if (_cachedHistory !== null) {
+      return _cachedHistory;
+    }
     try {
       const raw = await AsyncStorage.getItem(HISTORY_KEY);
-      return raw ? JSON.parse(raw) : [];
+      _cachedHistory = raw ? JSON.parse(raw) : [];
+      return _cachedHistory || [];
     } catch {
+      _cachedHistory = [];
       return [];
     }
   },
@@ -164,6 +176,7 @@ export const storageService = {
         timestamp: new Date().toISOString(),
       };
       const updated = [newEntry, ...history].slice(0, MAX_HISTORY);
+      _cachedHistory = updated;
       await AsyncStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
 
       // Also save to offline cache for future offline lookups
@@ -179,14 +192,21 @@ export const storageService = {
   },
 
   async clearHistory(): Promise<void> {
+    _cachedHistory = [];
     await AsyncStorage.removeItem(HISTORY_KEY);
   },
 
   async getSavedLanguage(): Promise<string | null> {
+    if (_cachedLanguage !== null) {
+      return _cachedLanguage;
+    }
     try {
       let lang = await AsyncStorage.getItem('krishi_language');
       if (!lang && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
         lang = window.localStorage.getItem('krishi_language');
+      }
+      if (lang) {
+        _cachedLanguage = lang;
       }
       return lang;
     } catch {
@@ -195,18 +215,24 @@ export const storageService = {
   },
 
   async getLanguage(): Promise<string> {
+    if (_cachedLanguage !== null) {
+      return _cachedLanguage;
+    }
     try {
       let lang = await AsyncStorage.getItem('krishi_language');
       if (!lang && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
         lang = window.localStorage.getItem('krishi_language');
       }
-      return lang || 'en';
+      _cachedLanguage = lang || 'en';
+      return _cachedLanguage;
     } catch {
+      _cachedLanguage = 'en';
       return 'en';
     }
   },
 
   async setLanguage(lang: string): Promise<void> {
+    _cachedLanguage = lang;
     try {
       await AsyncStorage.setItem('krishi_language', lang);
       if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
@@ -225,18 +251,23 @@ export const storageService = {
   },
 
   async getFarmerProfile(): Promise<FarmerProfile | null> {
+    if (_cachedFarmerProfile !== null) {
+      return _cachedFarmerProfile;
+    }
     try {
       let raw = (await getSecureItem(FARMER_PROFILE_KEY)) || (await AsyncStorage.getItem(FARMER_PROFILE_KEY));
       if (!raw && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
         raw = window.localStorage.getItem(FARMER_PROFILE_KEY);
       }
-      return raw ? JSON.parse(raw) : null;
+      _cachedFarmerProfile = raw ? JSON.parse(raw) : null;
+      return _cachedFarmerProfile;
     } catch {
       return null;
     }
   },
 
   async setFarmerProfile(profile: FarmerProfile): Promise<void> {
+    _cachedFarmerProfile = profile;
     try {
       const serialized = JSON.stringify(profile);
       await setSecureItem(FARMER_PROFILE_KEY, serialized);
@@ -249,6 +280,8 @@ export const storageService = {
   },
 
   async clearFarmerProfile(): Promise<void> {
+    _cachedFarmerProfile = null;
+    _cachedOnboardingDone = null;
     try {
       await removeSecureItem(FARMER_PROFILE_KEY);
       await AsyncStorage.removeItem(FARMER_PROFILE_KEY).catch(() => {});
@@ -270,16 +303,24 @@ export const storageService = {
    * If the profile is missing or corrupted, invalidates the stale onboarding flag so onboarding is re-triggered.
    */
   async hasCompletedOnboarding(): Promise<boolean> {
+    if (_cachedOnboardingDone === true && _cachedFarmerProfile && _cachedFarmerProfile.farmerId) {
+      return true;
+    }
     try {
       const val = await AsyncStorage.getItem('krishi_onboarding_done');
-      if (val !== 'true') return false;
+      if (val !== 'true') {
+        _cachedOnboardingDone = false;
+        return false;
+      }
 
       const profile = await storageService.getFarmerProfile();
       if (!profile || !profile.farmerId || profile.farmerId.trim() === '') {
         // Invalidate stale onboarding flag without verified profile
         await AsyncStorage.removeItem('krishi_onboarding_done').catch(() => {});
+        _cachedOnboardingDone = false;
         return false;
       }
+      _cachedOnboardingDone = true;
       return true;
     } catch {
       return false;
@@ -287,6 +328,7 @@ export const storageService = {
   },
 
   async setOnboardingComplete(): Promise<void> {
+    _cachedOnboardingDone = true;
     try {
       await AsyncStorage.setItem('krishi_onboarding_done', 'true');
       onboardingListeners.forEach((fn) => fn('dashboard'));
@@ -294,6 +336,11 @@ export const storageService = {
   },
 
   async resetOnboarding(): Promise<void> {
+    _cachedLanguage = null;
+    _cachedLocation = null;
+    _cachedHistory = null;
+    _cachedFarmerProfile = null;
+    _cachedOnboardingDone = null;
     try {
       await removeSecureItem(FARMER_PROFILE_KEY);
       await AsyncStorage.removeItem(FARMER_PROFILE_KEY).catch(() => {});
@@ -320,6 +367,11 @@ export const storageService = {
   },
 
   async clearAllStorage(): Promise<void> {
+    _cachedLanguage = null;
+    _cachedLocation = null;
+    _cachedHistory = null;
+    _cachedFarmerProfile = null;
+    _cachedOnboardingDone = null;
     try {
       await removeSecureItem(FARMER_PROFILE_KEY);
       await AsyncStorage.clear();
@@ -355,14 +407,15 @@ export const storageService = {
     isManualLock: boolean = true,
     pincode?: string
   ): Promise<void> {
+    const loc: SavedLocation = {
+      state,
+      district,
+      pincode,
+      isManualLock,
+      updatedAt: new Date().toISOString(),
+    };
+    _cachedLocation = loc;
     try {
-      const loc: SavedLocation = {
-        state,
-        district,
-        pincode,
-        isManualLock,
-        updatedAt: new Date().toISOString(),
-      };
       const serialized = JSON.stringify(loc);
       await AsyncStorage.setItem('krishi_saved_location', serialized);
       if (Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
@@ -377,6 +430,7 @@ export const storageService = {
           if (profile.state !== state || profile.district !== district) {
             profile.state = state;
             profile.district = district;
+            _cachedFarmerProfile = profile;
             const updatedProfile = JSON.stringify(profile);
             await setSecureItem(FARMER_PROFILE_KEY, updatedProfile);
             await AsyncStorage.setItem(FARMER_PROFILE_KEY, updatedProfile);
@@ -395,13 +449,17 @@ export const storageService = {
   },
 
   async getSavedLocation(): Promise<SavedLocation | null> {
+    if (_cachedLocation !== null) {
+      return _cachedLocation;
+    }
     try {
       let raw = await AsyncStorage.getItem('krishi_saved_location');
       if (!raw && Platform.OS === 'web' && typeof window !== 'undefined' && window.localStorage) {
         raw = window.localStorage.getItem('krishi_saved_location');
       }
       if (raw) {
-        return JSON.parse(raw);
+        _cachedLocation = JSON.parse(raw);
+        return _cachedLocation;
       }
 
       // Fallback: Check if active farmer profile has state and district
@@ -413,6 +471,7 @@ export const storageService = {
           isManualLock: true,
           updatedAt: profile.loginTimestamp || new Date().toISOString(),
         };
+        _cachedLocation = fallbackLoc;
         await storageService.saveLocation(fallbackLoc.state, fallbackLoc.district, true);
         return fallbackLoc;
       }

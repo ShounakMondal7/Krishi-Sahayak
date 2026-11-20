@@ -44,6 +44,8 @@ export default function LanguageSelectorSheet({
     onClose();
   };
 
+  if (!visible) return null;
+
   return (
     <Modal
       visible={visible}

@@ -113,6 +113,10 @@ export const DISTRICT_ALIAS_MAP: Record<string, string> = {
   hooghly: 'Hooghly',
   hugli: 'Hooghly',
   north24parganas: 'North 24 Parganas',
+  barasat: 'North 24 Parganas',
+  bidhannagar: 'North 24 Parganas',
+  saltlake: 'North 24 Parganas',
+  saltlakecity: 'North 24 Parganas',
   south24parganas: 'South 24 Parganas',
   bardhaman: 'Purba Bardhaman',
   burdwan: 'Purba Bardhaman',
@@ -268,6 +272,7 @@ export interface GpsLocationResult {
   state: string;
   district: string;
   source: 'gps_reverse' | 'gps_centroid' | 'pincode' | 'fallback';
+  postalCode?: string;
   latitude?: number;
   longitude?: number;
   accuracy?: number;
@@ -503,10 +508,22 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
     try {
       const saved = await storageService.getSavedLocation();
       if (saved?.state && saved?.district) {
-        return { state: saved.state, district: saved.district, source: 'fallback' };
+        return { state: saved.state, district: saved.district, postalCode: saved.pincode, source: 'fallback' };
       }
     } catch {}
-    return { state: 'Punjab', district: 'Ludhiana', source: 'fallback' };
+    return { state: 'Uttar Pradesh', district: 'Gautam Buddha Nagar', source: 'fallback' };
+  };
+
+  // Helper to strip prefixes/suffixes
+  const cleanLocationName = (val?: string | null): string => {
+    if (!val) return '';
+    return val
+      .replace(/state of /i, '')
+      .replace(/union territory of /i, '')
+      .replace(/ut of /i, '')
+      .replace(/ district/i, '')
+      .replace(/ division/i, '')
+      .trim();
   };
 
   // ── 1. NATIVE MOBILE GPS (Android / iOS via expo-location) ──
@@ -518,17 +535,41 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
         return await getFallback();
       }
 
+      // Force high-accuracy location provider on Android if available
+      if (Platform.OS === 'android') {
+        await Location.enableNetworkProviderAsync().catch(() => {});
+      }
+
       const pos = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest,
+        accuracy: Location.Accuracy.High,
       });
 
       const { latitude, longitude, accuracy } = pos.coords;
 
-      // 1.1 Native OS Geocoder reverse lookup
+      // ── Step A & B: Native OS Geocoder reverse lookup + PIN Resolution ──
       try {
-        const rev = await Location.reverseGeocodeAsync({ latitude, longitude });
-        if (rev && rev.length > 0) {
-          const addr = rev[0];
+        const places = await Location.reverseGeocodeAsync({ latitude, longitude });
+        if (places && places.length > 0) {
+          const addr = places[0];
+          const rawPin = (addr.postalCode || '').replace(/\D/g, '').trim();
+
+          // 1. If 6-digit Indian PIN present, immediately query verified India Post API
+          if (rawPin.length === 6) {
+            const pinRes = await lookupLocationByPincode(rawPin);
+            if (pinRes?.state && pinRes?.district) {
+              return {
+                state: pinRes.state,
+                district: pinRes.district,
+                postalCode: rawPin,
+                source: 'pincode',
+                latitude,
+                longitude,
+                accuracy: accuracy ?? undefined,
+              };
+            }
+          }
+
+          // 2. Candidate names matching
           const stateCandidate = cleanLocationName(addr.region || (addr as any).province);
           const distCandidates = [
             cleanLocationName(addr.subregion),
@@ -547,69 +588,32 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
 
             if (matchedState) {
               const stateDists = getDistrictsForState(matchedState);
-              let matchedDist = stateDists[0] || matchedState;
-
               for (const cand of distCandidates) {
                 const aliased = normalizeDistrictAlias(cand);
-                const found = stateDists.find(
-                  (d) => d.toLowerCase() === aliased.toLowerCase() ||
-                         d.toLowerCase().replace(/[^a-z0-9]/g, '') === aliased.toLowerCase().replace(/[^a-z0-9]/g, '') ||
-                         d.toLowerCase().includes(aliased.toLowerCase()) ||
-                         aliased.toLowerCase().includes(d.toLowerCase())
-                );
+                const candClean = cand.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const aliasedClean = aliased.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                const found = stateDists.find((d) => {
+                  const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
+                  return (
+                    d.toLowerCase() === aliased.toLowerCase() ||
+                    dClean === aliasedClean ||
+                    dClean === candClean ||
+                    d.toLowerCase().includes(aliased.toLowerCase()) ||
+                    aliased.toLowerCase().includes(d.toLowerCase())
+                  );
+                });
                 if (found) {
-                  matchedDist = found;
-                  break;
+                  return {
+                    state: matchedState,
+                    district: found,
+                    postalCode: rawPin || undefined,
+                    source: 'gps_reverse',
+                    latitude,
+                    longitude,
+                    accuracy: accuracy ?? undefined,
+                  };
                 }
-              }
-
-              return {
-                state: matchedState,
-                district: matchedDist,
-                source: 'gps_reverse',
-                latitude,
-                longitude,
-                accuracy: accuracy ?? undefined,
-              };
-            }
-          }
-
-          // Check if any candidate district directly matches a state
-          for (const cand of distCandidates) {
-            const aliased = normalizeDistrictAlias(cand);
-            const foundState = findStateForDistrict(aliased);
-            if (foundState) {
-              const stateDists = getDistrictsForState(foundState);
-              const foundDist = stateDists.find(
-                (d) => d.toLowerCase() === aliased.toLowerCase() ||
-                       d.toLowerCase().replace(/[^a-z0-9]/g, '') === aliased.toLowerCase().replace(/[^a-z0-9]/g, '')
-              ) || stateDists[0];
-
-              return {
-                state: foundState,
-                district: foundDist,
-                source: 'gps_reverse',
-                latitude,
-                longitude,
-                accuracy: accuracy ?? undefined,
-              };
-            }
-          }
-
-          // If postalCode present, check India Post PIN API
-          if (addr.postalCode) {
-            const cleanPin = addr.postalCode.replace(/\D/g, '');
-            if (cleanPin.length === 6) {
-              const pinRes = await lookupLocationByPincode(cleanPin);
-              if (pinRes) {
-                return {
-                  state: pinRes.state,
-                  district: pinRes.district,
-                  source: 'pincode',
-                  latitude,
-                  longitude,
-                  accuracy: accuracy ?? undefined,
-                };
               }
             }
           }
@@ -618,7 +622,85 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
         console.warn('Native reverseGeocodeAsync failed:', err);
       }
 
-      // 1.2 Mathematical Centroid Proximity match
+      // ── Step C: BigDataCloud coordinate reverse-geocoder ──
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 4000);
+        const bdcRes = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`,
+          { signal: controller.signal }
+        );
+        clearTimeout(timer);
+        if (bdcRes.ok) {
+          const bdcData = await bdcRes.json();
+          const bdcPin = (bdcData.postcode || '').replace(/\D/g, '').trim();
+          if (bdcPin.length === 6) {
+            const pinRes = await lookupLocationByPincode(bdcPin);
+            if (pinRes?.state && pinRes?.district) {
+              return {
+                state: pinRes.state,
+                district: pinRes.district,
+                postalCode: bdcPin,
+                source: 'pincode',
+                latitude,
+                longitude,
+                accuracy: accuracy ?? undefined,
+              };
+            }
+          }
+
+          const stName = cleanLocationName(bdcData.principalSubdivision);
+          const adminCandidates = [
+            cleanLocationName(bdcData.locality),
+            cleanLocationName(bdcData.city),
+            ...(Array.isArray(bdcData.localityInfo?.administrative)
+              ? bdcData.localityInfo.administrative.map((a: any) => cleanLocationName(a.name))
+              : []),
+          ].filter(Boolean);
+
+          if (stName) {
+            const normStName = normalizeStateAlias(stName);
+            const matchedState = ALL_INDIAN_STATES.find(
+              (s) => s.toLowerCase() === normStName.toLowerCase() ||
+                     normStName.toLowerCase().includes(s.toLowerCase())
+            );
+            if (matchedState) {
+              const stateDists = getDistrictsForState(matchedState);
+              for (const cand of adminCandidates) {
+                const aliased = normalizeDistrictAlias(cand);
+                const candClean = cand.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const aliasedClean = aliased.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                const foundD = stateDists.find((d) => {
+                  const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
+                  return (
+                    d.toLowerCase() === aliased.toLowerCase() ||
+                    dClean === aliasedClean ||
+                    dClean === candClean ||
+                    d.toLowerCase().includes(aliased.toLowerCase()) ||
+                    aliased.toLowerCase().includes(d.toLowerCase())
+                  );
+                });
+                if (foundD) {
+                  return {
+                    state: matchedState,
+                    district: foundD,
+                    postalCode: bdcPin || undefined,
+                    source: 'gps_reverse',
+                    latitude,
+                    longitude,
+                    accuracy: accuracy ?? undefined,
+                  };
+                }
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('BigDataCloud reverse geocode failed:', err);
+      }
+
+      // Step D: Centroid Proximity fallback
       const closest = findNearestDistrictByCoords(latitude, longitude);
       return {
         state: closest.state,
@@ -650,22 +732,9 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
         clearTimeout(timeoutTimer);
         const { latitude, longitude, accuracy } = pos.coords;
 
-        // Flag coarse IP fallback accuracy (Brave/desktop browsers typically report > 25,000m)
         const isCoarse = Platform.OS === 'web' && typeof accuracy === 'number' && accuracy > 15000;
 
-        // Clean candidate text
-        const cleanLocationName = (val?: string): string => {
-          if (!val) return '';
-          return val
-            .replace(/state of /i, '')
-            .replace(/union territory of /i, '')
-            .replace(/ut of /i, '')
-            .replace(/ district/i, '')
-            .replace(/ division/i, '')
-            .trim();
-        };
-
-        // 1. Primary: Reverse Geocoding via OpenStreetMap Nominatim (zoom=12 for accurate district/county)
+        // 1. Primary: Reverse Geocoding via OpenStreetMap Nominatim
         try {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), 4000);
@@ -680,6 +749,24 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
           if (res.ok) {
             const data = await res.json();
             const addr = data.address || {};
+            const rawPin = (addr.postcode || '').replace(/\D/g, '').trim();
+
+            if (rawPin.length === 6) {
+              const pinRes = await lookupLocationByPincode(rawPin);
+              if (pinRes?.state && pinRes?.district) {
+                resolve({
+                  state: pinRes.state,
+                  district: pinRes.district,
+                  postalCode: rawPin,
+                  source: 'pincode',
+                  latitude,
+                  longitude,
+                  accuracy,
+                });
+                return;
+              }
+            }
+
             const stateCandidate = cleanLocationName(addr.state || addr.province);
             const distCandidates = [
               cleanLocationName(addr.county),
@@ -699,44 +786,35 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
 
               if (matchedState) {
                 const stateDists = getDistrictsForState(matchedState);
-                let matchedDist = stateDists[0] || matchedState;
-
                 for (const cand of distCandidates) {
                   const aliasedCand = normalizeDistrictAlias(cand);
                   const candClean = cand.toLowerCase().replace(/[^a-z0-9]/g, '');
                   const aliasedClean = aliasedCand.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-                  const foundD = stateDists.find(
-                    (d) => {
-                      const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
-                      return (
-                        d.toLowerCase() === aliasedCand.toLowerCase() ||
-                        dClean === aliasedClean ||
-                        dClean === candClean ||
-                        d.toLowerCase().includes(aliasedCand.toLowerCase()) ||
-                        aliasedCand.toLowerCase().includes(d.toLowerCase())
-                      );
-                    }
-                  );
+                  const foundD = stateDists.find((d) => {
+                    const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    return (
+                      d.toLowerCase() === aliasedCand.toLowerCase() ||
+                      dClean === aliasedClean ||
+                      dClean === candClean ||
+                      d.toLowerCase().includes(aliasedCand.toLowerCase()) ||
+                      aliasedCand.toLowerCase().includes(d.toLowerCase())
+                    );
+                  });
                   if (foundD) {
-                    matchedDist = foundD;
-                    break;
+                    resolve({
+                      state: matchedState,
+                      district: foundD,
+                      postalCode: rawPin || undefined,
+                      source: 'gps_reverse',
+                      latitude,
+                      longitude,
+                      accuracy,
+                      isApproximate: isCoarse,
+                    });
+                    return;
                   }
                 }
-
-                resolve({
-                  state: matchedState,
-                  district: matchedDist,
-                  source: 'gps_reverse',
-                  latitude,
-                  longitude,
-                  accuracy,
-                  isApproximate: isCoarse,
-                  warning: isCoarse
-                    ? `Browser privacy settings returned an approximate city (${matchedDist}). Please verify or enter your 6-digit PIN code below for exact district matching.`
-                    : undefined,
-                });
-                return;
               }
             }
           }
@@ -755,8 +833,32 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
           clearTimeout(timer);
           if (bdcRes.ok) {
             const bdcData = await bdcRes.json();
+            const bdcPin = (bdcData.postcode || '').replace(/\D/g, '').trim();
+
+            if (bdcPin.length === 6) {
+              const pinRes = await lookupLocationByPincode(bdcPin);
+              if (pinRes?.state && pinRes?.district) {
+                resolve({
+                  state: pinRes.state,
+                  district: pinRes.district,
+                  postalCode: bdcPin,
+                  source: 'pincode',
+                  latitude,
+                  longitude,
+                  accuracy,
+                });
+                return;
+              }
+            }
+
             const stName = cleanLocationName(bdcData.principalSubdivision);
-            const cityName = cleanLocationName(bdcData.locality || bdcData.city);
+            const adminCandidates = [
+              cleanLocationName(bdcData.locality),
+              cleanLocationName(bdcData.city),
+              ...(Array.isArray(bdcData.localityInfo?.administrative)
+                ? bdcData.localityInfo.administrative.map((a: any) => cleanLocationName(a.name))
+                : []),
+            ].filter(Boolean);
 
             if (stName) {
               const normStName = normalizeStateAlias(stName);
@@ -766,39 +868,35 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
               );
               if (matchedState) {
                 const stateDists = getDistrictsForState(matchedState);
-                let matchedDist = stateDists[0] || matchedState;
-                if (cityName) {
-                  const aliasedCity = normalizeDistrictAlias(cityName);
-                  const cityClean = cityName.toLowerCase().replace(/[^a-z0-9]/g, '');
+                for (const cand of adminCandidates) {
+                  const aliasedCity = normalizeDistrictAlias(cand);
+                  const cityClean = cand.toLowerCase().replace(/[^a-z0-9]/g, '');
                   const aliasedClean = aliasedCity.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-                  const foundD = stateDists.find(
-                    (d) => {
-                      const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
-                      return (
-                        d.toLowerCase() === aliasedCity.toLowerCase() ||
-                        dClean === aliasedClean ||
-                        dClean === cityClean ||
-                        d.toLowerCase().includes(aliasedCity.toLowerCase()) ||
-                        aliasedCity.toLowerCase().includes(d.toLowerCase())
-                      );
-                    }
-                  );
-                  if (foundD) matchedDist = foundD;
+                  const foundD = stateDists.find((d) => {
+                    const dClean = d.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    return (
+                      d.toLowerCase() === aliasedCity.toLowerCase() ||
+                      dClean === aliasedClean ||
+                      dClean === cityClean ||
+                      d.toLowerCase().includes(aliasedCity.toLowerCase()) ||
+                      aliasedCity.toLowerCase().includes(d.toLowerCase())
+                    );
+                  });
+                  if (foundD) {
+                    resolve({
+                      state: matchedState,
+                      district: foundD,
+                      postalCode: bdcPin || undefined,
+                      source: 'gps_reverse',
+                      latitude,
+                      longitude,
+                      accuracy,
+                      isApproximate: isCoarse,
+                    });
+                    return;
+                  }
                 }
-                resolve({
-                  state: matchedState,
-                  district: matchedDist,
-                  source: 'gps_reverse',
-                  latitude,
-                  longitude,
-                  accuracy,
-                  isApproximate: isCoarse,
-                  warning: isCoarse
-                    ? `Browser privacy settings returned an approximate city (${matchedDist}). Please verify or enter your 6-digit PIN code below for exact district matching.`
-                    : undefined,
-                });
-                return;
               }
             }
           }
@@ -816,9 +914,6 @@ export async function detectLocationGPS(): Promise<GpsLocationResult> {
           longitude,
           accuracy,
           isApproximate: isCoarse,
-          warning: isCoarse
-            ? `Browser privacy settings returned an approximate city (${closest.district}). Please verify or enter your 6-digit PIN code below for exact district matching.`
-            : undefined,
         });
       },
       () => {

@@ -1,0 +1,89 @@
+ICAR TECHNICAL BULLETIN — PRECISION MICRO-IRRIGATION & WATER HARVESTING
+Source: ICAR-Central Institute of Agricultural Engineering (CIAE), Bhopal / ICAR-IIWM, Bhubaneswar
+Document Reference: ICAR-CIAE/WM-TECH/2026/02
+
+=======================================================================
+SECTION 1: DRIP IRRIGATION SYSTEM DESIGN & SPECIFICATIONS
+=======================================================================
+1. Component Layout & Filtration:
+   - Head Control Unit: Pump unit, Screen filter (120 mesh / 130 micron for sand/organic particles), Disc filter (secondary safety), Venturi fertilizer injector or fertilizer tank, and Pressure Relief Valve (PRV).
+   - Pressure Regulators: Operating pressure must be maintained at 1.0 to 1.5 kg/cm² (15 to 22 psi) at the field sub-main entrance.
+   - Mainline & Sub-main: Rigid PVC pipes (63 mm or 75 mm outer diameter, 4 to 6 kg/cm² pressure rating) buried 1.5 to 2.0 feet underground to prevent UV and mechanical damage.
+   - Laterals: UV-stabilized LLDPE tubes (12 mm or 16 mm outer diameter, Class-2).
+
+2. Crop-Specific Emitter Spacing & Discharge Rates:
+   - Vegetable Crops (Tomato, Chilli, Brinjal, Capsicum):
+     * Lateral spacing: 1.2 m to 1.5 m (one lateral per bed).
+     * Emitter spacing: 30 cm to 40 cm along lateral.
+     * Emitter discharge rate: 2.0 liters per hour (LPH) inline pressure-compensating (PC) drippers.
+   - Cotton, Maize & Sugarcane:
+     * Sugarcane: Paired-row planting (30:120:30 cm) with one lateral serving two rows. Emitter spacing 50 cm, 4.0 LPH discharge.
+     * Cotton: Lateral spacing 1.2 m, emitter spacing 40 cm, 2.0 to 2.4 LPH.
+   - Horticultural Orchards (Mango, Guava, Citrus, Pomegranate):
+     * Circular loop lateral around each tree canopy basin with 2 to 4 online button drippers per tree (4.0 to 8.0 LPH each).
+
+=======================================================================
+SECTION 2: LATERAL MAINTENANCE, FLUSHING & ACID TREATMENT
+=======================================================================
+1. Routine Fortnightly Sub-Main & Lateral Flushing:
+   - Open end-caps (flush valves) of all lateral lines while pump is operating.
+   - Allow water to run freely for 1 to 2 minutes until completely clear water emerges without sand or silt deposits.
+
+2. Acid Treatment for Mineral Clogging (Calcium/Magnesium Carbonates):
+   - Frequency: Every 3 to 6 months depending on groundwater hardness (water pH > 7.5 or total dissolved solids > 1000 ppm).
+   - Chemical Choice: Hydrochloric acid (Commercial HCl 30–33%) or Technical Nitric acid (HNO3 60%).
+   - Procedure:
+     * Inject acid via Venturi system until water coming out of the furthest lateral has a pH of 3.5 to 4.0 (tested with pH paper).
+     * Shut off the irrigation system and let the acid solution stand inside the pipes and drippers for 24 hours.
+     * Next morning, flush the system thoroughly with clean water for 30 minutes before irrigating crops.
+
+3. Chlorine (Bleach) Treatment for Algal & Bacterial Slime:
+   - Inject Sodium Hypochlorite (liquid bleach) at 20 to 50 ppm available chlorine.
+   - Retain in system for 2 to 4 hours, then flush completely to prevent dripper bio-clogging.
+
+=======================================================================
+SECTION 3: SPRINKLER IRRIGATION SYSTEMS
+=======================================================================
+1. Portable Micro-Sprinkler & Overhead Systems:
+   - Suitable Crops: Wheat, Mustard, Groundnut, Gram, Soybeans, Pulses, and Fodder grasses.
+   - Operating Pressure: 2.5 to 3.5 kg/cm².
+   - Nozzle Spacing: 12 m × 12 m grid layout for standard rotary impact sprinklers (nozzle size 4.0–4.5 mm, discharge 1.2 to 1.8 m³/hour).
+   - Water Saving: 35% to 45% water saving compared to surface flood irrigation; eliminates bund erosion and waterlogging.
+
+=======================================================================
+SECTION 4: FARM PONDS (KHET TALAB) & RAINWATER HARVESTING
+=======================================================================
+1. Farm Pond Design Standards:
+   - Size Recommendation for 5-Acre Holding:
+     * Dimensions: Top 30 m × 30 m, Bottom 20 m × 20 m, Depth 3.0 meters (1.5:1 side slope).
+     * Water Storage Capacity: 1,800 to 2,000 cubic meters (m³), sufficient for 2 protective supplemental irrigations for 5 acres of Kharif/Rabi crops.
+   - Catchment & Silt Trap:
+     * Construct an inlet masonry silt trap (Desilting chamber) at entry to deposit suspended clay before clean water enters main pond.
+     * Emergency spillway designed 30 cm below embankment crest to safely discharge excess monsoon runoff.
+
+2. Pond Seepage Prevention:
+   - Polythene Lining: 500-micron multilayer cross-laminated UV-stabilized geomembrane (LDPE / HDPE conforming to IS:15351 standards).
+   - Installation: Smooth pond bed, remove sharp stones, spread 5 cm fine sand cushion, anchor sheet in 50 cm × 50 cm trench on perimeter berm.
+   - Natural Clay Lining: 15 cm thick puddle clay layer mixed with bentonite (10 kg/m²) where plastic film is unavailable.
+
+3. Groundwater Recharge Wells:
+   - Filter Pit Dimensions: 2.5 m diameter × 3 m depth around existing defunct open well or casing pipe.
+   - Filter Media Layers: Bottom 50 cm coarse gravel (40-60 mm), middle 50 cm small gravel (20-40 mm), top 50 cm coarse sand.
+
+=======================================================================
+SECTION 5: PMKSY (PER DROP MORE CROP) SUBSIDY GUIDELINES
+=======================================================================
+1. Subsidy Structure:
+   - Small & Marginal Farmers (< 2 Hectares / 5 Acres landholding): Up to 55% financial assistance on indicative benchmark cost.
+   - Other / Medium-Large Farmers (> 2 Hectares): Up to 45% financial assistance on benchmark cost.
+   - Special Category States (Northeastern, Himalayan states, Union Territories): Up to 60-70% total subsidy support.
+
+2. Benchmark Costs (Reference Indicative Matrix):
+   - Drip Irrigation (Wide Spacing Orchards 5m×5m): ~₹25,000 to ₹35,000 per hectare.
+   - Drip Irrigation (Close Spacing Vegetables 1.2m×0.6m): ~₹90,000 to ₹1,15,000 per hectare.
+   - Portable Sprinkler System (63 mm pipes with accessories): ~₹20,000 to ₹25,000 per hectare.
+
+3. Application Workflow:
+   - Apply online via State Department of Horticulture / Agriculture DBT portal (e.g., e-Udyan UP, Mahadbt Maharashtra, HORTNET).
+   - Mandatory Documents: Aadhaar card, 7/12 extract / Khasra-Khatauni, active bank passbook, soil & water test report, farm layout sketch.
+   - Verification: Geotagged physical inspection before work order and post-installation GPS camera verification by Assistant Director of Horticulture.

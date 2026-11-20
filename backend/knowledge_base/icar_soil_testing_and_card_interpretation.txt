@@ -1,0 +1,89 @@
+ICAR TECHNICAL MANUAL — SCIENTIFIC SOIL SAMPLING & SOIL HEALTH CARD INTERPRETATION
+Source: ICAR-Indian Institute of Soil Science (IISS), Bhopal, Madhya Pradesh
+Document Reference: ICAR-IISS/SOIL-HEALTH/2026/12
+
+=======================================================================
+SECTION 1: SCIENTIFIC SOIL SAMPLING STANDARD OPERATING PROCEDURE (SOP)
+=======================================================================
+1. Tools & Field Equipment:
+   - Stainless steel soil auger, core sampler, or clean rust-free spade/khurpi.
+   - Clean plastic bucket (never use buckets previously containing fertilizers or lime).
+   - Clean polythene bag and water-resistant tag for farmer identification.
+
+2. Sampling Depth According to Cropping Pattern:
+   - Field / Cereal / Pulse Crops (Rice, Wheat, Mustard, Gram, Maize): 0 to 15 cm depth (0 to 6 inches - plow layer).
+   - Deep-Rooted Crops (Cotton, Sugarcane, Pigeonpea): 0 to 30 cm depth (0 to 12 inches).
+   - Horticultural Fruit Orchards (Mango, Guava, Citrus): Three separate depths: 0–30 cm, 30–60 cm, and 60–90 cm profile.
+
+3. Sampling Methodology (The Zig-Zag & Quartering Protocol):
+   - Sampling Pattern: Walk in a zig-zag pattern across the field, collecting 15 to 20 representative core subsamples per hectare.
+   - What to Avoid: Never sample near field bunds, compost heaps, tree trunks, water channels, or fertilizer storage spots.
+   - The "V-Shaped" Cut Method:
+     * Remove surface organic litter without scraping topsoil.
+     * Dig a 'V' shaped pit to 15 cm depth with a spade.
+     * Slice a uniform 2.5 cm (1 inch) thick soil slice from the clean exposed face from top to bottom.
+     * Place slice into the clean plastic bucket.
+   - Quartering Method to Prepare Final 500-Gram Sample:
+     * Thoroughly mix all 15–20 collected subsamples in the bucket, crushing large clods by hand.
+     * Spread soil into a circular layer on a clean polythene sheet.
+     * Divide circle into four equal quarters (quadrants). Discard opposite quarters.
+     * Remix remaining two quarters and repeat the quartering process until approximately 500 grams (half kilogram) remains.
+     * Dry sample in shade (never dry in direct sun or oven). Pack into a clean bag with farmer name, village, Khasra number, and previous crop details.
+
+=======================================================================
+SECTION 2: SOIL HEALTH CARD (SHC) 12 PARAMETERS & THRESHOLD MATRIX
+=======================================================================
+1. Physical & Chemical Indicators:
+   - Soil pH (Reaction Indicator):
+     * < 5.5: Strongly Acidic (requires agricultural lime or dolomite application).
+     * 6.5 to 7.5: Neutral & Ideal (optimal availability of all plant nutrients).
+     * 7.5 to 8.5: Moderately Alkaline / Calcareous.
+     * > 8.5: Sodic / Alkali Soil (requires agricultural gypsum application).
+   - Electrical Conductivity (EC - Salinity Indicator in dS/m):
+     * < 1.0 dS/m: Normal & Safe for all crops.
+     * 1.0 to 2.0 dS/m: Critical for sensitive crops (legumes, pulses, vegetables).
+     * > 2.0 dS/m: Saline soil (inhibits seed germination and root water uptake; requires deep drainage and flushing).
+   - Organic Carbon (OC% - Soil Biology & Nitrogen Reservoir):
+     * < 0.50%: Low (soil is exhausted; mandatory 10 tonnes FYM or green manuring).
+     * 0.50% to 0.75%: Medium (standard agricultural soil).
+     * > 0.75%: High (healthy fertile soil).
+
+2. Primary Macro-Nutrient Thresholds (in kg/ha):
+   - Available Nitrogen (N):
+     * Low: < 280 kg/ha | Medium: 280 to 560 kg/ha | High: > 560 kg/ha.
+   - Available Phosphorus (P2O5 - Olsen P in neutral/alkaline or Bray P in acidic):
+     * Low: < 10 kg/ha | Medium: 10 to 25 kg/ha | High: > 25 kg/ha.
+   - Available Potassium (K2O):
+     * Low: < 110 kg/ha | Medium: 110 to 280 kg/ha | High: > 280 kg/ha.
+
+3. Secondary & Micronutrient Critical Limits (DTPA-Extractable in mg/kg or ppm):
+   - Available Sulfur (S): Critical limit 10.0 ppm (deficiency prevalent in oilseed/pulse tracts).
+   - Zinc (Zn): Critical limit 0.60 ppm (most widespread micronutrient deficiency in Indian soils).
+   - Iron (Fe): Critical limit 4.5 ppm.
+   - Manganese (Mn): Critical limit 2.0 ppm.
+   - Copper (Cu): Critical limit 0.20 ppm.
+   - Boron (Hot water extractable B): Critical limit 0.50 ppm.
+
+=======================================================================
+SECTION 3: CALCULATING EXACT FERTILIZER BAG ADJUSTMENTS
+=======================================================================
+1. The 25% Dose Adjustment Principle:
+   - If SHC test rating is "LOW": Increase state Recommended Dose of Fertilizer (RDF) by 25%.
+   - If SHC test rating is "MEDIUM": Apply exactly 100% of Recommended Dose of Fertilizer (RDF).
+   - If SHC test rating is "HIGH": Reduce recommended chemical fertilizer application by 25% (prevents economic waste and environmental runoff).
+
+2. Practical Calculation Example for 1 Acre Wheat (Standard RDF: 50 kg N, 25 kg P2O5, 16 kg K2O per acre):
+   - Scenario: Soil Health Card shows Phosphorus is MEDIUM, Potassium is HIGH, and Nitrogen is LOW.
+   - Step 1 — Adjust Requirements:
+     * Nitrogen (LOW): Increase 50 kg by 25% = 62.5 kg N.
+     * Phosphorus (MEDIUM): Exactly 25 kg P2O5.
+     * Potassium (HIGH): Reduce 16 kg by 25% = 12 kg K2O.
+   - Step 2 — Convert into Fertilizer Bags (50 kg Bag Standards):
+     * Supply Phosphorus via DAP (18-46-0): 25 kg P2O5 requires (25 ÷ 0.46) = 54 kg DAP (approx. 1 bag and 4 kg DAP).
+     * Credit Nitrogen supplied by 54 kg DAP: 54 kg DAP contains 18% N = 9.7 kg N.
+     * Balance Nitrogen needed: 62.5 kg - 9.7 kg = 52.8 kg N.
+     * Supply Balance N via Neem Coated Urea (46% N): (52.8 ÷ 0.46) = 115 kg Urea (approx. 2.5 bags of 45-kg Urea, applied in 2 equal top-dressings at Crown Root Initiation and Tillering).
+     * Supply Potassium via MOP (Muriate of Potash 60% K2O): (12 ÷ 0.60) = 20 kg MOP (applied basal).
+
+3. Micronutrient Correction Schedule:
+   - Zinc Deficiency (Zn < 0.6 ppm): Apply Zinc Sulphate Heptahydrate (ZnSO4·7H2O 21%) at 25 kg/ha as basal soil dressing OR spray Zinc Sulphate Monohydrate (33% Zn) at 30 grams per 15-Liter knapsack pump (2 g/L) + 50g Urea at 30 DAS. Never mix Zinc with DAP/SSP in the same tank!

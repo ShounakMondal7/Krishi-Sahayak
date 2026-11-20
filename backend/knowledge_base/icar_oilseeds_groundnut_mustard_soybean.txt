@@ -1,0 +1,69 @@
+ICAR TECHNICAL BULLETIN — OILSEEDS PRODUCTION (GROUNDNUT, MUSTARD & SOYBEAN)
+Source: ICAR-Directorate of Groundnut Research (DGR) / ICAR-DRMR, Bharatpur / ICAR-IISR, Indore
+Document Reference: ICAR-OILSEEDS/AGRI-NMEO/2026/11
+
+=======================================================================
+SECTION 1: GROUNDNUT (PEANUT) & THE GYPSUM CALCIUM PROTOCOL
+=======================================================================
+1. Elite Commercial Varieties:
+   - High Oleic Acid (>75% healthy monounsaturated fat, 8-month shelf-life): Girnar 4, Girnar 5.
+   - High-Yielding Spreading & Spanish Bunch: TG 37A, Kadiri 6, Kadiri 9, GJG 22, TAG 24, ICGV 00350.
+
+2. The Critical Gypsum Application (Prevention of "Pops" / Empty Pods):
+   - Science of Pod Filling: Groundnut develops pods underground (pegs penetrate 3 to 5 cm soil). Developing pods cannot absorb Calcium from root sap; they must absorb Calcium directly through the pod shell wall from the surrounding soil!
+   - Defect: Calcium deficiency causes "Pops" (fully developed outer pods containing shriveled, abortive seeds or empty air spaces).
+   - Gypsum Timing & Dosage:
+     * Apply Agricultural Gypsum (CaSO4·2H2O - 29% Ca, 18% S) at 200 to 250 kg per hectare (80 to 100 kg per acre) exactly at the "Pegging Stage" (40 to 45 days after sowing).
+     * Application Method: Broadcast close to plant base and work lightly into top 5 cm soil; follow immediately with light irrigation or rain.
+     * Never apply gypsum after 55 days as pod shells harden and cannot absorb calcium.
+
+3. Early & Late Tikka Leaf Spot (Cercospora arachidicola / personata):
+   - Symptoms: Dark brown spots surrounded by a bright yellow halo on upper leaf surfaces, causing severe premature defoliation.
+   - 15-Liter Spray Control: Spray Tebuconazole 25.9% EC at 15 ml per 15-Liter pump (1 ml/L) OR Mancozeb 75% WP at 35 grams per 15L pump (2.5 g/L).
+
+=======================================================================
+SECTION 2: RAPESEED-MUSTARD (SARSON / RAYA)
+=======================================================================
+1. High-Yielding Mustard Varieties:
+   - Early / Sowing in October: Pusa Mustard 25 (90–95 days, ideal for cotton-wheat rotation), Pusa Mustard 28.
+   - Main Season High-Oil Varieties: Giriraj (DRMRIJ 31 - oil content 41%, yield 25–28 q/ha), NRCHB 101, RH 749, CS 58 (tolerant to saline-sodic soils).
+   - "Canola Quality" (Double Low: Erucic acid <2%, Glucosinolates <30 μmol/g): Pusa Mustard 30, Pusa Double Zero-1.
+
+2. Essential Sulfur Nutrition:
+   - Brassica crops require high sulfur for synthesis of glucosinolates and oil fatty acids.
+   - Apply Elemental Sulfur at 25 kg/ha or Bentonite Sulfur (90% S) at 20 kg/ha at land preparation.
+   - Increases seed oil content by 2.0% to 3.5% and seed yield by 15% to 22%.
+
+3. Mustard Aphid (Lipaphis erysimi) — Winter Pest Management:
+   - Economic Threshold Level (ETL): 20 to 25 aphids per 10 cm terminal central shoot on 20% of plants, or shoot curling during cloudy, humid January weather.
+   - 15-Liter Spray Interventions:
+     * Option 1 (Systemic): Spray Thiamethoxam 25% WG at 4.0 grams per 15-Liter knapsack pump (0.25 g/L).
+     * Option 2: Spray Dimethoate 30% EC at 25 ml per 15-Liter pump (1.7 ml/L).
+     * Spray only in late afternoon (> 3:30 PM) after honeybees have ceased foraging to prevent pollinator mortality.
+
+4. White Rust (Albugo candida) & Downy Mildew:
+   - Symptoms: White creamy pustules on lower leaf surfaces; floral deformities with swollen, distorted "staghead" inflorescences producing zero seeds.
+   - Prevention: Seed treatment with Metalaxyl 35% SD at 6 g/kg seed. Foliar spray of Metalaxyl 8% + Mancozeb 64% WP (Ridomil MZ) at 30 grams per 15-Liter pump (2 g/L) at 45 DAS.
+
+=======================================================================
+SECTION 3: SOYBEAN PRECISION AGRONOMY
+=======================================================================
+1. Recommended Varieties:
+   - Central Zone (MP, Maharashtra, Rajasthan): JS 20-34 (early 88 days), JS 20-98, NRC 127, NRC 138, RVS 2001-4.
+   - Northern Plains: PS 1347, SL 958.
+
+2. Yellow Mosaic Virus (YMV) — Whitefly Vector Control:
+   - Disease: Gemini virus causing alternating bright yellow and green mosaic patches on leaves, severe pod stunting, and yield wipeout.
+   - Vector: Transmitted exclusively by the Sweetpotato Whitefly (Bemisia tabaci).
+   - Integrated Management:
+     * Install Yellow Sticky Traps at 10 to 12 traps per acre at crop canopy level.
+     * Seed treatment with Thiamethoxam 30% FS at 10 ml per kg seed protects seedlings for 25 days.
+     * Foliar Spray: If whitefly adults exceed 5 per leaf, spray Diafenthiuron 50% WP at 18 grams per 15-Liter pump (1.2 g/L) OR Spiromesifen 22.9% SC at 15 ml per 15L pump (1 ml/L).
+
+=======================================================================
+SECTION 4: NATIONAL MISSION ON EDIBLE OILS (NMEO-OILSEEDS)
+=======================================================================
+1. Government Support & Subsidy Outlay:
+   - Approved in 2024–2025 with an outlay of ₹10,103 crore to achieve self-reliance (Atmanirbharata) in edible oils by 2030.
+   - 100% Certified High-Yielding Seed Minikits distributed free to farmers in oilseed clusters through KVKs and State Agriculture Departments.
+   - Guaranteed MSP Procurement: NAFED and NCCF procure 100% of fair average quality (FAQ) mustard, groundnut, and soybean produced at Central MSP under Price Support Scheme (PSS).

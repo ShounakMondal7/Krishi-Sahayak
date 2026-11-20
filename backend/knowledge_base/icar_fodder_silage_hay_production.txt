@@ -1,0 +1,77 @@
+ICAR TECHNICAL BULLETIN — YEAR-ROUND FODDER PRODUCTION & SILAGE ENSILEMENT
+Source: ICAR-Indian Grassland and Fodder Research Institute (IGFRI), Jhansi, Uttar Pradesh
+Document Reference: ICAR-IGFRI/FODDER-SILAGE/2026/08
+
+=======================================================================
+SECTION 1: YEAR-ROUND GREEN FODDER CROP CALENDAR
+=======================================================================
+1. Perennial Grasses (Hybrid Napier / Bajra Napier):
+   - High-Yielding Varieties: CO-4, CO-5, IGFRI-3, DHN-6, Phule Jaywant.
+   - Propagation: Vegetative two-budded stem cuttings or rooted slips planted at 90 cm × 60 cm spacing (18,000 to 20,000 slips per acre).
+   - Cutting Interval:
+     * First cut: 60 to 65 days after planting.
+     * Subsequent cuts: Every 35 to 45 days interval when plant reaches 1.2 to 1.5 meters height.
+     * Yield: 250 to 350 tonnes green fodder per hectare annually across 6 to 8 cuts.
+     * Cutting Height: Cut 10 to 15 cm above ground level to stimulate rapid tillering; never cut flush with ground soil.
+
+2. Winter Legume Fodder (Berseem - Egyptian Clover):
+   - Varieties: Wardan, BL-42, Mescavi, Bundel Berseem-2, JB-1.
+   - Sowing Window: October 1 to October 25 (optimal night temperature 18–22°C).
+   - Seed Treatment: Inoculate seed with specific Rhizobium trifolii culture (250 g per 10 kg seed) mixed with jaggery syrup.
+   - Nutritional Profile: Contains 18% to 22% crude protein and high calcium, reducing dairy concentrate feed requirement by 40%.
+   - Multi-Cut Harvest: First cut at 50–55 days; subsequent cuts every 25–30 days (total 5 to 6 cuts up to May).
+
+3. Summer & Rainy Season Legumes:
+   - Cowpea (Vigna unguiculata - UPC-5286, EC-4216): Crude protein 16–18%, excellent companion crop mixed with Maize or Sorghum.
+   - Lucerne (Alfalfa - Anand-2, RL-88): Perennial queen of forages for dry/irrigated western tracts, yield 80–100 t/ha over 3 years.
+
+4. Fodder Sorghum (Chari) & CRITICAL HCN POISONING WARNING:
+   - Varieties: SSG-59-3 (multicut Sweet Sudan), MP Chari, PC-6.
+   - DANGEROUS TOXIN: Young sorghum shoots (< 45 days old or < 1 meter height) and drought-stressed stunted plants contain high levels of Dhurrin, which releases lethal Hydrocyanic Acid (HCN / Prussic acid) in the rumen!
+   - SAFETY RULES:
+     * NEVER graze cattle on young sorghum or drought-stressed plants under 1 meter (3 feet) tall.
+     * Safe harvest window: When crop is at 50% flowering stage (HCN drops to non-toxic levels < 200 ppm).
+     * If cut slightly early, wilt in sun for 4 hours and mix 1:1 with dry straw or legume fodder before feeding.
+
+=======================================================================
+SECTION 2: SCIENTIFIC SILAGE MAKING (ACHAR FOR COWS)
+=======================================================================
+1. Best Crops for Quality Silage:
+   - Fodder Maize (African Tall, J-1006) and Grain Sorghum with high soluble sugar content.
+   - Optimum Harvest Stage: Exactly at the "Dough Stage" (Milk-to-Dough stage, when kernels on the cob are soft-solid, about 50% milk line).
+   - The Golden 65% Moisture Rule:
+     * Silage requires 65% moisture (35% dry matter).
+     * Test in hand: Squeeze a handful of chopped fodder. It should form a compact ball that slowly opens up without water dripping out between fingers.
+     * If moisture is > 75%, wilt chopped crop in field for 4 to 6 hours before ensiling.
+
+2. Bunker / Trench Silo Construction:
+   - Dimensions for 5 Dairy Cows (to feed 20 kg silage/day for 90 days = ~9 tonnes):
+     * Trench size: Length 15 feet × Width 8 feet × Depth 5 feet. Sloped smooth plastered walls.
+     * Alternatively, use 250-micron UV-stabilized heavy-duty Silage Bags (60 kg capacity bags or 50-tonne silo stretch wrap).
+
+3. Ensilement Protocol & Compaction:
+   - Chopping: Chop stalks to 1.5 cm to 2.0 cm length using an automated chaff cutter.
+   - Additives (Optional but Recommended): Dissolve 2 kg sugarcane molasses + 1 kg common salt per tonne of green fodder in water and sprinkle evenly during filling.
+   - Compaction: Pack chopped fodder in 20 cm layers and trample relentlessly (using tractor tyres in bunkers or heavy foot treading in bags) to squeeze out every pocket of trapped air.
+   - Hermetic Sealing: Cover bunker with 250-micron black polythene sheet, weighed down with a 15 cm soil layer or used vehicle tyres.
+   - Fermentation: Beneficial lactic acid bacteria (Lactobacillus plantarum) convert sugars into lactic acid, lowering pH to 3.8–4.2 within 21 days.
+   - Ready to Feed: Silo can be opened after 45 days. High-quality silage has a sweet pleasant fruity-acidic aroma and golden-green color with zero foul ammonia odor or white mold patches.
+
+=======================================================================
+SECTION 3: UMBB (UREA-MOLASSES MINERAL BLOCK)
+=======================================================================
+1. Drought & Dry Season Survival Feed:
+   - Formula: Molasses (38%) + Urea (10%) + Mineral mixture (6%) + Common salt (5%) + Calcite / Slaked lime (8%) + De-oiled rice bran (33%).
+   - Compressed into hard 3 kg blocks for adult cattle.
+   - Feeding Guideline: Animals must lick the block gradually (maximum 500 g/day); never dissolve in water or feed directly to calves under 6 months.
+
+=======================================================================
+SECTION 4: CHAFF CUTTER SAFETY (ACCIDENT PREVENTION)
+=======================================================================
+1. Safety Directives to Prevent Hand Amputation:
+   - Over 15,000 Indian farmers and farm women suffer devastating hand and finger amputations annually from power-driven chaff cutters (Toka).
+   - Mandatory Safety Upgrades:
+     * Install an extended feed hopper trough (minimum 1.0 meter long) so hands cannot physically reach the gripping feed-rollers.
+     * Ensure the mechanical reverse-gear lever and emergency trip-rod are fully functional within arm's reach of the operator.
+     * Keep the flywheel cutting-blade guard casing securely bolted at all times during operation.
+     * Never wear loose clothes, dupattas, or feed small handfuls directly near rotating rollers.

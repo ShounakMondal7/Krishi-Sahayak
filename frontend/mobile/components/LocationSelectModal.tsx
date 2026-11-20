@@ -1,14 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   Modal,
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  FlatList,
   StyleSheet,
   Platform,
 } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { safeHaptics } from '../services/haptics';
@@ -30,6 +30,49 @@ export interface LocationSelectModalProps {
   onClose: () => void;
 }
 
+interface LocationItemRowProps {
+  item: LocationOptionItem;
+  isSelected: boolean;
+  onSelect: (item: LocationOptionItem) => void;
+}
+
+const LocationItemRow = React.memo<LocationItemRowProps>(({ item, isSelected, onSelect }) => {
+  return (
+    <TouchableOpacity
+      style={[styles.itemRow, isSelected && styles.itemRowSelected]}
+      onPress={() => onSelect(item)}
+      activeOpacity={0.75}
+      accessibilityRole="button"
+      accessibilityLabel={`${item.label}${item.subLabel ? `, ${item.subLabel}` : ''}`}
+      accessibilityState={{ selected: isSelected }}
+    >
+      <View style={styles.itemTextWrap}>
+        <Text
+          style={[styles.itemLabel, isSelected && styles.itemLabelSelected]}
+          allowFontScaling={true}
+        >
+          {item.label}
+        </Text>
+        {item.subLabel ? (
+          <Text
+            style={[styles.itemSubLabel, isSelected && styles.itemSubLabelSelected]}
+            allowFontScaling={true}
+          >
+            {item.subLabel}
+          </Text>
+        ) : null}
+      </View>
+      {isSelected ? (
+        <View style={styles.checkCircle}>
+          <MaterialCommunityIcons name="check" size={16} color="#FFFFFF" />
+        </View>
+      ) : (
+        <MaterialCommunityIcons name="chevron-right" size={20} color="#CBD5E1" />
+      )}
+    </TouchableOpacity>
+  );
+});
+
 export default function LocationSelectModal({
   visible,
   title,
@@ -41,9 +84,18 @@ export default function LocationSelectModal({
   onClose,
 }: LocationSelectModalProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  // ⚡ 120ms Lightweight Debounce for 60 FPS Typing
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 120);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
 
   const filteredItems = useMemo(() => {
-    const rawQ = searchQuery.trim().toLowerCase();
+    const rawQ = debouncedQuery.trim().toLowerCase();
     if (!rawQ) return items;
     // Normalize and strip punctuation while preserving all Unicode letters and numbers across all Indian scripts
     const cleanQ = rawQ.replace(/[^\p{L}\p{N}]/gu, '');
@@ -60,19 +112,32 @@ export default function LocationSelectModal({
         (item.subLabel ? item.subLabel.toLowerCase().includes(rawQ) : false)
       );
     });
-  }, [items, searchQuery]);
+  }, [items, debouncedQuery]);
 
-  const handleSelectItem = (item: LocationOptionItem) => {
+  const handleSelectItem = useCallback((item: LocationOptionItem) => {
     safeHaptics.impactLight();
     onSelect(item);
     setSearchQuery('');
-  };
+    setDebouncedQuery('');
+  }, [onSelect]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     safeHaptics.impactLight();
     setSearchQuery('');
+    setDebouncedQuery('');
     onClose();
-  };
+  }, [onClose]);
+
+  const renderItem = useCallback(
+    ({ item }: { item: LocationOptionItem }) => (
+      <LocationItemRow
+        item={item}
+        isSelected={item.id === selectedId}
+        onSelect={handleSelectItem}
+      />
+    ),
+    [selectedId, handleSelectItem]
+  );
 
   return (
     <Modal
@@ -124,7 +189,10 @@ export default function LocationSelectModal({
           />
           {searchQuery.length > 0 && (
             <TouchableOpacity
-              onPress={() => setSearchQuery('')}
+              onPress={() => {
+                setSearchQuery('');
+                setDebouncedQuery('');
+              }}
               style={styles.clearSearchBtn}
               accessibilityRole="button"
               accessibilityLabel="Clear search text"
@@ -134,52 +202,13 @@ export default function LocationSelectModal({
           )}
         </View>
 
-        {/* Scrollable FlatList */}
-        <FlatList
+        {/* Virtualized FlashList with Butter-Smooth 60 FPS Scrolling */}
+        <FlashList
           data={filteredItems}
           keyExtractor={(item) => item.id}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.listContent}
-          initialNumToRender={20}
-          maxToRenderPerBatch={25}
-          windowSize={11}
-          renderItem={({ item }) => {
-            const isSelected = item.id === selectedId;
-            return (
-              <TouchableOpacity
-                style={[styles.itemRow, isSelected && styles.itemRowSelected]}
-                onPress={() => handleSelectItem(item)}
-                activeOpacity={0.75}
-                accessibilityRole="button"
-                accessibilityLabel={`${item.label}${item.subLabel ? `, ${item.subLabel}` : ''}`}
-                accessibilityState={{ selected: isSelected }}
-              >
-                <View style={styles.itemTextWrap}>
-                  <Text
-                    style={[styles.itemLabel, isSelected && styles.itemLabelSelected]}
-                    allowFontScaling={true}
-                  >
-                    {item.label}
-                  </Text>
-                  {item.subLabel ? (
-                    <Text
-                      style={[styles.itemSubLabel, isSelected && styles.itemSubLabelSelected]}
-                      allowFontScaling={true}
-                    >
-                      {item.subLabel}
-                    </Text>
-                  ) : null}
-                </View>
-                {isSelected ? (
-                  <View style={styles.checkCircle}>
-                    <MaterialCommunityIcons name="check" size={16} color="#FFFFFF" />
-                  </View>
-                ) : (
-                  <MaterialCommunityIcons name="chevron-right" size={20} color="#CBD5E1" />
-                )}
-              </TouchableOpacity>
-            );
-          }}
+          renderItem={renderItem}
           ListEmptyComponent={
             <View style={styles.emptyWrap}>
               <MaterialCommunityIcons name="map-marker-question-outline" size={48} color="#94A3B8" />

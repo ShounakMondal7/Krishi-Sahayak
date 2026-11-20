@@ -1,0 +1,83 @@
+ICAR TECHNICAL MANUAL — POST-HARVEST STORAGE, GRADING & FPO OPERATIONS
+Source: ICAR-Central Institute of Post-Harvest Engineering & Technology (CIPHET), Ludhiana / SFAC, New Delhi
+Document Reference: ICAR-CIPHET/PHM-FPO/2026/05
+
+=======================================================================
+SECTION 1: SCIENTIFIC GRAIN DRYING & CRITICAL MOISTURE THRESHOLDS
+=======================================================================
+1. Safe Moisture Standards for Long-Term Storage:
+   - Wheat, Paddy, Barley, Maize: Maximum 12.0% moisture content (10–11% preferred for >6 months storage).
+   - Pulses (Chickpea, Pigeonpea, Moong, Urad, Lentil): Maximum 9.0% to 10.0% moisture content.
+   - Oilseeds (Mustard, Groundnut, Soybean): Maximum 8.0% to 9.0% moisture (high oil content causes rancidity if moisture exceeds 9%).
+   - Prevention of Aflatoxin: Aspergillus flavus mold generates toxic carcinogenic aflatoxin when grain moisture exceeds 13.5% at ambient temperatures > 28°C. Dry grain immediately on polythene tarpaulins under bright sunlight for 2 to 3 days.
+
+2. On-Farm Moisture Testing Techniques:
+   - Digital Grain Moisture Meter: Calibrate and test 3 random sample draws (accuracy ±0.5%).
+   - Traditional Thumb-Rule Check: A grain of wheat or gram bitten between front teeth should crack with a sharp, crisp sound. If it dents without cracking, moisture is > 14% and requires further sun drying.
+
+=======================================================================
+SECTION 2: HERMETIC GRAIN STORAGE & ON-FARM SILOS
+=======================================================================
+1. Hermetic Storage Bags (Super Grain Bags):
+   - Construction: Multilayer co-extruded high-barrier gastight inner liner (e.g., GrainPro / SaveGrain bags) fitted inside a standard woven polypropylene outer sack.
+   - Scientific Mechanism: Grain and dormant insects consume available oxygen through natural respiration, driving oxygen levels down from 21% to below 3% within 10 to 14 days, suffocating weevils, beetles, and preventing mold proliferation without any chemical fumigation.
+   - Sealing Protocol: Fill bag tightly leaving 20 cm at top, twist liner neck, fold over, and lock hermetically with heavy-duty cable tie. Never puncture with sampling probes.
+
+2. Pusa Bin (ICAR-IARI Storage Structure):
+   - Double-walled brick or mud masonry bin incorporating a 700-gauge (0.18 mm) black polyethylene film embedded between outer and inner walls, floor, and roof slab.
+   - Completely vapor-proof, moisture-proof, and rodent-proof.
+   - Ideal for storing 1 to 3 tonnes of wheat, paddy, or seed grain safely for 12 to 24 months.
+
+=======================================================================
+SECTION 3: ON-FARM LOW-COST HORTICULTURE STORAGE
+=======================================================================
+1. Zero-Energy Cool Chamber (ZECC - Pusa Zero Energy Cool Chamber):
+   - Principle: Operates purely on evaporative cooling without electricity or running mechanical parts.
+   - Construction:
+     * Double brick cavity wall (external size 165 cm × 115 cm × 67 cm) with a 7.5 cm (3-inch) gap between inner and outer walls.
+     * Fill cavity completely with clean, coarse river sand.
+     * Sand cavity is kept continuously soaked with water twice daily using drip micro-tubes.
+     * Top covered with bamboo frame and wet thatch / gunny bags.
+   - Performance:
+     * Lowers internal chamber temperature by 10°C to 15°C below ambient peak summer heat.
+     * Maintains relative humidity above 90–95%, preventing weight loss and shriveling.
+     * Extends shelf-life: Leafy vegetables from 1 day to 4 days; Tomatoes from 5 days to 15 days; Citrus fruits from 10 days to 30 days.
+
+2. Scientific Onion & Garlic Storage Structure (ICAR-DOGR Model):
+   - Ventilation Requirements: Onions need continuous natural cross-ventilation and dry ambient air (relative humidity 65–70%); high humidity causes rotting.
+   - Structure Design:
+     * Raised slatted wooden or bamboo floor 60 cm above ground level for bottom airflow.
+     * Louvered side wire mesh walls and asbestos/galvanized roof with a wide overhang (1 meter) to prevent rain splash.
+     * Storage depth must not exceed 4 feet (1.2 meters) to prevent bulb compaction and sprouting.
+     * Reduces seasonal storage loss from 45% down to under 15% over a 5-month storage period (May to October).
+
+3. Solar Tunnel Dryers:
+   - Walk-in semicircular tunnel dryer covered with 200-micron UV-stabilized polycarbonate sheet.
+   - Dries Red Chillies, Turmeric, Ginger, Fenugreek, and Dehydrated Onion flakes in 2 to 3 days (compared to 8 to 12 days open sun drying), preserving natural color, capsaicin, and curcumin while eliminating dust contamination.
+
+=======================================================================
+SECTION 4: PRIMARY GRADING & AGMARK QUALITY STANDARDS
+=======================================================================
+1. Mechanical Cleaning & Rotary Screen Grading:
+   - Primary operations: Air aspirator for light chaff/dust, eccentric shaking screens for foreign seeds/stones, and gravity separator for bold, uniform grain.
+   - Grade A Produce Premium: Graded, cleaned, and moisture-certified wheat and pulses fetch ₹150 to ₹300 per quintal higher premium in APMC mandis and private buyer contracts.
+
+2. FSSAI Basic Registration for Farmers:
+   - Small farmers and petty food manufacturers with annual turnover up to ₹12 Lakh require only FSSAI Basic Registration (Form A) at ₹100 annual fee on foscos.fssai.gov.in.
+   - Mandatory for selling packaged, branded flours, pulses, honey, or jaggery on e-commerce or retail platforms.
+
+=======================================================================
+SECTION 5: FORMATION & PROMOTION OF 10,000 FPOS SCHEME
+=======================================================================
+1. Scheme Guidelines & Financial Incentives:
+   - Central Sector Scheme: "Formation and Promotion of 10,000 Farmer Producer Organizations (FPOs)".
+   - Cluster-Based Business Organizations (CBBOs) handhold FPOs for 5 years.
+   - Financial Assistance Components:
+     * Management Costs: Up to ₹18.00 Lakh per FPO over 3 years for salary of CEO, accountant, office rent, utilities, and registration.
+     * Matching Equity Grant: Up to ₹2,000 per member farmer, subject to maximum ₹15.00 Lakh per FPO to strengthen working capital.
+     * Credit Guarantee Fund (NABARD / NCDC): Credit guarantee cover up to ₹2.00 Crore for collateral-free bank loans.
+
+2. Minimum Membership Norms:
+   - Plain Areas: Minimum 300 farmer members.
+   - Northeastern & Hilly Areas: Minimum 100 farmer members.
+   - Key Commercial Activities: Bulk procurement of fertilizers/seeds at 15–20% wholesale discounts; common custom hiring centers; primary processing and direct supply contracts with institutional buyers (ITC, Reliance Retail, BigBasket).

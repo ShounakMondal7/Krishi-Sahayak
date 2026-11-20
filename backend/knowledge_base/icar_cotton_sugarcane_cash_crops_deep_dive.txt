@@ -1,0 +1,69 @@
+ICAR TECHNICAL MANUAL — COMMERCIAL CASH CROPS (COTTON & SUGARCANE DEEP DIVE)
+Source: ICAR-Central Institute for Cotton Research (CICR), Nagpur / ICAR-Sugarcane Breeding Institute (SBI), Coimbatore
+Document Reference: ICAR-CICR-SBI/CASH-CROPS/2026/10
+
+=======================================================================
+SECTION 1: BT COTTON — PINK BOLLWORM (PBW) INTEGRATED PROTOCOLS
+=======================================================================
+1. Pheromone Monitoring & Mating Disruption:
+   - Pest Profile: Pectinophora gossypiella (Pink Bollworm - PBW). Larvae bore directly into green bolls, feeding on developing seeds and lint without leaving visible outer boreholes ("Rosetted flowers").
+   - Pheromone Trapping: Install 5 Pheromone Traps per acre with Gossyplure septa at 45 days after sowing (canopy height). Replace lure every 21 days.
+   - Economic Threshold Level (ETL): 8 moths per trap per night for 3 consecutive nights OR 10% damaged green bolls / rosetted flowers.
+   - PB-Rope L Mating Disruption: Tie PB-Rope dispensers at 100 to 120 dispensers per acre on top plant branches at 40–45 days after sowing. Floods field with female sex pheromone, preventing male moths from finding females and slashing larval infestation by 85%.
+
+2. 15-Liter Spray Interventions for PBW:
+   - Stage 1 (Window 60–90 DAS - Peak Flowering): Spray Emamectin Benzoate 5% SG at 8.0 grams per 15-Liter knapsack pump (0.5 g/L) OR Spinetoram 11.7% SC at 15 ml per 15-Liter pump (1 ml/L).
+   - Stage 2 (Window 90–120 DAS - Boll Formation): Spray Profenofos 50% EC at 30 ml per 15-Liter pump (2 ml/L) OR Chlorpyrifos 20% EC at 35 ml per 15L pump.
+   - Stage 3 (Window 120–150 DAS): Spray Indoxacarb 14.5% SC at 15 ml per 15L pump.
+
+3. Cotton Leaf Reddening (Lal Patti) Correction:
+   - Causes: Physiological magnesium deficiency compounded by heavy boll load, sudden drop in night temperatures (<15°C), or saturated root zone moisture.
+   - Correction Spray: Dissolve 75 to 100 grams of Magnesium Sulphate (MgSO4) + 150 grams of Urea per 15-Liter knapsack pump (5g MgSO4 + 10g Urea per liter water). Spray twice at 15-day intervals during peak boll development. Leaves regain deep green photosynthetic vitality within 5 to 7 days.
+
+=======================================================================
+SECTION 2: SUGARCANE PRECISION TRENCH PLANTING
+=======================================================================
+1. Trench Method vs Conventional Flat Furrows:
+   - Layout: Dig trenches 25 to 30 cm deep and 30 cm wide spaced 120 cm (4 feet) to 150 cm (5 feet) center-to-center using a tractor-mounted trench opener.
+   - Benefits:
+     * Saves 30% irrigation water by watering only the trench furrows.
+     * Earthing-up at 90 and 120 days fills the trench, converting furrows into strong ridges that prevent cane lodging during heavy monsoon winds.
+     * Accommodates intercropping with Potato, Mustard, Garlic, or French beans between 120 cm trench rows without reducing cane yield.
+
+2. Seed Sett Selection & Treatment:
+   - Use top one-third to half of the cane stalk (young buds with high moisture and glucose, giving 95% germination).
+   - Two-budded setts: 35,000 to 40,000 setts per hectare.
+   - Seed Sett Fungicidal Dip: Dip setts for 15 minutes in solution containing Carbendazim 50% WP at 2.0 grams per liter water OR Trichoderma viride at 10 g/L to prevent pineapple disease and sett rot.
+
+=======================================================================
+SECTION 3: SUGARCANE RATOON MANAGEMENT (RATOONING BEST PRACTICES)
+=======================================================================
+1. Ratoon Productivity Enhancement (Ratoon Cane gives 20% Higher Profit):
+   - Step 1 — Stubble Shaving: Immediately after harvesting plant cane in January–March, shave stubbles flush with ground level using a sharp spade or tractor ratoon shaver. Ensures lower subterranean buds sprout vigorously into uniform thick canes.
+   - Step 2 — Trash Mulching: Spread loose sugarcane dry leaves/trash (3 to 4 tonnes per hectare) uniformly between cane rows. Conserves moisture, suppresses 85% of weeds, and adds 1.5 tonnes of organic matter.
+   - Step 3 — Off-Barring & Root Pruning: Run a light cultivator between rows to cut old roots and aerate compacted soil.
+   - Step 4 — Supplemental Nitrogen: Ratoon cane requires 25% higher Nitrogen than plant cane (250 kg N/ha in 3 splits) because organic decomposition temporarily immobilizes soil nitrogen.
+
+=======================================================================
+SECTION 4: RED ROT (COLLETOTRICHUM FALCATUM) CRISIS & MANAGEMENT
+=======================================================================
+1. Symptoms & Variety Vulnerability:
+   - The "Cancer of Sugarcane": Leaves turn orange-yellow, wither from tip down; splitting stalk reveals longitudinal red pith interrupted by distinct white transverse patches with an alcoholic sour odor.
+   - Variety Warning: Early mega-variety Co 0238 has become highly susceptible to new virulent Red Rot pathotypes (CF07/CF08) across Western UP, Haryana, and Punjab.
+   - Replacement ICAR Varieties (Red Rot Resistant): Co 15023 (early high-sugar), Co 0118, CoLk 14201, CoPb 95, and Co 05011.
+
+2. Strict Elimination Protocols:
+   - Uproot and burn diseased clumps immediately with surrounding soil; never leave infected stubble for ratoon.
+   - Practice minimum 2-year crop rotation with Paddy, Sesbania (Daincha), or Maize before replanting cane.
+
+=======================================================================
+SECTION 5: SUGARCANE PRICING MECHANISM (FRP VS SAP)
+=======================================================================
+1. Fair & Remunerative Price (FRP):
+   - Fixed annually by Central Government (Cabinet Committee on Economic Affairs) on recommendation of CACP under Sugarcane (Control) Order, 1966.
+   - Benchmark Recovery Rate: Linked to a basic sugar recovery rate of 10.25% (with premium bonuses for every 0.1% increase in recovery).
+   - Legally binding minimum floor price sugar mills must pay to farmers within 14 days of cane delivery.
+
+2. State Advised Price (SAP):
+   - Overriding higher price declared by key sugarcane-producing states (Uttar Pradesh, Punjab, Haryana).
+   - Reflects state-specific higher production costs and ensures sugar mills pay farmers prompt dues, with statutory interest provisions for delays beyond 14 days.

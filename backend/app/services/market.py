@@ -1014,11 +1014,18 @@ def detect_crop_in_query(english_query: str) -> Optional[str]:
     return extract_crop_from_query(english_query)
 
 
+def _matches_keyword(kw: str, words: set[str], text: str) -> bool:
+    """Helper to match phrases across text or single tokens in word set without partial substring collisions."""
+    if " " in kw or "-" in kw:
+        return kw in text
+    return kw in words
+
+
 def is_market_related(english_query: str) -> bool:
     """Returns True if the query has market/price intent."""
     query_lower = (english_query or "").lower()
     words = set(re.findall(r"\w+", query_lower))
-    return any(kw in words or kw in query_lower for kw in MARKET_KEYWORDS)
+    return any(_matches_keyword(kw, words, query_lower) for kw in MARKET_KEYWORDS)
 
 
 def classify_query_intent(query: str, input_mode: str = "text") -> str:
@@ -1035,7 +1042,7 @@ def classify_query_intent(query: str, input_mode: str = "text") -> str:
     words = set(re.findall(r"\w+", q))
 
     # 1. Market / Price intent (Check first so "potato rate" is not diagnosed as crop disease)
-    if any(kw in words or kw in q for kw in MARKET_KEYWORDS):
+    if any(_matches_keyword(kw, words, q) for kw in MARKET_KEYWORDS):
         return "MARKET_PRICE"
 
     # 2. Weather intent
@@ -1043,7 +1050,7 @@ def classify_query_intent(query: str, input_mode: str = "text") -> str:
         "weather", "rain", "rainfall", "monsoon", "temperature", "forecast", "drizzle",
         "humidity", "wind", "storm", "cyclone", "cloud", "cloudy", "sunny",
     }
-    if any(kw in words or kw in q for kw in weather_keywords):
+    if any(_matches_keyword(kw, words, q) for kw in weather_keywords):
         return "WEATHER"
 
     # 3. Default to disease / pest / agronomic advisory

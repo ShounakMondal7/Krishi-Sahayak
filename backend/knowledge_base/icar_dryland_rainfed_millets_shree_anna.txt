@@ -1,0 +1,74 @@
+ICAR TECHNICAL BULLETIN — SHREE ANNA (MILLETS) AGRONOMY FOR RAINFED ECOSYSTEMS
+Source: ICAR-Indian Institute of Millets Research (IIMR), Hyderabad, Telangana
+Document Reference: ICAR-IIMR/SHREE-ANNA/2026/09
+
+=======================================================================
+SECTION 1: PEARL MILLET (BAJRA) IN DRYLAND ECOSYSTEMS
+=======================================================================
+1. Major Climate-Resilient Cultivars:
+   - High-Yielding Hybrids: HHB-67 Improved (extra-early 62–65 days maturity, escapes late-season terminal drought in Rajasthan/Haryana), MPMH-17, GHB-538, RHB-177, ProAgro 9444.
+   - Biofortified High-Iron & Zinc Hybrids: Dhanshakti (Fe > 70 ppm), AHB 1200, HHB 299.
+
+2. Sowing & Seed Treatment:
+   - Sowing Window: July 1 to July 20 with the onset of monsoon rains.
+   - Seed Rate: 4.0 to 5.0 kg per hectare (line sowing at 45 cm row spacing, 10–12 cm plant spacing; thin plants 15 days after emergence).
+   - Seed Treatment for Downy Mildew (Green Ear Disease - Sclerospora graminicola):
+     * Treat seed with Metalaxyl 35% SD (Apron) at 6.0 grams per kg seed OR Metalaxyl-M 31.8% ES at 2.0 ml per kg seed before sowing.
+     * Prevents systemically stunted plants and deformed green leafy ear-heads.
+
+3. Ergot (Claviceps fusiformis) Prevention:
+   - Soak seeds in 10% common salt solution (1 kg salt in 10 liters water); skim off and destroy floating infected sclerotia, rinse seeds with fresh water and dry in shade.
+
+=======================================================================
+SECTION 2: GRAIN SORGHUM (JOWAR) MANAGEMENT
+=======================================================================
+1. Recommended Varieties:
+   - Kharif Grain Sorghum: CSH 16, CSH 25, CSH 30, CSV 20, CSV 27 (Yield: 35–45 q/ha).
+   - Rabi Sorghum (High Market Premium): Maldandi (M 35-1 - pearly white grain, sweet stover), CSV 22R, CSV 29R, Phule Yashoda.
+
+2. Sorghum Shoot Fly (Atherigona soccata) — Deadheart Prevention:
+   - Critical Period: First 4 weeks after crop emergence. Maggot enters growing tip, causing typical drying of central leaf ("Deadheart").
+   - Proven Seed Dressing: Treat seed with Thiamethoxam 30% FS at 10 ml per kg seed OR Imidacloprid 70% WS at 10 grams per kg seed before sowing.
+   - Cultural Control: Complete sowing within 10 to 14 days of monsoon onset; late-sown crops suffer devastating shoot fly damage.
+   - Foliar Intervention: If deadhearts exceed 10%, spray Chlorantraniliprole 18.5% SC at 6 ml per 15-Liter pump (0.4 ml/L).
+
+3. Stem Borer (Chilo partellus):
+   - Symptoms: Pinholes on unfurled leaves, followed by stem tunneling and white empty heads.
+   - Control: Apply Carbofuran 3% CG or Chlorantraniliprole 0.4% GR whorl granules at 5 to 7 kg per hectare directly into plant whorls at 30 days after emergence.
+
+=======================================================================
+SECTION 3: FINGER MILLET (RAGI / MANDUA) AGRONOMY
+=======================================================================
+1. Nutritional & Cultivation Profile:
+   - Richest grain source of plant-based calcium (344 mg/100g, 30 times higher than rice).
+   - Varieties: GPU-28, ML-365, KMR-301, Indaf-8, VL Mandua-352.
+   - Establishment Methods:
+     * Transplanting Method (Recommended for Higher Yields 35–40 q/ha): Raise nursery for 21 days; transplant 2 seedlings per hill at 22.5 cm × 10 cm spacing.
+     * Direct Line Sowing: Seed rate 8 to 10 kg/ha using seed-cum-fertilizer drill.
+
+2. Nutrient & Bio-Fertilizer Schedule:
+   - Basal: 50 kg N, 40 kg P2O5, 25 kg K2O per hectare.
+   - Inoculate seeds with Azospirillum brasilense and Aspergillus awamori (PSB) at 250 g each per 10 kg seed to economize 20 kg chemical N.
+   - Blast Disease (Pyricularia grisea) Management: Spray Tricyclazole 75% WP at 15 grams per 15-Liter pump (1 g/L) at neck emergence.
+
+=======================================================================
+SECTION 4: MINOR MILLETS (SMALL GRAIN SHREE ANNA)
+=======================================================================
+1. Short-Duration Drought-Hardy Minor Millets:
+   - Foxtail Millet (Kangni / Kakun): Varieties SiA 3085, SiA 3159. Matures in 70–80 days with minimal rainfall (< 350 mm).
+   - Little Millet (Kutki): Varieties JK-8, OLM-203. Thrives on impoverished stony tribal soils.
+   - Barnyard Millet (Sanwa / Jhangora): Varieties PRJ-1, VL 207. Fastest growing cereal, ready to harvest in 60 days.
+   - Kodo Millet: Varieties GPUK-3, RBK-155. Highly drought-tolerant with thick protective seed coat.
+   - Proso Millet (Cheena): Varieties TNAU 202, DHPM 2769. Matures in 60–65 days as a catch crop between seasons.
+
+=======================================================================
+SECTION 5: IN-SITU MOISTURE CONSERVATION & SEED PRIMING
+=======================================================================
+1. Broad-Bed and Furrow (BBF) System:
+   - Layout: Construct 100 cm wide raised beds separated by 50 cm wide, 15 cm deep furrows using a bullock or tractor-drawn BBF planter.
+   - Plant 3 rows of millets or intercropped pulses on each raised bed.
+   - Functions: Safely drains excess monsoon downpours during floods and stores runoff water in furrows, providing 2 to 3 weeks of extended subsoil moisture during mid-season dry spells.
+
+2. Seed Priming (Hydro-Priming & Osmopriming for Rapid Emergence):
+   - Hydro-Priming: Soak millet seeds in clean water for 6 to 8 hours (soaking ratio 1:1 seed-to-water), spread on cloth in shade to surface dry for 2 hours, and sow immediately into moist soil.
+   - Osmopriming for Drought Tolerance: Soak seeds in 1% Potassium Chloride (KCl) solution for 6 hours. Hardens seed embryos against drought stress and improves field emergence by 25–30%.

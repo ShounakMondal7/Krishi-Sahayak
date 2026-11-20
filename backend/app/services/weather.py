@@ -16,9 +16,9 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
-# ── In-memory weather cache (3-hour TTL) ─────────────────────────────────────
+# ── In-memory weather cache (15-minute / 900s TTL per district_state) ─────────
 _weather_cache: dict[str, tuple[dict, float]] = {}
-_WEATHER_TTL = 3 * 3600  # 3 hours in seconds
+_WEATHER_TTL = 900  # 15 minutes in seconds
 
 # ── Indian Census District Alias Table ───────────────────────────────────────
 # Maps administrative districts whose headquarters/prominent municipal names differ
@@ -151,9 +151,21 @@ WEATHER_KEYWORDS = {
 }
 
 
+def _parse_region_components(region: str) -> Tuple[str, str]:
+    """Extract district and state from a string like 'Gautam Buddha Nagar, Uttar Pradesh'."""
+    clean = (region or "").strip()
+    if not clean:
+        return "India", ""
+    if "," in clean:
+        parts = [p.strip() for p in clean.split(",", 1)]
+        return parts[0], parts[1]
+    return clean, ""
+
+
 def _cache_key(region: str) -> str:
-    cleaned = re.sub(r"\s+", " ", region.lower().strip())
-    return hashlib.md5(cleaned.encode("utf-8")).hexdigest()
+    district, state = _parse_region_components(region)
+    key = f"{district.strip().lower()}_{state.strip().lower()}"
+    return hashlib.md5(key.encode("utf-8")).hexdigest()
 
 
 def _get_cached(region: str) -> Optional[dict]:
@@ -170,17 +182,6 @@ def _get_cached(region: str) -> Optional[dict]:
 def _set_cached(region: str, data: dict) -> None:
     key = _cache_key(region)
     _weather_cache[key] = (data, time.monotonic())
-
-
-def _parse_region_components(region: str) -> Tuple[str, str]:
-    """Extract district and state from a string like 'Gautam Buddha Nagar, Uttar Pradesh'."""
-    clean = (region or "").strip()
-    if not clean:
-        return "India", ""
-    if "," in clean:
-        parts = [p.strip() for p in clean.split(",", 1)]
-        return parts[0], parts[1]
-    return clean, ""
 
 
 async def resolve_coordinates(district: str, state: str = "") -> Tuple[float, float, str]:

@@ -100,10 +100,13 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
+        lazy: false,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: styles.tabBar,
         tabBarItemStyle: styles.tabBarItem,
         tabBarActiveTintColor: '#1B5E20',
-        tabBarInactiveTintColor: '#6B7280',
+        tabBarInactiveTintColor: '#64748B',
       }}
     >
       <Tabs.Screen
@@ -112,28 +115,26 @@ export default function TabLayout() {
           title: getTranslation(currentLang, 'tabAsk') || 'Ask Query',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabAsk') || 'Ask Query'}, Tab 1 of 3`,
           tabBarIcon: ({ focused }) => (
-            <View style={focused ? styles.iconPillActive : styles.iconPillInactive}>
+            <View style={focused ? styles.tabPillActive : styles.tabPillInactive}>
               <MaterialCommunityIcons
                 name={(focused ? 'comment-text' : 'comment-text-outline') as any}
-                color={focused ? '#1B5E20' : '#6B7280'}
-                size={24}
+                color={focused ? '#1B5E20' : '#64748B'}
+                size={22}
               />
+              <Text
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+                style={{
+                  fontSize: 11,
+                  fontWeight: focused ? '700' : '500',
+                  color: focused ? '#1B5E20' : '#64748B',
+                  marginTop: 2,
+                }}
+              >
+                {getTranslation(currentLang, 'tabAsk') || 'Ask Query'}
+              </Text>
             </View>
-          ),
-          tabBarLabel: ({ focused }) => (
-            <Text
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.8}
-              style={{
-                fontSize: 11,
-                fontWeight: focused ? '700' : '500',
-                color: focused ? '#1B5E20' : '#6B7280',
-                marginTop: 2,
-              }}
-            >
-              {getTranslation(currentLang, 'tabAsk') || 'Ask Query'}
-            </Text>
           ),
         }}
       />
@@ -143,28 +144,26 @@ export default function TabLayout() {
           title: getTranslation(currentLang, 'tabPhoto') || 'Crop Scan',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabPhoto') || 'Crop Scan'}, Tab 2 of 3`,
           tabBarIcon: ({ focused }) => (
-            <View style={focused ? styles.iconPillActive : styles.iconPillInactive}>
+            <View style={focused ? styles.tabPillActive : styles.tabPillInactive}>
               <MaterialCommunityIcons
                 name={(focused ? 'camera-iris' : 'camera-outline') as any}
-                color={focused ? '#1B5E20' : '#6B7280'}
-                size={24}
+                color={focused ? '#1B5E20' : '#64748B'}
+                size={22}
               />
+              <Text
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+                style={{
+                  fontSize: 11,
+                  fontWeight: focused ? '700' : '500',
+                  color: focused ? '#1B5E20' : '#64748B',
+                  marginTop: 2,
+                }}
+              >
+                {getTranslation(currentLang, 'tabPhoto') || 'Crop Scan'}
+              </Text>
             </View>
-          ),
-          tabBarLabel: ({ focused }) => (
-            <Text
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.8}
-              style={{
-                fontSize: 11,
-                fontWeight: focused ? '700' : '500',
-                color: focused ? '#1B5E20' : '#6B7280',
-                marginTop: 2,
-              }}
-            >
-              {getTranslation(currentLang, 'tabPhoto') || 'Crop Scan'}
-            </Text>
           ),
         }}
       />
@@ -174,28 +173,26 @@ export default function TabLayout() {
           title: getTranslation(currentLang, 'tabHistory') || 'History',
           tabBarAccessibilityLabel: `${getTranslation(currentLang, 'tabHistory') || 'History'}, Tab 3 of 3`,
           tabBarIcon: ({ focused }) => (
-            <View style={focused ? styles.iconPillActive : styles.iconPillInactive}>
+            <View style={focused ? styles.tabPillActive : styles.tabPillInactive}>
               <MaterialCommunityIcons
                 name={(focused ? 'history' : 'clock-outline') as any}
-                color={focused ? '#1B5E20' : '#6B7280'}
-                size={24}
+                color={focused ? '#1B5E20' : '#64748B'}
+                size={22}
               />
+              <Text
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+                style={{
+                  fontSize: 11,
+                  fontWeight: focused ? '700' : '500',
+                  color: focused ? '#1B5E20' : '#64748B',
+                  marginTop: 2,
+                }}
+              >
+                {getTranslation(currentLang, 'tabHistory') || 'History'}
+              </Text>
             </View>
-          ),
-          tabBarLabel: ({ focused }) => (
-            <Text
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.8}
-              style={{
-                fontSize: 11,
-                fontWeight: focused ? '700' : '500',
-                color: focused ? '#1B5E20' : '#6B7280',
-                marginTop: 2,
-              }}
-            >
-              {getTranslation(currentLang, 'tabHistory') || 'History'}
-            </Text>
           ),
         }}
       />
@@ -234,19 +231,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconPillActive: {
+  tabPillActive: {
     backgroundColor: '#E8F5E9',
     borderRadius: 16,
     paddingHorizontal: 14,
-    paddingVertical: 3,
+    paddingVertical: 6,
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: 80,
   },
-  iconPillInactive: {
+  tabPillInactive: {
+    backgroundColor: 'transparent',
     borderRadius: 16,
     paddingHorizontal: 14,
-    paddingVertical: 3,
+    paddingVertical: 6,
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: 80,
   },
 });

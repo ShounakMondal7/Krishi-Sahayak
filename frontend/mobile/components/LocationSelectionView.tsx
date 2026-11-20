@@ -10,7 +10,7 @@
  * - Back button to return to Language selection
  * - Zero dashboard leaks
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -92,6 +92,26 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
 
   const t = (key: string) => getTranslation(activeLang, key);
 
+  // ⚡ Pre-computed memoized option items for butter-smooth list rendering
+  const stateItems = useMemo(() => {
+    return getAllStates().map((st) => ({
+      id: st,
+      label: translateLocation(st, activeLang),
+      subLabel: getStateDetails(st)?.zone || st,
+    }));
+  }, [activeLang]);
+
+  const districtItems = useMemo(() => {
+    if (!selectedState) return [];
+    const dists = getDistrictsForState(selectedState);
+    const localizedState = translateLocation(selectedState, activeLang);
+    return dists.map((dist) => ({
+      id: dist,
+      label: translateLocation(dist, activeLang),
+      subLabel: localizedState,
+    }));
+  }, [selectedState, activeLang]);
+
   useEffect(() => {
     if (selectedState) {
       const dists = getDistrictsForState(selectedState);
@@ -149,16 +169,20 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
       setSelectedState(result.state);
       setSelectedDistrict(result.district);
 
+      if (result.postalCode) {
+        setPincode(result.postalCode);
+      }
+
+      // Persist the resolved location immediately
+      await storageService.saveLocation(result.state, result.district, true, result.postalCode);
+
       if (result.warning) {
         setGpsWarning(result.warning);
       }
 
-      const sourceLabel = result.source === 'gps_reverse'
-        ? `📡 ${t('gpsDetected') || 'GPS Detected'}`
-        : result.source === 'gps_centroid'
-        ? `📍 ${t('nearestRegion') || 'Nearest Region'}`
-        : `🔄 ${t('defaultRegion') || 'Default Region'}`;
-      setDetectedInfo(`${sourceLabel}: ${translateLocation(result.district, activeLang)}, ${translateLocation(result.state, activeLang)}`);
+      const pinPart = result.postalCode ? ` (PIN ${result.postalCode})` : '';
+      const detectedMsg = `✅ Detected: ${result.district}, ${result.state}${pinPart}`;
+      setDetectedInfo(detectedMsg);
     } catch {
       setDetectedInfo(`⚠️ ${t('gpsFailed') || 'GPS detection failed. Please select manually.'}`);
     } finally {
@@ -216,7 +240,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
             disabled={detecting}
             activeOpacity={0.85}
             accessibilityRole="button"
-            accessibilityLabel={detecting ? (t('detectingLocation') || 'Detecting Location…') : (t('autoDetectGps') || 'Auto-Detect farm location via GPS')}
+            accessibilityLabel={detecting ? (t('detectingGps') || 'Detecting GPS…') : (t('autoDetectGps') || 'Auto-Detect farm location via GPS')}
             accessibilityState={{ busy: detecting }}
             accessibilityHint="Double tap to automatically detect farm state and district via device GPS"
           >
@@ -232,7 +256,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
                 <MaterialCommunityIcons name="crosshairs-gps" size={24} color="#FFF" />
               )}
               <Text style={styles.gpsBtnText} allowFontScaling={true}>
-                {detecting ? (t('detectingLocation') || 'Detecting Location…') : (t('autoDetectGps') || '📍 Auto-Detect via GPS')}
+                {detecting ? (t('detectingGps') || 'Detecting GPS…') : (t('autoDetectGps') || '📍 Auto-Detect via GPS')}
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -327,11 +351,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
             title={t('selectState') || 'Select State'}
             icon="map"
             searchPlaceholder={t('searchStatePlaceholder') || 'Search state (e.g. Punjab, Uttar Pradesh)...'}
-            items={getAllStates().map((st) => ({
-              id: st,
-              label: translateLocation(st, activeLang),
-              subLabel: getStateDetails(st)?.zone || st,
-            }))}
+            items={stateItems}
             selectedId={selectedState}
             onSelect={(item) => {
               setSelectedState(item.id);
@@ -371,11 +391,7 @@ export default function LocationSelectionView({ currentLang, onBack, onContinue 
                 title={`${t('selectDistrict') || 'Select District'} - ${translateLocation(selectedState, activeLang)}`}
                 icon="map-marker"
                 searchPlaceholder={t('searchDistrictPlaceholder') || 'Search district...'}
-                items={districts.map((dist) => ({
-                  id: dist,
-                  label: translateLocation(dist, activeLang),
-                  subLabel: translateLocation(selectedState, activeLang),
-                }))}
+                items={districtItems}
                 selectedId={selectedDistrict}
                 onSelect={(item) => {
                   setSelectedDistrict(item.id);

@@ -1,0 +1,84 @@
+GOVERNMENT OF INDIA TECHNICAL MANUAL — DIGITAL AGRICULTURE MISSION & AGRISTACK 2026
+Source: Ministry of Agriculture & Farmers Welfare, Department of Agriculture & Farmers Welfare (DA&FW)
+Document Reference: GOI-DAM-AGRISTACK-PMFBY/2026/POLICY-01
+
+=======================================================================
+SECTION 1: DIGITAL AGRICULTURE MISSION (DAM) & AGRISTACK ARCHITECTURE
+=======================================================================
+1. Mission Overview & Outlay:
+   - Approved in 2024-2025 with an outlay of ₹2,817 crore to build foundational digital public infrastructure (DPI) for Indian agriculture.
+   - Core Pillars: AgriStack (Farmers Registry, Geo-referenced Village Maps, Crop Sown Registry) and Krishi-DSS (Decision Support System).
+
+2. AgriStack Farmer ID (Digital Kisan ID):
+   - Unique 12-digit verifiable digital identifier assigned to every farmer linked to land revenue records and Aadhaar.
+   - How to Register:
+     * Visit the State Farmer Registry portal or nearest Common Service Centre (CSC) / PM-Kisan Seva Kendra.
+     * Documents: Aadhaar number, mobile linked with Aadhaar, state land revenue record (Khasra/Khatauni/ROR/Patta).
+     * Biometric or OTP-based e-KYC confirms farmer identity and automatically pulls mapped land parcel polygons.
+   - Benefits:
+     * Seamless zero-paperwork approval for crop loans (Kisan Credit Card - KCC).
+     * Instant direct benefit transfers (DBT) for fertilizer and seeds without multiple departmental visits.
+     * Universal eligibility verification across all central and state welfare initiatives.
+
+3. Digital Crop Survey (DCS) Protocols:
+   - Eliminates manual Patwari girdawari bias through automated, geo-tagged mobile crop survey.
+   - Local surveyors (Krishi Sakhis / Panchayat surveyors) capture geo-referenced crop images with latitude-longitude timestamps.
+   - AI and satellite spectral imagery verify primary and intercrop ratios (e.g., Mustard intercropped with Wheat).
+   - Real-time crop records update the National Crop Sown Registry to instantly substantiate insurance and procurement claims.
+
+4. Bharat-VISTAAR Advisory Integration:
+   - National Multilingual Agricultural LLM & Advisory Engine built over ICAR knowledge repositories.
+   - Translates hyper-local weather, pest alerts, and mandi rates into 22 Indian regional languages.
+   - Integrates with voice bots, WhatsApp kiosks, and Kisan Call Centres to provide field-level extension support.
+
+=======================================================================
+SECTION 2: PM-KISAN 2026 COMPLIANCE & DBT TROUBLESHOOTING
+=======================================================================
+1. Mandatory Eligibility Requirements:
+   - Three Non-Negotiable Checks for Installment Release (₹6,000/year in 3 equal ₹2,000 tranches):
+     * Check 1: Aadhaar-Based e-KYC (completed via Face Authentication on PM-KISAN App, OTP on pmkisan.gov.in, or biometric at CSC).
+     * Check 2: Land Seeding Status (Khasra/Khatauni must be verified and approved by district revenue authorities in the portal).
+     * Check 3: Aadhaar Seeding with Active Bank Account (DBT must be mapped to NPCI bank account server).
+
+2. Resolving Common Rejection Errors:
+   - "Aadhaar Not Seeded with NPCI / Inactive DBT Account":
+     * Farmer must visit bank branch and submit the "Aadhaar Mandate / Consent Form for Direct Benefit Transfer (DBT)".
+     * Alternatively, open an India Post Payments Bank (IPPB) savings account where DBT mapping happens automatically in 24 hours.
+   - "Land Seeding: NO":
+     * Submit physical copy of Khatauni/ROR, Aadhaar copy, and application to the Block Agriculture Officer (BAO) or Tehsildar office.
+   - "Name Mismatch Between Aadhaar and Land Records":
+     * Update demographic details on the PM-KISAN portal's "Name Correction as per Aadhaar" tool.
+
+=======================================================================
+SECTION 3: PMFBY 2026 REVAMPED CROP INSURANCE PROTOCOLS
+=======================================================================
+1. Advanced Yield Estimation (YES-TECH):
+   - Yield Estimation System based on Technology (YES-TECH) replaces 30-50% of traditional manual Crop Cutting Experiments (CCEs).
+   - Uses remote sensing indices (NDVI, NDRE), drone imagery, and automatic weather station (AWS) data to estimate yield losses objectively.
+   - Completely removes village-level political interference in post-harvest loss declaration.
+
+2. CROPIC (Photographic Evidence for Crop Loss):
+   - Collection of Real-time Observations & Photographs of In-situ Crop (CROPIC) mobile app.
+   - Farmers or field agents upload geo-tagged, time-stamped photos of standing crop during key vegetative and reproductive stages.
+   - Enables fast visual validation when claiming drought, flood, hailstorm, or pest epidemic losses.
+
+3. Strict 72-Hour Claim Notification Rule:
+   - For localized calamities (Hailstorm, Landslide, Inundation, Cloudburst, Natural Fire) and Post-Harvest losses (unseasonal rain while crop is drying in field for up to 14 days):
+   - Farmer MUST report crop damage within exactly 72 hours of the disaster event!
+   - Reporting Channels:
+     * Toll-Free National Kisan Call Centre: 14447 (Direct PMFBY Helpline).
+     * "Crop Insurance App" available on Google Play Store (tap "Report Crop Loss", verify via Aadhaar/Mobile).
+     * Immediate written notice to the local agriculture officer, bank branch where KCC was debited, or insurance company agent.
+   - Required Evidence: 2 clear photos of damaged field with GPS location, survey number, crop stage, and estimated loss percentage.
+   - Joint Survey Timeline: Damage assessment survey must be completed within 10 days by agriculture officer and insurance surveyor.
+
+4. 12% Annual Penalty for Delayed Claim Settlements:
+   - Under the 2026 PMFBY Operational Guidelines, insurance companies must disburse approved claim amounts within 30 days of receiving final yield data.
+   - If an insurance company delays claim payout beyond the statutory 30-day window, it is mandated to pay 12% annual interest directly to the farmer's bank account for each day of delay.
+   - State governments failing to release their 50% premium subsidy share within prescribed timelines are also penalized.
+
+5. Premium Rates for Farmers:
+   - Kharif Crops (Rice, Maize, Cotton, Soybean, Pulses): Flat 2.0% of Sum Insured.
+   - Rabi Crops (Wheat, Mustard, Barley, Gram): Flat 1.5% of Sum Insured.
+   - Annual Commercial & Horticultural Crops (Sugarcane, Potato, Onion, Spices, Fruits): Flat 5.0% of Sum Insured.
+   - All balance premium (often 80–90% of actual actuarial cost) is subsidized equally by Central and State Governments.

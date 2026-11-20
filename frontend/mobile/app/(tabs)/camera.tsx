@@ -14,6 +14,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
@@ -54,11 +55,10 @@ import {
   translateLocation,
 } from '../../services/locations';
 import { detectDeviceLanguage } from '../../services/languageDetector';
-import { BASE_URL, api } from '../../services/api';
+import { BASE_URL, api, ImageQueryResponse } from '../../services/api';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const RETICLE_SIZE = Math.min(SCREEN_WIDTH * 0.68, SCREEN_HEIGHT * 0.30, 250);
-
 
 // Visual Pan-India Crop Reference Chips
 const BOTANICAL_CROPS = [
@@ -72,23 +72,13 @@ const BOTANICAL_CROPS = [
   { id: 'spices', name: 'Pepper & Spices', icon: 'chili-medium', color: '#E11D48' },
 ];
 
-interface ImageQueryResponse {
-  query_id?: number;
-  answer: string;
-  answer_english: string;
-  sources: string[];
-  source_labels: Array<{ filename: string; display_name: string; relevance_score?: number }>;
-  response_time_ms: number;
-  from_cache: boolean;
-  weather_context_used: boolean;
-  market_context_used: boolean;
-  symptom_description: string;
-}
-
 export default function CameraScreen() {
   const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
   const [farmerProfile, setFarmerProfile] = useState<FarmerProfile | null>(null);
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [capturedImageUri, setCapturedImageUri] = useState<string | null>(null);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [quickNote, setQuickNote] = useState<string>('');
   const [selectedCrop, setSelectedCrop] = useState('paddy');
   const [selectedState, setSelectedState] = useState<string>('Punjab');
   const [region, setRegion] = useState('Thrissur');
@@ -218,7 +208,7 @@ export default function CameraScreen() {
   };
 
   // ── Analyze Captured or Picked Image ───────────────────────────────────────
-  const handleAnalyzePhoto = async (uri: string) => {
+  const handleAnalyzePhoto = async (uri: string, customNote?: string) => {
     setImageUri(uri);
     setLoading(true);
     setError(null);
@@ -227,11 +217,11 @@ export default function CameraScreen() {
     openResultCard();
 
     try {
-      // ── Step 1: Compress & resize image client-side before upload (1024px, 0.7 JPEG) ──
+      // ── Step 1: Compress & resize image client-side before upload (1280px, 0.85 JPEG) ──
       const manipulatedImage = await ImageManipulator.manipulateAsync(
         uri,
-        [{ resize: { width: 1024 } }],
-        { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+        [{ resize: { width: 1280 } }],
+        { compress: 0.85, format: ImageManipulator.SaveFormat.JPEG }
       );
       const compressedUri = manipulatedImage.uri;
 
@@ -249,9 +239,12 @@ export default function CameraScreen() {
         } as any);
       }
 
-      formData.append('question', `Diagnose crop disease for ${selectedCrop} and provide ICAR treatment guidelines.`);
+      const notePart = customNote?.trim() ? ` Farmer note: ${customNote.trim()}.` : '';
+      const questionText = `Diagnose crop disease, pest, or condition for ${selectedCrop} and provide ICAR treatment guidelines.${notePart}`;
+      formData.append('question', questionText);
       formData.append('language', currentLang);
-      formData.append('region', region);
+      const fullRegion = selectedState ? `${region}, ${selectedState}` : region;
+      formData.append('region', fullRegion);
 
       const reqHeaders: Record<string, string> = {};
       if (Platform.OS !== 'web') {
@@ -281,7 +274,7 @@ export default function CameraScreen() {
         : res.data.answer;
 
       await storageService.addToHistory({
-        question: `[Crop Scanner] ${res.data.symptom_description.slice(0, 80)}`,
+        question: `[Crop Scanner] ${res.data.primary_diagnosis || res.data.symptom_description?.slice(0, 80) || 'Crop Scan'}`,
         answer: displayAnswer,
         sources: res.data.sources,
         sourceLabels: res.data.source_labels,
@@ -318,7 +311,9 @@ export default function CameraScreen() {
       aspect: [4, 3],
     });
     if (!result.canceled && result.assets[0]) {
-      handleAnalyzePhoto(result.assets[0].uri);
+      setCapturedImageUri(result.assets[0].uri);
+      setQuickNote('');
+      setShowPreviewModal(true);
     }
   };
 
@@ -336,7 +331,9 @@ export default function CameraScreen() {
       aspect: [4, 3],
     });
     if (!result.canceled && result.assets[0]) {
-      handleAnalyzePhoto(result.assets[0].uri);
+      setCapturedImageUri(result.assets[0].uri);
+      setQuickNote('');
+      setShowPreviewModal(true);
     }
   };
 
@@ -353,7 +350,7 @@ export default function CameraScreen() {
   // Extract primary disease title or fallback
   const getDetectedDiseaseName = () => {
     if (!response) return t('detectedDiseaseDefault');
-    const desc = response.symptom_description;
+    const desc = response.symptom_description || '';
     if (desc.includes(':')) {
       return desc.split(':')[0].trim();
     }
@@ -448,7 +445,7 @@ export default function CameraScreen() {
         <View style={styles.viewportContainer}>
           {/* Viewfinder Background (Simulated field view or captured frame) */}
           {imageUri ? (
-            <Image source={{ uri: imageUri }} style={styles.viewfinderImage} resizeMode="cover" />
+            <Image source={{ uri: imageUri }} style={styles.viewfinderImage} resizeMode="cover" fadeDuration={0} />
           ) : (
             <View style={styles.viewfinderBackdrop}>
               <View style={styles.lensPatternRow} accessible={false}>
@@ -657,34 +654,152 @@ export default function CameraScreen() {
                 </View>
               ) : response ? (
                 <Animated.View style={{ opacity: fadeAnim, gap: 14 }}>
-                  {/* Photo Thumbnail + Disease Header */}
-                  <View style={styles.diseaseHeroRow}>
-                    <Image source={{ uri: imageUri }} style={styles.thumbnailPreview} resizeMode="cover" />
-                    <View style={{ flex: 1, gap: 4 }}>
-                      <Text style={[styles.detectedDiseaseHeading, { fontSize: scaleFont(16) }]} allowFontScaling={true}>{getDetectedDiseaseName()}</Text>
-                      <Text style={[styles.cropBadgeText, { fontSize: scaleFont(12) }]} allowFontScaling={true}>🌾 Crop: {selectedCrop.toUpperCase()}</Text>
+                  {response.is_plant_or_farm_image === false ? (
+                    <View style={styles.nonPlantBox}>
+                      <View style={styles.nonPlantIconCircle}>
+                        <MaterialCommunityIcons name="alert-decagram" size={36} color="#EA580C" />
+                      </View>
+                      <Text style={[styles.nonPlantTitle, { fontSize: scaleFont(16) }]} allowFontScaling={true}>
+                        {currentLang === 'hi' ? 'पौधे या फसल की पहचान नहीं हुई' : 'No Plant or Crop Detected'}
+                      </Text>
+                      <Text style={[styles.nonPlantGuidance, { fontSize: scaleFont(13) }]} allowFontScaling={true}>
+                        {response.answer || (currentLang === 'hi'
+                          ? 'कृपया किसी फसल, पौधे, पत्ती, तने या फल की स्पष्ट तस्वीर दिन के उजाले में खींचें।'
+                          : 'The uploaded image does not appear to show a plant or farm crop. Please take a clear close-up of the crop leaves, stem, or fruit in natural daylight.')}
+                      </Text>
+                      <TouchableOpacity
+                        style={styles.rescanBtn}
+                        onPress={closeResultCard}
+                        accessibilityRole="button"
+                        accessibilityLabel="Retake crop photo"
+                      >
+                        <MaterialCommunityIcons name="camera-retake" size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
+                        <Text style={[styles.rescanBtnText, { fontSize: scaleFont(13) }]} allowFontScaling={true}>
+                          {currentLang === 'hi' ? 'फिर से फोटो लें' : 'Retake Crop Photo'}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
-                  </View>
+                  ) : (
+                    <>
+                      {/* Photo Thumbnail + Disease Header */}
+                      <View style={styles.diseaseHeroRow}>
+                        <Image source={{ uri: imageUri }} style={styles.thumbnailPreview} resizeMode="cover" fadeDuration={0} />
+                        <View style={{ flex: 1, gap: 4 }}>
+                          <Text style={[styles.detectedDiseaseHeading, { fontSize: scaleFont(16) }]} allowFontScaling={true}>
+                            {response.primary_diagnosis || getDetectedDiseaseName()}
+                          </Text>
+                          <Text style={[styles.cropBadgeText, { fontSize: scaleFont(12) }]} allowFontScaling={true}>
+                            🌾 {response.crop_common_name || selectedCrop.toUpperCase()}
+                            {response.crop_scientific_name ? ` (${response.crop_scientific_name})` : ''}
+                          </Text>
+                        </View>
+                      </View>
 
-                  {/* 📊 CONFIDENCE PERCENTAGE BAR */}
-                  <View style={styles.confidenceContainer} accessibilityRole="summary" accessibilityLabel="Confidence score 94%, high confidence">
-                    <View style={styles.confidenceHeader}>
-                      <Text style={[styles.confidenceLabelText, { fontSize: scaleFont(13) }]} allowFontScaling={true}>{t('confidenceLabel')}</Text>
-                      <Text style={[styles.confidenceScoreText, { fontSize: scaleFont(12) }]} allowFontScaling={true}>94% • High Confidence</Text>
-                    </View>
-                    <View style={styles.confidenceTrack}>
-                      <View style={[styles.confidenceFill, { width: '94%' }]} />
-                    </View>
-                  </View>
+                      {/* Diagnostic Badges: Category, Growth Stage, Severity */}
+                      <View style={styles.conditionPillsRow}>
+                        {response.condition_category && (
+                          <View style={styles.conditionCategoryPill}>
+                            <MaterialCommunityIcons name="tag-outline" size={12} color="#166534" />
+                            <Text style={styles.conditionCategoryPillText}>{response.condition_category}</Text>
+                          </View>
+                        )}
+                        {response.growth_stage && (
+                          <View style={styles.growthStagePill}>
+                            <MaterialCommunityIcons name="sprout-outline" size={12} color="#0369A1" />
+                            <Text style={styles.growthStagePillText}>{response.growth_stage}</Text>
+                          </View>
+                        )}
+                        {response.severity && (
+                          <View style={[
+                            styles.severityPill,
+                            response.severity.toLowerCase().includes('severe')
+                              ? styles.severityPillSevere
+                              : response.severity.toLowerCase().includes('mod')
+                              ? styles.severityPillModerate
+                              : styles.severityPillEarly,
+                          ]}>
+                            <MaterialCommunityIcons
+                              name={
+                                response.severity.toLowerCase().includes('severe')
+                                  ? 'alert-octagon'
+                                  : 'alert-circle-outline'
+                              }
+                              size={12}
+                              color={
+                                response.severity.toLowerCase().includes('severe')
+                                  ? '#DC2626'
+                                  : response.severity.toLowerCase().includes('mod')
+                                  ? '#D97706'
+                                  : '#166534'
+                              }
+                            />
+                            <Text style={[
+                              styles.severityPillText,
+                              response.severity.toLowerCase().includes('severe')
+                                ? styles.severityTextSevere
+                                : response.severity.toLowerCase().includes('mod')
+                                ? styles.severityTextModerate
+                                : styles.severityTextEarly,
+                            ]}>
+                              Severity: {response.severity}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
 
-                  {/* Observed Symptoms List */}
-                  <View style={styles.symptomsBox} accessibilityRole="summary" accessibilityLabel={t('symptomsIdentifiedTitle') || 'Symptoms Identified'}>
-                    <View style={styles.symptomsHeader}>
-                      <MaterialCommunityIcons name="eye-check-outline" size={16} color="#166534" />
-                      <Text style={[styles.symptomsTitle, { fontSize: scaleFont(13) }]} allowFontScaling={true}>{t('symptomsIdentifiedTitle')}</Text>
-                    </View>
-                    <Text style={[styles.symptomBodyText, { fontSize: scaleFont(13), lineHeight: scaleLineHeight(20) }]} allowFontScaling={true}>{response.symptom_description}</Text>
-                  </View>
+                      {/* 📊 DYNAMIC CONFIDENCE PERCENTAGE BAR */}
+                      {(() => {
+                        const confVal = response.confidence_percent || 90;
+                        return (
+                          <View style={styles.confidenceContainer} accessibilityRole="summary" accessibilityLabel={`Confidence score ${confVal} percent`}>
+                            <View style={styles.confidenceHeader}>
+                              <Text style={[styles.confidenceLabelText, { fontSize: scaleFont(13) }]} allowFontScaling={true}>{t('confidenceLabel')}</Text>
+                              <Text style={[styles.confidenceScoreText, { fontSize: scaleFont(12) }]} allowFontScaling={true}>
+                                {confVal}% • {confVal >= 80 ? 'High Confidence' : 'Moderate Confidence'}
+                              </Text>
+                            </View>
+                            <View style={styles.confidenceTrack}>
+                              <View style={[styles.confidenceFill, { width: `${Math.min(confVal, 100)}%` }]} />
+                            </View>
+                          </View>
+                        );
+                      })()}
+
+                      {/* Observed Symptoms List & Evidence */}
+                      <View style={styles.symptomsBox} accessibilityRole="summary" accessibilityLabel={t('symptomsIdentifiedTitle') || 'Symptoms Identified'}>
+                        <View style={styles.symptomsHeader}>
+                          <MaterialCommunityIcons name="eye-check-outline" size={16} color="#166534" />
+                          <Text style={[styles.symptomsTitle, { fontSize: scaleFont(13) }]} allowFontScaling={true}>{t('symptomsIdentifiedTitle')}</Text>
+                        </View>
+                        {response.visual_evidence && response.visual_evidence.length > 0 ? (
+                          <View style={{ gap: 6, marginTop: 4 }}>
+                            {response.visual_evidence.map((evidence, idx) => (
+                              <View key={idx} style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 6 }}>
+                                <MaterialCommunityIcons name="check-circle-outline" size={14} color="#166534" style={{ marginTop: 2 }} />
+                                <Text style={[styles.symptomBodyText, { fontSize: scaleFont(13), flex: 1 }]} allowFontScaling={true}>
+                                  {evidence}
+                                </Text>
+                              </View>
+                            ))}
+                          </View>
+                        ) : (
+                          <Text style={[styles.symptomBodyText, { fontSize: scaleFont(13), lineHeight: scaleLineHeight(20) }]} allowFontScaling={true}>
+                            {response.symptom_description}
+                          </Text>
+                        )}
+
+                        {response.differential_diagnosis_ruled_out && (
+                          <View style={styles.differentialBox}>
+                            <MaterialCommunityIcons name="shield-search" size={14} color="#6B7280" />
+                            <Text style={[styles.differentialText, { fontSize: scaleFont(11) }]} allowFontScaling={true}>
+                              <Text style={{ fontWeight: '700' }}>Ruled Out: </Text>
+                              {response.differential_diagnosis_ruled_out}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    </>
+                  )}
 
                   {/* 🌿 PROMINENT ACTION BUTTON: GET ICAR TREATMENT STEPS */}
                   <TouchableOpacity
@@ -1048,6 +1163,118 @@ export default function CameraScreen() {
                   </Text>
                 </LinearGradient>
               </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+        {/* ── PHOTO PREVIEW & CONTEXT NOTES MODAL ── */}
+        <Modal
+          visible={showPreviewModal}
+          transparent
+          animationType="slide"
+          onRequestClose={() => {
+            setShowPreviewModal(false);
+            setCapturedImageUri(null);
+          }}
+        >
+          <View style={styles.previewModalBackdrop}>
+            <View style={styles.previewModalCard}>
+              <View style={styles.previewModalHeader}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                  <MaterialCommunityIcons name="camera-enhance-outline" size={22} color="#15803D" />
+                  <Text style={[styles.previewModalTitle, { fontSize: scaleFont(15) }]} allowFontScaling={true}>
+                    Field Note & Crop Check
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowPreviewModal(false);
+                    setCapturedImageUri(null);
+                  }}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  <MaterialCommunityIcons name="close" size={22} color="#64748B" />
+                </TouchableOpacity>
+              </View>
+
+              {capturedImageUri && (
+                <View style={styles.previewImageContainer}>
+                  <Image source={{ uri: capturedImageUri }} style={styles.previewImageThumb} resizeMode="cover" fadeDuration={0} />
+                  <View style={{ flex: 1, gap: 4 }}>
+                    <Text style={styles.previewCropName}>Selected: {selectedCrop.toUpperCase()}</Text>
+                    <Text style={styles.previewTipText}>
+                      Tap a quick symptom chip or add notes for a high-accuracy ICAR diagnosis.
+                    </Text>
+                  </View>
+                </View>
+              )}
+
+              {/* Quick Note Chips */}
+              <Text style={styles.quickNoteSectionLabel}>Quick Field Observations:</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.quickChipsScroll}>
+                {[
+                  '🍃 Yellowing Leaves',
+                  '🐛 Holes / Insects / Pests',
+                  '🔴 Spots / Blight / Rot',
+                  '🌿 Identify Plant / Weed',
+                  '🌱 Growth / Nutrient Issue',
+                ].map((chip) => {
+                  const isSelected = quickNote === chip;
+                  return (
+                    <TouchableOpacity
+                      key={chip}
+                      style={[styles.quickNoteChip, isSelected && styles.quickNoteChipActive]}
+                      onPress={() => {
+                        safeHaptics.impactLight();
+                        setQuickNote(isSelected ? '' : chip);
+                      }}
+                    >
+                      <Text style={[styles.quickNoteChipText, isSelected && styles.quickNoteChipTextActive]}>
+                        {chip}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+
+              {/* Custom Text Input */}
+              <TextInput
+                style={styles.customNoteInput}
+                value={quickNote}
+                onChangeText={setQuickNote}
+                placeholder="Or type note: e.g. curled leaf tips, sprayed neem 2 days ago..."
+                placeholderTextColor="#94A3B8"
+                multiline
+                numberOfLines={2}
+              />
+
+              {/* Action Buttons */}
+              <View style={styles.previewModalActions}>
+                <TouchableOpacity
+                  style={styles.previewCancelBtn}
+                  onPress={() => {
+                    safeHaptics.impactLight();
+                    setShowPreviewModal(false);
+                    setCapturedImageUri(null);
+                  }}
+                >
+                  <Text style={styles.previewCancelText}>Retake / Cancel</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.previewAnalyzeBtn}
+                  onPress={() => {
+                    safeHaptics.impactHeavy();
+                    setShowPreviewModal(false);
+                    if (capturedImageUri) {
+                      handleAnalyzePhoto(capturedImageUri, quickNote);
+                    }
+                  }}
+                >
+                  <MaterialCommunityIcons name="magnify-scan" size={20} color="#FFFFFF" style={{ marginRight: 6 }} />
+                  <Text style={styles.previewAnalyzeText}>Analyze Crop</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </Modal>
@@ -2020,5 +2247,259 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '800',
+  },
+
+  // ── Preview Modal Styles ──
+  previewModalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(15, 23, 42, 0.75)',
+    justifyContent: 'flex-end',
+  },
+  previewModalCard: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 20,
+    gap: 14,
+    maxHeight: '85%',
+  },
+  previewModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 4,
+  },
+  previewModalTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#0F172A',
+  },
+  previewImageContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'center',
+    backgroundColor: '#F8FAFC',
+    padding: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  previewImageThumb: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+  },
+  previewCropName: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#15803D',
+  },
+  previewTipText: {
+    fontSize: 11,
+    color: '#64748B',
+    lineHeight: 16,
+  },
+  quickNoteSectionLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#475569',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  quickChipsScroll: {
+    gap: 8,
+    paddingVertical: 2,
+  },
+  quickNoteChip: {
+    backgroundColor: '#F1F5F9',
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  quickNoteChipActive: {
+    backgroundColor: '#DCFCE7',
+    borderColor: '#16A34A',
+  },
+  quickNoteChipText: {
+    fontSize: 12,
+    color: '#334155',
+    fontWeight: '600',
+  },
+  quickNoteChipTextActive: {
+    color: '#166534',
+    fontWeight: '800',
+  },
+  customNoteInput: {
+    backgroundColor: '#F8FAFC',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    padding: 12,
+    fontSize: 13,
+    color: '#0F172A',
+    minHeight: 56,
+    textAlignVertical: 'top',
+  },
+  previewModalActions: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 4,
+  },
+  previewCancelBtn: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: '#F1F5F9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+  },
+  previewCancelText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#475569',
+  },
+  previewAnalyzeBtn: {
+    flex: 1.6,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: '#15803D',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#15803D',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  previewAnalyzeText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+
+  // ── Non-Plant Warning Box ──
+  nonPlantBox: {
+    backgroundColor: '#FFF7ED',
+    borderRadius: 16,
+    padding: 20,
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1.5,
+    borderColor: '#FFEDD5',
+  },
+  nonPlantIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FFEDD5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  nonPlantTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#C2410C',
+    textAlign: 'center',
+  },
+  nonPlantGuidance: {
+    fontSize: 13,
+    color: '#7C2D12',
+    textAlign: 'center',
+    lineHeight: 19,
+  },
+
+  // ── Condition Diagnostic Badges ──
+  conditionPillsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  conditionCategoryPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#F0FDF4',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#BBF7D0',
+  },
+  conditionCategoryPillText: {
+    fontSize: 11,
+    color: '#166534',
+    fontWeight: '700',
+  },
+  growthStagePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#F0F9FF',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#BAE6FD',
+  },
+  growthStagePillText: {
+    fontSize: 11,
+    color: '#0369A1',
+    fontWeight: '700',
+  },
+  severityPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  severityPillSevere: {
+    backgroundColor: '#FEF2F2',
+    borderColor: '#FECACA',
+  },
+  severityPillModerate: {
+    backgroundColor: '#FFFBEB',
+    borderColor: '#FDE68A',
+  },
+  severityPillEarly: {
+    backgroundColor: '#F0FDF4',
+    borderColor: '#BBF7D0',
+  },
+  severityPillText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  severityTextSevere: {
+    color: '#DC2626',
+  },
+  severityTextModerate: {
+    color: '#D97706',
+  },
+  severityTextEarly: {
+    color: '#166534',
+  },
+  differentialBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+    backgroundColor: '#F8FAFC',
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 6,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  differentialText: {
+    fontSize: 11,
+    color: '#475569',
+    flex: 1,
+    lineHeight: 16,
   },
 });

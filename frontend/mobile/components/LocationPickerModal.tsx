@@ -4,7 +4,7 @@
  * Opened when the farmer taps the location pill in the top bar.
  * Same cascade State → District pickers as LocationSelectionView but compact.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -83,6 +83,26 @@ export default function LocationPickerModal({
     return translateLocation(districtName, activeLang) || t(districtName) || districtName;
   };
 
+  // ⚡ Pre-computed memoized option items for butter-smooth list rendering
+  const stateItems = useMemo(() => {
+    return getAllStates().map((state) => ({
+      id: state,
+      label: localizeState(state),
+      subLabel: state,
+    }));
+  }, [activeLang]);
+
+  const districtItems = useMemo(() => {
+    if (!selectedState) return [];
+    const dists = getDistrictsForState(selectedState);
+    const localizedState = localizeState(selectedState);
+    return dists.map((dist) => ({
+      id: dist,
+      label: localizeDistrict(dist),
+      subLabel: localizedState,
+    }));
+  }, [selectedState, activeLang]);
+
   useEffect(() => {
     if (visible) {
       setSelectedState(currentState);
@@ -151,12 +171,18 @@ export default function LocationPickerModal({
       const result = await detectLocationGPS();
       setSelectedState(result.state);
       setSelectedDistrict(result.district);
+      if (result.postalCode) {
+        setPincode(result.postalCode);
+        setPincodeNotice(`✅ Detected: ${result.district}, ${result.state} (PIN ${result.postalCode})`);
+      }
       if (result.warning) {
         setGpsWarning(result.warning);
       }
     } catch {}
     setDetecting(false);
   };
+
+  if (!visible) return null;
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
@@ -290,11 +316,7 @@ export default function LocationPickerModal({
               title={t('selectState') || 'Select State'}
               icon="map"
               searchPlaceholder={activeLang === 'hi' ? 'राज्य खोजें (उदा. पंजाब, उत्तर प्रदेश)...' : 'Search state (e.g. Punjab, Uttar Pradesh)...'}
-              items={getAllStates().map((state) => ({
-                id: state,
-                label: localizeState(state),
-                subLabel: state,
-              }))}
+              items={stateItems}
               selectedId={selectedState}
               onSelect={(item) => {
                 setSelectedState(item.id);
@@ -333,11 +355,7 @@ export default function LocationPickerModal({
                   title={`${t('selectDistrict') || 'Select District'} - ${localizeState(selectedState)}`}
                   icon="map-marker"
                   searchPlaceholder={activeLang === 'hi' ? 'ज़िला खोजें...' : 'Search district...'}
-                  items={districts.map((dist) => ({
-                    id: dist,
-                    label: localizeDistrict(dist),
-                    subLabel: localizeState(selectedState),
-                  }))}
+                  items={districtItems}
                   selectedId={selectedDistrict}
                   onSelect={(item) => {
                     setSelectedDistrict(item.id);

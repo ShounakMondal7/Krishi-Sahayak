@@ -338,7 +338,16 @@ async def _run_rag_pipeline(
     conv_history = await _load_conversation_history_from_db(db, conversation_id, limit=6)
     conv_context = _format_conversation_context(conv_history)
 
-    # ── Step 4: Detect intent → fetch live data in parallel ───────────────
+    # ── Step 4 & 5: Concurrently Launch ChromaDB Retrieval + Live Data ─────────
+    t0_retrieval = time.time()
+    retrieval_query = rag.contextualize_query(question_english, conv_history)
+    retrieval_task = asyncio.create_task(
+        rag.retrieve_context_async(
+            english_query=retrieval_query,
+            top_k=settings.rag_top_k,
+        )
+    )
+
     live_context_chunks: List[str] = list(extra_context_chunks or [])
     weather_task = None
     market_task = None
@@ -383,18 +392,47 @@ async def _run_rag_pipeline(
                     market_svc.fetch_current_price(crop, region)
                 )
 
+    # Concurrently await ChromaDB retrieval, weather, and market lookups
+    gather_list = [retrieval_task]
+    w_idx = None
+    m_idx = None
     if weather_task:
-        try:
-            weather_data = await weather_task
-            live_context_chunks.append(weather_svc.format_weather_context(weather_data))
+        w_idx = len(gather_list)
+        gather_list.append(weather_task)
+    if market_task:
+        m_idx = len(gather_list)
+        gather_list.append(market_task)
+
+    results = await asyncio.gather(*gather_list, return_exceptions=True)
+    timings["retrieval_ms"] = int((time.time() - t0_retrieval) * 1000)
+
+    # 1. Handle ChromaDB retrieval result
+    retrieval_res = results[0]
+    if isinstance(retrieval_res, Exception):
+        logger.error(f"Retrieval failed (non-fatal): {retrieval_res}")
+        chunks, sources, scores = [], [], []
+    else:
+        chunks, sources, scores = retrieval_res
+    avg_score = round(sum(scores) / len(scores), 4) if scores else 0.0
+
+    # 2. Handle Weather result
+    if w_idx is not None:
+        weather_res = results[w_idx]
+        if isinstance(weather_res, Exception):
+            logger.warning(f"Weather fetch failed (non-fatal): {weather_res}")
+        else:
+            live_context_chunks.append(weather_svc.format_weather_context(weather_res))
             weather_used = True
             logger.info(f"Weather context injected for {region}")
-        except Exception as exc:
-            logger.warning(f"Weather fetch failed (non-fatal): {exc}")
 
-    if market_task:
-        try:
-            price_data = await market_task
+    # 3. Handle Market result
+    price_data = None
+    if m_idx is not None:
+        market_res = results[m_idx]
+        if isinstance(market_res, Exception):
+            logger.warning(f"Market fetch failed (non-fatal): {market_res}")
+        else:
+            price_data = market_res
             live_context_chunks.append(market_svc.format_price_context(price_data))
             market_used = True
             is_msp = price_data.get("is_msp", False)
@@ -410,18 +448,6 @@ async def _run_rag_pipeline(
             else:
                 market_badge_label = "📈 e-NAM: MSP" if is_msp else "📈 APMC Mandi Rate"
             logger.info(f"Market price context injected (crop: {price_data.get('crop')}, is_msp: {is_msp})")
-        except Exception as exc:
-            logger.warning(f"Market fetch failed (non-fatal): {exc}")
-
-    # ── Step 5: Retrieve context from ChromaDB (with query contextualization) ──
-    t0 = time.time()
-    retrieval_query = rag.contextualize_query(question_english, conv_history)
-    chunks, sources, scores = await rag.retrieve_context_async(
-        english_query=retrieval_query,
-        top_k=settings.rag_top_k,
-    )
-    timings["retrieval_ms"] = int((time.time() - t0) * 1000)
-    avg_score = round(sum(scores) / len(scores), 4) if scores else 0.0
 
     # Deduplicate source filenames while preserving order
     seen: set = set()
@@ -475,16 +501,74 @@ async def _run_rag_pipeline(
         )
     timings["llm_ms"] = int((time.time() - t0) * 1000)
 
-    # ── Step 7: Localize English → Target Language ─────────────────────────
+    # Dynamic or contextual follow-up suggestions for high farmer engagement
+    dynamic_followups = getattr(answer_english, "follow_up_questions", [])
+    if dynamic_followups:
+        follow_up_questions = list(dynamic_followups)
+    elif intent == "MARKET_PRICE":
+        follow_up_crop = (
+            price_data.get("crop")
+            if price_data and price_data.get("crop") and price_data.get("crop") != "Agricultural Produce"
+            else None
+        )
+        if follow_up_crop:
+            follow_up_questions = [
+                f"Where is the nearest APMC Mandi auction for {follow_up_crop}?",
+                f"What are the grading criteria and storage guidelines for {follow_up_crop}?",
+                "How can I register and check live prices on the e-NAM portal?",
+            ]
+        else:
+            follow_up_questions = [
+                "Where is the nearest APMC Mandi auction in my district?",
+                "What are the official grading standards and MSP rates on e-NAM?",
+                "How can I register and sell my crop on the e-NAM portal?",
+            ]
+    elif weather_used:
+        follow_up_questions = [
+            "Will the expected rain affect my pesticide or fertilizer schedule?",
+            f"What is the 3-day agricultural weather forecast for {region}?",
+            "What preventive measures should I take against high humidity?",
+        ]
+    else:
+        follow_up_questions = [
+            "What is the exact dosage per 15-liter backpack spray pump?",
+            "What is the best time of day to spray (early morning or evening)?",
+            "What low-cost organic or bio-control remedies can prevent recurrence?",
+        ]
+
+    # ── Step 7: Localize English → Target Language (Concurrent Single-Batch) ──
     t0 = time.time()
     if language == "en":
         answer_localized = answer_english
         timings["translation_output_ms"] = 0
     else:
         try:
-            answer_localized = translation.translate_en_to_lang(answer_english, tgt_lang=language)
+            trans_tasks = [
+                asyncio.to_thread(translation.translate_en_to_lang, answer_english, language)
+            ]
+            for q in follow_up_questions:
+                trans_tasks.append(
+                    asyncio.to_thread(translation.translate_en_to_lang, q, language)
+                )
+            trans_results = await asyncio.gather(*trans_tasks, return_exceptions=True)
+
+            ans_res = trans_results[0]
+            if isinstance(ans_res, str) and ans_res.strip():
+                answer_localized = ans_res
+            else:
+                logger.warning(f"Translation to {language} failed, returning English: {ans_res}")
+                answer_localized = answer_english
+
+            translated_followups = []
+            for res, orig in zip(trans_results[1:], follow_up_questions):
+                if isinstance(res, str) and res.strip():
+                    translated_followups.append(res)
+                else:
+                    translated_followups.append(orig)
+            follow_up_questions = translated_followups
+            logger.info(f"Concurrently translated advisory & {len(follow_up_questions)} follow-ups to '{language}'")
         except Exception as exc:
-            logger.warning(f"Translation to {language} failed, returning English: {exc}")
+            logger.warning(f"Concurrent translation to {language} failed (non-fatal): {exc}")
             answer_localized = answer_english
         timings["translation_output_ms"] = int((time.time() - t0) * 1000)
 
@@ -539,57 +623,6 @@ async def _run_rag_pipeline(
     )
 
     source_labels = make_source_labels(unique_sources, scores)
-
-    # Dynamic or contextual follow-up suggestions for high farmer engagement
-    dynamic_followups = getattr(answer_english, "follow_up_questions", [])
-    if dynamic_followups:
-        follow_up_questions = list(dynamic_followups)
-    elif intent == "MARKET_PRICE":
-        follow_up_crop = (
-            price_data.get("crop")
-            if "price_data" in locals() and price_data and price_data.get("crop") and price_data.get("crop") != "Agricultural Produce"
-            else None
-        )
-        if follow_up_crop:
-            follow_up_questions = [
-                f"Where is the nearest APMC Mandi auction for {follow_up_crop}?",
-                f"What are the grading criteria and storage guidelines for {follow_up_crop}?",
-                "How can I register and check live prices on the e-NAM portal?",
-            ]
-        else:
-            follow_up_questions = [
-                "Where is the nearest APMC Mandi auction in my district?",
-                "What are the official grading standards and MSP rates on e-NAM?",
-                "How can I register and sell my crop on the e-NAM portal?",
-            ]
-    elif weather_used:
-        follow_up_questions = [
-            "Will the expected rain affect my pesticide or fertilizer schedule?",
-            f"What is the 3-day agricultural weather forecast for {region}?",
-            "What preventive measures should I take against high humidity?",
-        ]
-    else:
-        follow_up_questions = [
-            "What is the exact dosage per 15-liter backpack spray pump?",
-            "What is the best time of day to spray (early morning or evening)?",
-            "What low-cost organic or bio-control remedies can prevent recurrence?",
-        ]
-
-    # Translate follow-up questions to target language if not English
-    if language != "en" and follow_up_questions:
-        try:
-            tasks = [
-                asyncio.to_thread(translation.translate_en_to_lang, q, language)
-                for q in follow_up_questions
-            ]
-            translated = await asyncio.gather(*tasks, return_exceptions=True)
-            follow_up_questions = [
-                res if isinstance(res, str) and res.strip() else orig
-                for res, orig in zip(translated, follow_up_questions)
-            ]
-            logger.info(f"Translated {len(follow_up_questions)} follow-up questions to '{language}'")
-        except Exception as exc:
-            logger.warning(f"Translating follow-up questions failed (non-fatal): {exc}")
 
     response = QueryResponse(
         query_id=query_id,
@@ -723,11 +756,12 @@ async def voice_query(
 
     logger.info(f"Received audio: {upload.filename} ({len(audio_bytes)} bytes, {encoding}, lang={language})")
 
-    # Resilient audio transcription (Google STT with fallback)
-    transcribed_text = speech.transcribe_audio_resilient(
+    # Resilient multilingual audio transcription (OpenAI / Google STT with fallback)
+    transcribed_text = speech.transcribe_audio(
         audio_bytes=audio_bytes,
-        encoding=encoding,
+        filename=upload.filename,
         language=language,
+        encoding=encoding,
     )
 
     # Sanitize inputs (CERT-In / OWASP)
@@ -802,18 +836,15 @@ async def image_query(
             detail="Unsupported image format. Use JPEG, PNG, or WebP.",
         )
 
-    # Step 1: Describe symptoms with GPT-4o vision (no diagnosis)
-    try:
-        from app.services.vision import describe_crop_image, combine_image_and_text_query
-        symptom_description = describe_crop_image(image_bytes, mime_type=content_type)
-    except RuntimeError as exc:
-        await _log_error(db, "VisionError", str(exc), endpoint="image-query", region=region)
-        raise HTTPException(
-            status_code=422,
-            detail={"error": "Image analysis failed", "message": _ML_IMAGE_ERROR},
-        )
-
-    logger.info(f"Vision description: '{symptom_description[:80]}…'")
+    # Step 1: Pre-fetch live weather context to inform microclimate diagnosis
+    weather_context = None
+    if region:
+        try:
+            weather_data = await weather_svc.fetch_weather_advisory(region)
+            if weather_data:
+                weather_context = weather_svc.format_weather_context(weather_data)
+        except Exception as w_err:
+            logger.debug(f"Could not pre-fetch weather for vision: {w_err}")
 
     # Step 2: Sanitize inputs & translate farmer's optional text question
     farmer_question_english = None
@@ -836,19 +867,76 @@ async def image_query(
             try:
                 farmer_question_english = translation.translate_to_en(question.strip(), src_lang=language)
             except Exception:
-                farmer_question_english = question.strip()  # Use as-is if translation fails
+                farmer_question_english = question.strip()
 
-    # Step 3: Combine symptom description + optional question
-    from app.services.vision import combine_image_and_text_query
-    combined_english_query = combine_image_and_text_query(
-        symptom_description, farmer_question_english
+    # Step 3: Two-Stage High-Detail Agronomic Vision Analysis
+    try:
+        from app.services.vision import analyze_crop_image
+        vision_result = analyze_crop_image(
+            image_bytes=image_bytes,
+            mime_type=content_type,
+            region=region,
+            weather_context=weather_context,
+            farmer_question=farmer_question_english,
+        )
+    except RuntimeError as exc:
+        await _log_error(db, "VisionError", str(exc), endpoint="image-query", region=region)
+        raise HTTPException(
+            status_code=422,
+            detail={"error": "Image analysis failed", "message": _ML_IMAGE_ERROR},
+        )
+
+    # Non-Plant Guardrail
+    if not vision_result.get("is_plant_or_farm_image", True):
+        non_plant_msg = (
+            "कृपया फसल, पत्ती, तने, कीट या खरपतवार की स्पष्ट और रोशनी वाली क्लोज़-अप तस्वीर लें। अपलोड की गई तस्वीर में पौधे के लक्षण स्पष्ट नहीं दिख रहे हैं।"
+            if language == "hi" else
+            "Please take a clear, well-lit close-up photo of the affected crop leaf, stem, insect, or weed in daylight. The uploaded image does not appear to show recognizable crop foliage or symptoms."
+        )
+        if language not in ("en", "hi"):
+            try:
+                non_plant_msg = translation.translate_en_to_lang(non_plant_msg, tgt_lang=language)
+            except Exception:
+                pass
+        return ImageQueryResponse(
+            answer=non_plant_msg,
+            answer_english="Please take a clear, well-lit close-up photo of the affected crop leaf, stem, insect, or weed in daylight.",
+            sources=[],
+            source_labels=[],
+            response_time_ms=500,
+            from_cache=False,
+            symptom_description="Non-agricultural or unreadable image uploaded.",
+            is_plant_or_farm_image=False,
+            confidence_percent=0,
+        )
+
+    # Step 4: Synthesize high-fidelity RAG query & visual identification context
+    rag_search_query = vision_result.get("rag_search_query") or (
+        f"{vision_result.get('crop_common_name', 'Crop')} {vision_result.get('primary_diagnosis', 'Disease')} "
+        f"management fungicide pesticide 15L sprayer dosage ICAR"
+    )
+    combined_query = (
+        f"{rag_search_query}. Farmer note: {farmer_question_english}"
+        if farmer_question_english else rag_search_query
     )
 
-    # Step 4: Run RAG pipeline with combined English query
-    # We pass the combined query as an already-translated English string.
-    # Skip the Malayalam→English translation step by passing it directly.
+    ev_list = vision_result.get("visual_evidence", [])
+    ev_formatted = "\n- ".join(ev_list) if ev_list else "Symptoms observed on foliage"
+    visual_diag_chunk = (
+        f"### 🔍 VISUAL PATHOLOGY & AGRONOMIC IDENTIFICATION:\n"
+        f"- **Crop Identified:** {vision_result.get('crop_common_name', 'Crop')} (*{vision_result.get('crop_scientific_name', '')}*)\n"
+        f"- **Growth Stage:** {vision_result.get('growth_stage', 'Vegetative')}\n"
+        f"- **Condition Category:** {vision_result.get('condition_category', 'Fungal Disease')}\n"
+        f"- **Primary Diagnosis:** {vision_result.get('primary_diagnosis', 'Crop Condition')}\n"
+        f"- **Confidence Score:** {vision_result.get('confidence_percent', 90)}%\n"
+        f"- **Severity Level:** {vision_result.get('severity', 'Moderate')}\n"
+        f"- **Observable Visual Markers:**\n- {ev_formatted}\n"
+        f"- **Differential Diagnosis (Look-Alike Ruled Out):** {vision_result.get('differential_diagnosis_ruled_out', 'N/A')}\n"
+    )
+
+    # Step 5: Run RAG pipeline with combined English query & injected visual diagnosis
     rag_response = await _run_rag_pipeline(
-        question_original=combined_english_query,   # Already in English
+        question_original=combined_query,
         language=language,
         region=region,
         session_id=session_id,
@@ -856,14 +944,26 @@ async def image_query(
         input_mode="image",
         db=db,
         background_tasks=background_tasks,
-        image_description=symptom_description,
+        extra_context_chunks=[visual_diag_chunk],
+        image_description=visual_diag_chunk,
         already_english=True,
     )
 
-    return ImageQueryResponse(
-        **rag_response.model_dump(),
-        symptom_description=symptom_description,
-    )
+    resp_dict = rag_response.model_dump()
+    resp_dict.update({
+        "symptom_description": ", ".join(ev_list) if ev_list else str(vision_result.get("primary_diagnosis", "")),
+        "crop_common_name": vision_result.get("crop_common_name"),
+        "crop_scientific_name": vision_result.get("crop_scientific_name"),
+        "growth_stage": vision_result.get("growth_stage"),
+        "condition_category": vision_result.get("condition_category"),
+        "primary_diagnosis": vision_result.get("primary_diagnosis"),
+        "confidence_percent": vision_result.get("confidence_percent"),
+        "severity": vision_result.get("severity"),
+        "visual_evidence": vision_result.get("visual_evidence"),
+        "differential_diagnosis_ruled_out": vision_result.get("differential_diagnosis_ruled_out"),
+        "is_plant_or_farm_image": True,
+    })
+    return ImageQueryResponse(**resp_dict)
 
 
 # ── ENDPOINT: Text-to-Speech for a previous answer ────────────────────────────

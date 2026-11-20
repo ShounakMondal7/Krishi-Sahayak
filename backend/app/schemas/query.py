@@ -193,6 +193,19 @@ class QueryResponse(BaseModel):
         description="Suggested follow-up questions tailored to the query and context",
     )
     timing: Optional[TimingBreakdown] = None
+    question_original: Optional[str] = Field(default=None, description="Original query in farmer's native script")
+
+    # Structured Vision Agronomic Diagnosis fields
+    crop_common_name: Optional[str] = None
+    crop_scientific_name: Optional[str] = None
+    growth_stage: Optional[str] = None
+    condition_category: Optional[str] = None
+    primary_diagnosis: Optional[str] = None
+    confidence_percent: Optional[int] = None
+    severity: Optional[str] = None
+    visual_evidence: Optional[List[str]] = None
+    differential_diagnosis_ruled_out: Optional[str] = None
+    is_plant_or_farm_image: Optional[bool] = None
 
     model_config = {"json_schema_extra": {
         "example": {
@@ -370,6 +383,19 @@ _SOURCE_LABELS: dict[str, str] = {
     "icar_pesticide_compatibility_and_safety_antidotes.txt": "CIB&RC — Pesticide Compatibility, Safety & Medical Antidotes",
     "icar_veterinary_cattle_goat_poultry_complete.txt": "ICAR-NDRI/IVRI — Veterinary, Cattle, Goat & Poultry Manual",
     "govt_farmer_credit_insurance_schemes_2026_expanded.txt": "Govt of India — Farmer Credit, PMFBY & Welfare Schemes 2026",
+    # 12 Comprehensive Farming & 2026 Scheme Manuals (59 Library Extension)
+    "govt_digital_agriculture_agristack_2026.txt": "Govt of India — Digital Agriculture Mission, AgriStack & PMFBY 2026",
+    "icar_natural_and_organic_farming_jaivik.txt": "ICAR-NCONF — Natural & Organic Farming (BPKP, Jeevamrit & PKVY)",
+    "icar_micro_irrigation_water_harvesting.txt": "ICAR-CIAE/IIWM — Precision Micro-Irrigation, Drip & Farm Ponds",
+    "icar_fisheries_aquaculture_pmmsy.txt": "ICAR-CIFA — Freshwater Composite Aquaculture & PMMSY",
+    "icar_post_harvest_storage_grading_fpo.txt": "ICAR-CIPHET/SFAC — Post-Harvest Storage, ZECC & 10,000 FPOs",
+    "icar_integrated_farming_system_ifs.txt": "ICAR-IIFSR — Integrated Farming System (IFS 1-Acre & 2-Acre Models)",
+    "icar_floriculture_commercial_flowers.txt": "ICAR-DFR — Commercial Floriculture, Marigold & Cut-Flowers",
+    "icar_fodder_silage_hay_production.txt": "ICAR-IGFRI — Year-Round Fodder Production & Silage Ensilement",
+    "icar_dryland_rainfed_millets_shree_anna.txt": "ICAR-IIMR — Shree Anna (Millets) Agronomy for Rainfed Zones",
+    "icar_cotton_sugarcane_cash_crops_deep_dive.txt": "ICAR-CICR/SBI — Cash Crops Deep Dive (Cotton PBW & Sugarcane Trench)",
+    "icar_oilseeds_groundnut_mustard_soybean.txt": "ICAR-DRMR/DGR/IISR — Oilseeds Production (Groundnut, Mustard, Soybean)",
+    "icar_soil_testing_and_card_interpretation.txt": "ICAR-IISS — Soil Sampling SOP & Soil Health Card Interpretation",
 }
 
 
